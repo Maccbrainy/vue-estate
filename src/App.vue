@@ -1,30 +1,30 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+  <base-layout>
+    <template v-slot:default>
+      <router-view :key="$route.path"/>
+    </template>
+  </base-layout>
 </template>
-
+<script>
+import BaseLayout from "@/layouts/BaseLayout.vue";
+export default ({
+  components: {
+    BaseLayout,
+  }
+})
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); */
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.1px;
+  /* font-family: 'Poppins', sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+  background-color: rgb(255, 255, 255);
 }
 </style>

@@ -1,0 +1,20 @@
+<template>
+  <ul
+    class="
+      z-30
+      top-10
+      left-0
+      group-hover:block
+      absolute 
+      pb-1 pt-1
+      w-48
+      hidden 
+      rounded-md 
+      shadow 
+      bg-white" 
+    role="menu" 
+    aria-orientation="vertical" 
+    aria-labelledby="menu-button">
+    <slot></slot>
+  </ul>
+</template>
