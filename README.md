@@ -1,4 +1,4 @@
-# homesive
+# vue-estate
 
 ## Project setup
 ```
