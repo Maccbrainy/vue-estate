@@ -48,7 +48,7 @@
             </div>
             <div class="w-5/6 my-8 mx-auto flex flex-col text-center">
               <div class="text-4xl text-gray-700 font-bold">
-                <h1>See how Homesive can help</h1></div>
+                <h1>See how Vue Estate App can help</h1></div>
               <div class="flex flex-row space-x-4 justify-center">
                 <div>Rent a home</div>
                 <div>Buy a home</div>

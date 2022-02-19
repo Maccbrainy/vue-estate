@@ -11,7 +11,7 @@ const routes = [
     name: "HomePage",
     component: HomePage,
     meta: {
-      title: "Homesive: Real Estate Listings, Homes For Sale, Housing Data"
+      title: "Vue-estate: Real Estate Listings, Homes For Sale, Housing Data"
     }
   },
   {
@@ -19,7 +19,7 @@ const routes = [
     name: "RentPage",
     component: HomePage,
     meta: {
-      title: "Rental Listings in your Neighbourhood | Homesive.com"
+      title: "Rental Listings in your Neighbourhood | Vue-estate.com"
     }
   },
   {
@@ -32,7 +32,7 @@ const routes = [
       title: route.params.title,
     }),
     meta: {
-      title: "Homesive"
+      title: "Vue-estate"
     }
   },
   {
@@ -64,7 +64,7 @@ const routes = [
       // title: route.params.title,
     }),
     meta: {
-      title: "Homesive"
+      title: "Vue-estate"
     }
   },
   {
