@@ -27,4 +27,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(255, 255, 255);
 }
+
+.leaflet-popup-content {
+  width: 280px !important;
+  margin: 0px !important;
+}
+.leaflet-popup-content p {
+  margin: 1px 0px !important;
+}
 </style>
