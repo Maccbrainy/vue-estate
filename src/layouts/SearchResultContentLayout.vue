@@ -45,7 +45,8 @@
       </div>
     </div>
     <no-search-term-match v-else></no-search-term-match>
-    <search-result-google-map></search-result-google-map>
+    <search-result-google-map v-bind:discoveredHomes="discoveredHomes">
+    </search-result-google-map>
   </div>
 </template>
 <script>
@@ -120,6 +121,7 @@ export default {
       homeLocationFinders, 
       props.slug,
       hyphenFreeProp.value);
+    // console.log("Our Homes:", discoveredHomes);
     const discoveredHomesCount = computed(() => {
       return discoveredHomes.value.length > 1 
         ? `${discoveredHomes.value.length} homes available on Homesive`
@@ -172,10 +174,3 @@ export default {
   // },
 }
 </script>
-<style scoped>
-.map-layout-size {
-  width: calc(50% - 16px);
-  height: calc(80% - 16px);
-  touch-action: manipulation;
-}
-</style>
