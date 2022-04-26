@@ -3,9 +3,9 @@
     <div class="flex align-center px-4 pt-2 pb-4 mb-2">
       <button-box>
         <filter-button-toggle-active></filter-button-toggle-active>
-        <filter-button-check-boxes></filter-button-check-boxes>
         <filter-button-range></filter-button-range>
         <filter-button-group></filter-button-group>
+        <filter-button-check-boxes></filter-button-check-boxes>
         <filter-button-more></filter-button-more>
       </button-box> 
     </div>
