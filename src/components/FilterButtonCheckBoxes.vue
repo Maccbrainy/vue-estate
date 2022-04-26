@@ -2,8 +2,37 @@
   <dropdown-button buttonTitle="All Home Types" menuTitle="Home Type">
     <dropdown-button-options>
       <dropdown-button-option>
-        <dropdown-button-option-check-box>
-          Home
+        <dropdown-button-option-check-box id="single" value="single">
+          Single
+        </dropdown-button-option-check-box>
+      </dropdown-button-option>
+      <dropdown-button-option>
+        <dropdown-button-option-check-box 
+          id="multi_family" 
+          value="multi_family">
+          Multi-family
+        </dropdown-button-option-check-box>
+      </dropdown-button-option>
+      <dropdown-button-option>
+        <dropdown-button-option-check-box id="town" value="town">
+          Town
+        </dropdown-button-option-check-box>
+      </dropdown-button-option>
+      <dropdown-button-option>
+        <dropdown-button-option-check-box id="land" value="land">
+          Land
+        </dropdown-button-option-check-box>
+      </dropdown-button-option>
+      <dropdown-button-option>
+        <dropdown-button-option-check-box 
+          id="mobile_manufactured" 
+          value="mobile">
+          Mobile/Manufactured
+        </dropdown-button-option-check-box>
+      </dropdown-button-option>
+      <dropdown-button-option>
+        <dropdown-button-option-check-box id="others" value="others">
+          Others
         </dropdown-button-option-check-box>
       </dropdown-button-option>
     </dropdown-button-options>
