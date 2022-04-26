@@ -99,7 +99,6 @@ export default {
         circle.bindTooltip(markerText);
       }
     });
-    
     return {
       mapWidget,
       mapMarker,
