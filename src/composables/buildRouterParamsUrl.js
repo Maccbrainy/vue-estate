@@ -15,8 +15,8 @@ export default function buildRouterParamsUrl(
   //   ? propsCity.replaceAll(" ", "-")
   //   : propsCity;
   const searchedWithZipCode = `Homes For Sale & Real Estate in ${searchSlugTerm.value} Zip Code`;
-  const searchedWithCityNameDefined = `${hyphenFreeProp} Homes For Sale & ${hyphenFreeProp} Real Estate | Homesive`;
-  const searchedDefault = `${searchSlugTerm.value} Homes For Sale & ${searchSlugTerm.value} Real Estate | Homesive`;
+  const searchedWithCityNameDefined = `${hyphenFreeProp} Homes For Sale & ${hyphenFreeProp} Real Estate | Vue Estate`;
+  const searchedDefault = `${searchSlugTerm.value} Homes For Sale & ${searchSlugTerm.value} Real Estate | Vue Estate`;
   //named route with params to let the router build the url;
   router.push({
     name: "BuyPage",
