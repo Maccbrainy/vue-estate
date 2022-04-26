@@ -69,7 +69,6 @@
             {{home.city}}, {{home.state}}
             <legend class="text-xs font-normal">City</legend>
           </span>
-          
         </div>
       </li>
     </ul>
