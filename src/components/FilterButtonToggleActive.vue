@@ -6,7 +6,7 @@
     Other (15)</nav-bar-button> 
 </template>
 <script>
-import NavBarButton from "@/utilityui/NavBarButton.vue";
+import NavBarButton from "@/components/buttonui/NavBarButton.vue";
 export default {
   components: {
     NavBarButton,

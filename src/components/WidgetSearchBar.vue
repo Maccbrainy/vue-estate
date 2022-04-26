@@ -1,39 +1,33 @@
 <template>
   <search-box>
-    <search-form v-on:submit.prevent="onSubmit">
-      <search-input v-model="searchData">
-        <button 
-          class="
-          bg-red-600
-          hover:bg-red-800 
-            absolute 
-            right-0 
-            top-0 
-            w-16
-            h-full
-            rounded-r-md
-            cursor-pointer" 
-          role="button">
-          <search-icon />
-        </button>
-      </search-input>
-    </search-form>
+    <search-input v-model="searchData">
+      <button 
+        class="
+        bg-red-600
+        hover:bg-red-800 
+          absolute 
+          right-0 
+          top-0 
+          w-16
+          h-full
+          rounded-r-md
+          cursor-pointer" 
+        role="button">
+        <search-icon />
+      </button>
+    </search-input>
   </search-box>
 </template>
 <script>
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
-import SearchBox from "@/utilityui/SearchBox.vue";
-import SearchForm from "@/utilityui/SearchForm.vue";
-import SearchInput from "@/utilityui/SearchInput.vue";
-// import { useRoute } from "vue-router";
+import { SearchBox, SearchInput } from "@/components/buttonui/index";
 export default {
   name: "WidgetSearchBar",
   components: {
     SearchIcon,
     SearchBox,
-    SearchForm,
     SearchInput,
   },
   setup() {

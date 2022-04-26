@@ -40,7 +40,7 @@ import {
   DropdownButtonSelect, 
   DropdownButtonSelectBox, 
   DropdownButtonSelectOption, 
-} from "@/utilityui/index";
+} from "@/components/buttonui/index";
 export default {
   name: "FilterButtonRange",
   components: {

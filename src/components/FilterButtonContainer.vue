@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import { ButtonBox } from "@/utilityui/index";
+import { ButtonBox } from "@/components/buttonui/index";
 // import FilterButtonLists from "@/components/FilterButtonLists.vue";
 import FilterButtonToggleActive from "@/components/FilterButtonToggleActive.vue";
 import FilterButtonRange from "@/components/FilterButtonRange.vue";

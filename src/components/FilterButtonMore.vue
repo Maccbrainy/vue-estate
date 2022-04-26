@@ -112,7 +112,7 @@ import {
   DropdownButtonOptionCheckBox, 
   DropdownButtonOption,
   DropdownButtonOptions,
-} from "@/utilityui/index";
+} from "@/components/buttonui/index";
 export default ({
   components: {
     ButtonSingular,

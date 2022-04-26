@@ -15,7 +15,7 @@ import {
   DropdownButtonOptions, 
   DropdownButtonOption,
   DropdownButtonOptionCheckBox, 
-} from "@/utilityui/index";
+} from "@/components/buttonui/index";
 export default ({
   name: "FilterButtonCheckBoxes",
   components: {

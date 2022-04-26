@@ -6,7 +6,7 @@
   </span> 
 </template>
 <script>
-import ButtonTab from "@/utilityui/ButtonTab.vue";
+import ButtonTab from "@/components/buttonui/ButtonTab.vue";
 export default {
   name: "HomeTabButtons",
   components: {

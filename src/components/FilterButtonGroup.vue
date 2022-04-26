@@ -13,7 +13,11 @@
   </dropdown-button>
 </template>
 <script>
-import { ButtonSingular, ButtonGroup, DropdownButton } from "@/utilityui/index";
+import { 
+  ButtonSingular, 
+  ButtonGroup, 
+  DropdownButton 
+} from "@/components/buttonui/index";
 export default ({
   name: "FilterButtonGroup",
   components: {

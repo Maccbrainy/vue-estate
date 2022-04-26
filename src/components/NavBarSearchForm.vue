@@ -5,7 +5,7 @@
   </search-box>
 </template>
 <script>
-import { SearchBox, SearchInput } from "@/utilityui/index";
+import { SearchBox, SearchInput } from "@/components/buttonui/index";
 export default {
   name: "NavBarSearchForm",
   components: {

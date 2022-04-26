@@ -152,7 +152,7 @@ import {
   NavBarButton, 
   NavBarDropdown, 
   NavBarDropdownItem, 
-} from "@/utilityui/index";
+} from "@/components/buttonui/index";
 import { useStore } from "vuex";
 import { computed, reactive } from "vue";
 import { useRoute } from "vue-router";

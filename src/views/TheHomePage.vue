@@ -66,7 +66,7 @@
 <script>
 import { useStore } from "vuex";
 import { ref, computed, watch } from "vue";
-import { SearchBox, SearchInput } from "@/utilityui/index";
+import { SearchBox, SearchInput } from "@/components/buttonui/index";
 import buildRouterParamsUrl from "@/composables/buildRouterParamsUrl";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
