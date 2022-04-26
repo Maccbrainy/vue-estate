@@ -112,8 +112,14 @@ export default {
       validatedSearchInfo, 
       hypenatedProp.value, 
       hyphenFreeProp.value);
-    const { savedSearchedData } = clientLocalStorage( searchTerm.value, hyphenFreeProp.value);
-    const { resultTitle } = searchResultTitle(searchTerm.value, hyphenFreeProp.value);
+    const { savedSearchedData } = clientLocalStorage(
+      searchTerm.value, 
+      hyphenFreeProp.value
+    );
+    const { resultTitle } = searchResultTitle(
+      searchTerm.value, 
+      hyphenFreeProp.value
+    );
     const { homeLocationFinders } = homeLocationFinderSearchControllers();
     const { homeResources } = homeResourcesData();
     const { discoveredHomes } = computedHomeResourcesSearched(
