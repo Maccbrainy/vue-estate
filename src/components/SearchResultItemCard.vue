@@ -1,5 +1,5 @@
 <template>
-  <li
+  <li 
     class="
       block 
       flex-initial
@@ -12,7 +12,7 @@
       2xl:w-4/12
       3xl:w-3/12">
     <div>
-      <div>
+      <div v-bind:id="home.name">
         <router-link 
           :to="{
             name: 'HomeDetail', 
@@ -42,7 +42,8 @@
         </router-link>
         <div v-if="home.name" class="my-1 pt-2 border-t">
           <div class="uppercase pb-2 text-xs text-gray-600">
-            LISTING BY: {{ home.name }}
+            LISTING BY: {{ home.name }} | Long: {{ home.longitude }} | Lat: 
+            {{ home.latitude }}
           </div>
         </div>
       </div>
