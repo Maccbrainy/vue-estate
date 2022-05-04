@@ -33,8 +33,8 @@
       v-bind:class="{
         'rounded-br-lg': !searchFilterIsActive}"
       class="
-      bg-red-600
-      hover:bg-red-800 
+        bg-red-600 
+        hover:bg-red-800 
         absolute 
         right-0 
         top-0
@@ -51,7 +51,12 @@
     v-bind:class="{
       'relative border-t-0 border text-gray-600 w-full max-h-40 overflow-auto bg-white z-20 rounded-b-lg': searchFilterIsActive }">
     <ul role="listbox" aria-labelledby="search-label">
-      <li v-bind:class="{'bg-gray-100 pl-4 py-3 text-xs font-medium':searchFilterIsActive }">{{placeListTag}}</li>
+      <li 
+        v-bind:class="{
+          'bg-gray-100 pl-4 py-3 text-xs font-medium': searchFilterIsActive 
+        }"> 
+        {{ placeListTag }}
+      </li>
       <li 
         v-for="(home, index) in searchPreferences" 
         :key="index"
@@ -60,13 +65,20 @@
         role="option"
         v-on:click="submitClicked" 
         aria-selected="false"
-        class="text-gray-600 border-b font-normal text-sm hover:bg-gray-100 py-1 px-3">
+        class="
+          text-gray-600 
+          border-b 
+          font-normal 
+          text-sm 
+          hover:bg-gray-100 
+          py-1 
+          px-3">
         <div class="flex space-x-2">
           <span>
             <location-icon class="mt-1 text-gray-600 text-xs"/>
           </span>
           <span :id="`${home.city}`" :nonce="`${home.state}`">
-            {{home.city}}, {{home.state}}
+            {{ home.city }}, {{ home.state}}
             <legend class="text-xs font-normal">City</legend>
           </span>
         </div>
