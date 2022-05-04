@@ -36,7 +36,6 @@ import {
   MobileMenuList,
   MobileMenuButtonItem,
   MobileMenuDropDown,
-  // MobileMenuDropDownList, 
   MobileMenuDropDownItem 
 } from "@/components/mobile/index.js";
 export default {
@@ -46,7 +45,6 @@ export default {
     MobileMenuList,
     MobileMenuButtonItem,
     MobileMenuDropDown,
-    // MobileMenuDropDownList,
     MobileMenuDropDownItem 
   },
   setup() {
