@@ -3,7 +3,6 @@
     class="
       group
       relative 
-      inline-block
       inline-flex
       cursor-pointer 
       rounded-md 
