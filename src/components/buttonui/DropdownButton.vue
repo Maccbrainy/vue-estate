@@ -53,7 +53,7 @@
   </li>
 </template>
 <script>
-import { ref } from 'vue';
+import { ref } from "vue";
 import ChevronDown from "@/assets/icons/ChevronDown.vue";
 export default {
   // Button title from the parent
@@ -62,7 +62,7 @@ export default {
     ChevronDown,
   },
   setup() {
-    const buttonIsOpen = ref(false)
+    const buttonIsOpen = ref(false);
     return {
       buttonIsOpen,
     }
