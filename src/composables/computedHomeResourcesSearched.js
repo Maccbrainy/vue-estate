@@ -1,7 +1,7 @@
 import { computed } from "vue";
 
 export default function computedHomeResourcesSearched(
-  homeResources, 
+  allPropertListings, 
   homeLocationFinders, 
   propsSlug,
   cityProp){
@@ -9,7 +9,7 @@ export default function computedHomeResourcesSearched(
     //Empty array to collect computed home data;
     let computedData = [];
     //Home Data;
-    let homeData = homeResources;
+    let homeData = allPropertListings;
     //Home location search term and controller which are home state, city and postal code;
     let homeFinderControllers = homeLocationFinders;
     let principalFinder = cityProp ? cityProp : propsSlug;

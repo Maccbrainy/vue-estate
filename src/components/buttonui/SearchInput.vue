@@ -83,7 +83,6 @@ import LocationIcon from "@/assets/icons/LocationIcon.vue";
 export default {
   name: "SearchInput",
   inheritAttrs: false,
-  emits: ["emittingSearchData"],
   components: {
     SearchIcon,
     LocationIcon,
@@ -132,24 +131,16 @@ export default {
     })
     const placeListTag = computed(() =>{
       return searchPreferences.value.length > 0 ? "Places" : ""; 
-      })
+    })
 
     watch(searchData, () => {
-      let searchedWordIsTwo = searchData.value.length >= 2;
-      if (searchedWordIsTwo) {
-        searchActive.value = true;
-        // console.log(searchActive.value);
-      }else {
-        searchActive.value = false;
-        // console.log(searchActive.value);
-      }
+      let searchedWordIsTwo = searchData.value.length >= 2 ? true : false;
+      searchActive.value = searchedWordIsTwo;
     });
     onMounted(() => {
       if (localStorage.savedSearchedData){
         searchData.value = localStorage.savedSearchedData;
       }
-      // globData.value = router.options.history.state.back;
-      // console.log(globData.value);
     });
     return{
       homeResources,
@@ -164,12 +155,6 @@ export default {
       payloadClicked,
     }
   },
-  
-    // watch: {
-    //   searchData(value){
-    //     console.log(value);
-    //   }
-    // },
   methods: {
     onSubmit(e) {
       if (!this.searchFilterIsActive && this.searchData) {

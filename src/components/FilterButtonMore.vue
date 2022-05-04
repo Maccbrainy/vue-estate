@@ -11,27 +11,33 @@
     <dropdown-button-fieldset fieldsetTitle="Type of Listings">
       <dropdown-button-options>
         <dropdown-button-option>
-          <dropdown-button-option-check-box>
+          <dropdown-button-option-check-box id="fsba" value="fsba">
             For Sale by Agent
           </dropdown-button-option-check-box>
         </dropdown-button-option>
         <dropdown-button-option>
-          <dropdown-button-option-check-box>
+          <dropdown-button-option-check-box id="fsbo" value="fsbo">
             For Sale by Owner
           </dropdown-button-option-check-box>
         </dropdown-button-option>
         <dropdown-button-option>
-          <dropdown-button-option-check-box>
+          <dropdown-button-option-check-box 
+            id="new_construction" 
+            value="new_construction">
             New Construction
           </dropdown-button-option-check-box>
         </dropdown-button-option>
         <dropdown-button-option>
-          <dropdown-button-option-check-box>
+          <dropdown-button-option-check-box 
+            id="foreclosures" 
+            value="foreclosures">
             Foreclosures
           </dropdown-button-option-check-box>
         </dropdown-button-option>
         <dropdown-button-option>
-          <dropdown-button-option-check-box>
+          <dropdown-button-option-check-box 
+            id="open_houses" 
+            value="open_houses">
             Open Houses
           </dropdown-button-option-check-box>
         </dropdown-button-option>

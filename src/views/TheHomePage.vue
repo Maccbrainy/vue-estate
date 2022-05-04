@@ -50,7 +50,7 @@
               <div class="text-4xl text-gray-700 font-bold">
                 <h1>See how Vue Estate App can help</h1></div>
               <div class="flex flex-row space-x-4 justify-center">
-                <div>Rent a home</div>
+                <div>Rent a home {{ userLocLat }} {{ userLocLong }}</div>
                 <div>Buy a home</div>
                 <div>See neighborhoods</div>
               </div>
@@ -65,13 +65,14 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted, reactive } from "vue";
 import { SearchBox, SearchInput } from "@/components/buttonui/index";
 import buildRouterParamsUrl from "@/composables/buildRouterParamsUrl";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
 import NavBar from "@/components/NavBar.vue";
 import HomePageLayout from "@/layouts/HomePageLayout.vue";
+import userGeolocation from "@/helper/userGeolocation";
 export default {
   name: "HomePage",
   components: {
@@ -87,6 +88,9 @@ export default {
   setup() {
     const store = useStore();
     const stateSearchedData = ref("");
+    const userLocLat = ref("");
+    const userLocLong = ref("");
+    // const userLatLong = reactive({})
     const searchedDataFromStore = computed(() => {
       return store.getters.getSearchedData
     });
@@ -97,10 +101,28 @@ export default {
         stateSearchedData.value["city"]
       );
     });
+    const { cordinates, userEnabledLocation } = userGeolocation();
 
+    console.log("From Destructured:", cordinates);
+
+    onMounted(() => {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          const userCordinates = reactive({
+            lat: latitude,
+            long: longitude,
+          })
+          userLocLat.value = userCordinates.lat;
+          userLocLong.value = userCordinates.long;
+          console.log("From HomePage onmounted", userCordinates); 
+        })
+    });
     return {
+      userLocLat,
+      userLocLong,
       searchedDataFromStore,
       stateSearchedData,
+      userEnabledLocation
     }
   }
 };

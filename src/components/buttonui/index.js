@@ -28,6 +28,10 @@ import NavBarDropdownItem from "@/components/buttonui/NavBarDropdownItem.vue";
 import SearchBox from "@/components/buttonui/SearchBox.vue";
 import SearchInput from "@/components/buttonui/SearchInput.vue";
 
+//SwitchButton
+import SwitchButton from "@/components/buttonui/SwitchButton.vue";
+import SwitchButtonContainer from "@/components/buttonui/SwitchButtonContainer.vue";
+import SwitchButtonClassActive from "@/components/buttonui/SwitchButtonClassActive.vue";
 export {
   ButtonTab,
   ButtonBox,
@@ -50,4 +54,7 @@ export {
   NavBarDropdownItem,
   SearchBox,
   SearchInput,
+  SwitchButton,
+  SwitchButtonContainer,
+  SwitchButtonClassActive
 }
