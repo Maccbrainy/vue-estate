@@ -10,7 +10,8 @@
       text-base 
       font-bold 
       text-gray-700 
-      hover:bg-gray-200">
+      hover:bg-gray-200
+      active:bg-gray-400">
     <slot></slot>
   </button>
 </template>
