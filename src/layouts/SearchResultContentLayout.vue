@@ -10,7 +10,7 @@
         <div 
           class="flex justify-between flex-col flex-auto flex-start pl-2 pb-2">
           <h2 
-            v-if="!agentListIsActive" 
+            v-show="!agentListIsActive" 
             class="bg-gray-100 text-base font-normal text-gray-500 px-4 py-4 mr-3 mb-3">
             Includes homes for sale by owner, plus foreclosures and auctions not listed by agents.
           </h2>
@@ -20,11 +20,13 @@
           <div class="flex w-full justify-between">
             <div class="flex justify-between w-full flex-wrap items-center">
               <h2 
-                v-if="homeCountIsAboveOne" 
+                v-show="homeCountIsAboveOne" 
                 class="text-base font-normal text-gray-500">
                 {{ activeListing.length }} homes available in Vue Estate
               </h2>
-              <h2 v-else class="text-base font-normal text-gray-500">
+              <h2 
+                v-show="!homeCountIsAboveOne" 
+                class="text-base font-normal text-gray-500">
                 {{ activeListing.length }} home available in Vue Estate
               </h2>
               <div>
