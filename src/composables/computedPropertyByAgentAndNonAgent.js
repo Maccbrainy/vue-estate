@@ -36,7 +36,7 @@ export default function computedPropertyByAgentAndNonAgent(discoveredHomes){
       store.commit("setListingsByAgent", listingsByAgent.value);
       store.commit("setListingsByNoneAgent", listingsByOthers.value);
     }
-  
+
     activeListing.value = agentListIsActive.value 
       ? listingsByAgent.value 
       : listingsByOthers.value;
