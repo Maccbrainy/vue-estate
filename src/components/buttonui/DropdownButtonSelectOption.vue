@@ -1,3 +1,5 @@
 <template>
-  <option><slot></slot></option>
+  <option>
+    <slot></slot>
+  </option>
 </template>

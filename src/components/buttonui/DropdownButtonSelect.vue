@@ -1,5 +1,7 @@
 <template>
-  <select 
+  <select
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
     class="
       inline-flex
       w-full
@@ -21,3 +23,12 @@
     <slot></slot>
   </select>
 </template>
+<script>
+export default {
+  props: ['modelValue'],
+  emits: ['update:modelValue'],
+  setup() {
+    return{}
+  },
+}
+</script>
