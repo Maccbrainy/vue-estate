@@ -24,17 +24,18 @@ export default function computedPropertyByAgentAndNonAgent(discoveredHomes){
     return store.getters.getListingBranchByAgent;
   });
   watchEffect(() =>{
-    let isActive = listingBranchByAgent.value === "active" ? true : false;
-    agentListIsActive.value = isActive;
+    agentListIsActive.value = 
+      listingBranchByAgent.value === "active" ? true : false;
 
-    let updateListingByOthersWhenAgentIsActive = isActive 
-      ? listingsByOthers.value 
-      : listingsByOthers.value; 
-
-    store.commit(
-      "setListingsByNoneAgent", 
-      updateListingByOthersWhenAgentIsActive
-    );
+    //update Listing ByOthers When Agent Is Active
+    if (agentListIsActive.value ){
+      store.commit("setListingsByNoneAgent", listingsByOthers.value);
+    };
+    //update Listing ByAgent When Other Is Active
+    if (!agentListIsActive.value){
+      store.commit("setListingsByAgent", listingsByAgent.value);
+      store.commit("setListingsByNoneAgent", listingsByOthers.value);
+    }
   
     activeListing.value = agentListIsActive.value 
       ? listingsByAgent.value 
