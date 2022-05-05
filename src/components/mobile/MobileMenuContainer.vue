@@ -9,7 +9,7 @@
       h-screen 
       bg-gray-700 
       text-white 
-      overflow-y-scroll">
+      overflow-y-auto">
     <slot></slot>
   </div>
 </template>
