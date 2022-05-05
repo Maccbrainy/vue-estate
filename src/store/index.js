@@ -2,6 +2,8 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
+    propertyMinRange:"",
+    propertyMaxRange:"",
     listingBranchByAgent: "active",
     searchedData: {},
     successfulSearchHistory: [{}],
@@ -61,6 +63,14 @@ export default createStore({
     //Invoked from computedAgentAndNoneAgent component
     setActiveListing(state, propertyPayLoad){
       state.activeListing = propertyPayLoad;
+    },
+    //Invoked from Filter button Range component
+    setMinPriceRange(state, propertyPayLoad){
+      state.propertyMinRange = propertyPayLoad;
+    },
+    //Invoked from Filter button Range component
+    setMaxPriceRange(state, propertyPayLoad){
+      state.propertyMaxRange = propertyPayLoad;
     },
   },
 
