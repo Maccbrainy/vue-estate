@@ -2,6 +2,8 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
+    homeType: [],
+    numberOfBedRoom: "",
     propertyMinRange:"",
     propertyMaxRange:"",
     listingBranchByAgent: "active",
@@ -71,6 +73,14 @@ export default createStore({
     //Invoked from Filter button Range component
     setMaxPriceRange(state, propertyPayLoad){
       state.propertyMaxRange = propertyPayLoad;
+    },
+    //Invoked from Filter button Range component
+    setNumberOfBedRoom(state, propertyPayLoad){
+      state.numberOfBedRoom = propertyPayLoad;
+    },
+    //Invoked from FilterButtonCheckBoxes component
+    setHomeType(state, propertyPayLoad){
+      state.homeType = propertyPayLoad;
     },
   },
 
