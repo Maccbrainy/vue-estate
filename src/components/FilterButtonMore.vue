@@ -9,39 +9,10 @@
       <button-singular class="rounded-r-md border-r">Sold</button-singular>
     </button-group>
     <dropdown-button-fieldset fieldsetTitle="Type of Listings">
-      <dropdown-button-options>
-        <dropdown-button-option>
-          <dropdown-button-option-check-box id="fsba" value="fsba">
-            For Sale by Agent
-          </dropdown-button-option-check-box>
-        </dropdown-button-option>
-        <dropdown-button-option>
-          <dropdown-button-option-check-box id="fsbo" value="fsbo">
-            For Sale by Owner
-          </dropdown-button-option-check-box>
-        </dropdown-button-option>
-        <dropdown-button-option>
-          <dropdown-button-option-check-box 
-            id="new_construction" 
-            value="new_construction">
-            New Construction
-          </dropdown-button-option-check-box>
-        </dropdown-button-option>
-        <dropdown-button-option>
-          <dropdown-button-option-check-box 
-            id="foreclosures" 
-            value="foreclosures">
-            Foreclosures
-          </dropdown-button-option-check-box>
-        </dropdown-button-option>
-        <dropdown-button-option>
-          <dropdown-button-option-check-box 
-            id="open_houses" 
-            value="open_houses">
-            Open Houses
-          </dropdown-button-option-check-box>
-        </dropdown-button-option>
-      </dropdown-button-options>  
+      <dropdown-button-multi-check-boxes 
+        v-model:value="checkedTypeOfListing"
+        v-bind:propertyOptions="typeOfListing">
+      </dropdown-button-multi-check-boxes>  
     </dropdown-button-fieldset>
     <dropdown-button-fieldset fieldsetTitle="Max HOA Fees">
       <dropdown-button-select-box>
@@ -114,11 +85,10 @@ import {
   DropdownButtonFieldset, 
   DropdownButtonSelectBox, 
   DropdownButtonSelect, 
-  DropdownButtonSelectOption, 
-  DropdownButtonOptionCheckBox, 
-  DropdownButtonOption,
-  DropdownButtonOptions,
+  DropdownButtonSelectOption,
+  DropdownButtonMultiCheckBoxes, 
 } from "@/components/buttonui/index";
+import { ref } from "vue";
 export default ({
   components: {
     ButtonSingular,
@@ -130,9 +100,23 @@ export default ({
     DropdownButtonSelectBox,
     DropdownButtonSelect,
     DropdownButtonSelectOption,
-    DropdownButtonOption,
-    DropdownButtonOptions,
-    DropdownButtonOptionCheckBox,
+    DropdownButtonMultiCheckBoxes
+  },
+  setup() {
+    const checkedTypeOfListing = ref([]);
+    const typeOfListing = ref([
+      "For Sale by Agent",
+      "For Sale by Owner",
+      "Foreclosures",
+      "Open Houses",
+      "New Construction",
+      "New Listings (Past Week)",
+      "Price Reduced (Past Week)",
+    ]);
+    return {
+      typeOfListing,
+      checkedTypeOfListing
+    }
   }
 })
 </script>
