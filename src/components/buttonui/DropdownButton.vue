@@ -9,7 +9,7 @@
           inline-flex
           justify-center 
           w-full 
-          rounded-md 
+          rounded-lg 
           border border-gray-300 
           shadow-sm 
           px-4 

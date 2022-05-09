@@ -8,10 +8,13 @@
       py-2 
       bg-white 
       text-base 
-      font-bold 
+      font-bold
       text-gray-700 
       hover:bg-gray-200
-      active:bg-gray-400">
+      hover:border-transparent
+      focus:bg-teal
+      focus:text-teal-lighter
+      focus:border-transparent">
     <slot></slot>
   </button>
 </template>

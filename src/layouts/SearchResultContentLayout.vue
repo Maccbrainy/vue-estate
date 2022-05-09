@@ -32,15 +32,19 @@
               <div>
                 <dropdown-button-select-box>
                   <dropdown-button-select class="shadow-none border-none">
-                    <dropdown-button-select-option>
+                    <dropdown-button-select-option value>
                       Sort: Just For You
                     </dropdown-button-select-option>
-                    <dropdown-button-select-option value="a">
-                      Sort: Mortgage</dropdown-button-select-option>
-                    <dropdown-button-select-option value="b">
+                    <dropdown-button-select-option value="Newest Listings">
+                      Sort: Newest Listings</dropdown-button-select-option>
+                    <dropdown-button-select-option value="Bathrooms">
+                      Sort: Bathrooms</dropdown-button-select-option>
+                    <dropdown-button-select-option value="Bedrooms">
                       Sort: Bedrooms</dropdown-button-select-option>
-                    <dropdown-button-select-option value="c">
+                    <dropdown-button-select-option value="Most photos">
                       Sort: Most photos</dropdown-button-select-option>
+                    <dropdown-button-select-option value="Square feet">
+                      Sort: Square feet</dropdown-button-select-option>
                   </dropdown-button-select>
                 </dropdown-button-select-box>
               </div>
