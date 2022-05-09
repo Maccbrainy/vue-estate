@@ -15,6 +15,7 @@ export { default as ButtonBox } from "@/components/buttonui/ButtonBox.vue";
 export { default as ButtonTab } from "@/components/buttonui/ButtonTab.vue";
 export { default as ButtonSingular } from "@/components/buttonui/ButtonSingular.vue";
 export { default as ButtonGroup } from "@/components/buttonui/ButtonGroup.vue";
+export { default as ButtonGroupMultiButtons } from "@/components/buttonui/ButtonGroupMultiButtons.vue";
 export { default as ButtonSeparator } from "@/components/buttonui/ButtonSeparator.vue";
 export { default as ButtonInput } from "@/components/buttonui/ButtonInput.vue";
 export { default as DropdownButtonFieldset } from "@/components/buttonui/DropdownButtonFieldset.vue";
