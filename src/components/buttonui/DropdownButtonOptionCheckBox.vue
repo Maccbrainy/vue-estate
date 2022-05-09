@@ -1,31 +1,44 @@
 <template>
   <div>
-    <label :for="forAttr">
+    <label :for="label">
       <div class="flex flex-row items-center h-6 cursor-pointer">
         <input
-          v-model="checkedHomeType" 
           type="checkbox"
-          v-bind="$attrs" 
-          class="inline-block h-4 w-6 text-teal border border-gray-200 rounded" 
-          true-value="yes" 
-          false-value="no">
-        <div class="ml-2"><slot></slot></div>
+          :checked="checked"
+          :id="fieldId"
+          @input="$emit('update:checked', $event.target.checked)"
+          class="hidden">
+        <div v-if="checked" class="flex items-center">
+          <checked-box-icon />
+          <div class="ml-2"><slot></slot></div>
+        </div>
+        <div class="flex items-center" v-else>
+          <check-box-icon />
+          <div class="ml-2"><slot></slot></div>
+        </div>
       </div>
     </label>
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import CheckBoxIcon from "@/assets/icons/CheckBoxIcon.vue";
+import CheckedBoxIcon from "@/assets/icons/CheckedBoxIcon.vue";
 export default {
-  inheritAttrs: false,
-  setup(props, ctx) {
-    // fallthrough attributes are exposed as ctx.attrs
-    const forAttr = ref(ctx.attrs.id);
-    const checkedHomeType = ref([]);
-    return {
-      forAttr,
-      checkedHomeType
-    }
+  // props: ['modelValue'],
+  props: {
+    checked: {
+      type: Boolean
+    },
+    fieldId: {
+      type: String,
+      required: true
+    },
+    label: String,
+  },
+  emits: ['update:checked'],
+  components: {
+    CheckBoxIcon,
+    CheckedBoxIcon
   }
 }
 </script>
