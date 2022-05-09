@@ -1,13 +1,9 @@
 <template>
   <dropdown-button buttonTitle="More">
-    <button-group>
-      <button-singular 
-        class="rounded-l-md text-teal-lighter bg-teal hover:bg-teal">
-        Buy
-      </button-singular>
-      <button-singular>Rent</button-singular>
-      <button-singular class="rounded-r-md border-r">Sold</button-singular>
-    </button-group>
+    <button-group-multi-buttons 
+      v-bind:options="propertyListingType"
+      v-on:getOptionId="propertyListingTypeId">
+    </button-group-multi-buttons>
     <dropdown-button-fieldset fieldsetTitle="Type of Listings">
       <dropdown-button-multi-check-boxes 
         v-model:value="checkedTypeOfListing"
@@ -28,17 +24,10 @@
       </dropdown-button-select-box>
     </dropdown-button-fieldset>
     <dropdown-button-fieldset fieldsetTitle="Bathrooms">
-      <button-group>
-        <button-singular 
-          class="rounded-l-md text-teal-lighter bg-teal hover:bg-teal">
-          Any+
-        </button-singular>
-        <button-singular>1+</button-singular>
-        <button-singular>2+</button-singular>
-        <button-singular>3+</button-singular>
-        <button-singular>4+</button-singular>
-        <button-singular class="rounded-r-md">5+</button-singular>
-      </button-group>
+      <button-group-multi-buttons 
+        v-bind:options="bathroomOptions"
+        v-on:getOptionId="numberOfBathroom">
+      </button-group-multi-buttons>
     </dropdown-button-fieldset>
     <dropdown-button-fieldset fieldsetTitle="Square Feet">
       <div class="flex">
@@ -77,8 +66,6 @@
 </template>
 <script>
 import { 
-  ButtonSingular, 
-  ButtonGroup, 
   ButtonSeparator, 
   ButtonInput, 
   DropdownButton, 
@@ -86,21 +73,21 @@ import {
   DropdownButtonSelectBox, 
   DropdownButtonSelect, 
   DropdownButtonSelectOption,
-  DropdownButtonMultiCheckBoxes, 
+  DropdownButtonMultiCheckBoxes,
+  ButtonGroupMultiButtons 
 } from "@/components/buttonui/index";
 import { ref } from "vue";
 export default ({
   components: {
-    ButtonSingular,
     ButtonInput,
-    ButtonGroup,
     ButtonSeparator,
     DropdownButton,
     DropdownButtonFieldset,
     DropdownButtonSelectBox,
     DropdownButtonSelect,
     DropdownButtonSelectOption,
-    DropdownButtonMultiCheckBoxes
+    DropdownButtonMultiCheckBoxes,
+    ButtonGroupMultiButtons
   },
   setup() {
     const checkedTypeOfListing = ref([]);
@@ -113,9 +100,22 @@ export default ({
       "New Listings (Past Week)",
       "Price Reduced (Past Week)",
     ]);
+    const propertyListingType = ref(["Buy", "Rent", "Sold"]);
+    const bathroomOptions = ref(["Any", "1+", "2+", "3+", "4+", "5+"]);
+
+    function propertyListingTypeId(e){
+      console.log("Listing Type Id:", e.target.id);
+    };
+    function numberOfBathroom(e){
+      console.log("Bathroom No:", e.target.id);
+    };
     return {
+      propertyListingType,
       typeOfListing,
-      checkedTypeOfListing
+      bathroomOptions,
+      propertyListingTypeId,
+      checkedTypeOfListing,
+      numberOfBathroom
     }
   }
 })

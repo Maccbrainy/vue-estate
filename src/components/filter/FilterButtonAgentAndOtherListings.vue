@@ -28,6 +28,7 @@ import {
   SwitchButtonClassActive 
 } from "@/components/buttonui/index";
 export default {
+  name: "FilterButtonAgentAndOtherListings",
   components: {
     SwitchButton,
     SwitchButtonContainer,

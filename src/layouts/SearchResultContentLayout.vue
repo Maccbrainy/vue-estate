@@ -72,8 +72,8 @@ import {
   DropdownButtonSelect, 
   DropdownButtonSelectOption, 
   DropdownButtonSelectBox 
-} from "@/components/buttonui/index";
-import FilterButtonContainer from "@/components/FilterButtonContainer.vue";
+} from "@/components/buttonui";
+import { FilterButtonContainer } from "@/components/filter";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import NavBar from "@/components/NavBar.vue";
 import NavBarSearchForm from "@/components/NavBarSearchForm.vue";

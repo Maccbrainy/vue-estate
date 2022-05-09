@@ -10,7 +10,7 @@
         'border-r rounded-r-lg': 
           option === options[options.length - 1] ? true : false,
       }">
-      {{ option }}+
+      {{ option }}
     </button-singular>
   </button-group>
 </template>

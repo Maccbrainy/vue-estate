@@ -15,7 +15,7 @@ import {
   DropdownButtonMultiCheckBoxes 
 } from "@/components/buttonui/index";
 export default ({
-  name: "FilterButtonCheckBoxes",
+  name: "FilterButtonHomeTypes",
   components: {
     DropdownButton,
     DropdownButtonMultiCheckBoxes

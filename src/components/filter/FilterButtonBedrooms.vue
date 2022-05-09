@@ -14,14 +14,14 @@ import {
 } from "@/components/buttonui/index";
 import { useStore } from "vuex";
 export default ({
-  name: "FilterButtonGroup",
+  name: "FilterButtonBedrooms",
   components: {
     DropdownButton,
     ButtonGroupMultiButtons
   },
   setup() {
     const store = useStore();
-    const bedOptions = reactive(["Studio", 1, 2, 3, 4]);
+    const bedOptions = reactive(["Studio", "1+", "2+", "3+", "4+"]);
 
     function numberOfBed(e){
       console.log("You clicked me!", e.target.id);
