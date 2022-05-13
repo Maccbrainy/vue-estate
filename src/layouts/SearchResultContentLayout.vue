@@ -5,7 +5,7 @@
   </nav-bar-container>
   <filter-button-container></filter-button-container>
   <div class="flex flex-grow flex-auto flex-col z-0" tabindex="-1">
-    <div v-if="discoveredHomes" class="w-1/2 block relative flex-1 -bottom-16">
+    <div v-if="discoveredHomes" class="w-1/2 sf:w-full block relative flex-1 -bottom-16">
       <div tabindex="-1" class="flex flex-auto flex-col px-2 py-1">
         <div 
           class="flex justify-between flex-col flex-auto flex-start pl-2 pb-2">
@@ -14,42 +14,49 @@
             class="bg-gray-100 text-base font-normal text-gray-500 px-4 py-4 mr-3 mb-3">
             Includes homes for sale by owner, plus foreclosures and auctions not listed by agents.
           </h2>
-          <h1 class="text-lg font-bold text-gray-600 mb-1 pt-1">
-            {{ resultTitle }}
-          </h1>
-          <div class="flex w-full justify-between">
-            <div class="flex justify-between w-full flex-wrap items-center">
-              <h2 
-                v-show="homeCountIsAboveOne" 
-                class="text-base font-normal text-gray-500">
-                {{ activeListing.length }} homes available in Vue Estate
-              </h2>
-              <h2 
-                v-show="!homeCountIsAboveOne" 
-                class="text-base font-normal text-gray-500">
-                {{ activeListing.length }} home available in Vue Estate
-              </h2>
-              <div>
-                <dropdown-button-select-box>
-                  <dropdown-button-select class="shadow-none border-none">
-                    <dropdown-button-select-option value>
-                      Sort: Just For You
-                    </dropdown-button-select-option>
-                    <dropdown-button-select-option value="Newest Listings">
-                      Sort: Newest Listings</dropdown-button-select-option>
-                    <dropdown-button-select-option value="Bathrooms">
-                      Sort: Bathrooms</dropdown-button-select-option>
-                    <dropdown-button-select-option value="Bedrooms">
-                      Sort: Bedrooms</dropdown-button-select-option>
-                    <dropdown-button-select-option value="Most photos">
-                      Sort: Most photos</dropdown-button-select-option>
-                    <dropdown-button-select-option value="Square feet">
-                      Sort: Square feet</dropdown-button-select-option>
-                  </dropdown-button-select>
-                </dropdown-button-select-box>
+          <div v-if="activeListing.length > 0 ? true : false">
+            <h1 class="text-lg font-bold text-gray-600 mb-1 pt-1">
+              {{ resultTitle }}
+            </h1>
+            <div class="flex w-full justify-between">
+              <div class="flex justify-between w-full flex-wrap items-center">
+                <h2 
+                  v-show="homeCountIsAboveOne" 
+                  class="text-base font-normal text-gray-500">
+                  {{ activeListing.length }} homes available in Vue Estate
+                </h2>
+                <h2 
+                  v-show="!homeCountIsAboveOne" 
+                  class="text-base font-normal text-gray-500">
+                  {{ activeListing.length }} home available in Vue Estate
+                </h2>
+                <div>
+                  <dropdown-button-select-box>
+                    <dropdown-button-select class="shadow-none border-none">
+                      <dropdown-button-select-option value>
+                        Sort: Just For You
+                      </dropdown-button-select-option>
+                      <dropdown-button-select-option value="Newest Listings">
+                        Sort: Newest Listings</dropdown-button-select-option>
+                      <dropdown-button-select-option value="Bathrooms">
+                        Sort: Bathrooms</dropdown-button-select-option>
+                      <dropdown-button-select-option value="Bedrooms">
+                        Sort: Bedrooms</dropdown-button-select-option>
+                      <dropdown-button-select-option value="Most photos">
+                        Sort: Most photos</dropdown-button-select-option>
+                      <dropdown-button-select-option value="Square feet">
+                        Sort: Square feet</dropdown-button-select-option>
+                    </dropdown-button-select>
+                  </dropdown-button-select-box>
+                </div>
               </div>
             </div>
           </div>
+          <no-search-term-match-for-agent-and-other-listings 
+            v-else-if="listingsByAgentAndByOtherIsZero">
+          </no-search-term-match-for-agent-and-other-listings>
+          <no-search-term-for-agent-or-other-listings v-else>
+          </no-search-term-for-agent-or-other-listings>
         </div>
         <ul class="flex flex-wrap">
           <search-result-item-card 
@@ -78,6 +85,8 @@ import NavBarContainer from "@/components/NavBarContainer.vue";
 import NavBar from "@/components/NavBar.vue";
 import NavBarSearchForm from "@/components/NavBarSearchForm.vue";
 import NoSearchTermMatch from "@/components/NoSearchTermMatch.vue";
+import NoSearchTermMatchForAgentAndOtherListings from "@/components/NoSearchTermMatchForAgentAndOtherListings.vue";
+import NoSearchTermForAgentOrOtherListings from "@/components/NoSearchTermForAgentOrOtherListings.vue";
 import SearchResultGoogleMap from "@/components/SearchResultGoogleMap.vue";
 import SearchResultItemCard from "@/components/SearchResultItemCard.vue";
 import searchInfoQuerySanitizer from "@/composables/searchInfoQuerySanitizer";
@@ -108,6 +117,8 @@ export default {
     DropdownButtonSelectOption,
     FilterButtonContainer,
     NoSearchTermMatch,
+    NoSearchTermMatchForAgentAndOtherListings,
+    NoSearchTermForAgentOrOtherListings
   },
   setup(props) {
     const store = useStore();
@@ -120,7 +131,6 @@ export default {
     });
 
     https().getListings();
-    // console.log("From SRCL file:", propertyListings.value);
   
     //From allPropertListings Store
     const allPropertListings = computed(() => {
@@ -155,11 +165,6 @@ export default {
     );
 
     const { homeLocationFinders } = homeLocationFinderSearchControllers();
-
-    // onBeforeMount(() => {
-    //   https();
-    //   console.log("This is madness!");
-    // })
     const { discoveredHomes } = computedHomeResourcesSearched(
       allPropertListings.value,
       homeLocationFinders, 
@@ -176,6 +181,10 @@ export default {
     const homeCountIsAboveOne = computed(() => {
       return activeListing.value.length > 1 ? true : false
     });
+
+    const listingsByAgentAndByOtherIsZero = computed(() => {
+      return listingsByAgent.value.length == 0 && listingsByOthers.value.length == 0 ? true : false;
+    })
     onMounted(() => {
       if (discoveredHomes.value && searchedData.value) {
         store.commit("setSuccessfulSearchHistory", searchedData.value);
@@ -194,34 +203,9 @@ export default {
       listingsByAgent,
       listingsByOthers,
       activeListing,
-      agentListIsActive
+      agentListIsActive,
+      listingsByAgentAndByOtherIsZero
     }
   },
-  // computed: {
-  //   // searchedData: function(){
-  //   //   return this.$store.state.searchedData;
-  //   // }
-  //   // searchedData: function(){
-  //   //   console.log("Layout:", this.$store.getters.getSearchedDataB );
-  //   //   return this.$store.getters.getSearchedDataB;
-  //   // }
-    
-  // },
-  // computed: mapGetters({
-  //     searchedData: 'getSearchedDataB',
-  //   }),
-  // watch: {
-  //   // searchedData(value){
-  //   //   console.log("Watching old method:", value);
-  //   // }
-  //   searchedData(value){
-  //     // if(value){
-  //       this.stateSearchedData = value;
-  //       // buildRouterParamsUrl(this.stateSearchedData);
-  //       console.log("Watching old this:", this.stateSearchedData);
-  //     // }
-
-  //   }
-  // },
 }
 </script>
