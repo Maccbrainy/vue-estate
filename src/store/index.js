@@ -58,7 +58,7 @@ export default createStore({
     setListingsByNoneAgent(state, propertyPayLoad){
       state.propertyListingsByNoneAgent = propertyPayLoad;
     },
-    //Invoked from filter button Toggle Active component
+    //Invoked from filter button Agent and Other Listings
     setListingBranchByAgent(state, propertyPayLoad){
       state.listingBranchByAgent = propertyPayLoad;
     },
@@ -66,19 +66,19 @@ export default createStore({
     setActiveListing(state, propertyPayLoad){
       state.activeListing = propertyPayLoad;
     },
-    //Invoked from Filter button Range component
+    //Invoked from Filter button Price Range component
     setMinPriceRange(state, propertyPayLoad){
       state.propertyMinRange = propertyPayLoad;
     },
-    //Invoked from Filter button Range component
+    //Invoked from Filter button Price Range component
     setMaxPriceRange(state, propertyPayLoad){
       state.propertyMaxRange = propertyPayLoad;
     },
-    //Invoked from Filter button Range component
+    //Invoked from Filter button Price Range component
     setNumberOfBedRoom(state, propertyPayLoad){
       state.numberOfBedRoom = propertyPayLoad;
     },
-    //Invoked from FilterButtonCheckBoxes component
+    //Invoked from FilterButtonHomeType component
     setHomeType(state, propertyPayLoad){
       state.homeType = propertyPayLoad;
     },
