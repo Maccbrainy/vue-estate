@@ -12,7 +12,7 @@
       text-base 
       font-medium 
       text-gray-700
-      hover:text-white hover:bg-teal">
+      hover:text-white hover:bg-teal lf:hidden">
     <slot></slot>
   </li>
 </template>

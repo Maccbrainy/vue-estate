@@ -3,9 +3,9 @@
     <div class="flex align-center px-4 pt-2 pb-4 mb-2">
       <button-box>
         <filter-button-agent-and-other-listings></filter-button-agent-and-other-listings>
-        <filter-button-price-range></filter-button-price-range>
-        <filter-button-bedrooms></filter-button-bedrooms>
-        <filter-button-home-types></filter-button-home-types>
+        <filter-button-price-range class="mf:hidden"></filter-button-price-range>
+        <filter-button-bedrooms class="mf:hidden"></filter-button-bedrooms>
+        <filter-button-home-types class="mf:hidden"></filter-button-home-types>
         <filter-button-more></filter-button-more>
       </button-box> 
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <search-box class="w-3/12 my-auto mt-1">
+  <search-box class="w-3/12 mf:w-full my-auto mt-1">
     <search-input class="h-10 focus:border
         focus:border-gray-900 bg-gray-100 focus:bg-white"></search-input>
   </search-box>

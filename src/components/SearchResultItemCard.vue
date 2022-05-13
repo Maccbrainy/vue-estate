@@ -4,7 +4,8 @@
       block 
       flex-initial
       border-solid border-transparent border-r-8 border-l-8 border-t-8 
-      pb-4 
+      pb-4
+      xs:w-full 
       sm:w-full 
       md:w-full 
       lg:w-6/12 
