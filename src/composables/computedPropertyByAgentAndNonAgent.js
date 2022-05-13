@@ -14,10 +14,10 @@ export default function computedPropertyByAgentAndNonAgent(discoveredHomes){
   });
 
   const listingsByOthers = computed(() => {
-    let byNonAgent = discoveredHomes.filter(
+    let byNoneAgent = discoveredHomes.filter(
       (property) => !property["listing_by_Agent"]);
     // store.commit("setListingsByNoneAgent", byNonAgent);
-    return byNonAgent;
+    return byNoneAgent;
   });
 
   const listingBranchByAgent = computed(() => {
