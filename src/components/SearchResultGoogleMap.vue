@@ -11,7 +11,8 @@
       bg-teal-lighter 
       mx-4
       mb-6
-      rounded-xl">
+      rounded-xl 
+      sf:hidden">
     <div class="flex flex-1 w-full h-full">
       <div class="flex-1 relative overflow-hidden">
         <div 
