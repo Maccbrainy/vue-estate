@@ -181,6 +181,7 @@ export default ({
     const searchedDataFromStore = computed(() => {
       return store.getters.getSearchedData
     });
+
     const searchedLinks = reactive({
       cityName: searchedDataFromStore.value["city"] 
         ? searchedDataFromStore.value["city"] 
