@@ -1,6 +1,6 @@
 import { ref } from "vue";
-import { useStore } from "vuex";
-import homeResourcesData from "@/api/homeResourcesData";
+// import { useStore } from "vuex";
+// import homeResourcesData from "@/api/homeResourcesData";
 // import axios from "axios";
 
 const url = 
@@ -14,12 +14,12 @@ const options = {
   },
   headers: {
     "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
-    "X-RapidAPI-Key": "677b340b10mshb59d46acdd85017p1cef8djsne8fef785e371"
+    "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`
   }
 };
 
 export default function https(){
-  const store = useStore();
+  // const store = useStore();
   const propertyData = ref(null);
   const loading = ref(false);
   const error = ref(null);
@@ -30,7 +30,7 @@ export default function https(){
 
     try {
 
-      const { homeResources } = homeResourcesData();
+      // const { homeResources } = homeResourcesData();
       // propertyData.value = await axios.get(url, options);
       // const { 
       //   data: { data } 
@@ -38,7 +38,7 @@ export default function https(){
       // console.log("From api indexjs file data:", data);
       // return data;
       // console.log("From api index:", homeResources);
-      store.commit("setAllPropertyListings", homeResources);
+      // store.commit("setAllPropertyListings", homeResources);
 
     } catch (err) {
       console.error(err);
