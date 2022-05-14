@@ -4,6 +4,9 @@
       <button 
         type="button"
         ref="menubutton"
+        v-bind:class="{ 
+          ' hover:bg-gray-200 active:bg-gray-400 text-gray-700': !isLoading,
+          'bg-gray-100 text-gray-400': isLoading}"
         class="
           z-30
           inline-flex
@@ -14,15 +17,17 @@
           shadow-sm 
           px-4 
           py-2 
-          bg-white 
           text-base 
-          font-medium 
-          text-gray-700
-          hover:bg-gray-200 
-          active:bg-gray-400"
-        v-on:click="toggleButtonOpenClose">
+          font-medium
+          bg-white"
+        v-on:click="toggleButtonOpenClose" 
+        :disabled="isLoading">
         {{ buttonTitle}}
-        <chevron-down v-bind:class="{ 'transform rotate-180': buttonIsOpen }" />
+        <chevron-down 
+          v-bind:class="{
+            'transform rotate-180': buttonIsOpen,
+            ' text-gray-400': isLoading 
+          }" />
       </button>
       <fieldset
         class="
@@ -53,7 +58,8 @@
   </li>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, computed, watchEffect } from "vue";
+import { useStore } from "vuex";
 import ChevronDown from "@/assets/icons/ChevronDown.vue";
 export default {
   // Button title from the parent
@@ -63,8 +69,17 @@ export default {
   },
   setup() {
     const buttonIsOpen = ref(false);
+    const store = useStore();
+    const isLoading = ref(false);
+    const loadingIsActive = computed(() => {
+      return store.getters.getIsLoading;
+    });
+    watchEffect(() => {
+      isLoading.value = loadingIsActive.value
+    })
     return {
       buttonIsOpen,
+      isLoading
     }
   },
   methods: {

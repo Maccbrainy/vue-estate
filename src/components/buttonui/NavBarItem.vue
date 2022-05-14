@@ -1,5 +1,6 @@
 <template>
-  <li 
+  <li
+    v-bind:class="{ 'cursor-not-allowed': isLoading }" 
     class="
       group
       relative 
@@ -16,3 +17,23 @@
     <slot></slot>
   </li>
 </template>
+<script>
+import { useStore } from "vuex";
+import { ref, computed, watchEffect } from "vue";
+export default {
+  setup() {
+    const store = useStore();
+    const isLoading = ref(false);
+    const loadingIsActive = computed(() => {
+      return store.getters.getIsLoading;
+    });
+
+    watchEffect(() => {
+      isLoading.value = loadingIsActive.value;
+    });
+    return {
+      isLoading,
+    }
+  },
+}
+</script>

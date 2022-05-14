@@ -1,7 +1,11 @@
 import { createStore } from "vuex";
+import axios from "axios";
+// import { buildRouterParamsUrl } from "@/composables";
 
 export default createStore({
   state: {
+    autoCompleteData:[],
+    isLoading: false,
     homeType: [],
     numberOfBedRoom: "",
     propertyMinRange:"",
@@ -22,17 +26,19 @@ export default createStore({
     getSearchedData(state){
       return state.searchedData ? state.searchedData : null; 
     },
+    //Consumed in filter button agent and other active
+    getIsLoading(state){
+      return state.isLoading;
+    },
     //Consumed in searchResultContentLayout component
     getAllPropertyListings(state){
       return state.allPropertyListings ? state.allPropertyListings : null;
     },
     getPropertyListingsByAgent(state){
-      return state.propertyListingsByAgent 
-        ? state.propertyListingsByAgent : null;
+      return state.propertyListingsByAgent;
     },
     getPropertyListingsByNoneAgent(state){
-      return state.propertyListingsByNoneAgent 
-        ? state.propertyListingsByNoneAgent : null;
+      return state.propertyListingsByNoneAgent;
     },
     getActiveListing(state){
       return state.activeListing ? state.activeListing : null;
@@ -82,8 +88,42 @@ export default createStore({
     setHomeType(state, propertyPayLoad){
       state.homeType = propertyPayLoad;
     },
+    setAutoCompleteData(state, autoCompletePayLoad){
+      state.autoCompleteData = autoCompletePayLoad;
+    },
+    //Invoked from store action
+    setIsLoading(state, isLoadingPayload){
+      state.isLoading = isLoadingPayload;
+    }
   },
 
-  actions: {},
+  actions: {
+    //Invoked from watch function in the searchResultContentLayout component
+    setPropertiesFromRemoteApi: async ({ commit }, payload) => {
+      commit("setIsLoading", true);
+      const url = "https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale"
+      try {
+        const {
+          data: { properties }
+        } = await axios.get(url, {
+          params: {
+            city: `${payload}`,
+            state_code: "NY",
+            offset: "0",
+            limit: "200",
+            sort: "relevance"
+          },
+          headers: {
+            "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
+            "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`
+          }
+        })
+        commit("setAllPropertyListings", properties);
+        commit("setIsLoading", false);
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  },
   modules: {},
 });

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row items-center cursor-pointer p-3">
+  <div class="flex flex-row items-center">
     <slot></slot>
   </div>
 </template>

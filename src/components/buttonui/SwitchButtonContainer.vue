@@ -7,7 +7,6 @@
       mr-2 
       rounded-lg 
       bg-gray-100 
-      hover:bg-gray-300 
       h-11">
     <slot></slot>
   </div>

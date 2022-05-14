@@ -1,5 +1,8 @@
 <template>
-  <button v-on:click="sendTheActiveBranch" :id="id">
+  <button 
+    v-on:click="sendTheActiveBranch" 
+    :id="id" 
+    class="px-4 py-2 cursor-pointer">
     <div class="text-base font-medium">
       <slot></slot>
     </div>
