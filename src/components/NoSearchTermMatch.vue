@@ -10,7 +10,7 @@
       <li>City</li>
       <li>Postal code</li>
       <li>Street name or address</li>
-      <li>Location in Nigeria</li>
+      <li>Location in United State</li>
     </div>
   </div>
 </template>
