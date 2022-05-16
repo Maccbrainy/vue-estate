@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
-// import { buildRouterParamsUrl } from "@/composables";
+import { buildRouterParamsUrl } from "@/composables";
 
 export default createStore({
   state: {
@@ -20,11 +20,11 @@ export default createStore({
   },
   getters: {
     getListingBranchByAgent(state){
-      return state.listingBranchByAgent ? state.listingBranchByAgent : null;
+      return state.listingBranchByAgent;
     },
     //Consumed in searchResultContentLayout component
     getSearchedData(state){
-      return state.searchedData ? state.searchedData : null; 
+      return state.searchedData; 
     },
     //Consumed in filter button agent and other active
     getIsLoading(state){
@@ -32,7 +32,7 @@ export default createStore({
     },
     //Consumed in searchResultContentLayout component
     getAllPropertyListings(state){
-      return state.allPropertyListings ? state.allPropertyListings : null;
+      return state.allPropertyListings;
     },
     getPropertyListingsByAgent(state){
       return state.propertyListingsByAgent;
@@ -41,7 +41,7 @@ export default createStore({
       return state.propertyListingsByNoneAgent;
     },
     getActiveListing(state){
-      return state.activeListing ? state.activeListing : null;
+      return state.activeListing;
     }
 
   },
@@ -119,6 +119,7 @@ export default createStore({
           }
         })
         commit("setAllPropertyListings", properties);
+        buildRouterParamsUrl(payload);
         commit("setIsLoading", false);
       } catch (error) {
         console.error(error)
