@@ -50,9 +50,9 @@ const routes = [
     }
   },
   {
-    path: "/:slug/:city/:address",
+    path: "/:slug/:city/:address?/:propertyId?/:postalCode?",
     name: "HomeDetail",
-    component: SearchResultDetailedContentLayout,
+    component: SearchResultDetailedContentLayout, 
     // route level code-splitting
     // this generates a separate chunk (mortgage.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -60,7 +60,11 @@ const routes = [
     //   import(
     //     /* webpackChunkName: "HomeDetail" */ "../layouts/SearchResultDetailedContentLayout.vue"),
     props: (route) => ({
+      slug: route.params.slug,
+      city: route.params.city,
       address: route.params.address,
+      propertyId: route.params.propertyId,
+      postalCode: route.params.postalCode,
       // title: route.params.title,
     }),
     meta: {
