@@ -33,7 +33,10 @@
             <widget-utility-summary 
               v-bind:bedroom="home.beds" 
               v-bind:bathroom="home.baths" 
-              v-bind:squarefoot="home.baths">
+              v-bind:squarefoot="
+                home.building_size == undefined 
+                  ? `Unknown` 
+                  : home.building_size.size">
             </widget-utility-summary>
             <widget-location-detail 
               v-bind:street="home.address.line"
