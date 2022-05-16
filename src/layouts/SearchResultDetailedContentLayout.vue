@@ -3,6 +3,7 @@
     <nav-bar-search-form></nav-bar-search-form>
     <nav-bar></nav-bar>
   </nav-bar-container>
+  <!-- <div v-if="isLoading">Loading...</div> -->
   <div 
     class="
       w-full 
@@ -25,20 +26,20 @@
                 <div>
                   <h1>
                     <span class="text-2xl text-gray-700 font-semibold">
-                      {{ homeFactsShowDetails.street }}
+                      {{ address }}
                     </span>
                     <br>
                     <span class="text-base font-normaltext-gray-600">
-                      {{ homeFactsShowDetails.city }}, 
-                      {{ homeFactsShowDetails.state }} 
-                      {{ homeFactsShowDetails.postal_code }}
+                      {{ city }}, 
+                      {{ slug }} 
+                      {{ postalCode }}
                     </span>
                   </h1>
                 </div>
                 <widget-utility-summary 
-                  v-bind:bedroom="homeFactsShowDetails.no_bedroom" 
-                  v-bind:bathroom="homeFactsShowDetails.no_bathroom" 
-                  v-bind:squarefoot="homeFactsShowDetails.no_sqft"
+                  v-bind:bedroom="propertyDetail.beds" 
+                  v-bind:bathroom="propertyDetail.baths" 
+                  v-bind:squarefoot="propertyDetail.sqft"
                   class="my-3">
                 </widget-utility-summary>
               </div>
@@ -46,7 +47,7 @@
                 <div>
                   <h3>
                     <div class="text-2xl text-gray-700 font-bold">
-                      ${{ homeFactsShowDetails.id }}
+                      ${{ propertyDetail.price }}
                     </div>
                   </h3>
                 </div>
@@ -65,23 +66,36 @@
   </div>
 </template>
 <script>
-import dataSource from "@/components/homes.json";
-import { computed, reactive, ref, watch } from "vue";
-import buildRouterParamsUrl from "@/composables/buildRouterParamsUrl";
-import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import { useFetch } from "@/api/useFetch.js";
+import { ref, onMounted } from "vue";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import NavBarSearchForm from "@/components/NavBarSearchForm.vue";
 import WidgetImageGrid from "@/components/WidgetImageGrid.vue";
 import WidgetUtilitySummary from "@/components/WidgetUtilitySummary.vue";
 import NavBar from "@/components/NavBar.vue";
-import { useRouter } from "vue-router";
-import checkPresenceOfHyphenAndRemove from "@/composables/checkPresenceOfHyphenAndRemove";
+
 export default {
   name: "SearchResultDetailedContentLayout",
   props: {
+    slug: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
     address: {
       type: String,
       required: true,
+    },
+    propertyId: {
+      type: String,
+      required: true,
+    },
+    postalCode: {
+      type: String
     },
   },
   components: {
@@ -92,38 +106,29 @@ export default {
     NavBar,
   },
   setup(props) {
+    const propertyDetail = ref({});
+    const isLoading = ref(true);
     const router = useRouter();
-    const { hyphenFreeProp } = checkPresenceOfHyphenAndRemove(props.address);
-    //All Data source
-    const homeResources = reactive({
-      homeData: dataSource.homes,
-    });
-    const homeFactsShowDetails = computed(() => {
-      return homeResources.homeData.find(
-        (computed) => computed.street === hyphenFreeProp.value);
-    });
     router.push({
       name: "HomeDetail",
       params: {
-        title: `${hyphenFreeProp.value}, ${homeFactsShowDetails.value.city}, ${homeFactsShowDetails.value.postal_code}`,
+        slug: props.slug,
+        city: props.city,
+        address: props.address,
+        propertyId: props.propertyId,
+        postalCode: props.postalCode,
+        title: `${props.address}, ${props.city}, ${props.slug}, ${props.postalCode}`,
       }
     });
-    const store = useStore();
-    const stateSearchedData = ref("");
-    const searchedDataFromStore = computed(() => {
-      return store.getters.getSearchedData
+    onMounted(async () => {
+      const { getPropertyDetails } = useFetch();
+      propertyDetail.value = await getPropertyDetails(props.propertyId);
+      isLoading.value = false;
     });
-    watch(searchedDataFromStore, (val) => {
-      stateSearchedData.value = val;
-      buildRouterParamsUrl(
-        stateSearchedData.value["state"], 
-        stateSearchedData.value["city"]
-      );
-    });
+
     return {
-      searchedDataFromStore,
-      stateSearchedData,
-      homeFactsShowDetails,
+      isLoading,
+      propertyDetail,
     }
   }
 }
