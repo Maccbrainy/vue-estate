@@ -88,10 +88,11 @@
 </template>
 <script>
 import { ref, reactive, onMounted, watch, computed } from "vue";
-import searchInfoQuerySanitizer from "@/composables/searchInfoQuerySanitizer";
 import dataSource from "@/components/homes.json";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import LocationIcon from "@/assets/icons/LocationIcon.vue";
+// import { buildRouterParamsUrl } from "@/composables";
+
 export default {
   name: "SearchInput",
   inheritAttrs: false,
@@ -150,6 +151,7 @@ export default {
       searchActive.value = searchedWordIsTwo;
     });
     onMounted(() => {
+      
       if (localStorage.savedSearchedData){
         searchData.value = localStorage.savedSearchedData;
       }
@@ -161,26 +163,29 @@ export default {
       searchPreferences,
       searchFilterIsActive,
       searchActive,
-      searchInfoQuerySanitizer,
       placeListTag,
       payloadOnSubmit,
       payloadClicked,
     }
   },
   methods: {
-    onSubmit(e) {
-      if (!this.searchFilterIsActive && this.searchData) {
-        console.log(this.searchData);
-        return;
-      };
-      this.payloadOnSubmit = {
-        city: e.target.nextElementSibling.firstChild.children[1].firstChild
-          .children[1].id,
-        state: 
-          e.target.nextElementSibling.firstChild.children[1].firstChild
-            .children[1].nonce,
-      }
-      this.$store.commit("setSearchedData", this.payloadOnSubmit);
+    async onSubmit() {
+      await this.$store.dispatch("setPropertiesFromRemoteApi", this.searchData);
+      this.$store.commit("setSearchedData", this.searchData);
+
+      console.log("Dispatched is completed");
+      // if (!this.searchFilterIsActive && this.searchData) {
+      //   this.$store.commit("setSearchedData", this.searchData);
+      //   buildRouterParamsUrl(this.searchData);
+      // };
+      // this.payloadOnSubmit = {
+      //   city: e.target.nextElementSibling.firstChild.children[1].firstChild
+      //     .children[1].id,
+      //   state: 
+      //     e.target.nextElementSibling.firstChild.children[1].firstChild
+      //       .children[1].nonce,
+      // }
+      // this.$store.commit("setSearchedData", this.payloadOnSubmit);
     },
     submitClicked(e){
       this.payloadClicked = {
