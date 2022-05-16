@@ -7,4 +7,3 @@ export { default as checkWhiteSpacesAndReplaceWithHypen } from "@/composables/ch
 
 export { default as computedHomeResourcesSearched } from "@/composables/computedHomeResourcesSearched";
 export { default as computedPropertyByAgentAndNonAgent } from "@/composables/computedPropertyByAgentAndNonAgent";
-export { default as useGetPropertyListings } from "@/composables/useGetPropertyListings";
