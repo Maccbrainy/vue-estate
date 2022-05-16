@@ -43,9 +43,7 @@
             </widget-location-detail>
           </div>
         </router-link>
-        <div 
-          v-if="home.branding.listing_office.list_item.name" 
-          class="my-1 pt-2 border-t">
+        <div v-if="showListingBy" class="my-1 pt-2 border-t">
           <div class="uppercase pb-2 text-xs text-gray-600">
             LISTING BY: {{ home.branding.listing_office.list_item.name }} | Long: {{ home.address.lon }} | Lat: 
             {{ home.address.lat }}
@@ -56,7 +54,7 @@
   </li>
 </template>
 <script>
-// import { computed } from "vue";
+import { computed } from "vue";
 import WidgetUtilitySummary from "@/components/WidgetUtilitySummary.vue";
 import WidgetImageSlider from "@/components/WidgetImageSlider.vue";
 import WidgetPriceDetail from "@/components/WidgetPriceDetail.vue";
@@ -74,10 +72,16 @@ export default {
     WidgetPriceDetail,
     WidgetLocationDetail,
   },
-  setup() {
+  setup(props) {
+    const showListingBy = computed(() => {
+      return props.home.branding.listing_office.list_item.name != null 
+        ? true 
+        : false;
+    });
     // const homeCity = computed(() => props.home.city.replaceAll(" ", "-"));
     // const homeStreet = computed(() => props.home.street.replaceAll(" ", "-"));
     return{
+      showListingBy,
       // homeCity: computed(() => props.home.address.city.replaceAll(" ", "-")),
       // homeStreet: computed(() => props.home.address.line.replaceAll(" ", "-")),
     }
