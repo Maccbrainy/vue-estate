@@ -3,8 +3,10 @@ import { ref } from "vue";
 export default function buildRouterParamsUrl(
   validatedSearchInfo, 
   propsCity, 
-  hyphenFreeProp,
+  // hyphenFreeProp,
 ) {
+
+  console.log("I am working!");
   const searchSlugTerm = ref("");
   searchSlugTerm.value = validatedSearchInfo;
   if (!searchSlugTerm.value) return;
@@ -15,7 +17,7 @@ export default function buildRouterParamsUrl(
   //   ? propsCity.replaceAll(" ", "-")
   //   : propsCity;
   const searchedWithZipCode = `Homes For Sale & Real Estate in ${searchSlugTerm.value} Zip Code`;
-  const searchedWithCityNameDefined = `${hyphenFreeProp} Homes For Sale & ${hyphenFreeProp} Real Estate | Vue Estate`;
+  //const searchedWithCityNameDefined = `${hyphenFreeProp} Homes For Sale & ${hyphenFreeProp} Real Estate | Vue Estate`;
   const searchedDefault = `${searchSlugTerm.value} Homes For Sale & ${searchSlugTerm.value} Real Estate | Vue Estate`;
   //named route with params to let the router build the url;
   router.push({
@@ -25,9 +27,12 @@ export default function buildRouterParamsUrl(
       city: propsCity ? propsCity : "",
       title: regExpNumbersOnly.test(searchSlugTerm.value) 
         ? searchedWithZipCode 
-        : hyphenFreeProp 
-        ? searchedWithCityNameDefined
         : searchedDefault,
+      // title: regExpNumbersOnly.test(searchSlugTerm.value) 
+      //   ? searchedWithZipCode 
+      //   : hyphenFreeProp 
+      //   ? searchedWithCityNameDefined
+      //   : searchedDefault,
     },
   });
   return {
