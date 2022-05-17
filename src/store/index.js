@@ -122,7 +122,8 @@ export default createStore({
         buildRouterParamsUrl(payload);
         commit("setIsLoading", false);
       } catch (error) {
-        console.error(error)
+        console.error(error);
+        commit("setIsLoading", false);
       }
     }
   },
