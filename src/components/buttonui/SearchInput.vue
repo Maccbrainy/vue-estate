@@ -87,10 +87,12 @@
   </div>
 </template>
 <script>
-import { ref, reactive, onMounted, watch, computed } from "vue";
+import { ref, reactive, onMounted, watch, computed, watchEffect } from "vue";
+import { useRoute } from "vue-router";
 import dataSource from "@/components/homes.json";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import LocationIcon from "@/assets/icons/LocationIcon.vue";
+import { useStore } from "vuex";
 // import { buildRouterParamsUrl } from "@/composables";
 
 export default {
@@ -102,10 +104,16 @@ export default {
   },
   setup() {
     const searchData = ref("");
+    const route = useRoute();
+    const store = useStore();
     const searchActive = ref(false);
     const payloadOnSubmit = reactive({});
     const payloadClicked = reactive({});
 
+    watchEffect(async () => {
+      console.log("This is my new search:", route.params.slug);
+      await store.dispatch("setPropertiesFromRemoteApi", route.params.slug);
+    })
     //All Home Data source;
     const homeResources = reactive({ allHomes: dataSource.homes });
     const removeDuplicateHomeData = homeResources.allHomes.reduce(
@@ -172,7 +180,6 @@ export default {
     async onSubmit() {
       await this.$store.dispatch("setPropertiesFromRemoteApi", this.searchData);
       this.$store.commit("setSearchedData", this.searchData);
-
       console.log("Dispatched is completed");
       // if (!this.searchFilterIsActive && this.searchData) {
       //   this.$store.commit("setSearchedData", this.searchData);
