@@ -96,6 +96,8 @@ export default {
     });
     watch(searchedDataFromStore, (val) => {
       stateSearchedData.value = val;
+
+      console.log("This is coming from the TheHomePage component");
       buildRouterParamsUrl(
         stateSearchedData.value["state"], 
         stateSearchedData.value["city"]
