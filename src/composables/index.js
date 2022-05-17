@@ -1,7 +1,7 @@
 export { default as searchInfoQuerySanitizer } from "@/composables/searchInfoQuerySanitizer";
 export { default as buildRouterParamsUrl } from "@/composables/buildRouterParamsUrl";
 export { default as clientLocalStorage } from "@/composables/clientLocalStorage";
-export { default as searchResultTitle } from "@/composables/searchResultTitle";
+export { default as useListingTitle } from "@/composables/useListingTitle";
 export { default as checkPresenceOfHyphenAndRemove } from "@/composables/checkPresenceOfHyphenAndRemove";
 export { default as checkWhiteSpacesAndReplaceWithHypen } from "@/composables/checkWhiteSpacesAndReplaceWithHypen";
 
