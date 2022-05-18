@@ -61,7 +61,7 @@
         v-for="(home, index) in searchPreferences" 
         :key="index"
         :id="`data-suggestion-item-${index}`"
-        :title="`${home.city}, ${home.state}`"
+        :title="`${home.city}, ${home.state_code}`"
         role="option"
         v-on:click="submitClicked" 
         aria-selected="false"
@@ -77,8 +77,8 @@
           <span>
             <location-icon class="mt-1 text-gray-600 text-xs"/>
           </span>
-          <span :id="`${home.city}`" :nonce="`${home.state}`">
-            {{ home.city }}, {{ home.state}}
+          <span :id="`${home.city}`" :nonce="`${home.state_code}`">
+            {{ home.city }}, {{ home.state_code}}
             <legend class="text-xs font-normal">City</legend>
           </span>
         </div>
@@ -89,12 +89,10 @@
 <script>
 import { ref, reactive, onMounted, watch, computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
-import dataSource from "@/components/homes.json";
+import jsonProperties from "@/api/autoComplete.json";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import LocationIcon from "@/assets/icons/LocationIcon.vue";
 import { useStore } from "vuex";
-// import { buildRouterParamsUrl } from "@/composables";
-
 export default {
   name: "SearchInput",
   inheritAttrs: false,
@@ -114,9 +112,9 @@ export default {
       console.log("This is my new search:", route.params.slug);
       await store.dispatch("setPropertiesFromRemoteApi", route.params.slug);
     })
-    //All Home Data source;
-    const homeResources = reactive({ allHomes: dataSource.homes });
-    const removeDuplicateHomeData = homeResources.allHomes.reduce(
+
+    const autoComplete = reactive({ allProperties: jsonProperties.property });
+    const removeDuplicateHomeData = autoComplete.allProperties.reduce(
       (unique, o) => {
         let duplicateScreening = !unique.some(
           (obj) => obj.city === o.city && obj.state === o.state)
@@ -125,6 +123,7 @@ export default {
           unique.push({
             city: o.city,
             state: o.state,
+            state_code: o.state_code,
             postal_code: o.postal_code,
             country: o.country,
           });
@@ -135,7 +134,7 @@ export default {
       if (!searchActive.value) return "";
       return removeDuplicateHomeData.filter((data) => {
         let increaseSearchFilterField = 
-          data.state + data.city + data.postal_code;
+          data.state + data.city + data.state_code;
         let searched = increaseSearchFilterField
           .toLowerCase()
           .includes(searchData.value.toLowerCase());
@@ -143,7 +142,6 @@ export default {
       })
     })
     const searchFilterIsActive = computed(() => {
-      // return searchPreferences.value.length > 0 ? true : false;
       return !searchActive.value
         ? false 
         : searchPreferences.value.length > 0 
@@ -159,13 +157,12 @@ export default {
       searchActive.value = searchedWordIsTwo;
     });
     onMounted(() => {
-      
       if (localStorage.savedSearchedData){
         searchData.value = localStorage.savedSearchedData;
       }
     });
     return{
-      homeResources,
+      autoComplete,
       searchData,
       removeDuplicateHomeData,
       searchPreferences,
@@ -177,29 +174,36 @@ export default {
     }
   },
   methods: {
-    async onSubmit() {
-      await this.$store.dispatch("setPropertiesFromRemoteApi", this.searchData);
-      this.$store.commit("setSearchedData", this.searchData);
-      console.log("Dispatched is completed");
-      // if (!this.searchFilterIsActive && this.searchData) {
-      //   this.$store.commit("setSearchedData", this.searchData);
-      //   buildRouterParamsUrl(this.searchData);
-      // };
-      // this.payloadOnSubmit = {
-      //   city: e.target.nextElementSibling.firstChild.children[1].firstChild
-      //     .children[1].id,
-      //   state: 
-      //     e.target.nextElementSibling.firstChild.children[1].firstChild
-      //       .children[1].nonce,
-      // }
-      // this.$store.commit("setSearchedData", this.payloadOnSubmit);
+    async onSubmit(e) {
+      if (!this.searchFilterIsActive && this.searchData) {
+        let defaultSearch = {
+          city: "San Francisco",
+          state_code: "CA",
+        }
+        // await this.$store.dispatch("setPropertiesFromRemoteApi", defaultSearch);
+        this.$store.commit("setSearchedData", defaultSearch);
+        console.log("Dispatched is completed:", defaultSearch);
+      } else {
+        this.payloadOnSubmit = {
+          city: e.target.nextElementSibling.firstChild.children[1].firstChild
+            .children[1].id,
+          state_code: 
+            e.target.nextElementSibling.firstChild.children[1].firstChild
+            .children[1].nonce
+          }
+      // await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadOnSubmit);
+        this.$store.commit("setSearchedData", this.payloadOnSubmit);
+        console.log("Dispatched is completed:", this.payloadOnSubmit)
+      };
     },
-    submitClicked(e){
+    async submitClicked(e){
       this.payloadClicked = {
         city: e.target.id,
-        state: e.target.nonce,
+        state_code: e.target.nonce,
       }
+      // await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadOnSubmit);
       this.$store.commit("setSearchedData", this.payloadClicked);
+      console.log("Dispatched is completed:", this.payloadClicked);
     }
   },
 }
