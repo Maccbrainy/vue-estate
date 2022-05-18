@@ -1,0 +1,454 @@
+{
+  "property" : [
+    {
+      "city": "New York City",
+      "state": "New York",
+      "state_code": "NY"
+    },
+    {
+      "city": "Los Angeles",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Chicago",
+      "state": "Illinois",
+      "state_code": "IL"
+    },
+    {
+      "city": "Houston",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Phoenix",
+      "state": "Arizona",
+      "state_code": "AZ"
+    },
+    {
+      "city": "Philadelphia",
+      "state": "Pennsylvania",
+      "state_code": "PA"
+    },
+    {
+      "city": "San Diego",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "San Antonio",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Dallas",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "San Jose",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Fort Worth",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Austin",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Jacksonville",
+      "state": "Florida",
+      "state_code": "FL"
+    },
+    {
+      "city": "Columbus",
+      "state": "Ohio",
+      "state_code": "OH"
+    },
+    {
+      "city": "Indianapolis",
+      "state": "Indiana",
+      "state_code": "IN"
+    },
+    {
+      "city": "Charlotte",
+      "state": "North Carolina",
+      "state_code": "NC"
+    },
+    {
+      "city": "San Francisco",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Seattle",
+      "state": "Washington",
+      "state_code": "WA"
+    },
+    {
+      "city": "Denver",
+      "state": "Colorado",
+      "state_code": "CO"
+    },
+    {
+      "city": "Washington",
+      "state": "District of Columbia",
+      "state_code": "DC"
+    },
+    {
+      "city": "Nashville",
+      "state": "Tennessee",
+      "state_code": "TN"
+    },
+    {
+      "city": "Oklahoma City",
+      "state": "Oklahoma",
+      "state_code": "OK"
+    },
+    {
+      "city": "El Paso",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Boston",
+      "state": "Massachusetts",
+      "state_code": "MA"
+    },
+    {
+      "city": "Portland",
+      "state": "Oregon",
+      "state_code": "OR"
+    },
+    {
+      "city": "Las Vegas",
+      "state": "Nevada",
+      "state_code": "NV"
+    },
+    {
+      "city": "Detroit",
+      "state": "Michigan",
+      "state_code": "MI"
+    },
+    {
+      "city": "Memphis",
+      "state": "Tennessee",
+      "state_code": "TN"
+    },
+    {
+      "city": "Louisville",
+      "state": "Kentucky",
+      "state_code": "KY"
+    },
+    {
+      "city": "Baltimore",
+      "state": "Maryland",
+      "state_code": "MD"
+    },
+    {
+      "city": "Milwaukee",
+      "state": "Wisconsin",
+      "state_code": "WI"
+    },
+    {
+      "city": "Albuquerque",
+      "state": "New Mexico",
+      "state_code": "NM"
+    },
+    {
+      "city": "Tucson",
+      "state": "Arizona",
+      "state_code": "AZ"
+    },
+    {
+      "city": "Fresno",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Sacramento",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Kansas City",
+      "state": "Missouri",
+      "state_code": "MO"
+    },
+    {
+      "city": "Mesa",
+      "state": "Arizona",
+      "state_code": "AZ"
+    },
+    {
+      "city": "Atlanta",
+      "state": "Georgia",
+      "state_code": "GA"
+    },
+    {
+      "city": "Omaha",
+      "state": "Nebraska",
+      "state_code": "NE"
+    },
+    {
+      "city": "Colorado Springs",
+      "state": "Colorado",
+      "state_code": "CO"
+    },
+    {
+      "city": "Raleigh",
+      "state": "North Carolina",
+      "state_code": "NC"
+    },
+    {
+      "city": "Long Beach",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Virginia Beach[",
+      "state": "Virginia",
+      "state_code": "VA"
+    },
+    {
+      "city": "Miami",
+      "state": "Florida",
+      "state_code": "FL"
+    },
+    {
+      "city": "Oakland",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Columbus",
+      "state": "Ohio",
+      "state_code": "OH"
+    },
+    {
+      "city": "Minneapolis",
+      "state": "Minnesota",
+      "state_code": "MN"
+    },
+    {
+      "city": "Tulsa",
+      "state": "Oklahoma",
+      "state_code": "OK"
+    },
+    {
+      "city": "Bakersfield",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Wichita",
+      "state": "Kansas",
+      "state_code": "KS"
+    },
+    {
+      "city": "Aurora",
+      "state": "Colorado",
+      "state_code": "CO"
+    },
+    {
+      "city": "Tampa",
+      "state": "Florida",
+      "state_code": "FL"
+    },
+    {
+      "city": "New Orleans",
+      "state": "Louisiana",
+      "state_code": "LA"
+    },
+    {
+      "city": "Cleveland",
+      "state": "Ohio",
+      "state_code": "OH"
+    },
+    {
+      "city": "Arlington",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Honolulu",
+      "state": "Hawaii",
+      "state_code": "HI"
+    },
+    {
+      "city": "Anaheim",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Lexington",
+      "state": "Kentucky",
+      "state_code": "KY"
+    },
+    {
+      "city": "Stockton",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Corpus Christi",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Henderson",
+      "state": "Nevada",
+      "state_code": "NV"
+    },
+    {
+      "city": "Riverside",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Newark",
+      "state": "New Jersey",
+      "state_code": "NJ"
+    },
+    {
+      "city": "Saint Paul",
+      "state": "Minnesota",
+      "state_code": "MN"
+    },
+    {
+      "city": "Santa Ana",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Cincinnati",
+      "state": "Ohio",
+      "state_code": "OH"
+    },
+    {
+      "city": "Irvine",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Orlando",
+      "state": "Florida",
+      "state_code": "FL"
+    },
+    {
+      "city": "Pittsburgh",
+      "state": "Pennsylvania",
+      "state_code": "PA"
+    },
+    {
+      "city": "St. Louis",
+      "state": "Missouri",
+      "state_code": "MO"
+    },
+    {
+      "city": "Anchorage",
+      "state": "Alaska",
+      "state_code": "AK"
+    },
+    {
+      "city": "Lincoln",
+      "state": "Nebraska",
+      "state_code": "NE"
+    },
+    {
+      "city": "Plano",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Durham",
+      "state": "North Carolina",
+      "state_code": "NC"
+    },
+    {
+      "city": "Buffalo",
+      "state": "New York",
+      "state_code": "NY"
+    },
+    {
+      "city": "Greensboro",
+      "state": "North Carolina",
+      "state_code": "NC"
+    },
+    {
+      "city": "Jersey City",
+      "state": "New Jersey",
+      "state_code": "NJ"
+    },
+    {
+      "city": "Chandler",
+      "state": "Arizona",
+      "state_code": "AZ"
+    },
+    {
+      "city": "Chula Vista",
+      "state": "California",
+      "state_code": "CA"
+    },
+    {
+      "city": "Toledo",
+      "state": "Ohio",
+      "state_code": "OH"
+    },
+    {
+      "city": "Gilbert",
+      "state": "Arizona",
+      "state_code": "AZ"
+    },
+    {
+      "city": "Reno",
+      "state": "Nevada",
+      "state_code": "NV"
+    },
+    {
+      "city": "Fort Wayne",
+      "state": "Indiana",
+      "state_code": "IN"
+    },
+    {
+      "city": "North Las Vegas",
+      "state": "Nevada",
+      "state_code": "NV"
+    },
+    {
+      "city": "St. Petersburg",
+      "state": "Florida",
+      "state_code": "FL"
+    },
+    {
+      "city": "Lubbock",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Irving",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Laredo",
+      "state": "Texas",
+      "state_code": "TX"
+    },
+    {
+      "city": "Winston Salem",
+      "state": "North Carolina",
+      "state_code": "NC"
+    },
+    {
+      "city": "Chesapeake",
+      "state": "Virginia",
+      "state_code": "VA"
+    }
+  ] 
+}
