@@ -50,7 +50,7 @@ const routes = [
     }
   },
   {
-    path: "/:slug/:city/:address?/:propertyId?/:postalCode?",
+    path: "/:slug/:city/:address?/:propertyId/:postalCode?",
     name: "HomeDetail",
     component: SearchResultDetailedContentLayout, 
     // route level code-splitting
