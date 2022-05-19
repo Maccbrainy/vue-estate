@@ -109,7 +109,6 @@ export default {
     const payloadClicked = reactive({});
 
     watchEffect(async () => {
-      console.log("This is my new search:", route.params.slug);
       if (route.params.slug){
         await store.dispatch("setPropertiesFromRemoteApi", route.params.slug);
       }
