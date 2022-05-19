@@ -110,8 +110,10 @@ export default {
 
     watchEffect(async () => {
       console.log("This is my new search:", route.params.slug);
-      await store.dispatch("setPropertiesFromRemoteApi", route.params.slug);
-    })
+      if (route.params.slug){
+        await store.dispatch("setPropertiesFromRemoteApi", route.params.slug);
+      }
+    });
 
     const autoComplete = reactive({ allProperties: jsonProperties.property });
     const removeDuplicateHomeData = autoComplete.allProperties.reduce(
@@ -180,28 +182,32 @@ export default {
           city: "San Francisco",
           state_code: "CA",
         }
-        // await this.$store.dispatch("setPropertiesFromRemoteApi", defaultSearch);
+        await this.$store.dispatch("setPropertiesFromRemoteApi", defaultSearch);
         this.$store.commit("setSearchedData", defaultSearch);
         console.log("Dispatched is completed:", defaultSearch);
-      } else {
+      }; 
+      if (this.searchFilterIsActive){
         this.payloadOnSubmit = {
           city: e.target.nextElementSibling.firstChild.children[1].firstChild
             .children[1].id,
           state_code: 
             e.target.nextElementSibling.firstChild.children[1].firstChild
             .children[1].nonce
-          }
-      // await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadOnSubmit);
+        }
+        await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadOnSubmit);
         this.$store.commit("setSearchedData", this.payloadOnSubmit);
         console.log("Dispatched is completed:", this.payloadOnSubmit)
       };
+      if (!this.searchData) {
+        return;
+      }
     },
     async submitClicked(e){
       this.payloadClicked = {
         city: e.target.id,
         state_code: e.target.nonce,
       }
-      // await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadOnSubmit);
+      await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadClicked);
       this.$store.commit("setSearchedData", this.payloadClicked);
       console.log("Dispatched is completed:", this.payloadClicked);
     }
