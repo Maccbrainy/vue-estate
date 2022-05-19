@@ -5,35 +5,30 @@
   </nav-bar-container>
   <filter-button-container></filter-button-container>
   <div class="flex flex-grow flex-auto flex-col z-0" tabindex="-1">
-    <div 
-      v-if="allPropertListings" 
-      class="w-1/2 sf:w-full block relative flex-1 -bottom-16">
+    <div v-if="!allPropertListings" class="w-1/2 sf:w-full block relative flex-1 -bottom-16">
       <div tabindex="-1" class="flex flex-auto flex-col px-2 py-1">
         <div 
           class="flex justify-between flex-col flex-auto flex-start pl-2 pb-2">
           <h2 
-             
+            v-show="!agentListIsActive" 
             class="bg-gray-100 text-base font-normal text-gray-500 px-4 py-4 mr-3 mb-3">
             Includes homes for sale by owner, plus foreclosures and auctions not listed by agents.
-            <!-- v-show="!agentListIsActive" -->
           </h2>
-          <div v-if="allPropertListings.length > 0 ? true : false">
+          <div v-if="activeListing.length > 0 ? true : false">
             <h1 class="text-lg font-bold text-gray-600 mb-1 pt-1">
-              <!-- {{ resultTitle }} -->
+              {{ resultTitle }}
             </h1>
             <div class="flex w-full justify-between">
               <div class="flex justify-between w-full flex-wrap items-center">
                 <h2 
-                   
+                  v-show="homeCountIsAboveOne" 
                   class="text-base font-normal text-gray-500">
-                  <!-- v-show="homeCountIsAboveOne" -->
-                  <!-- {{ activeListing.length }} homes available in Vue Estate -->
+                  {{ activeListing.length }} homes available in Vue Estate
                 </h2>
                 <h2 
-                   
+                  v-show="!homeCountIsAboveOne" 
                   class="text-base font-normal text-gray-500">
-                  <!-- v-show="!homeCountIsAboveOne" -->
-                  <!-- {{ activeListing.length }} home available in Vue Estate -->
+                  {{ activeListing.length }} home available in Vue Estate
                 </h2>
                 <div>
                   <dropdown-button-select-box>
@@ -57,16 +52,15 @@
               </div>
             </div>
           </div>
-          <no-search-term-match-for-agent-and-other-listings>
-            <!-- v-else-if="listingsByAgentAndByOtherIsZero" -->
+          <no-search-term-match-for-agent-and-other-listings 
+            v-else-if="listingsByAgentAndByOtherIsZero">
           </no-search-term-match-for-agent-and-other-listings>
-          <no-search-term-for-agent-or-other-listings>
-            <!-- v-else -->
+          <no-search-term-for-agent-or-other-listings v-else>
           </no-search-term-for-agent-or-other-listings>
         </div>
         <ul class="flex flex-wrap">
           <search-result-item-card 
-            v-for="home in allPropertListings"
+            v-for="home in activeListing"
             v-bind:key="home.property_id"
             v-bind:home="home">
           </search-result-item-card>
@@ -80,7 +74,7 @@
   </div>
 </template>
 <script>
-import { ref, onMounted, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 import { 
   DropdownButtonSelect, 
@@ -96,20 +90,6 @@ import NoSearchTermMatchForAgentAndOtherListings from "@/components/NoSearchTerm
 import NoSearchTermForAgentOrOtherListings from "@/components/NoSearchTermForAgentOrOtherListings.vue";
 import SearchResultGoogleMap from "@/components/SearchResultGoogleMap.vue";
 import SearchResultItemCard from "@/components/SearchResultItemCard.vue";
-// import {
-//   // useGetPropertyListings
-//   // searchInfoQuerySanitizer,
-//   // buildRouterParamsUrl,
-//   // clientLocalStorage,
-//   // searchResultTitle,
-//   // checkPresenceOfHyphenAndRemove,
-//   // checkWhiteSpacesAndReplaceWithHypen,
-//   // computedHomeResourcesSearched,
-//   // computedPropertyByAgentAndNonAgent
-//   } from "@/composables";
-// import homeLocationFinderSearchControllers from "@/api/homeLocationFinderSearchControllers";
-// import https from "@/api/index";
-// import { propertiesForListing } from "@/api/propertiesForListing.js";
 export default {
   name: "SearchResultContentLayout",
   props: {
@@ -131,39 +111,30 @@ export default {
     NoSearchTermMatchForAgentAndOtherListings,
     NoSearchTermForAgentOrOtherListings
   },
-  setup() {
+  setup(props) {
     const store = useStore();
     const isLoading = ref(false);
-    // const allPropertListings = ref({});
     const searchedData = computed(() => {
       return store.getters.getSearchedData
     });
     console.log("Just searched:", searchedData.value);
 
+    const unwatchEffect = watchEffect(async () => {
+      if (props.slug && props.city){
+        console.log("Store Action API terminated!");
+        return;
+      } 
+      if (props.slug && !props.city) {
+        console.log("Remote Api fetching running!");
+        await store.dispatch("setPropertiesFromRemoteApi", props.slug);
+        unwatchEffect();
+      }
+    });
+
     const allPropertListings = computed(() => {
       return store.getters.getAllPropertyListings;
     });
-    console.log("All properties searched tracked:", allPropertListings.value);
-
-    // const { hypenatedProp } = checkWhiteSpacesAndReplaceWithHypen(props.city);
-    // const { hyphenFreeProp } = checkPresenceOfHyphenAndRemove(props.city);
-
-
-    //Formatting the search term to Capitalize
-    // const { validatedSearchInfo } = searchInfoQuerySanitizer(props.slug);
-    // const { searchTerm } = buildRouterParamsUrl(
-    //   validatedSearchInfo, 
-    //   hypenatedProp.value, 
-    //   hyphenFreeProp.value);
-
-    // const { savedSearchedData } = clientLocalStorage(
-    //   searchTerm.value, 
-    //   hyphenFreeProp.value
-    // );
-    // const { resultTitle } = searchResultTitle(
-    //   searchTerm.value, 
-    //   hyphenFreeProp.value
-    // );
+    console.log("All properties searched:", allPropertListings.value);
 
     // const { homeLocationFinders } = homeLocationFinderSearchControllers();
     // const { discoveredHomes } = computedHomeResourcesSearched(
@@ -184,30 +155,9 @@ export default {
     // const listingsByAgentAndByOtherIsZero = computed(() => {
     //   return listingsByAgent.value.length == 0 && listingsByOthers.value.length == 0 ? true : false;
     // })
-    onMounted(() => {
-      // console.log("All properties searched 2st:", allPropertListings.value);
-      
-      // if (discoveredHomes.value && searchedData.value) {
-      //   store.commit("setSuccessfulSearchHistory", searchedData.value);
-      // }
-    });
     return {
       isLoading,
       allPropertListings
-      // searchTerm,
-      // hypenatedProp, 
-      // savedSearchedData,
-      // resultTitle,
-      // homeLocationFinders,
-      // discoveredHomes,
-      // homeCountIsAboveOne,
-      // validatedSearchInfo,
-      // buildRouterParamsUrl,
-      // listingsByAgent,
-      // listingsByOthers,
-      // activeListing,
-      // agentListIsActive,
-      // listingsByAgentAndByOtherIsZero,
     }
   },
 }
