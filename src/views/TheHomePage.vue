@@ -66,8 +66,7 @@
 <script>
 import { useStore } from "vuex";
 import { ref, computed, watch, onMounted, reactive } from "vue";
-import { SearchBox, SearchInput } from "@/components/buttonui/index";
-import buildRouterParamsUrl from "@/composables/buildRouterParamsUrl";
+import { SearchBox, SearchInput } from "@/components/buttonui";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
 import NavBar from "@/components/NavBar.vue";
@@ -96,12 +95,7 @@ export default {
     });
     watch(searchedDataFromStore, (val) => {
       stateSearchedData.value = val;
-
       console.log("This is coming from the TheHomePage component");
-      buildRouterParamsUrl(
-        stateSearchedData.value["state"], 
-        stateSearchedData.value["city"]
-      );
     });
     const { cordinates, userEnabledLocation } = userGeolocation();
 
