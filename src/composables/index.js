@@ -1,5 +1,5 @@
 export { default as searchInfoQuerySanitizer } from "@/composables/searchInfoQuerySanitizer";
-export { default as buildRouterParamsUrl } from "@/composables/buildRouterParamsUrl";
+export { default as useBuildRouter } from "@/composables/useBuildRouter";
 export { default as clientLocalStorage } from "@/composables/clientLocalStorage";
 export { default as useListingTitle } from "@/composables/useListingTitle";
 export { default as checkPresenceOfHyphenAndRemove } from "@/composables/checkPresenceOfHyphenAndRemove";
