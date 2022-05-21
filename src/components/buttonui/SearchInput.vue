@@ -26,7 +26,8 @@
         pr-20"
       v-bind="$attrs" 
       type="search" 
-      aria-label="Search for State, City, Postal Code" 
+      aria-label="Search for State, City, Postal Code"
+      aria-controls="places-search-list" 
       placeholder="Search for State, District/City, Zip, Neigbourhood/Area"
     />
     <button
@@ -49,14 +50,20 @@
   <div 
     v-show="searchActive"
     v-bind:class="{
-      'relative border-t-0 border text-gray-600 w-full max-h-40 overflow-auto bg-white z-20 rounded-b-lg': searchFilterIsActive }">
-    <ul role="listbox" aria-labelledby="search-label">
-      <li 
+      'relative border-t-0 border text-gray-600 w-full max-h-40 overflow-auto bg-white z-20 rounded-b-lg': 
+        searchFilterIsActive }">
+    <ul 
+      role="listbox" 
+      aria-labelledby="search-label" 
+      id="places-search-list" 
+      v-on:keydown="nextItem">
+      <span 
         v-bind:class="{
-          'bg-gray-100 pl-4 py-3 text-xs font-medium': searchFilterIsActive 
-        }"> 
+          'bg-gray-100 block pl-4 py-3 text-xs font-medium': 
+            searchFilterIsActive 
+        }" disabled> 
         {{ placeListTag }}
-      </li>
+      </span>
       <li 
         v-for="(home, index) in searchPreferences" 
         :key="index"
@@ -65,19 +72,16 @@
         role="option"
         v-on:click="submitClicked" 
         aria-selected="false"
-        class="
-          text-gray-600 
-          border-b 
-          font-normal 
-          text-sm 
-          hover:bg-gray-100 
-          py-1 
-          px-3">
-        <div class="flex space-x-2">
+        class="text-gray-600 border-b font-normal text-sm hover:bg-gray-100" 
+        v-bind:class="{'active bg-gray-200 focus:bg-gray-200': currentDataOnScroll == index}">
+        <div class="flex space-x-2 py-1 px-3">
           <span>
             <location-icon class="mt-1 text-gray-600 text-xs"/>
           </span>
-          <span :id="`${home.city}`" :nonce="`${home.state_code}`">
+          <span 
+            :id="`${home.city}`" 
+            :nonce="`${home.state_code}`" 
+            class="w-full">
             {{ home.city }}, {{ home.state_code}}
             <legend class="text-xs font-normal">City</legend>
           </span>
@@ -87,12 +91,17 @@
   </div>
 </template>
 <script>
-import { ref, reactive, onMounted, watch, computed, watchEffect } from "vue";
-import { useRoute } from "vue-router";
+import { 
+  ref, 
+  reactive, 
+  onMounted, 
+  watch, 
+  computed, 
+  onBeforeUnmount 
+} from "vue";
 import jsonProperties from "@/api/autoComplete.json";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import LocationIcon from "@/assets/icons/LocationIcon.vue";
-import { useStore } from "vuex";
 export default {
   name: "SearchInput",
   inheritAttrs: false,
@@ -102,17 +111,12 @@ export default {
   },
   setup() {
     const searchData = ref("");
-    const route = useRoute();
-    const store = useStore();
+    // const route = useRoute();
+    // const store = useStore();
     const searchActive = ref(false);
     const payloadOnSubmit = reactive({});
     const payloadClicked = reactive({});
-
-    watchEffect(async () => {
-      if (route.params.slug){
-        await store.dispatch("setPropertiesFromRemoteApi", route.params.slug);
-      }
-    });
+    const currentDataOnScroll = ref(-1);
 
     const autoComplete = reactive({ allProperties: jsonProperties.property });
     const removeDuplicateHomeData = autoComplete.allProperties.reduce(
@@ -158,10 +162,32 @@ export default {
       searchActive.value = searchedWordIsTwo;
     });
     onMounted(() => {
+      document.addEventListener("keydown", nextItem);
       if (localStorage.savedSearchedData){
         searchData.value = localStorage.savedSearchedData;
       }
     });
+
+    onBeforeUnmount(() => {
+      console.log("Event listener keydown destroyed");
+      document.removeEventListener("keydown", nextItem);
+    });
+
+    function nextItem(e){
+      if (
+        searchFilterIsActive.value && 
+        e.keyCode == 40 && 
+        currentDataOnScroll.value < searchPreferences.value.length -1){
+        currentDataOnScroll.value++;
+      } else if ( 
+        searchFilterIsActive.value && 
+        e.keyCode == 38 && 
+        currentDataOnScroll.value > -1){
+        currentDataOnScroll.value--;
+      }
+    };
+
+    
     return{
       autoComplete,
       searchData,
@@ -172,6 +198,8 @@ export default {
       placeListTag,
       payloadOnSubmit,
       payloadClicked,
+      currentDataOnScroll,
+      nextItem
     }
   },
   methods: {
@@ -193,9 +221,9 @@ export default {
             e.target.nextElementSibling.firstChild.children[1].firstChild
             .children[1].nonce
         }
-        await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadOnSubmit);
-        this.$store.commit("setSearchedData", this.payloadOnSubmit);
-        console.log("Dispatched is completed:", this.payloadOnSubmit)
+        // await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadOnSubmit);
+        // this.$store.commit("setSearchedData", this.payloadOnSubmit);
+        console.log("Dispatched is completed:", this.payloadOnSubmit);
       };
       if (!this.searchData) {
         return;
@@ -206,10 +234,10 @@ export default {
         city: e.target.id,
         state_code: e.target.nonce,
       }
-      await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadClicked);
-      this.$store.commit("setSearchedData", this.payloadClicked);
+      // await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadClicked);
+      // this.$store.commit("setSearchedData", this.payloadClicked);
       console.log("Dispatched is completed:", this.payloadClicked);
-    }
+    },
   },
 }
 </script>
