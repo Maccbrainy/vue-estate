@@ -74,8 +74,16 @@
         role="option"
         v-on:click="submitClicked" 
         aria-selected="false"
-        class="text-gray-600 border-b font-normal text-sm hover:bg-gray-100 py-1 px-3" 
-        v-bind:class="{'bg-gray-100 focus:bg-gray-200': currentDataOnScroll == index}">
+        class="
+          text-gray-600 
+          border-b 
+          font-normal 
+          text-sm 
+          hover:bg-gray-100 
+          py-1 
+          px-3" 
+        v-bind:class="{
+          'bg-gray-100 focus:bg-gray-200': currentDataIndex == index}">
         <div class="flex space-x-2">
           <span>
             <location-icon class="mt-1 text-gray-600 text-xs"/>
@@ -101,7 +109,7 @@ import {
   computed, 
   onBeforeUnmount 
 } from "vue";
-// import { useStore } from "vuex";
+import { useStore } from "vuex";
 import jsonProperties from "@/api/autoComplete.json";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import LocationIcon from "@/assets/icons/LocationIcon.vue";
@@ -115,11 +123,10 @@ export default {
   },
   setup() {
     const searchData = ref("");
-    // const store = useStore();
+    const searchPayload = ref({});
+    const store = useStore();
     const searchActive = ref(false);
-    const payloadOnSubmit = reactive({});
-    const payloadClicked = reactive({});
-    const currentDataOnScroll = ref(-1);
+    const currentDataIndex = ref(-1);
 
     const autoComplete = reactive({ allProperties: jsonProperties.property });
     const removeDuplicateHomeData = autoComplete.allProperties.reduce(
@@ -164,6 +171,52 @@ export default {
       let searchedWordIsTwo = searchData.value.length >= 2 ? true : false;
       searchActive.value = searchedWordIsTwo;
     });
+
+    async function onSubmit(e) {
+      if (!searchData.value) {
+        return;
+      };
+
+      if (!searchFilterIsActive.value && searchData.value) {
+        let defaultSearch = {
+          city: "San Francisco",
+          state_code: "CA",
+        }
+        await store.dispatch("setPropertiesFromRemoteApi", defaultSearch);
+        store.commit("setSearchedData", defaultSearch);
+      }; 
+      if (searchFilterIsActive.value && currentDataIndex.value <= 0){
+        searchPayload.value = {
+          city: e.target.nextElementSibling.children["places-search-list"].children[1].id,
+          state_code: 
+            e.target.nextElementSibling.children["places-search-list"].children[1].nonce
+        }
+        await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
+        store.commit("setSearchedData", searchPayload.value);
+      };
+      if (searchFilterIsActive.value && currentDataIndex.value > 0){
+        searchPayload.value = {
+          city: e.target.nextElementSibling.children["places-search-list"]
+            .children[currentDataIndex.value+1].id,
+          state_code: 
+            e.target.nextElementSibling.children["places-search-list"].children[currentDataIndex.value+1].nonce,
+        };
+
+        await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
+        store.commit("setSearchedData", searchPayload.value);
+
+      }
+
+    };
+    async function submitClicked(e){
+      searchPayload.value = {
+        city: e.target.id,
+        state_code: e.target.nonce,
+      }
+      await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
+      store.commit("setSearchedData", searchPayload.value);
+
+    };
     onMounted(() => {
       document.addEventListener("keydown", nextItem);
     });
@@ -177,74 +230,29 @@ export default {
       if (
         searchFilterIsActive.value && 
         e.keyCode == 40 && 
-        currentDataOnScroll.value < searchPreferences.value.length -1){
-        currentDataOnScroll.value++;
+        currentDataIndex.value < searchPreferences.value.length -1){
+        currentDataIndex.value++;
       } else if ( 
         searchFilterIsActive.value && 
         e.keyCode == 38 && 
-        currentDataOnScroll.value > -1){
-        currentDataOnScroll.value--;
+        currentDataIndex.value > -1){
+        currentDataIndex.value--;
       }
     };
     return{
       autoComplete,
       searchData,
+      searchPayload,
       removeDuplicateHomeData,
       searchPreferences,
       searchFilterIsActive,
       searchActive,
       placeListTag,
-      payloadOnSubmit,
-      payloadClicked,
-      currentDataOnScroll,
+      onSubmit,
+      submitClicked,
+      currentDataIndex,
       nextItem
     }
-  },
-  methods: {
-    async onSubmit(e) {
-      if (!this.searchFilterIsActive && this.searchData) {
-        let defaultSearch = {
-          city: "San Francisco",
-          state_code: "CA",
-        }
-        await this.$store.dispatch("setPropertiesFromRemoteApi", defaultSearch);
-        this.$store.commit("setSearchedData", defaultSearch);
-        console.log("Dispatched is completed:", defaultSearch);
-      }; 
-      if (this.searchFilterIsActive && this.currentDataOnScroll <= 0){
-        this.payloadOnSubmit = {
-          city: e.target.nextElementSibling.children["places-search-list"].children[1].id,
-          state_code: 
-            e.target.nextElementSibling.children["places-search-list"].children[1].nonce
-        }
-        // await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadOnSubmit);
-        // this.$store.commit("setSearchedData", this.payloadOnSubmit);
-        console.log("Dispatched onSubmit is completed:", this.payloadOnSubmit);
-      };
-      if (this.searchFilterIsActive && this.currentDataOnScroll > 0){
-
-        this.payloadOnSubmit = {
-          city: e.target.nextElementSibling.children["places-search-list"].children[this.currentDataOnScroll+1].id,
-          state_code: 
-            e.target.nextElementSibling.children["places-search-list"].children[this.currentDataOnScroll+1].nonce,
-        }
-        // console.log("Dispatched onSubmit > 0 is completed:", this.currentDataOnScroll);
-        console.log("Dispatched onSubmit > 0 is completed:", this.payloadOnSubmit);
-      }
-      if (!this.searchData) {
-        return;
-      }
-    },
-    async submitClicked(e){
-      this.payloadClicked = {
-        city: e.target.id,
-        state_code: e.target.nonce,
-      }
-      // await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadClicked);
-      // this.$store.commit("setSearchedData", this.payloadClicked);
-      console.log("Dispatched onClick is completed:", this.payloadClicked);
-      console.log("Dispatched onClick is completed:", e);
-    },
   },
 }
 </script>
