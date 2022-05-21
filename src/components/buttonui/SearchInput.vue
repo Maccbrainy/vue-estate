@@ -67,14 +67,16 @@
       <li 
         v-for="(home, index) in searchPreferences" 
         :key="index"
-        :id="`data-suggestion-item-${index}`"
+        :data-suggestion-item="index"
         :title="`${home.city}, ${home.state_code}`"
+        :id="`${home.city}`"
+        :nonce="`${home.state_code}`"
         role="option"
         v-on:click="submitClicked" 
         aria-selected="false"
-        class="text-gray-600 border-b font-normal text-sm hover:bg-gray-100" 
-        v-bind:class="{'active bg-gray-200 focus:bg-gray-200': currentDataOnScroll == index}">
-        <div class="flex space-x-2 py-1 px-3">
+        class="text-gray-600 border-b font-normal text-sm hover:bg-gray-100 py-1 px-3" 
+        v-bind:class="{'bg-gray-100 focus:bg-gray-200': currentDataOnScroll == index}">
+        <div class="flex space-x-2">
           <span>
             <location-icon class="mt-1 text-gray-600 text-xs"/>
           </span>
@@ -99,9 +101,11 @@ import {
   computed, 
   onBeforeUnmount 
 } from "vue";
+// import { useStore } from "vuex";
 import jsonProperties from "@/api/autoComplete.json";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import LocationIcon from "@/assets/icons/LocationIcon.vue";
+
 export default {
   name: "SearchInput",
   inheritAttrs: false,
@@ -111,7 +115,6 @@ export default {
   },
   setup() {
     const searchData = ref("");
-    // const route = useRoute();
     // const store = useStore();
     const searchActive = ref(false);
     const payloadOnSubmit = reactive({});
@@ -163,9 +166,6 @@ export default {
     });
     onMounted(() => {
       document.addEventListener("keydown", nextItem);
-      if (localStorage.savedSearchedData){
-        searchData.value = localStorage.savedSearchedData;
-      }
     });
 
     onBeforeUnmount(() => {
@@ -186,8 +186,6 @@ export default {
         currentDataOnScroll.value--;
       }
     };
-
-    
     return{
       autoComplete,
       searchData,
@@ -213,18 +211,26 @@ export default {
         this.$store.commit("setSearchedData", defaultSearch);
         console.log("Dispatched is completed:", defaultSearch);
       }; 
-      if (this.searchFilterIsActive){
+      if (this.searchFilterIsActive && this.currentDataOnScroll <= 0){
         this.payloadOnSubmit = {
-          city: e.target.nextElementSibling.firstChild.children[1].firstChild
-            .children[1].id,
+          city: e.target.nextElementSibling.children["places-search-list"].children[1].id,
           state_code: 
-            e.target.nextElementSibling.firstChild.children[1].firstChild
-            .children[1].nonce
+            e.target.nextElementSibling.children["places-search-list"].children[1].nonce
         }
         // await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadOnSubmit);
         // this.$store.commit("setSearchedData", this.payloadOnSubmit);
-        console.log("Dispatched is completed:", this.payloadOnSubmit);
+        console.log("Dispatched onSubmit is completed:", this.payloadOnSubmit);
       };
+      if (this.searchFilterIsActive && this.currentDataOnScroll > 0){
+
+        this.payloadOnSubmit = {
+          city: e.target.nextElementSibling.children["places-search-list"].children[this.currentDataOnScroll+1].id,
+          state_code: 
+            e.target.nextElementSibling.children["places-search-list"].children[this.currentDataOnScroll+1].nonce,
+        }
+        // console.log("Dispatched onSubmit > 0 is completed:", this.currentDataOnScroll);
+        console.log("Dispatched onSubmit > 0 is completed:", this.payloadOnSubmit);
+      }
       if (!this.searchData) {
         return;
       }
@@ -236,7 +242,8 @@ export default {
       }
       // await this.$store.dispatch("setPropertiesFromRemoteApi", this.payloadClicked);
       // this.$store.commit("setSearchedData", this.payloadClicked);
-      console.log("Dispatched is completed:", this.payloadClicked);
+      console.log("Dispatched onClick is completed:", this.payloadClicked);
+      console.log("Dispatched onClick is completed:", e);
     },
   },
 }
