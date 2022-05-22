@@ -36,7 +36,7 @@ export default function useBuildRouter(payLoad) {
   const searchedDefault = `${slugParam} Homes For Sale & ${slugParam} Real Estate | Vue Estate`;
 
   router.push({
-    name: "BuyPage",
+    name: "ListingPage",
     params: {
       slug: slugParam,
       city: removedWhiteSpacesFromCityParam,
