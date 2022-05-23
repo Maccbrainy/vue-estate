@@ -1,8 +1,6 @@
 <template>
-  <div v-on:click="returnHomeAndKeepRouteState" class="logo">
-    <!-- <router-link to="/"> -->
-      <img alt="Vue Estate logo" src="../vue-estate.svg" />
-    <!-- </router-link> -->
+  <div v-on:click="returnHomeAndKeepRouteState">
+    <img alt="Vue Estate logo" src="../vue-estate.svg" />
   </div>
 </template>
 <script>
@@ -21,7 +19,10 @@ export default {
     function returnHomeAndKeepRouteState(){
       console.log("Home clicked");
       router.push({
-        name: getIsActiveRouteTab.value
+        name: 
+          getIsActiveRouteTab.value == "list-for-sale" 
+            ? "HomePage" 
+            : getIsActiveRouteTab.value
       });
     }
     return {
