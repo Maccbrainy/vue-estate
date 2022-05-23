@@ -113,30 +113,33 @@ export default createStore({
 
       let city = payload.city != undefined ? payload.city : payload;
       let state_code = payload.state_code != undefined ? payload.state_code : payload;
+      let activeRouteTab = payload.activeRouteTab;
 
       console.log("store payload:",payload);
       if( payload !="" ){
         console.log("Caught from store city:", city);
-        console.log("Caught from store state:", state_code);
-        commit("setIsLoading", false);
+        console.log("Caught from store state_code:", state_code);
+        console.log("Caught from store activeRoute:", activeRouteTab);
         useBuildRouter(payload);
+        commit("setIsLoading", false);
         return;
       }
-      const url = "https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale";
+      // const url = "https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale";
       try {
         const {
           data: { properties }
-        } = await axios.get(url, {
-          params: {
+        } = await axios.get(
+          `https://realty-in-us.p.rapidapi.com/properties/v2/${activeRouteTab}`, {
+           params: {
             // city: `${city}`,
             // state_code: `${state_code}`,
-            offset: "0",
-            limit: "200",
-            sort: "relevance"
+              offset: "0",
+              limit: "200",
+              sort: "relevance"
           },
-          headers: {
-            "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
-            "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`
+            headers: {
+              "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
+              "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`
           }
         })
         commit("setAllPropertyListings", properties);
