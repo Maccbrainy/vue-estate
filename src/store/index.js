@@ -1,11 +1,12 @@
 import { createStore } from "vuex";
 import axios from "axios";
-import { buildRouterParamsUrl } from "@/composables";
+import { useBuildRouter } from "@/composables";
 
 export default createStore({
   state: {
-    autoCompleteData:[],
+    // autoCompleteData:[],
     isLoading: false,
+    activeRouteTab: "",
     homeType: [],
     numberOfBedRoom: "",
     propertyMinRange:"",
@@ -42,6 +43,10 @@ export default createStore({
     },
     getActiveListing(state){
       return state.activeListing;
+    },
+    //Consumed in HomeTabButtons
+    getIsActiveRouteTab(state){
+      return state.activeRouteTab;
     }
 
   },
@@ -88,27 +93,43 @@ export default createStore({
     setHomeType(state, propertyPayLoad){
       state.homeType = propertyPayLoad;
     },
-    setAutoCompleteData(state, autoCompletePayLoad){
-      state.autoCompleteData = autoCompletePayLoad;
-    },
+    // setAutoCompleteData(state, autoCompletePayLoad){
+    //   state.autoCompleteData = autoCompletePayLoad;
+    // },
     //Invoked from store action
     setIsLoading(state, isLoadingPayload){
       state.isLoading = isLoadingPayload;
-    }
+    },
+    //Invoked from HomeTabButtons
+    setActiveRouteTab(state, routePayload){
+      state.activeRouteTab = routePayload;
+    },
   },
 
   actions: {
     //Invoked from watch function in the searchResultContentLayout component
     setPropertiesFromRemoteApi: async ({ commit }, payload) => {
       commit("setIsLoading", true);
-      const url = "https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale"
+
+      let city = payload.city != undefined ? payload.city : payload;
+      let state_code = payload.state_code != undefined ? payload.state_code : payload;
+
+      console.log("store payload:",payload);
+      if( payload !="" ){
+        console.log("Caught from store city:", city);
+        console.log("Caught from store state:", state_code);
+        commit("setIsLoading", false);
+        useBuildRouter(payload);
+        return;
+      }
+      const url = "https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale";
       try {
         const {
           data: { properties }
         } = await axios.get(url, {
           params: {
-            city: `${payload}`,
-            state_code: "NY",
+            // city: `${city}`,
+            // state_code: `${state_code}`,
             offset: "0",
             limit: "200",
             sort: "relevance"
@@ -119,7 +140,7 @@ export default createStore({
           }
         })
         commit("setAllPropertyListings", properties);
-        buildRouterParamsUrl(payload);
+        useBuildRouter(payload);
         commit("setIsLoading", false);
       } catch (error) {
         console.error(error);
