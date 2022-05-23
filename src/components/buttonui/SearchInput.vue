@@ -107,7 +107,8 @@ import {
   onMounted, 
   watch, 
   computed, 
-  onBeforeUnmount 
+  onBeforeUnmount, 
+  watchEffect
 } from "vue";
 import { useStore } from "vuex";
 import jsonProperties from "@/api/autoComplete.json";
@@ -123,6 +124,7 @@ export default {
   },
   setup() {
     const searchData = ref("");
+    const activeRouteTab = ref("");
     const searchPayload = ref({});
     const store = useStore();
     const searchActive = ref(false);
@@ -172,6 +174,14 @@ export default {
       searchActive.value = searchedWordIsTwo;
     });
 
+    const getIsActiveRouteTab = computed(() => {
+      return store.getters.getIsActiveRouteTab;
+    });
+
+    watchEffect(() => {
+      activeRouteTab.value = getIsActiveRouteTab.value;
+    });
+
     async function onSubmit(e) {
       if (!searchData.value) {
         return;
@@ -181,15 +191,18 @@ export default {
         let defaultSearch = {
           city: "San Francisco",
           state_code: "CA",
+          activeRouteTab: activeRouteTab.value
         }
         await store.dispatch("setPropertiesFromRemoteApi", defaultSearch);
         store.commit("setSearchedData", defaultSearch);
+        console.log("ActiveRouteTab:", defaultSearch);
       }; 
       if (searchFilterIsActive.value && currentDataIndex.value <= 0){
         searchPayload.value = {
           city: e.target.nextElementSibling.children["places-search-list"].children[1].id,
           state_code: 
-            e.target.nextElementSibling.children["places-search-list"].children[1].nonce
+            e.target.nextElementSibling.children["places-search-list"].children[1].nonce,
+          activeRouteTab: activeRouteTab.value
         }
         await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
         store.commit("setSearchedData", searchPayload.value);
@@ -200,6 +213,7 @@ export default {
             .children[currentDataIndex.value+1].id,
           state_code: 
             e.target.nextElementSibling.children["places-search-list"].children[currentDataIndex.value+1].nonce,
+          activeRouteTab: activeRouteTab.value
         };
 
         await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
@@ -212,6 +226,7 @@ export default {
       searchPayload.value = {
         city: e.target.id,
         state_code: e.target.nonce,
+        activeRouteTab:`${activeRouteTab.value}`
       }
       await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
       store.commit("setSearchedData", searchPayload.value);
@@ -242,6 +257,7 @@ export default {
     return{
       autoComplete,
       searchData,
+      activeRouteTab,
       searchPayload,
       removeDuplicateHomeData,
       searchPreferences,
