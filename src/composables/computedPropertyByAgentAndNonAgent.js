@@ -6,16 +6,17 @@ export default function computedPropertyByAgentAndNonAgent(discoveredHomes){
   const agentListIsActive = ref(null);
   const activeListing = ref({});
 
+  console.log("DiscoveredHomes:", discoveredHomes);
   const listingsByAgent = computed(() => {
     let byAgent = discoveredHomes.filter(
-      (property) => property["listing_by_Agent"]);
+      (property) => property.agents[0].primary == true);
     store.commit("setListingsByAgent", byAgent);
     return byAgent;
   });
 
   const listingsByOthers = computed(() => {
     let byNoneAgent = discoveredHomes.filter(
-      (property) => !property["listing_by_Agent"]);
+      (property) => property.agents[0].primary == false);
     // store.commit("setListingsByNoneAgent", byNonAgent);
     return byNoneAgent;
   });

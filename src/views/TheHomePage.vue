@@ -93,6 +93,7 @@ export default {
     const searchedDataFromStore = computed(() => {
       return store.getters.getSearchedData
     });
+
     watch(searchedDataFromStore, (val) => {
       stateSearchedData.value = val;
       console.log("This is coming from the TheHomePage component");
