@@ -3,16 +3,28 @@ import { ref } from "vue";
 export default function useBuildRouter(payLoad) {
   
   const searchParams = ref("");
+  const activeRoute = ref("");
   searchParams.value = payLoad;
   console.log("useBuildROuter Working:", payLoad);
-  if (!searchParams.value) return;
-
+  if (!searchParams.value) {
+    return
+  };
   let cityParam = 
     searchParams.value.city != undefined ? searchParams.value.city : "";
   let slugParam = 
     searchParams.value.state_code != undefined
       ? searchParams.value.state_code
       : searchParams.value;
+  switch (searchParams.value.activeRouteTab) {
+    case "list-for-rent":
+      activeRoute.value = "RentPage"
+      break;
+    case "list-sold":
+      activeRoute.value = "SoldPage"
+      break;
+    default:
+      activeRoute.value = "BuyPage"
+  }
   /**Regular Expression
    * for numeric characters only 
    * thus to detect postal or zip codes search; 
@@ -36,7 +48,7 @@ export default function useBuildRouter(payLoad) {
   const searchedDefault = `${slugParam} Homes For Sale & ${slugParam} Real Estate | Vue Estate`;
 
   router.push({
-    name: "ListingPage",
+    name: `${activeRoute.value}`,
     params: {
       slug: slugParam,
       city: removedWhiteSpacesFromCityParam,
