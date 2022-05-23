@@ -27,7 +27,7 @@ export default {
     const tabButtons = [
       {
         title: "Buy",
-        namedRoute: "HomePage",
+        namedRoute: "list-for-sale",
       },
       {
         title: "Rent",
@@ -38,21 +38,29 @@ export default {
         namedRoute: "list-sold",
       }
     ]
-    function activateTab(e){
-      router.push({
-        name:`${e.target.name}`
-      });
-      store.commit("setActiveRouteTab", e.target.name);
-    };
     const getIsActiveRouteTab = computed(() => {
       return store.getters.getIsActiveRouteTab;
     });
     watchEffect(() => {
-      activeTabButton.value = 
-        getIsActiveRouteTab.value == "" 
-          ? route.name 
-          : getIsActiveRouteTab.value;
-    })
+      let routingValue = 
+        route.name == "HomePage" ? "list-for-sale" : route.name;
+      if (getIsActiveRouteTab.value == ""){
+        store.commit("setActiveRouteTab", routingValue);
+      } 
+    });
+
+    function activateTab(e){
+      let routingValue = 
+        e.target.name == "list-for-sale" ? "HomePage" : e.target.name; 
+      router.push({
+        name: routingValue
+      });
+      store.commit("setActiveRouteTab", e.target.name);
+    };
+
+    watchEffect(() => {
+      activeTabButton.value = getIsActiveRouteTab.value;
+    });
     return {
       tabButtons,
       activateTab,
