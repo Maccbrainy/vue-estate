@@ -24,7 +24,33 @@ const routes = [
   },
   {
     path: "/:slug/:city?",
-    name: "ListingPage",
+    name: "BuyPage",
+    component: SearchResultContentLayout,
+    props: (route) => ({
+      slug: route.params.slug,
+      city: route.params.city,
+      title: route.params.title,
+    }),
+    meta: {
+      title: "Vue-estate"
+    }
+  },
+  {
+    path: "/rent/:slug/:city?",
+    name: "RentPage",
+    component: SearchResultContentLayout,
+    props: (route) => ({
+      slug: route.params.slug,
+      city: route.params.city,
+      title: route.params.title,
+    }),
+    meta: {
+      title: "Vue-estate"
+    }
+  },
+  {
+    path: "/sold/:slug/:city?",
+    name: "SoldPage",
     component: SearchResultContentLayout,
     props: (route) => ({
       slug: route.params.slug,
@@ -53,6 +79,7 @@ const routes = [
     path: "/",
     name: "list-sold",
     component: HomePage,
+    alias: "/list-sold",
     meta: {
       title: "Vue-estate: Real Estate Sold Listings, and Housing Data"
     }
