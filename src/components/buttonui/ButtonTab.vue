@@ -10,8 +10,7 @@
       py-2 
       text-xl
       font-normal 
-      text-white
-      hover:text-teal hover:bg-white">
+      text-white">
     <slot></slot> 
   </button>
 </template>
