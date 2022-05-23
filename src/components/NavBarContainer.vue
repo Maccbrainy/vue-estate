@@ -11,7 +11,7 @@
       w-full 
       py-2 
       z-50">
-    <vue-estate-logo class="py-3 pr-5"></vue-estate-logo>
+    <vue-estate-logo class="py-3 pr-5 cursor-pointer"></vue-estate-logo>
     <slot></slot>
     <menu-icon
       v-if="!toggleMenu" 
@@ -41,7 +41,7 @@ export default ({
   setup() {
     const toggleMenu = ref(false);
     return {
-      toggleMenu
+      toggleMenu,
     }
   }
 })
