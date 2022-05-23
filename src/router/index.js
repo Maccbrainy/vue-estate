@@ -15,8 +15,8 @@ const routes = [
     }
   },
   {
-    path: "/for_rent/",
-    name: "RentPage",
+    path: "/for_rent",
+    name: "list-for-rent",
     component: HomePage,
     meta: {
       title: "Rental Listings in your Neighbourhood | Vue-estate.com"
@@ -24,7 +24,7 @@ const routes = [
   },
   {
     path: "/:slug/:city?",
-    name: "BuyPage",
+    name: "ListingPage",
     component: SearchResultContentLayout,
     props: (route) => ({
       slug: route.params.slug,
@@ -46,7 +46,15 @@ const routes = [
     name: "SiteMaps",
     component: SiteMapsContentLayout,
     meta: {
-      title: "Homes in Nigeria"
+      title: "Homes in USA"
+    }
+  },
+  {
+    path: "/",
+    name: "list-sold",
+    component: HomePage,
+    meta: {
+      title: "Vue-estate: Real Estate Sold Listings, and Housing Data"
     }
   },
   {
@@ -98,4 +106,5 @@ router.afterEach((to) => {
   let toParamsTitle = to.params.title;
   document.title = toParamsTitle ? toParamsTitle : documentDefaultTitle;
 });
+
 export default router;
