@@ -10,7 +10,7 @@ export default function userGeolocation(){
       watcher = navigator.geolocation.watchPosition(
         (position) => (cordinates.value = position.coords))
       }
-    console.log(cordinates);
+    // console.log(cordinates);
   });
   onUnmounted(() => {
     if (watcher) {
