@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
-import { useBuildRouter } from "@/composables";
+import { useRouterPush } from "@/composables";
 
 export default createStore({
   state: {
@@ -120,7 +120,7 @@ export default createStore({
         console.log("Caught from store city:", city);
         console.log("Caught from store state_code:", state_code);
         console.log("Caught from store activeRoute:", activeRouteTab);
-        useBuildRouter(payload);
+        useRouterPush(payload);
         commit("setIsLoading", false);
         return;
       }
@@ -143,7 +143,7 @@ export default createStore({
           }
         })
         commit("setAllPropertyListings", properties);
-        useBuildRouter(payload);
+        useRouterPush(payload);
         commit("setIsLoading", false);
       } catch (error) {
         console.error(error);

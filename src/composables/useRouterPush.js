@@ -1,11 +1,10 @@
 import router from "@/router";
 import { ref } from "vue";
-export default function useBuildRouter(payLoad) {
+export default function useRouterPush(payLoad) {
   
   const searchParams = ref("");
   const activeRoute = ref("");
   searchParams.value = payLoad;
-  console.log("useBuildROuter Working:", payLoad);
   if (!searchParams.value) {
     return
   };
