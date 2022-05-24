@@ -12,8 +12,8 @@
       text-gray-700 
       hover:bg-gray-200
       hover:border-transparent
-      focus:bg-teal
-      focus:text-teal-lighter
+      focus:border-gray-600
+      focus:text-gray-700
       focus:border-transparent">
     <slot></slot>
   </button>
