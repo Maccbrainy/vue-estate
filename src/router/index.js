@@ -15,7 +15,7 @@ const routes = [
     }
   },
   {
-    path: "/for_rent",
+    path: "/rent",
     name: "list-for-rent",
     component: HomePage,
     meta: {
@@ -36,7 +36,7 @@ const routes = [
     }
   },
   {
-    path: "/rent/:slug/:city?",
+    path: "/for_rent/:slug/:city?",
     name: "RentPage",
     component: SearchResultContentLayout,
     props: (route) => ({
