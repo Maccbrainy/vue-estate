@@ -11,7 +11,7 @@
           },
         }">
         Buy</router-link>
-      <span v-else>Buy</span>
+      <router-link to="/" v-else>Buy</router-link>
       <nav-bar-dropdown v-if="pathCity">
         <nav-bar-dropdown-item 
           :class="{'hidden': !searchedLinksActive }"
@@ -71,7 +71,7 @@
       </nav-bar-dropdown>
     </nav-bar-item>
     <nav-bar-item>
-      <router-link to="/for_rent/">Rent</router-link>
+      <router-link to="/rent/">Rent</router-link>
       <nav-bar-dropdown v-if="pathCity">
         <nav-bar-dropdown-item 
           :class="{'hidden': !searchedLinksActive }"
