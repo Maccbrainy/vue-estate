@@ -4,7 +4,7 @@
       v-for="(tabButton, index) in tabButtons" 
       v-bind:key="index"
       v-bind:name="tabButton.namedRoute"
-      v-on:click="activateTab"
+      v-on:click.prevent="activateTab"
       v-bind:class="{'bg-white text-teal': tabButton.namedRoute == activeTabButton}"
       >{{ tabButton.title }}</button-tab>
   </span> 
