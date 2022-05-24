@@ -2,6 +2,7 @@
   <dropdown-button buttonTitle="More">
     <button-group-multi-buttons 
       v-bind:options="propertyListingType"
+      v-bind:isActiveTab="activeRouteTab"
       v-on:getOptionId="propertyListingTypeId">
     </button-group-multi-buttons>
     <dropdown-button-fieldset fieldsetTitle="Type of Listings">
@@ -26,6 +27,7 @@
     <dropdown-button-fieldset fieldsetTitle="Bathrooms">
       <button-group-multi-buttons 
         v-bind:options="bathroomOptions"
+        v-bind:isActiveTab="noBath"
         v-on:getOptionId="numberOfBathroom">
       </button-group-multi-buttons>
     </dropdown-button-fieldset>
@@ -65,6 +67,8 @@
   </dropdown-button>
 </template>
 <script>
+import { ref, computed, watchEffect } from "vue";
+import { useStore } from "vuex";
 import { 
   ButtonSeparator, 
   ButtonInput, 
@@ -75,8 +79,7 @@ import {
   DropdownButtonSelectOption,
   DropdownButtonMultiCheckBoxes,
   ButtonGroupMultiButtons 
-} from "@/components/buttonui/index";
-import { ref } from "vue";
+} from "@/components/buttonui";
 export default ({
   components: {
     ButtonInput,
@@ -91,6 +94,8 @@ export default ({
   },
   setup() {
     const checkedTypeOfListing = ref([]);
+    const store = useStore();
+    const activeRouteTab = ref("");
     const typeOfListing = ref([
       "For Sale by Agent",
       "For Sale by Owner",
@@ -100,16 +105,48 @@ export default ({
       "New Listings (Past Week)",
       "Price Reduced (Past Week)",
     ]);
-    const propertyListingType = ref(["Buy", "Rent", "Sold"]);
+
     const bathroomOptions = ref(["Any", "1+", "2+", "3+", "4+", "5+"]);
 
+    /**==========================
+     * propertyListingType
+     * ==========================
+     */
+    const propertyListingType = ref(["Buy", "Rent", "Sold"]);
+    
+    const getIsActiveRouteTab = computed(() => {
+      return store.getters.getIsActiveRouteTab;
+    });
+    
+    watchEffect(() => {
+      console.log("Inside Filter:", getIsActiveRouteTab.value);
+      switch (getIsActiveRouteTab.value) {
+        case "BuyPage":
+          activeRouteTab.value = propertyListingType.value[0]
+          break;
+        case "RentPage":
+          activeRouteTab.value = propertyListingType.value[1]
+          break;
+        case "SoldPage": 
+          activeRouteTab.value = propertyListingType.value[2]
+          break;
+      };
+    });
     function propertyListingTypeId(e){
       console.log("Listing Type Id:", e.target.id);
     };
+
+    /**==========================
+     * numberOfBathroom
+     * ==========================
+     */
+    const noBath = computed(() => bathroomOptions.value[0]);
     function numberOfBathroom(e){
       console.log("Bathroom No:", e.target.id);
     };
     return {
+      noBath,
+      activeRouteTab,
       propertyListingType,
       typeOfListing,
       bathroomOptions,
