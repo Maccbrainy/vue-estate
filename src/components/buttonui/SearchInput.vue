@@ -179,7 +179,20 @@ export default {
     });
 
     watchEffect(() => {
-      activeRouteTab.value = getIsActiveRouteTab.value;
+
+      switch (getIsActiveRouteTab.value) {
+        case "RentPage":
+        case "list-for-rent":
+          activeRouteTab.value = "list-for-rent"
+          break;
+        case "SoldPage": 
+        case "list-sold":
+          activeRouteTab.value = "list-sold"
+          break;
+        default:
+          activeRouteTab.value = "list-for-sale"
+          break;
+      }
     });
 
     async function onSubmit(e) {
@@ -237,7 +250,6 @@ export default {
     });
 
     onBeforeUnmount(() => {
-      console.log("Event listener keydown destroyed");
       document.removeEventListener("keydown", nextItem);
     });
 
