@@ -46,7 +46,9 @@ export default {
         route.name == "HomePage" ? "list-for-sale" : route.name;
       if (getIsActiveRouteTab.value == ""){
         store.commit("setActiveRouteTab", routingValue);
-      } 
+      } else {
+        store.commit("setActiveRouteTab", routingValue);
+      }
     });
 
     function activateTab(e){
