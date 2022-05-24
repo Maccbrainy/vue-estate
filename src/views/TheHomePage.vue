@@ -96,11 +96,10 @@ export default {
 
     watch(searchedDataFromStore, (val) => {
       stateSearchedData.value = val;
-      console.log("This is coming from the TheHomePage component");
     });
     const { cordinates, userEnabledLocation } = userGeolocation();
 
-    console.log("From Destructured:", cordinates);
+    // console.log("From Destructured:", cordinates);
 
     onMounted(() => {
       navigator.geolocation.getCurrentPosition(
@@ -117,6 +116,7 @@ export default {
     return {
       userLocLat,
       userLocLong,
+      cordinates,
       searchedDataFromStore,
       stateSearchedData,
       userEnabledLocation
