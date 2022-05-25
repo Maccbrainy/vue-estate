@@ -104,10 +104,17 @@ export default createStore({
     setActiveRouteTab(state, routePayload){
       state.activeRouteTab = routePayload;
     },
+    //Invoked from SearchInput
+    setUseRouterPush(state, routePayload){
+      state.isLoading = true;
+      state.activeRouteTab = routePayload["activeRouteTab"];
+      useRouterPush(routePayload);
+      state.isLoading = false;
+    }
   },
 
   actions: {
-    //Invoked from watch function in the searchResultContentLayout component
+    //Invoked from watch function in the searchInput component
     setPropertiesFromRemoteApi: async ({ commit }, payload) => {
       commit("setIsLoading", true);
 
