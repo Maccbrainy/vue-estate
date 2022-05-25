@@ -2,15 +2,15 @@
   <button-group>
     <button-singular 
       v-for="option in options" 
-      v-bind:key="option.index"
+      v-bind:key="option.id"
       v-on:click="$emit('getOptionId', $event)"
-      v-bind:id="option"
+      v-bind:id="option.id"
       v-bind:class="{
         'rounded-l-lg': option == options[0],
         'border-r rounded-r-lg': option == options[options.length - 1],
-        'bg-teal text-teal-lighter border-teal shadow-xl hover:bg-teal': isActiveTab == option
+        'text-white bg-teal  border-teal shadow-xl hover:bg-teal focus:border-teal': isActiveTab == option.id,
       }">
-      {{ option }}
+      {{ option.name }}
     </button-singular>
   </button-group>
 </template>
@@ -24,7 +24,7 @@ export default ({
   },
   props: {
     options: Array,
-    isActiveTab: String
-  }
+    isActiveTab: [String, Number]
+  },
 })
 </script>
