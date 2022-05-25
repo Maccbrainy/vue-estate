@@ -1,3 +1,4 @@
+export { default as FilterRouteTab } from "@/components/filter/FilterRouteTab.vue";
 export { default as FilterButtonAgentAndOtherListings } from "@/components/filter/FilterButtonAgentAndOtherListings.vue";
 export { default as FilterButtonPriceRange } from "@/components/filter/FilterButtonPriceRange.vue";
 export { default as FilterButtonBedrooms } from "@/components/filter/FilterButtonBedrooms.vue";
