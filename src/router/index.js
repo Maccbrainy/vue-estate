@@ -27,6 +27,7 @@ const routes = [
     name: "BuyPage",
     component: SearchResultContentLayout,
     props: (route) => ({
+      name: route.name,
       slug: route.params.slug,
       city: route.params.city,
       title: route.params.title,
@@ -40,6 +41,7 @@ const routes = [
     name: "RentPage",
     component: SearchResultContentLayout,
     props: (route) => ({
+      name: route.name,
       slug: route.params.slug,
       city: route.params.city,
       title: route.params.title,
@@ -53,6 +55,7 @@ const routes = [
     name: "SoldPage",
     component: SearchResultContentLayout,
     props: (route) => ({
+      name: route.name,
       slug: route.params.slug,
       city: route.params.city,
       title: route.params.title,
