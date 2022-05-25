@@ -1,29 +1,45 @@
 import router from "@/router";
 import { ref } from "vue";
 export default function useRouterPush(payLoad) {
-  
   const searchParams = ref("");
   const activeRoute = ref("");
   searchParams.value = payLoad;
   if (!searchParams.value) {
     return
   };
+
   let cityParam = 
     searchParams.value.city != undefined ? searchParams.value.city : "";
   let slugParam = 
     searchParams.value.state_code != undefined
       ? searchParams.value.state_code
       : searchParams.value;
+    
+  let searchedWithZipCode;
+  let searchedWithCityNameDefined;
+  let searchedDefault;
+
   switch (searchParams.value.activeRouteTab) {
     case "list-for-rent":
-      activeRoute.value = "RentPage"
+    case "RentPage":
+      activeRoute.value = "RentPage";
+      searchedWithZipCode = `Homes For Rent & Real Estate in ${slugParam} Zip Code`;
+      searchedWithCityNameDefined = `${cityParam} Homes For Rent & ${cityParam} Real Estate | Vue Estate`;
+      searchedDefault = `${slugParam} Homes For Rent & ${slugParam} Real Estate | Vue Estate`;
       break;
     case "list-sold":
-      activeRoute.value = "SoldPage"
+    case "SoldPage":
+      activeRoute.value = "SoldPage";
+      searchedWithZipCode = `Homes Sold & Real Estate in ${slugParam} Zip Code`;
+      searchedWithCityNameDefined = `${cityParam} Homes Sold & ${cityParam} Real Estate | Vue Estate`;
+      searchedDefault = `${slugParam} Homes Sold & ${slugParam} Real Estate | Vue Estate`;
       break;
     default:
-      activeRoute.value = "BuyPage"
-  }
+      activeRoute.value = "BuyPage";
+      searchedWithZipCode = `Homes For Sale & Real Estate in ${slugParam} Zip Code`;
+      searchedWithCityNameDefined = `${cityParam} Homes For Sale & ${cityParam} Real Estate | Vue Estate`;
+      searchedDefault = `${slugParam} Homes For Sale & ${slugParam} Real Estate | Vue Estate`;
+  };
   /**Regular Expression
    * for numeric characters only 
    * thus to detect postal or zip codes search; 
@@ -41,10 +57,6 @@ export default function useRouterPush(payLoad) {
   const removedWhiteSpacesFromCityParam = regExpWhiteSpaces.test(cityParam)
     ? cityParam.replaceAll(" ", "_")
     : cityParam;
-
-  const searchedWithZipCode = `Homes For Sale & Real Estate in ${slugParam} Zip Code`;
-  const searchedWithCityNameDefined = `${cityParam} Homes For Sale & ${cityParam} Real Estate | Vue Estate`;
-  const searchedDefault = `${slugParam} Homes For Sale & ${slugParam} Real Estate | Vue Estate`;
 
   router.push({
     name: `${activeRoute.value}`,
