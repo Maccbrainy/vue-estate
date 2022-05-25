@@ -206,9 +206,10 @@ export default {
           state_code: "CA",
           activeRouteTab: activeRouteTab.value
         }
-        await store.dispatch("setPropertiesFromRemoteApi", defaultSearch);
+        // await store.dispatch("setPropertiesFromRemoteApi", defaultSearch);
+        store.commit("setUseRouterPush", defaultSearch);
         store.commit("setSearchedData", defaultSearch);
-        console.log("ActiveRouteTab:", defaultSearch);
+        // console.log("ActiveRouteTab:", defaultSearch);
       }; 
       if (searchFilterIsActive.value && currentDataIndex.value <= 0){
         searchPayload.value = {
