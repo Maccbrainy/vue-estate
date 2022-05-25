@@ -2,12 +2,13 @@
   <dropdown-button buttonTitle="All Beds" menuTitle="Bedrooms">
     <button-group-multi-buttons 
       v-bind:options="bedOptions"
+      v-bind:isActiveTab="noOfBeds"
       v-on:getOptionId="numberOfBed">
     </button-group-multi-buttons>
   </dropdown-button>
 </template>
 <script>
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { 
   DropdownButton,
   ButtonGroupMultiButtons 
@@ -21,13 +22,35 @@ export default ({
   },
   setup() {
     const store = useStore();
-    const bedOptions = reactive(["Studio", "1+", "2+", "3+", "4+"]);
-
+    const bedOptions = reactive([
+      {
+        id: "Studio",
+        name: "Studio",
+      },
+      {
+        id: "1+",
+        name: "1+",
+      },
+      {
+        id: "2+",
+        name: "2+",
+      },
+      {
+        id: "3+",
+        name: "3+",
+      },
+      {
+        id: "4+",
+        name: "4+",
+      }
+    ]);
+    const noOfBeds = computed(() => bedOptions[0].id);
     function numberOfBed(e){
       console.log("You clicked me!", e.target.id);
       store.commit("setNumberOfBedRoom", e.target.id);
     }
     return {
+      noOfBeds,
       numberOfBed,
       bedOptions,
     }
