@@ -1,4 +1,5 @@
 import router from "@/router";
+import store from "@/store";
 import { ref } from "vue";
 export default function useRouterPush(payLoad) {
   const searchParams = ref("");
@@ -23,21 +24,21 @@ export default function useRouterPush(payLoad) {
     case "list-for-rent":
     case "RentPage":
       activeRoute.value = "RentPage";
-      searchedWithZipCode = `Homes For Rent & Real Estate in ${slugParam} Zip Code`;
-      searchedWithCityNameDefined = `${cityParam} Homes For Rent & ${cityParam} Real Estate | Vue Estate`;
-      searchedDefault = `${slugParam} Homes For Rent & ${slugParam} Real Estate | Vue Estate`;
+      searchedWithZipCode = `Apartments For Rent in ${slugParam} Zip Code`;
+      searchedWithCityNameDefined = `Apartments For Rent in ${cityParam}, ${slugParam} | Vue Estate`;
+      searchedDefault = `Apartments For Rent in ${slugParam} | Vue Estate`;
       break;
     case "list-sold":
     case "SoldPage":
       activeRoute.value = "SoldPage";
-      searchedWithZipCode = `Homes Sold & Real Estate in ${slugParam} Zip Code`;
-      searchedWithCityNameDefined = `${cityParam} Homes Sold & ${cityParam} Real Estate | Vue Estate`;
-      searchedDefault = `${slugParam} Homes Sold & ${slugParam} Real Estate | Vue Estate`;
+      searchedWithZipCode = `Recently Sold Properties in ${slugParam} Zip Code`;
+      searchedWithCityNameDefined = `${cityParam}, ${slugParam} Recently Sold Properties | Vue Estate`;
+      searchedDefault = `${slugParam} Recently Sold Properties | Vue Estate`;
       break;
     default:
       activeRoute.value = "BuyPage";
       searchedWithZipCode = `Homes For Sale & Real Estate in ${slugParam} Zip Code`;
-      searchedWithCityNameDefined = `${cityParam} Homes For Sale & ${cityParam} Real Estate | Vue Estate`;
+      searchedWithCityNameDefined = `${cityParam}, ${slugParam} Homes For Sale & ${cityParam}, ${slugParam} Real Estate | Vue Estate`;
       searchedDefault = `${slugParam} Homes For Sale & ${slugParam} Real Estate | Vue Estate`;
   };
   /**Regular Expression
@@ -57,9 +58,9 @@ export default function useRouterPush(payLoad) {
   const removedWhiteSpacesFromCityParam = regExpWhiteSpaces.test(cityParam)
     ? cityParam.replaceAll(" ", "_")
     : cityParam;
-
+  store.commit("setActiveRouteTab", activeRoute.value);
   router.push({
-    name: `${activeRoute.value}`,
+    name: activeRoute.value,
     params: {
       slug: slugParam,
       city: removedWhiteSpacesFromCityParam,
