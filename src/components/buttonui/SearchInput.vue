@@ -218,7 +218,8 @@ export default {
             e.target.nextElementSibling.children["places-search-list"].children[1].nonce,
           activeRouteTab: activeRouteTab.value
         }
-        await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
+        // await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
+        store.commit("setUseRouterPush", searchPayload.value);
         store.commit("setSearchedData", searchPayload.value);
       };
       if (searchFilterIsActive.value && currentDataIndex.value > 0){
@@ -230,7 +231,8 @@ export default {
           activeRouteTab: activeRouteTab.value
         };
 
-        await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
+        // await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
+        store.commit("setUseRouterPush", searchPayload.value);
         store.commit("setSearchedData", searchPayload.value);
 
       }
@@ -240,9 +242,10 @@ export default {
       searchPayload.value = {
         city: e.target.id,
         state_code: e.target.nonce,
-        activeRouteTab:`${activeRouteTab.value}`
+        activeRouteTab: activeRouteTab.value
       }
-      await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
+      store.commit("setUseRouterPush", searchPayload.value);
+      // await store.dispatch("setPropertiesFromRemoteApi", searchPayload.value);
       store.commit("setSearchedData", searchPayload.value);
 
     };
