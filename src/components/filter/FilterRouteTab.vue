@@ -1,8 +1,8 @@
 <template>
   <button-group-multi-buttons 
-    v-bind:options="propertyListingType"
-    v-bind:isActiveTab="activeRouteTab"
-    v-on:getOptionId="setPropertyListingType">
+    v-bind:options="propertyListingTemplate"
+    v-bind:isActiveTab="activeRouteTemplate"
+    v-on:getOptionId="setPropertyListingTemplate">
   </button-group-multi-buttons>
 </template>
 <script>
@@ -19,8 +19,8 @@ export default {
     const store = useStore();
     const route = useRoute();
     const searchPayload = ref({});
-    const activeRouteTab = ref("");
-    const propertyListingType = ref([
+    const activeRouteTemplate = ref("");
+    const propertyListingTemplate = ref([
       {
         id: "BuyPage",
         name: "Buy",
@@ -37,15 +37,18 @@ export default {
     const getIsActiveRouteTab = computed(() => {
       return store.getters.getIsActiveRouteTab;
     });
+    // const getSearchedData = computed(() => {
+    //   return store.getters.getSearchedData;
+    // });
     watchEffect(() => {
       if (getIsActiveRouteTab.value == ""){
-        store.commit("setActiveRouteTab", route.name);
-        activeRouteTab.value = route.name;
+        store.commit("setActiveRoutePath", route.name);
+        activeRouteTemplate.value = route.name;
       }
-      activeRouteTab.value = getIsActiveRouteTab.value;
+      activeRouteTemplate.value = getIsActiveRouteTab.value;
     });
 
-    function setPropertyListingType(e){
+    function setPropertyListingTemplate(e){
       let routeName = e.target.id;
       let isActiveRoute = getIsActiveRouteTab.value;
       if (routeName != isActiveRoute){
@@ -56,13 +59,12 @@ export default {
         };
         store.commit("setUseRouterPush", searchPayload.value);
         store.commit("setSearchedData", searchPayload.value);
-        console.log("Active Route page Object:", searchPayload.value);
       }
     };
     return {
-      activeRouteTab,
-      propertyListingType,
-      setPropertyListingType
+      activeRouteTemplate,
+      propertyListingTemplate,
+      setPropertyListingTemplate
     }
  },
 }
