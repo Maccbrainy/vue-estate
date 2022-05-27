@@ -67,7 +67,7 @@
 </template>
 <script>
 import { useRouter } from "vue-router";
-import { useFetch } from "@/api/useFetch.js";
+import { useFetchDetail } from "@/api/useFetchDetail.js";
 import { ref, onMounted } from "vue";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import NavBarSearchForm from "@/components/NavBarSearchForm.vue";
@@ -121,7 +121,7 @@ export default {
       }
     });
     onMounted(async () => {
-      const { getPropertyDetails } = useFetch();
+      const { getPropertyDetails } = useFetchDetail();
       propertyDetail.value = await getPropertyDetails(props.propertyId);
       isLoading.value = false;
     });
