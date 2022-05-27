@@ -23,7 +23,7 @@
         'border border-gray-300 bg-white rounded-lg h-11 transition duration-700': !isActiveBranch,
          }">
       <switch-button 
-        id="Other"
+        id="Other Listings"
         v-bind:class="{ 'text-gray-400': isLoading }" 
         v-bind:disabled="isLoading">
         Other
@@ -63,14 +63,20 @@ export default {
     const propertListingsByOther = computed(() => {
       return store.getters.getPropertyListingsByNoneAgent;
     });
-    const byAgent = computed(() => {
-      return store.getters.getListingBranchByAgent;
+    const activeBranch = computed(() => {
+      return store.getters.getActiveBranch;
+    });
+    watchEffect(() => {
+      if (activeBranch.value == ""){
+        store.commit("setActiveListBranch", "Agent Listings");
+      }
     });
     watchEffect(() => {
       isLoading.value = loadingIsActive.value;
     });
     watchEffect(() => {
-      isActiveBranch.value = byAgent.value === "active" ? true : false;
+      isActiveBranch.value = 
+        activeBranch.value === "Agent Listings" ? true : false;
     });
     watchEffect(() => {
       let numberByOther = propertListingsByOther.value.length;
@@ -92,5 +98,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-</style>
