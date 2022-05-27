@@ -58,7 +58,7 @@ export default function useRouterPush(payLoad) {
   const removedWhiteSpacesFromCityParam = regExpWhiteSpaces.test(cityParam)
     ? cityParam.replaceAll(" ", "_")
     : cityParam;
-  store.commit("setActiveRouteTab", activeRoute.value);
+  store.commit("setActiveRoutePath", activeRoute.value);
   router.push({
     name: activeRoute.value,
     params: {
