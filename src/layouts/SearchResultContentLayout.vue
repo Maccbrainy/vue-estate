@@ -5,6 +5,7 @@
   </nav-bar-container>
   <filter-button-container></filter-button-container>
   <div class="flex flex-grow flex-auto flex-col z-0" tabindex="-1">
+    <is-loading></is-loading>
     <div v-if="!allPropertListings" class="w-1/2 sf:w-full block relative flex-1 -bottom-16">
       <div tabindex="-1" class="flex flex-auto flex-col px-2 py-1">
         <div 
@@ -74,8 +75,10 @@
   </div>
 </template>
 <script>
-import { ref, computed, watchEffect } from "vue";
+import { ref, computed, onMounted, watchEffect } from "vue";
 import { useStore } from "vuex";
+import axios from "axios";
+import { useFetch } from "@/api/useFetch.js";
 import { 
   DropdownButtonSelect, 
   DropdownButtonSelectOption, 
@@ -84,21 +87,26 @@ import {
 import { FilterButtonContainer } from "@/components/filter";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import NavBar from "@/components/NavBar.vue";
+import IsLoading from "@/components/IsLoading.vue";
 import NavBarSearchForm from "@/components/NavBarSearchForm.vue";
 import NoSearchTermMatch from "@/components/NoSearchTermMatch.vue";
 import NoSearchTermMatchForAgentAndOtherListings from "@/components/NoSearchTermMatchForAgentAndOtherListings.vue";
 import NoSearchTermForAgentOrOtherListings from "@/components/NoSearchTermForAgentOrOtherListings.vue";
 import SearchResultGoogleMap from "@/components/SearchResultGoogleMap.vue";
 import SearchResultItemCard from "@/components/SearchResultItemCard.vue";
+// import { useRouterPush } from "@/composables";
+// import { useRoute } from "vue-router";
 export default {
   name: "SearchResultContentLayout",
   props: {
+    name: String,
     slug: [String, Number],
     city: String,
     title: String,
   },
   components:{
     NavBar,
+    IsLoading,
     NavBarSearchForm,
     DropdownButtonSelect,
     NavBarContainer,
@@ -114,49 +122,101 @@ export default {
   setup(props) {
     const store = useStore();
     const isLoading = ref(false);
+    const allPropertListings = ref({});
+    const error = ref("");
+    // const route = useRoute();
+    const activeRouteTab = ref("");
     const searchedData = computed(() => {
       return store.getters.getSearchedData
     });
-    console.log("Just searched:", searchedData.value);
+    const getIsActiveRouteTab = computed(() => {
+      return store.getters.getIsActiveRouteTab;
+    });
+    watchEffect(async () => {
+      switch (getIsActiveRouteTab.value) {
+        case "RentPage":
+          activeRouteTab.value = "list-for-rent"
+          break;
+        case "SoldPage":
+          activeRouteTab.value = "list-sold"
+          break;
+        default:
+          activeRouteTab.value = "list-for-sale"
+          break;
+      };
+      isLoading.value = true;
+      console.log("Switched 1st detailed:", activeRouteTab.value);
+      const { propertyDetail } = await useFetch(activeRouteTab.value, props.slug, props.city);
+      isLoading.value = false;
+      console.log("Switched parameters:", propertyDetail.value);
+      store.commit("setIsLoading", false);
+      console.log("Switched 2nd detailed:", activeRouteTab.value);
+    });
 
-    const unwatchEffect = watchEffect(async () => {
-      if (props.slug && props.city){
-        console.log("Store Action API terminated!");
-        return;
-      } 
-      if (props.slug && !props.city) {
-        console.log("Remote Api fetching running!");
-        await store.dispatch("setPropertiesFromRemoteApi", props.slug);
-        unwatchEffect();
+    async function fetchData(){
+
+      if (activeRouteTab.value != ""){
+        let fetchParameters = {
+          routeName: activeRouteTab.value,
+          slug: props.slug,
+          cityName: props.city,
+        };
+        return fetchParameters;
+      } else {
+        try {
+          const {
+            data: { properties }
+          } = await axios.get(
+            `https://realty-in-us.p.rapidapi.com/properties/v2/${activeRouteTab.value}`, 
+            { 
+              params: {
+                // city: cityName ? cityName : slug,
+                // state_code: slug,
+                offset: "0",
+                limit: "200",
+                sort: "relevance"
+              },
+              headers: {
+                "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
+                "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`
+              }
+            });
+          allPropertListings.value = properties;
+          store.commit("setAllPropertyListings", properties);
+          store.commit("setIsLoading", false);
+          isLoading.value = false;
+        } catch (err) {
+          console.error(err);
+          error.value = err.toString(); 
+          store.commit("setIsLoading", false);
+          isLoading.value = false;
+        }
       }
-    });
 
-    const allPropertListings = computed(() => {
-      return store.getters.getAllPropertyListings;
-    });
-    console.log("All properties searched:", allPropertListings.value);
-
-    // const { homeLocationFinders } = homeLocationFinderSearchControllers();
-    // const { discoveredHomes } = computedHomeResourcesSearched(
-    //   allPropertListings.value,
-    //   homeLocationFinders, 
-    //   props.slug,
-    //   hyphenFreeProp.value);
-    // const { 
-    //   activeListing, 
-    //   listingsByAgent, 
-    //   listingsByOthers, 
-    //   agentListIsActive 
-    // } = computedPropertyByAgentAndNonAgent(discoveredHomes.value);
-    // const homeCountIsAboveOne = computed(() => {
-    //   return activeListing.value.length > 1 ? true : false
+    } 
+    // *const unwatchEffect = watchEffect(async () => {
+    //   if (props.slug && props.city){
+    //     console.log("Store Action API terminated!");
+    //     return;
+    //   } 
+    //   if (props.slug && !props.city) {
+    //     console.log("Remote Api fetching running!");
+    //     await store.dispatch("setPropertiesFromRemoteApi", props.slug);
+    //     unwatchEffect();
+    //   }
     // });
 
-    // const listingsByAgentAndByOtherIsZero = computed(() => {
-    //   return listingsByAgent.value.length == 0 && listingsByOthers.value.length == 0 ? true : false;
-    // })
+    // *const allPropertListings = computed(() => {
+    //   return store.getters.getAllPropertyListings;
+    // });
+    console.log("All properties before onMounted  searched:", allPropertListings.value);
+    onMounted(() => {
+      console.log("Get the route props name:", props.name);
+    });
     return {
+      fetchData,
       isLoading,
+      searchedData,
       allPropertListings
     }
   },
