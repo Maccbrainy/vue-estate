@@ -6,12 +6,12 @@
         <div class="mt-5">
           <h1 class="mb-1 pt-1 h-3 w-1/2 bg-gray-200 rounded-xl"></h1>
         </div>
-        <div class="flex w-full mt-4 justify-between items-center">
+        <div class="flex w-full mt-2 justify-between items-center">
           <h1 class="pt-1 h-3 w-2/5 bg-gray-200 rounded-xl"></h1>
           <dropdown-button-select-box>
             <dropdown-button-select class="shadow-none border-none">
               <dropdown-button-select-option value>
-                Sort: Just For You
+                Sort
               </dropdown-button-select-option>
             </dropdown-button-select>
           </dropdown-button-select-box>
