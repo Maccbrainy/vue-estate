@@ -45,9 +45,9 @@ export default {
       let routingValue = 
         route.name == "HomePage" ? "list-for-sale" : route.name;
       if (getIsActiveRouteTab.value == ""){
-        store.commit("setActiveRouteTab", routingValue);
+        store.commit("setActiveRoutePath", routingValue);
       } else {
-        store.commit("setActiveRouteTab", routingValue);
+        store.commit("setActiveRoutePath", routingValue);
       }
     });
 
@@ -57,7 +57,7 @@ export default {
       router.push({
         name: routingValue
       });
-      store.commit("setActiveRouteTab", e.target.name);
+      store.commit("setActiveRoutePath", e.target.name);
     };
 
     watchEffect(() => {
