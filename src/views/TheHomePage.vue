@@ -98,18 +98,11 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { 
-  ref, 
-  computed,
-  watch, 
-  onMounted, 
-  reactive, 
-  watchEffect, 
-  markRaw 
+import { ref, computed, watch, onMounted, reactive, watchEffect
 } from "vue";
-import BuyAHome from "@/assets/icons/BuyAHome.vue";
-import RentAHome from "@/assets/icons/RentAHome.vue";
-import NeighborHoods from "@/assets/icons/Neighborhoods.vue";
+import BuyAHomeIcon from "@/assets/icons/BuyAHome.vue";
+import RentAHomeIcon from "@/assets/icons/RentAHome.vue";
+import NeighborHoodsIcon from "@/assets/icons/Neighborhoods.vue";
 import { SearchBox, SearchInput } from "@/components/buttonui";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
@@ -125,6 +118,9 @@ export default {
     SearchInput,
     HomePageLayout,
     HomeTabButtons,
+    BuyAHomeIcon,
+    RentAHomeIcon,
+    NeighborHoodsIcon
   },
   setup() {
     const store = useStore();
@@ -135,15 +131,12 @@ export default {
     const userLocLat = ref("");
     const userLocLong = ref("");
     const { cordinates, userEnabledLocation } = userGeolocation();
-    const buyHomeIcon = markRaw(BuyAHome);
-    const rentHomeIcon = markRaw(RentAHome);
-    const neighborhoodIcon = markRaw(NeighborHoods);
     const findHomeAndRental = [
       {
         id: "BuyHome",
         title: "Buy a Home",
         description: "With over 1 million+ homes for sale available on the website, Vue Estate App can match you with a house you will want to call home.",
-        icon: buyHomeIcon,
+        icon: "BuyAHomeIcon",
         url: "/houses-for-sale-near-me/",
         callToAction: "Find a Home"
       },
@@ -151,7 +144,7 @@ export default {
         id: "RentalHome",
         title: "Rent a Home",
         description: "With 35+ filters and custom keyword search, Vue Estate App can help you easily find a home or apartment for rent that you'll love.",
-        icon: rentHomeIcon,
+        icon: "RentAHomeIcon",
         url: "/apartments-for-rent-near-me/",
         callToAction: "Find a Rental"
       }
@@ -161,7 +154,7 @@ export default {
         id: "Neighborhoods",
         title: "See Neighborhoods",
         description: "With more neighborhood insights than any other real estate website, we've captured the color and diversity of communities",
-        icon: neighborhoodIcon,
+        icon: "NeighborHoodsIcon",
         url: "/neighborhoods/",
         callToAction: "Learn more"
       }];
