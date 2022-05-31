@@ -95,18 +95,22 @@
     <template v-slot:footer>
       <section class="listColumns w-full flex relative top-40">
         <div class="max-w-7xl flex m-auto">
-          <show-hide-columns listColumnTitle="Real Estate Markets"
-            v-bind:listColumnData="arrangeAscendingOrder">
-          </show-hide-columns>
-          <show-hide-columns listColumnTitle="Popular Searches"
-            v-bind:listColumnData="arrangeAscendingOrder">
-          </show-hide-columns>
-          <show-hide-columns listColumnTitle="Explore Vue Estate"
-            v-bind:listColumnData="arrangeAscendingOrder">
-          </show-hide-columns>
-          <show-hide-columns listColumnTitle="For Professionals"
-            v-bind:listColumnData="arrangeAscendingOrder">
-          </show-hide-columns>
+          <show-hide-list-columns 
+            listColumnTitle="Real Estate Markets"
+            suffix="Real Estate"
+            v-bind:listColumnData="marketPlaces">
+          </show-hide-list-columns>
+          <show-hide-list-columns 
+            listColumnTitle="Popular Searches"
+            suffix="For Sale"
+            v-bind:listColumnData="marketPlaces">
+          </show-hide-list-columns>
+          <show-hide-list-columns listColumnTitle="Explore Vue Estate"
+            v-bind:listColumnData="exploreContact">
+          </show-hide-list-columns>
+          <show-hide-list-columns listColumnTitle="For Professionals"
+            v-bind:listColumnData="forProfessionals">
+          </show-hide-list-columns>
         </div>
       </section>
     </template>
@@ -123,7 +127,7 @@ import { SearchBox, SearchInput } from "@/components/buttonui";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
 import NavBar from "@/components/NavBar.vue";
-import ShowHideColumns from "@/components/ShowHideColumns.vue";
+import ShowHideListColumns from "@/components/ShowHideListColumns.vue";
 import HomePageLayout from "@/layouts/HomePageLayout.vue";
 import userGeolocation from "@/helper/userGeolocation";
 import jsonProperties from "@/api/autoComplete.json";
@@ -139,15 +143,13 @@ export default {
     BuyAHomeIcon,
     RentAHomeIcon,
     NeighborHoodsIcon,
-    ShowHideColumns
+    ShowHideListColumns
   },
   setup() {
     const store = useStore();
     const stateSearchedData = ref("");
     const userFindSwitch = ref("");
     const userSearchPriorities = ref([]);
-    const showHide = ref(false);
-    const listColumns = ref({});
     const userLocLat = ref("");
     const userLocLong = ref("");
     const { cordinates, userEnabledLocation } = userGeolocation();
@@ -226,29 +228,47 @@ export default {
       //State must be equal
         return 0;
     });
-    watchEffect(() => {
-      if (removeDuplicateHomeData.length > 4){
-        listColumns.value = {
-          data: arrangeAscendingOrder.slice(0, 4),
-          showMoreText: true
-        }
-        return listColumns.value;
-      };
-      if (removeDuplicateHomeData.length == 4){
-        listColumns.value = {
-          data: arrangeAscendingOrder,
-          showMoreText: false
-       };
-       return listColumns.value;
-      };
-    });
-    const fullListColumns = computed(() => {
-      return arrangeAscendingOrder.slice(4);
-    });
-    function toggleShowHideData(){
-      showHide.value = !showHide.value
-    };
+    const forProfessionals = [
+      {
+        name: "Popular County",
+        url: ""
+      },
+      {
+        name: "Rental Communities County",
+        url: ""
+      },
+      {
+        name: "Real Estate leads",
+        url: ""
+      },
+    ];
 
+    const exploreContact = [
+      {
+        name: "Facebook",
+        url: ""
+      },
+      {
+        name: "Twitter",
+        url: ""
+      },
+      {
+        name: "Community Sitemap",
+        url: ""
+      },
+      {
+        name: "Vue App Sitemap",
+        url: ""
+      },
+      {
+        name: "All Real Estate Markets",
+        url: ""
+      },
+      {
+        name: "All Rental Markets",
+        url: ""
+      },
+    ]
     onMounted(() => {
       navigator.geolocation.getCurrentPosition(
         ({ coords: { latitude, longitude } }) => {
@@ -270,11 +290,9 @@ export default {
       searchedDataFromStore,
       stateSearchedData,
       userEnabledLocation,
-      arrangeAscendingOrder,
-      listColumns,
-      fullListColumns,
-      showHide,
-      toggleShowHideData
+      marketPlaces: arrangeAscendingOrder,
+      forProfessionals,
+      exploreContact
     }
   }
 };
