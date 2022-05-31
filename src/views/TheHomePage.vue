@@ -49,11 +49,11 @@
           </div>
         </div>
       </section>
-      <section class="w-5/6 m-auto flex flex-col text-center relative top-32">
+      <section class="max-w-6xl mf:w-full m-auto flex flex-col text-center relative top-32">
         <div class="text-4xl sf:text-3xl sf:w-10/12 m-auto text-gray-700 font-bold">
           <h1>See how Vue Estate App can help</h1>
         </div>
-        <div class="flex sf:block space-x-4 justify-center mt-10 w-9/12 m-auto">
+        <div class="flex sf:grid space-x-4 justify-center mt-10 w-9/12 lf:w-11/12 m-auto">
           <div 
             v-for="priority in userSearchPriorities"
             :key="priority.id" 
@@ -93,6 +93,39 @@
       </section>
     </template>
     <template v-slot:footer>
+      <section class="listColumn w-full flex relative top-40">
+        <div class="max-w-7xl flex m-auto">
+          <div class="w-10/12 lg:w-60 border-transparent border-8">
+            <h3 class="font-medium text-base text-gray-700">Real Estate Markets</h3>
+            <ul class="mt-2">
+              <div v-for="list in listColumns.data" 
+                v-bind:key="list">
+                <router-link :to="list.state_code">
+                  <li 
+                    class="font-normal text-xs text-gray-600 pb-1 cursor-pointer hover:underline">{{list.state}} Real Estate</li>
+                </router-link>
+              </div>
+              <span 
+                v-if="listColumns.showMoreText"
+                v-on:click="toggleShowHideData" 
+                class="text-teal text-sm cursor-pointer hover:underline"
+                v-bind:class="{'hidden': showHide}">More</span>
+              <div v-if="showHide">
+                <div v-for="list in fullListColumns" v-bind:key="list">
+                  <router-link :to="list.state_code">
+                    <li 
+                      class="font-normal text-xs text-gray-600 pb-1 cursor-pointer hover:underline">{{list.state}} Real Estate
+                    </li>
+                  </router-link>
+                </div>
+                <span 
+                  v-on:click="toggleShowHideData" 
+                  class="text-teal text-sm cursor-pointer hover:underline">Less</span>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </section>
     </template>
   </home-page-layout>
 </template>
@@ -109,6 +142,7 @@ import HomeTabButtons from "@/components/HomeTabButtons.vue";
 import NavBar from "@/components/NavBar.vue";
 import HomePageLayout from "@/layouts/HomePageLayout.vue";
 import userGeolocation from "@/helper/userGeolocation";
+import jsonProperties from "@/api/autoComplete.json";
 export default {
   name: "HomePage",
   components: {
@@ -124,10 +158,11 @@ export default {
   },
   setup() {
     const store = useStore();
-    // const router = useRouter();
     const stateSearchedData = ref("");
     const userFindSwitch = ref("");
     const userSearchPriorities = ref([]);
+    const showHide = ref(false);
+    const listColumns = ref({});
     const userLocLat = ref("");
     const userLocLong = ref("");
     const { cordinates, userEnabledLocation } = userGeolocation();
@@ -182,6 +217,53 @@ export default {
       }
       userSearchPriorities.value = [...userFindSwitch.value, ...neighborhoods];
     });
+
+    const autoComplete = ref(jsonProperties.property);
+    const removeDuplicateHomeData = autoComplete.value.reduce((unique, o) => {
+      let duplicateScreening = !unique.some((obj) => obj.state === o.state)
+      if (duplicateScreening) { 
+        unique.push({
+          state: o.state,
+          state_code: o.state_code,
+        });
+      }
+      return unique;
+    },[]);
+    const arrangeAscendingOrder = removeDuplicateHomeData.sort((a, b) => {
+      const stateA = a.state.toUpperCase();
+      const stateB = b.state.toUpperCase();
+      if (stateA < stateB){
+        return -1;
+      };
+      if (stateA > stateB){
+        return 1;
+      }
+      //State must be equal
+        return 0;
+    });
+    watchEffect(() => {
+      if (removeDuplicateHomeData.length > 4){
+        listColumns.value = {
+          data: arrangeAscendingOrder.slice(0, 4),
+          showMoreText: true
+        }
+        return listColumns.value;
+      };
+      if (removeDuplicateHomeData.length == 4){
+        listColumns.value = {
+          data: arrangeAscendingOrder,
+          showMoreText: false
+       };
+       return listColumns.value;
+      };
+    });
+    const fullListColumns = computed(() => {
+      return arrangeAscendingOrder.slice(4);
+    });
+    function toggleShowHideData(){
+      showHide.value = !showHide.value
+    };
+
     onMounted(() => {
       navigator.geolocation.getCurrentPosition(
         ({ coords: { latitude, longitude } }) => {
@@ -194,6 +276,7 @@ export default {
           console.log("From HomePage onmounted", userCordinates); 
         })
     });
+
     return {
       userSearchPriorities,
       userLocLat,
@@ -202,6 +285,11 @@ export default {
       searchedDataFromStore,
       stateSearchedData,
       userEnabledLocation,
+      arrangeAscendingOrder,
+      listColumns,
+      fullListColumns,
+      showHide,
+      toggleShowHideData
     }
   }
 };
