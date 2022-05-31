@@ -93,37 +93,20 @@
       </section>
     </template>
     <template v-slot:footer>
-      <section class="listColumn w-full flex relative top-40">
+      <section class="listColumns w-full flex relative top-40">
         <div class="max-w-7xl flex m-auto">
-          <div class="w-10/12 lg:w-60 border-transparent border-8">
-            <h3 class="font-medium text-base text-gray-700">Real Estate Markets</h3>
-            <ul class="mt-2">
-              <div v-for="list in listColumns.data" 
-                v-bind:key="list">
-                <router-link :to="list.state_code">
-                  <li 
-                    class="font-normal text-xs text-gray-600 pb-1 cursor-pointer hover:underline">{{list.state}} Real Estate</li>
-                </router-link>
-              </div>
-              <span 
-                v-if="listColumns.showMoreText"
-                v-on:click="toggleShowHideData" 
-                class="text-teal text-sm cursor-pointer hover:underline"
-                v-bind:class="{'hidden': showHide}">More</span>
-              <div v-if="showHide">
-                <div v-for="list in fullListColumns" v-bind:key="list">
-                  <router-link :to="list.state_code">
-                    <li 
-                      class="font-normal text-xs text-gray-600 pb-1 cursor-pointer hover:underline">{{list.state}} Real Estate
-                    </li>
-                  </router-link>
-                </div>
-                <span 
-                  v-on:click="toggleShowHideData" 
-                  class="text-teal text-sm cursor-pointer hover:underline">Less</span>
-              </div>
-            </ul>
-          </div>
+          <show-hide-columns listColumnTitle="Real Estate Markets"
+            v-bind:listColumnData="arrangeAscendingOrder">
+          </show-hide-columns>
+          <show-hide-columns listColumnTitle="Popular Searches"
+            v-bind:listColumnData="arrangeAscendingOrder">
+          </show-hide-columns>
+          <show-hide-columns listColumnTitle="Explore Vue Estate"
+            v-bind:listColumnData="arrangeAscendingOrder">
+          </show-hide-columns>
+          <show-hide-columns listColumnTitle="For Professionals"
+            v-bind:listColumnData="arrangeAscendingOrder">
+          </show-hide-columns>
         </div>
       </section>
     </template>
@@ -140,6 +123,7 @@ import { SearchBox, SearchInput } from "@/components/buttonui";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
 import NavBar from "@/components/NavBar.vue";
+import ShowHideColumns from "@/components/ShowHideColumns.vue";
 import HomePageLayout from "@/layouts/HomePageLayout.vue";
 import userGeolocation from "@/helper/userGeolocation";
 import jsonProperties from "@/api/autoComplete.json";
@@ -154,7 +138,8 @@ export default {
     HomeTabButtons,
     BuyAHomeIcon,
     RentAHomeIcon,
-    NeighborHoodsIcon
+    NeighborHoodsIcon,
+    ShowHideColumns
   },
   setup() {
     const store = useStore();
