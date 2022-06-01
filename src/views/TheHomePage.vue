@@ -54,33 +54,9 @@
           <h1>See how Vue Estate App can help</h1>
         </div>
         <div class="flex sf:grid space-x-4 justify-center mt-10 w-9/12 lf:w-11/12 m-auto">
-          <div 
-            v-for="priority in userSearchPriorities"
-            :key="priority.id" 
-            class="flex flex-col items-center max-w-xs p-2 cursor-pointer">
-            <component v-bind:is="priority.icon"></component>
-            <h1 class="text-gray-700 text-2xl font-semibold">
-              {{ priority.title }}</h1>
-            <p class="font-normal text-base text-gray-600 mt-3 mb-5">
-              {{ priority.description }}</p>
-            <router-link :to="priority.url">
-              <button 
-                type="button" 
-                class="
-                bg-teal 
-                  px-4 
-                  py-2 
-                  shadow-xl 
-                  text-white text-base 
-                  font-bold 
-                  rounded-lg 
-                  border border-teal 
-                  hover:bg-transparent hover:text-teal 
-                  focus:bg-teal-lighter focus:text-teal">
-                {{ priority.callToAction }}
-              </button>
-            </router-link>
-          </div>
+          <call-to-action-card 
+            v-bind:callToActionsData="searchNearMeModel">
+          </call-to-action-card>
         </div>
       </section>
       <section class="w-full my-8 mx-auto flex flex-col justify-center items-center relative top-40">
@@ -105,10 +81,12 @@
             suffix="For Sale"
             v-bind:listColumnData="marketPlaces">
           </show-hide-list-columns>
-          <show-hide-list-columns listColumnTitle="Explore Vue Estate"
+          <show-hide-list-columns 
+            listColumnTitle="Explore Vue Estate"
             v-bind:listColumnData="exploreContact">
           </show-hide-list-columns>
-          <show-hide-list-columns listColumnTitle="For Professionals"
+          <show-hide-list-columns 
+            listColumnTitle="For Professionals"
             v-bind:listColumnData="forProfessionals">
           </show-hide-list-columns>
         </div>
@@ -120,14 +98,12 @@
 import { useStore } from "vuex";
 import { ref, computed, watch, onMounted, reactive, watchEffect
 } from "vue";
-import BuyAHomeIcon from "@/assets/icons/BuyAHome.vue";
-import RentAHomeIcon from "@/assets/icons/RentAHome.vue";
-import NeighborHoodsIcon from "@/assets/icons/Neighborhoods.vue";
 import { SearchBox, SearchInput } from "@/components/buttonui";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
 import NavBar from "@/components/NavBar.vue";
 import ShowHideListColumns from "@/components/ShowHideListColumns.vue";
+import CallToActionCard from "@/components/CallToActionCard.vue";
 import HomePageLayout from "@/layouts/HomePageLayout.vue";
 import userGeolocation from "@/helper/userGeolocation";
 import jsonProperties from "@/api/autoComplete.json";
@@ -140,16 +116,14 @@ export default {
     SearchInput,
     HomePageLayout,
     HomeTabButtons,
-    BuyAHomeIcon,
-    RentAHomeIcon,
-    NeighborHoodsIcon,
-    ShowHideListColumns
+    ShowHideListColumns,
+    CallToActionCard
   },
   setup() {
     const store = useStore();
     const stateSearchedData = ref("");
     const userFindSwitch = ref("");
-    const userSearchPriorities = ref([]);
+    const searchNearMeModel = ref([]);
     const userLocLat = ref("");
     const userLocLong = ref("");
     const { cordinates, userEnabledLocation } = userGeolocation();
@@ -202,7 +176,7 @@ export default {
           userFindSwitch.value = findHomeAndRental;
           break;
       }
-      userSearchPriorities.value = [...userFindSwitch.value, ...neighborhoods];
+      searchNearMeModel.value = [...userFindSwitch.value, ...neighborhoods];
     });
 
     const autoComplete = ref(jsonProperties.property);
@@ -283,7 +257,7 @@ export default {
     });
 
     return {
-      userSearchPriorities,
+      searchNearMeModel,
       userLocLat,
       userLocLong,
       cordinates,
