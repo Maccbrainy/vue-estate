@@ -49,6 +49,32 @@
           </div>
         </div>
       </section>
+      <section class="w-full relative top-32 mb-20">
+        <div class="overflow-hidden">
+          <button v-on:click="moveSlides(-1)" id="btn-scroll-left"><chevron-left/></button>
+          <button v-on:click="moveSlides(1)" id="btn-scroll-right"><chevron-right/></button>
+          <div class="snap-mandatory px-2">
+            <ul
+              v-for="(groupedItem, index) in groupedItems" 
+              v-bind:key="groupedItem"
+              v-bind:id="`grouped-item-${index}`" 
+              v-bind:class="{
+                'flex': moveIndex == index,
+              }">
+              <search-result-item-card 
+                v-for="(home, i) in groupedItem"
+                v-bind:key="home.property_id || home.id"
+                v-bind:ref="el => itemRefs[i] = el"
+                v-bind:home="home"
+                v-bind:class="{'hidden': moveIndex != index}">
+              </search-result-item-card>
+              <li 
+                v-if="groupedItem.length < 5" 
+                v-bind:class="{'hidden': moveIndex != index}">This is the last card!</li>
+            </ul>
+          </div>
+        </div>
+      </section>
       <section class="max-w-6xl mf:w-full m-auto flex flex-col text-center relative top-32">
         <div class="text-4xl sf:text-3xl sf:w-10/12 m-auto text-gray-700 font-bold">
           <h1>See how Vue Estate App can help</h1>
@@ -96,7 +122,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, computed, watch, onMounted, reactive, watchEffect
+import { ref, computed, watch, onMounted, watchEffect
 } from "vue";
 import { SearchBox, SearchInput } from "@/components/buttonui";
 import NavBarContainer from "@/components/NavBarContainer.vue";
@@ -107,6 +133,10 @@ import CallToActionCard from "@/components/CallToActionCard.vue";
 import HomePageLayout from "@/layouts/HomePageLayout.vue";
 import userGeolocation from "@/helper/userGeolocation";
 import jsonProperties from "@/api/autoComplete.json";
+import SearchResultItemCard from "@/components/SearchResultItemCard.vue";
+import ExperimentalJson from "@/components/homes.json";
+import ChevronRight from "@/assets/icons/ChevronRight.vue";
+import ChevronLeft from "@/assets/icons/ChevronLeft.vue";
 export default {
   name: "HomePage",
   components: {
@@ -117,7 +147,10 @@ export default {
     HomePageLayout,
     HomeTabButtons,
     ShowHideListColumns,
-    CallToActionCard
+    CallToActionCard,
+    SearchResultItemCard,
+    ChevronRight,
+    ChevronLeft
   },
   setup() {
     const store = useStore();
@@ -242,21 +275,47 @@ export default {
         name: "All Rental Markets",
         url: ""
       },
-    ]
+    ];
+    const expJson = ref(ExperimentalJson.homes);
+    const groupedItems = ref({});
+    const itemRefs = ref([]);
+    const moveIndex = ref(0);
+
+    function moveSlides(value){
+      if(value == 1 && moveIndex.value < 2){
+        moveIndex.value++;
+      };
+      if(value == -1 && moveIndex.value > 0){
+        moveIndex.value--;
+      }
+    };
+
     onMounted(() => {
-      navigator.geolocation.getCurrentPosition(
-        ({ coords: { latitude, longitude } }) => {
-          const userCordinates = reactive({
-            lat: latitude,
-            long: longitude,
-          })
-          userLocLat.value = userCordinates.lat;
-          userLocLong.value = userCordinates.long;
-          console.log("From HomePage onmounted", userCordinates); 
-        })
+      groupItems()
+      // navigator.geolocation.getCurrentPosition(
+      //   ({ coords: { latitude, longitude } }) => {
+      //     const userCordinates = reactive({
+      //       lat: latitude,
+      //       long: longitude,
+      //     })
+      //     userLocLat.value = userCordinates.lat;
+      //     userLocLong.value = userCordinates.long;
+      //     console.log("From HomePage onmounted", userCordinates); 
+      //   })
     });
+    function groupItems(){
+      let groupedItemsByIndex = {
+        0: expJson.value.slice(0, 5),
+        1: expJson.value.slice(4, 9),
+        2: expJson.value.slice(8, 12)
+      };
+      groupedItems.value = groupedItemsByIndex;
+  };
 
     return {
+      itemRefs,
+      expJson,
+      groupedItems,
       searchNearMeModel,
       userLocLat,
       userLocLong,
@@ -266,9 +325,11 @@ export default {
       userEnabledLocation,
       marketPlaces: arrangeAscendingOrder,
       forProfessionals,
-      exploreContact
+      exploreContact,
+      moveSlides,
+      moveIndex
     }
-  }
+  },
 };
 </script>
 <style scoped>
