@@ -132,20 +132,19 @@ export default {
 
     const autoComplete = reactive({ allProperties: jsonProperties.property });
     const removeDuplicateHomeData = autoComplete.allProperties.reduce(
-      (unique, o) => {
-        let duplicateScreening = !unique.some(
-          (obj) => obj.city === o.city && obj.state === o.state)
+      (accumulator, currentValue) => {
+        let duplicateScreening = !accumulator.some(
+          (obj) => obj.city === currentValue.city && obj.state === currentValue.state)
         if (duplicateScreening) { 
-          // unique.push(o);
-          unique.push({
-            city: o.city,
-            state: o.state,
-            state_code: o.state_code,
-            postal_code: o.postal_code,
-            country: o.country,
+          accumulator.push({
+            city: currentValue.city,
+            state: currentValue.state,
+            state_code: currentValue.state_code,
+            postal_code: currentValue.postal_code,
+            country: currentValue.country,
           });
         }
-        return unique;
+        return accumulator;
       },[]);
     const searchPreferences = computed(() => {
       if (!searchActive.value) return "";
