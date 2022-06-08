@@ -51,9 +51,18 @@
       </section>
       <section class="w-full relative top-32 mb-20">
         <div class="overflow-hidden">
-          <button v-on:click="moveSlides(-1)" id="btn-scroll-left"><chevron-left/></button>
-          <button v-on:click="moveSlides(1)" id="btn-scroll-right"><chevron-right/></button>
-          <div class="snap-mandatory px-2">
+          <button
+            v-on:click="moveSlides(-1)" 
+            class="absolute z-10 left-0 top-1/2"
+            :class="{'hidden': moveIndex == 0}">
+              <chevron-left class=" text-gray-800 w-10 h-10 p-2 ml-3 bg-white rounded-full shadow-md hover:bg-gray-100 active:bg-gray-300"/>
+            </button>
+          <button
+            class="absolute z-10 right-0 top-1/2"
+            :class="{'hidden': moveIndex == 2}">
+              <chevron-right v-on:click="moveSlides(1)" class="text-gray-800 w-10 h-10 p-2 mr-3 bg-white rounded-full shadow-md hover:bg-gray-100 active:bg-gray-300"/>
+            </button>
+          <div class="snap-mandatory px-2 box-border">
             <ul
               v-for="(groupedItem, index) in groupedItems" 
               v-bind:key="groupedItem"
@@ -68,9 +77,24 @@
                 v-bind:home="home"
                 v-bind:class="{'hidden': moveIndex != index}">
               </search-result-item-card>
-              <li 
+              <li class="
+                block 
+                flex-initial
+                border-solid border-transparent border-r-8 border-l-8 border-t-8 
+                pb-4
+                xs:w-full 
+                sm:w-full 
+                md:w-full 
+                lg:w-6/12 
+                xl:w-6/12 
+                2xl:w-4/12
+                3xl:w-3/12"
                 v-if="groupedItem.length < 5" 
-                v-bind:class="{'hidden': moveIndex != index}">This is the last card!</li>
+                v-bind:class="{'hidden': moveIndex != index}">
+                  <div class="relative w-full h-44 bg-gray-200 rounded-xl overflow-hidden">
+                    See more homes for sale
+                  </div>
+                </li>
             </ul>
           </div>
         </div>
@@ -213,15 +237,16 @@ export default {
     });
 
     const autoComplete = ref(jsonProperties.property);
-    const removeDuplicateHomeData = autoComplete.value.reduce((unique, o) => {
-      let duplicateScreening = !unique.some((obj) => obj.state === o.state)
-      if (duplicateScreening) { 
-        unique.push({
-          state: o.state,
-          state_code: o.state_code,
+    const removeDuplicateHomeData = autoComplete.value.reduce((accumulator, currentValue) => {
+        let duplicateScreening = !accumulator.some(
+          (property) => property.state === currentValue.state)
+        if (duplicateScreening) { 
+        accumulator.push({
+          state: currentValue.state,
+          state_code: currentValue.state_code,
         });
       }
-      return unique;
+      return accumulator;
     },[]);
     const arrangeAscendingOrder = removeDuplicateHomeData.sort((a, b) => {
       const stateA = a.state.toUpperCase();
@@ -336,4 +361,7 @@ export default {
 .h-100 {
   height: 27.7rem;
 }
+/* .transX {
+  transition: all 0.7s;
+} */
 </style>
