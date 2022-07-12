@@ -7,7 +7,7 @@
       whitespace-nowrap 
       overflow-hidden 
       text-gray-600">
-    {{ street }},
+    {{ streetOrName }}
     <br>
     {{city}}, 
     {{state}} 
@@ -17,6 +17,6 @@
 <script>
 export default {
   name: "WidgetLocationDetail",
-  props: ["street", "city", "state", "postalCode"],
+  props: ["streetOrName", "city", "state", "postalCode"],
 };
 </script>
