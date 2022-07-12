@@ -99,9 +99,11 @@ export default {
       return getIsActiveRouteTab.value === "RentPage" ? true : false;
     });
     const propertyImages = computed(() => {
-      return !props.home.thumbnail 
-        ? props.home.photos[0].href 
-        : props.home.thumbnail 
+      return props.home.thumbnail 
+        ? props.home.thumbnail 
+        : !props.home.photos
+        ? "defaultImage"
+        : props.home.photos[0].href
     });
     const propertyPriceMinMAx = computed(() => {
       return props.home.community.price_hint == "CALL" 
