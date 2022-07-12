@@ -57,10 +57,10 @@ export default {
     const loadingIsActive = computed(() => {
       return store.getters.getIsLoading;
     });
-    const propertListingsByAgent = computed(() => {
+    const propertyListingsByAgent = computed(() => {
       return store.getters.getPropertyListingsByAgent;
     });
-    const propertListingsByOther = computed(() => {
+    const propertyListingsByOther = computed(() => {
       return store.getters.getPropertyListingsByNoneAgent;
     });
     const activeBranch = computed(() => {
@@ -79,19 +79,19 @@ export default {
         activeBranch.value === "Agent Listings" ? true : false;
     });
     watchEffect(() => {
-      let numberByOther = propertListingsByOther.value.length;
+      let numberByOther = propertyListingsByOther.value.length;
       numberOfPropertyByOther.value = numberByOther > 0 ? numberByAgent: 0;
       console.log("By Others:", numberOfPropertyByOther.value);
 
-      let numberByAgent = propertListingsByAgent.value.length;
+      let numberByAgent = propertyListingsByAgent.value.length;
       numberOfPropertyByAgent.value = numberByAgent > 0 ? numberByAgent: 0;
       console.log("By Agent:", numberOfPropertyByAgent.value);
     });
     return {
       isLoading,
       isActiveBranch,
-      propertListingsByAgent,
-      propertListingsByOther,
+      propertyListingsByAgent,
+      propertyListingsByOther,
       numberOfPropertyByAgent,
       numberOfPropertyByOther
     }
