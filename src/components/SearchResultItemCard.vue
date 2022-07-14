@@ -145,11 +145,6 @@ export default {
         ? bedPropertyNotOnRental.value
         : bedProperty.value 
     });
-    const propertyListingBy = computed(() => {
-      return !props.home.branding.listing_office.list_item.name 
-        ? "" 
-        : `${props.home.branding.listing_office.list_item.name},`
-    });
 
     const isRentalPropertyName = computed(() => {
       return !isRentalProperty.value 
@@ -182,6 +177,12 @@ export default {
         : !props.home.building_size 
         ? "Unknown"
         : props.home.building_size.size
+    });
+
+    const propertyListingBy = computed(() => {
+      return !props.home.branding 
+        ? "" 
+        : `${props.home.branding.listing_office.list_item.name},`
     });
     return{
       isRentalProperty,
