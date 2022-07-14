@@ -15,9 +15,9 @@ export default {
   name: "WidgetImageSlider",
   props: ["listingPhotos"],
   setup(props){
-    const propertyListingPhotos = computed(() => {
-      return !props.listingPhotos ? false : true
-    })
+    const propertyListingPhotos = computed(() => 
+      props.listingPhotos == "defaultImage" ? false : true
+    );
     return {
       propertyListingPhotos
     }
