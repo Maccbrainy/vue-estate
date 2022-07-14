@@ -1,17 +1,18 @@
 import { createStore } from "vuex";
-import axios from "axios";
 import { useRouterPush } from "@/composables";
 
 export default createStore({
   state: {
-    // autoCompleteData:[],
     isLoading: false,
-    activeRouteTab: "",
+    errorCatch: false,
+    activeRoutePath: "",
+    activeListBranch: "",
+    // agentBranch: "",
+    // otherBranch: "",
     homeType: [],
     numberOfBedRoom: "",
     propertyMinRange:"",
     propertyMaxRange:"",
-    listingBranchByAgent: "active",
     searchedData: {},
     successfulSearchHistory: [{}],
     allPropertyListings: {},
@@ -20,8 +21,14 @@ export default createStore({
     activeListing: {},
   },
   getters: {
-    getListingBranchByAgent(state){
-      return state.listingBranchByAgent;
+    // getListingBranchByAgent(state){
+    //   return state.agentBranch;
+    // },
+    // getListingBranchByOther(state){
+    //   return state.otherBranch;
+    // },
+    getActiveBranch(state){
+      return state.activeListBranch;
     },
     //Consumed in searchResultContentLayout component
     getSearchedData(state){
@@ -30,6 +37,9 @@ export default createStore({
     //Consumed in filter button agent and other active
     getIsLoading(state){
       return state.isLoading;
+    },
+    getErrorCatch(state){
+      return state.errorCatch;
     },
     //Consumed in searchResultContentLayout component
     getAllPropertyListings(state){
@@ -46,8 +56,11 @@ export default createStore({
     },
     //Consumed in HomeTabButtons
     getIsActiveRouteTab(state){
-      return state.activeRouteTab;
-    }
+      return state.activeRoutePath;
+    },
+    // getActivatedOtherRoutePath(state){
+    //   return state.activatedOtherRoutePath;
+    // }
 
   },
   mutations: {
@@ -70,8 +83,16 @@ export default createStore({
       state.propertyListingsByNoneAgent = propertyPayLoad;
     },
     //Invoked from filter button Agent and Other Listings
-    setListingBranchByAgent(state, propertyPayLoad){
-      state.listingBranchByAgent = propertyPayLoad;
+    // setAgentBranch(state, propertyPayLoad){
+    //   state.agentBranch = propertyPayLoad;
+    // },
+    // //Invoked from filter button Agent and Other Listings
+    // setOtherBranch(state, propertyPayLoad){
+    //   state.otherBranch = propertyPayLoad;
+    // },
+    //Invoked from filter button Agent and Other Listings
+    setActiveListBranch(state, propertyPayLoad){
+      state.activeListBranch = propertyPayLoad;
     },
     //Invoked from computedAgentAndNoneAgent component
     setActiveListing(state, propertyPayLoad){
@@ -93,70 +114,30 @@ export default createStore({
     setHomeType(state, propertyPayLoad){
       state.homeType = propertyPayLoad;
     },
-    // setAutoCompleteData(state, autoCompletePayLoad){
-    //   state.autoCompleteData = autoCompletePayLoad;
-    // },
     //Invoked from store action
     setIsLoading(state, isLoadingPayload){
       state.isLoading = isLoadingPayload;
     },
+    //Invoked from async request useFetchjs
+    setCaughtError(state, errorPayload){
+      state.errorCatch = errorPayload;
+    },
     //Invoked from HomeTabButtons
-    setActiveRouteTab(state, routePayload){
-      state.activeRouteTab = routePayload;
+    setActiveRoutePath(state, routePayload){
+      state.activeRoutePath = routePayload;
     },
     //Invoked from SearchInput
+    //Invoked from FilterRouteTab
     setUseRouterPush(state, routePayload){
       state.isLoading = true;
-      state.activeRouteTab = routePayload["activeRouteTab"];
       useRouterPush(routePayload);
-      state.isLoading = false;
-    }
+    },
+    //Invoked from HomeTabButtons
+    // setOtherRoutePath(state, routePayload){
+    //   state.activatedOtherRoutePath = routePayload;
+    // },
   },
 
-  actions: {
-    //Invoked from watch function in the searchInput component
-    setPropertiesFromRemoteApi: async ({ commit }, payload) => {
-      commit("setIsLoading", true);
-
-      let city = payload.city != undefined ? payload.city : payload;
-      let state_code = payload.state_code != undefined ? payload.state_code : payload;
-      let activeRouteTab = payload.activeRouteTab;
-
-      console.log("store payload:",payload);
-      if( payload !="" ){
-        console.log("Caught from store city:", city);
-        console.log("Caught from store state_code:", state_code);
-        console.log("Caught from store activeRoute:", activeRouteTab);
-        useRouterPush(payload);
-        commit("setIsLoading", false);
-        return;
-      }
-      // const url = "https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale";
-      try {
-        const {
-          data: { properties }
-        } = await axios.get(
-          `https://realty-in-us.p.rapidapi.com/properties/v2/${activeRouteTab}`, {
-           params: {
-            // city: `${city}`,
-            // state_code: `${state_code}`,
-              offset: "0",
-              limit: "200",
-              sort: "relevance"
-          },
-            headers: {
-              "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
-              "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`
-          }
-        })
-        commit("setAllPropertyListings", properties);
-        useRouterPush(payload);
-        commit("setIsLoading", false);
-      } catch (error) {
-        console.error(error);
-        commit("setIsLoading", false);
-      }
-    }
-  },
+  actions: {},
   modules: {},
 });
