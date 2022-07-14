@@ -15,7 +15,7 @@
         v-bind:class="{ 'text-gray-400': isLoading }" 
         v-bind:disabled="isLoading">
         Agent Listings
-        <span class="font-normal">({{ numberOfPropertyByAgent }})</span>
+        <span v-show="!isLoading" class="font-normal">({{ numberOfPropertyByAgent }})</span>
       </switch-button>
     </switch-button-class-active>
     <switch-button-class-active 
@@ -27,7 +27,7 @@
         v-bind:class="{ 'text-gray-400': isLoading }" 
         v-bind:disabled="isLoading">
         Other
-        <span class="font-normal">({{ numberOfPropertyByOther }})</span>
+        <span v-show="!isLoading" class="font-normal">({{ numberOfPropertyByOther }})</span>
       </switch-button>
     </switch-button-class-active>
   </switch-button-container>
@@ -67,7 +67,7 @@ export default {
       return store.getters.getActiveBranch;
     });
     watchEffect(() => {
-      if (activeBranch.value == ""){
+      if (!activeBranch.value){
         store.commit("setActiveListBranch", "Agent Listings");
       }
     });
