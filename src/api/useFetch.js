@@ -1,21 +1,24 @@
 import { ref } from "vue";
-// import { useStore } from "vuex";
+import store from "@/store";
 import axios from "axios";
-export async function useFetch(routeName, slug, city){
+export async function useFetch(route, slug, city){
   const propertyDetail = ref(null);
-  const error = ref(null);
-  // propertyDetail.value = {
-  //   routeName: routeName,
-  //   slug: slug,
-  //   cityName: city  
-  // };
+  const errorCatch = ref(null);
+  // const isLoading = ref(null);
+
+  let routeName = route;
+  let slugName = slug;
+  let cityName = city.replace(/_/g," ");
+
   try {
+    errorCatch.value = false;
+    store.commit("setCaughtError", errorCatch.value);
     const response = await axios.get(
       `https://realty-in-us.p.rapidapi.com/properties/v2/${routeName}`, 
       { 
         params: {
-          city: city ? city : slug,
-          state_code: slug,
+          city: cityName ? cityName : slugName,
+          state_code: slugName,
           offset: "0",
           limit: "200",
           sort: "relevance"
@@ -27,11 +30,12 @@ export async function useFetch(routeName, slug, city){
       });
     propertyDetail.value = response;
   } catch (e){
-    error.value = true;
+    errorCatch.value = true;
+    store.commit("setCaughtError", true);
     console.log("Error in fetching from rapid api:", e) 
-  }
+  } 
   return {
-    error,
+    errorCatch,
     propertyDetail
   }
 }
