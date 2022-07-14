@@ -1,11 +1,10 @@
 <template>
   <li
-    v-bind:class="{ 'cursor-not-allowed': isLoading }" 
+    v-bind:class="{'cursor-pointer hover:text-white hover:bg-teal cur': !isLoading }" 
     class="
       group
       relative 
       inline-flex
-      cursor-pointer 
       rounded-md 
       px-4 
       py-2 
@@ -13,7 +12,7 @@
       text-base 
       font-medium 
       text-gray-700
-      hover:text-white hover:bg-teal lf:hidden">
+      lf:hidden">
     <slot></slot>
   </li>
 </template>

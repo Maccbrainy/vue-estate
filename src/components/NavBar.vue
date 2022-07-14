@@ -2,7 +2,7 @@
   <nav-bar-box>
     <nav-bar-item>
       <router-link 
-        v-if="searchedLinksActive" 
+        v-if="searchedLinksActive"
         :to="{
           name: 'BuyPage', 
           params: { 
