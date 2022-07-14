@@ -4,17 +4,18 @@ import { ref } from "vue";
 export default function useRouterPush(payLoad) {
   const searchParams = ref("");
   const activeRoute = ref("");
+  const regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
+  const regExpWhiteSpaces = /\s/gi; //Regular Expression for White Space detection
   searchParams.value = payLoad;
   if (!searchParams.value) {
     return
   };
 
-  let cityParam = 
-    searchParams.value.city != undefined ? searchParams.value.city : "";
-  let slugParam = 
-    searchParams.value.state_code != undefined
-      ? searchParams.value.state_code
-      : searchParams.value;
+  let cityParam = !searchParams.value.city ? "" : searchParams.value.city;
+
+  let slugParam = !searchParams.value.state_code
+    ? searchParams.value 
+    : searchParams.value.state_code;
     
   let searchedWithZipCode;
   let searchedWithCityNameDefined;
@@ -45,7 +46,6 @@ export default function useRouterPush(payLoad) {
    * for numeric characters only 
    * thus to detect postal or zip codes search; 
    * */
-  const regExpNumbersOnly = /^\d+$/;
   const titleParam = regExpNumbersOnly.test(slugParam) 
     ? searchedWithZipCode 
     : cityParam 
@@ -54,11 +54,12 @@ export default function useRouterPush(payLoad) {
   /**Regular Expression
    * for white space detections only  
   * */
-  const regExpWhiteSpaces = /\s/gi;
   const removedWhiteSpacesFromCityParam = regExpWhiteSpaces.test(cityParam)
     ? cityParam.replaceAll(" ", "_")
     : cityParam;
+
   store.commit("setActiveRoutePath", activeRoute.value);
+
   router.push({
     name: activeRoute.value,
     params: {
