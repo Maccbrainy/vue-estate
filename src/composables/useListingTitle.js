@@ -1,13 +1,21 @@
-import { computed } from "vue";
-export default function useListingTitle(searchTerm, cityProp) {
-  const listingTitle = computed(() => {
-    return /^\d+$/.test(searchTerm) 
-      ? `Homes For Sale & Real Estates in ${searchTerm}`
-      : cityProp 
-      ? `${cityProp}, ${searchTerm} Homes For Sale & Real Estates`
-      : `${searchTerm} Homes For Sale & Real Estates`;
+import { computed, ref } from "vue";
+export default function useListingTitle(slug, city) {
+  const slugName = ref(slug);
+  const cityName = ref(city.replace(/_/g," "));//remove all underscore from a string
+  const listTitle = computed(() => {
+    //Recently Sold Homes in San Francisco, CA
+    //Apartments For Rent in San Francisco, CA
+    /**
+     * Regular Expression to Detect Numbers only
+     * /^\d+$/
+     */
+    return /^\d+$/.test(slugName) 
+      ? `Homes For Sale & Real Estates in ${slugName.value}`
+      : cityName.value 
+      ? `${cityName.value}, ${slugName.value} Real Estates & Homes For Sale`
+      : `${slugName.value} Homes For Sale & Real Estates`;
   });
   return {
-    listingTitle,
+    listTitle,
   }
 }
