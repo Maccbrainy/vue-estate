@@ -6,4 +6,5 @@ export { default as checkPresenceOfHyphenAndRemove } from "@/composables/checkPr
 export { default as checkWhiteSpacesAndReplaceWithHypen } from "@/composables/checkWhiteSpacesAndReplaceWithHypen";
 
 export { default as computedHomeResourcesSearched } from "@/composables/computedHomeResourcesSearched";
-export { default as computedPropertyByAgentAndNonAgent } from "@/composables/computedPropertyByAgentAndNonAgent";
+export { default as useSortListingsByAgentAndOthers } from "@/composables/useSortListingsByAgentAndOthers";
+export { default as useAgentAndOtherListsIsEqualToZero } from "@/composables/useAgentAndOtherListsIsEqualToZero";
