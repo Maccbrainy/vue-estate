@@ -27,23 +27,23 @@ export default {
       return store.getters.getPropertyListingsByNoneAgent.length;
     });
     const numberOfListings = computed(() => {
-      return numberOfListingsByAgent.value == 0 
+      return !numberOfListingsByAgent.value 
         ? `${numberOfListingsByOthers.value} other` 
-        : numberOfListingsByOthers.value == 0 
+        : !numberOfListingsByOthers.value 
         ? `${numberOfListingsByAgent.value} agent` 
-        : null
+        : ""
     })
-    const listingBranchByAgent = computed(() => {
-      return store.getters.getListingBranchByAgent;
+    const activeBranch = computed(() => {
+      return store.getters.getActiveBranch;
     });
     const listingBranch = computed(() => {
-      return listingBranchByAgent.value == "active" ? "agent" : "other"
+      return activeBranch.value == "Agent Listings" ? "agent" : "other"
     });
 
     function seeTheHomes(){
       let changeActiveListingBranch = 
-        listingBranchByAgent.value == "active" ? "not_active" : "active" 
-      store.commit("setListingBranchByAgent", changeActiveListingBranch);
+        activeBranch.value == "Agent Listings" ? "Other Listings" : "Agent Listings" 
+      store.commit("setActiveListBranch", changeActiveListingBranch);
     };
 
     const singularPluralWord = computed(() => {
