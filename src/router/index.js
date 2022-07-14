@@ -71,6 +71,34 @@ const routes = [
     },
   },
   {
+    path: "/houses-for-sale-near-me/",
+    name: "SalesNearMe",
+    component: SearchResultContentLayout,
+    props: (route) => ({
+      name: route.name,
+      slug: route.params.slug,
+      city: route.params.city,
+      title: route.params.title,
+    }),
+    meta: {
+      title: "Houses for sale near me - Find a nearby Real Estate & Homes | Vue Estate"
+    }
+  },
+  {
+    path: "/apartments-for-rent-near-me/",
+    name: "RentsNearMe",
+    component: SearchResultContentLayout,
+    props: (route) => ({
+      name: route.name,
+      slug: route.params.slug,
+      city: route.params.city,
+      title: route.params.title,
+    }),
+    meta: {
+      title: "Apartments for rent near me - Find An Apartment Nearby | Vue Estate"
+    }
+  },
+  {
     path: "/sitemaps/",
     name: "SiteMaps",
     component: SiteMapsContentLayout,
