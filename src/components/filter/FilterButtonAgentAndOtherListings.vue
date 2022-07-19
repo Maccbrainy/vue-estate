@@ -1,21 +1,21 @@
 <template>
   <switch-button-container 
     v-bind:class="{ 
-      'border border-gray-300': isLoading,
-      'hover:bg-gray-300': !isLoading 
+      'border border-gray-300': loadingIsActive,
+      'hover:bg-gray-300': !loadingIsActive 
     }">
     <switch-button-class-active 
       v-bind:class="{
         'border border-gray-300 bg-white rounded-lg h-11 transition duration-700': 
           isActiveBranch,
-        'bg-gray-100': isLoading 
+        'bg-gray-100': loadingIsActive 
       }">
       <switch-button 
         id="Agent Listings" 
-        v-bind:class="{ 'text-gray-400': isLoading }" 
-        v-bind:disabled="isLoading">
+        v-bind:class="{ 'text-gray-400': loadingIsActive }" 
+        v-bind:disabled="loadingIsActive">
         Agent Listings
-        <span v-show="!isLoading" class="font-normal">({{ numberOfPropertyByAgent }})</span>
+        <span v-show="!loadingIsActive" class="font-normal">({{ numberOfPropertyByAgent }})</span>
       </switch-button>
     </switch-button-class-active>
     <switch-button-class-active 
@@ -24,10 +24,10 @@
          }">
       <switch-button 
         id="Other Listings"
-        v-bind:class="{ 'text-gray-400': isLoading }" 
-        v-bind:disabled="isLoading">
+        v-bind:class="{ 'text-gray-400': loadingIsActive }" 
+        v-bind:disabled="loadingIsActive">
         Other
-        <span v-show="!isLoading" class="font-normal">({{ numberOfPropertyByOther }})</span>
+        <span v-show="!loadingIsActive" class="font-normal">({{ numberOfPropertyByOther }})</span>
       </switch-button>
     </switch-button-class-active>
   </switch-button-container>
@@ -49,7 +49,7 @@ export default {
   },
   setup() {
     const store = useStore();
-    const isLoading = ref(false);
+    // const isLoading = ref(false);
     const numberOfPropertyByAgent = ref(Number);
     const numberOfPropertyByOther = ref(Number);
     const isActiveBranch = ref(Boolean);
@@ -71,24 +71,35 @@ export default {
         store.commit("setActiveListBranch", "Agent Listings");
       }
     });
-    watchEffect(() => {
-      isLoading.value = loadingIsActive.value;
+
+    const getNumberOfActiveProperties = computed(() => {
+      return store.getters.getActiveListing.length;
     });
+    const numberOfActiveProperties = computed(() => {
+      return getNumberOfActiveProperties.value > 0 
+        ? getNumberOfActiveProperties.value 
+        : 0;
+    }) 
     watchEffect(() => {
       isActiveBranch.value = 
         activeBranch.value === "Agent Listings" ? true : false;
-    });
-    watchEffect(() => {
-      let numberByOther = propertyListingsByOther.value.length;
-      numberOfPropertyByOther.value = numberByOther > 0 ? numberByAgent: 0;
-      console.log("By Others:", numberOfPropertyByOther.value);
 
-      let numberByAgent = propertyListingsByAgent.value.length;
-      numberOfPropertyByAgent.value = numberByAgent > 0 ? numberByAgent: 0;
+      numberOfPropertyByAgent.value = isActiveBranch.value 
+        ? numberOfActiveProperties.value 
+        : propertyListingsByAgent.value.length > 0
+        ? propertyListingsByAgent.value.length
+        : 0;
       console.log("By Agent:", numberOfPropertyByAgent.value);
+
+      numberOfPropertyByOther.value = !isActiveBranch.value
+        ? numberOfActiveProperties.value
+        : propertyListingsByOther.value.length > 0
+        ? propertyListingsByOther.value.length
+        : 0;
+      console.log("By Others:", numberOfPropertyByOther.value);
     });
     return {
-      isLoading,
+      loadingIsActive,
       isActiveBranch,
       propertyListingsByAgent,
       propertyListingsByOther,
