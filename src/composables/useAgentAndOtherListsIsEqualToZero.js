@@ -4,7 +4,7 @@ export default function useAgentAndOtherListsIsEqualToZero(
   otherLists
 ){
   const agentAndOtherListsIsZero = computed(() => {
-    return !agentLists.length && !otherLists.length ? true : false;
+    return agentLists.length == 0 && otherLists.length == 0 ? true : false;
   })
   return {
     agentAndOtherListsIsZero
