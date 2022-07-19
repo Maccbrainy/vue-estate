@@ -1,8 +1,7 @@
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import store from "@/store";
 
 export default function useSortListingsByAgentAndOthers(dataProperties){
-  const agentListingIsActive = ref(null);
   // const activeListings = ref({});
 
   const listingsByAgent = computed(() => {
@@ -17,9 +16,7 @@ export default function useSortListingsByAgentAndOthers(dataProperties){
   });
   store.commit("setListingsByNoneAgent", listingsByOthers.value);
   return {
-    // activeListings,
     listingsByOthers,
     listingsByAgent,
-    agentListingIsActive
   }
 }
