@@ -7,12 +7,17 @@ export default createStore({
     errorCatch: false,
     activeRoutePath: "",
     activeListBranch: "",
-    // agentBranch: "",
-    // otherBranch: "",
-    homeType: [],
-    numberOfBedRoom: "",
-    propertyMinRange:"",
-    propertyMaxRange:"",
+    propertyFilters: {
+      homeType:[],
+      numberOfBed: "",
+      numberOfBath: "",
+      priceMinRange: "",
+      priceMaxRange: "",
+    },
+    // homeType: [],
+    // numberOfBedRoom: "",
+    // priceMinRange:"",
+    // priceMaxRange:"",
     searchedData: {},
     successfulSearchHistory: [{}],
     allPropertyListings: {},
@@ -21,12 +26,12 @@ export default createStore({
     activeListing: {},
   },
   getters: {
-    // getListingBranchByAgent(state){
-    //   return state.agentBranch;
-    // },
-    // getListingBranchByOther(state){
-    //   return state.otherBranch;
-    // },
+    getPriceRangeMin(state){
+      return state.propertyFilters.priceMinRange;
+    },
+    getPriceRangeMax(state){
+      return state.propertyFilters.priceMaxRange;
+    },
     getActiveBranch(state){
       return state.activeListBranch;
     },
@@ -83,14 +88,6 @@ export default createStore({
       state.propertyListingsByNoneAgent = propertyPayLoad;
     },
     //Invoked from filter button Agent and Other Listings
-    // setAgentBranch(state, propertyPayLoad){
-    //   state.agentBranch = propertyPayLoad;
-    // },
-    // //Invoked from filter button Agent and Other Listings
-    // setOtherBranch(state, propertyPayLoad){
-    //   state.otherBranch = propertyPayLoad;
-    // },
-    //Invoked from filter button Agent and Other Listings
     setActiveListBranch(state, propertyPayLoad){
       state.activeListBranch = propertyPayLoad;
     },
@@ -100,19 +97,19 @@ export default createStore({
     },
     //Invoked from Filter button Price Range component
     setMinPriceRange(state, propertyPayLoad){
-      state.propertyMinRange = propertyPayLoad;
+      state.propertyFilters.priceMinRange = propertyPayLoad;
     },
     //Invoked from Filter button Price Range component
     setMaxPriceRange(state, propertyPayLoad){
-      state.propertyMaxRange = propertyPayLoad;
+      state.propertyFilters.priceMaxRange = propertyPayLoad;
     },
     //Invoked from Filter button Price Range component
     setNumberOfBedRoom(state, propertyPayLoad){
-      state.numberOfBedRoom = propertyPayLoad;
+      state.propertyFilters.numberOfBed = propertyPayLoad;
     },
     //Invoked from FilterButtonHomeType component
     setHomeType(state, propertyPayLoad){
-      state.homeType = propertyPayLoad;
+      state.propertyFilters.homeType = propertyPayLoad;
     },
     //Invoked from store action
     setIsLoading(state, isLoadingPayload){
@@ -132,10 +129,6 @@ export default createStore({
       state.isLoading = true;
       useRouterPush(routePayload);
     },
-    //Invoked from HomeTabButtons
-    // setOtherRoutePath(state, routePayload){
-    //   state.activatedOtherRoutePath = routePayload;
-    // },
   },
 
   actions: {},
