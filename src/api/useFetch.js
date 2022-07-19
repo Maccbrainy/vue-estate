@@ -20,7 +20,7 @@ export async function useFetch(route, slug, city){
           city: cityName ? cityName : slugName,
           state_code: slugName,
           offset: "0",
-          limit: "200",
+          limit: "40",
           sort: "relevance"
         },
         headers: {
