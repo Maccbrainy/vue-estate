@@ -2,23 +2,23 @@
   <dropdown-button :buttonTitle="priceIndicator" menuTitle="Price Range">
     <div class="flex">
       <dropdown-button-select-box>
-        <dropdown-button-select v-model="selectedMin">
+        <dropdown-button-select v-model="selectedMin" ref="selectMinRef" @change="minChangeEvent">
           <dropdown-button-select-option 
             v-for="priceRange in priceRanges"
-            v-bind:key="priceRange.index" 
-            v-bind:value="priceRange.val">
-            {{ priceRange.val == "" ? "No Min" : `$${priceRange.name}`}}
+            v-bind:key="priceRange.index"
+            v-bind:value="priceRange">
+            {{ priceRange == "0" ? "No Min" : `$${priceRange}`}}
           </dropdown-button-select-option>
         </dropdown-button-select>
       </dropdown-button-select-box>
       <button-separator></button-separator>
       <dropdown-button-select-box>
-        <dropdown-button-select v-model="selectedMax"> 
+        <dropdown-button-select v-model="selectedMax" ref="selectMaxRef"> 
           <dropdown-button-select-option 
             v-for="priceRange in priceRanges"
             v-bind:key="priceRange.index" 
-            v-bind:value="priceRange.val">
-            {{ priceRange.val == "" ? "No Max" : `$${priceRange.name}`}}
+            v-bind:value="priceRange">
+            {{ priceRange == "0" ? "No Max" : `$${priceRange}`}}
           </dropdown-button-select-option>
         </dropdown-button-select>
       </dropdown-button-select-box>
@@ -46,107 +46,121 @@ export default {
   },
   setup() {
     const priceRanges = ref([
-      {
-        val:"",
-        name: "No"
-      },
-      {
-        val:10000,
-        name: "10K"
-      },
-      {
-        val:20000,
-        name: "20K"
-      },
-      {
-        val:40000,
-        name: "40K"
-      },
-      {
-        val:80000,
-        name: "80K"
-      },
-      {
-        val:100000,
-        name: "100K"
-      },
-      {
-        val:200000,
-        name: "200K"
-      },
-      {
-        val:400000,
-        name: "400K"
-      },
-      {
-        val:800000,
-        name: "800K"
-      },
-      {
-        val:1000000,
-        name: "1M"
-      },
-      {
-        val:1500000,
-        name: "1.5M"
-      }, 
-       
+      "0",
+      "10K",
+      "20K",
+      "30K",
+      "50K",
+      "100K",
+      "130K",
+      "150K",
+      "200K",
+      "300K",
+      "400K",
+      "500K",
+      "600K",
+      "700K",
+      "800K",
+      "900K",
+      "1M",
+      "1.5M",
+      "2M",
+      "10M"
     ]);
     const store = useStore();
-    const selectedMin = ref("");
-    const selectedMax = ref("");
+    const selectedMin = ref("0");
+    const selectedMax = ref("0");
+    const minPrice = ref("");
+    const maxPrice = ref("");
     const priceIndicator = ref("");
+    const selectMinRef = ref([]);
+    const selectMaxRef = ref([]);
+
 
     watchEffect(() => {
-      let minRange = selectedMin.value;
-      let maxRange = selectedMax.value;
+      minPrice.value = 
+        selectedMin.value == "0" ? null : maxChangeEvent(selectedMin.value);
+      maxPrice.value = 
+        selectedMax.value == "0" ? null : maxChangeEvent(selectedMax.value);
 
-      if (minRange == ""){
-        store.commit("setMinPriceRange", minRange);
-        store.commit("setMaxPriceRange", minRange);
+      if (!minPrice.value){
+        selectedMax.value = 0;
+        store.commit("setMinPriceRange", minPrice.value);
+        store.commit("setMaxPriceRange", minPrice.value);
       }
-      if (!maxRange){
-        store.commit("setMaxPriceRange", maxRange);
+      if (minPrice.value && maxPrice.value){ 
+        let indexMin = selectMinRef.value.$el.selectedIndex;
+        let indexMax = selectMaxRef.value.$el.selectedIndex;
+        if (maxPrice.value < minPrice.value){
+          console.log("IndexMin > IndexMax true:", indexMin);
+          console.log("IndexMax > IndexMin false:", indexMax);
+          selectedMin.value = selectedMax.value;
+          store.commit("setMinPriceRange", maxPrice.value);
+          store.commit("setMaxPriceRange", null);
+          selectedMax.value = 0;
+        }
+        if (maxPrice.value > minPrice.value){ 
+          store.commit("setMaxPriceRange", maxPrice.value);
+        }
+        if (minPrice.value == maxPrice.value){
+          console.log("IndexMin equality:", indexMin);
+          console.log("IndexMax equality:", indexMax);
+          store.commit("setMinPriceRange", minPrice.value);
+          store.commit("setMaxPriceRange", maxPrice.value);
+        }
       }
-      if (!minRange && maxRange) {
-        selectedMin.value = "";
-        selectedMax.value = "";
-        store.commit("setMinPriceRange", minRange);
-      };
-      if (minRange){
-        store.commit("setMinPriceRange", minRange);
-      };
-      if (minRange && maxRange){
-        if (maxRange < minRange){
-
-          selectedMin.value = maxRange;
-          selectedMax.value = "";
-          store.commit("setMinPriceRange", maxRange);
-          store.commit("setMaxPriceRange", selectedMax.value);
-        } 
-        if (maxRange > minRange){
-          store.commit("setMaxPriceRange", maxRange);
-        }
-        if (minRange == maxRange){
-          store.commit("setMaxPriceRange", maxRange);
-        }
+      if (minPrice.value){
+        store.commit("setMinPriceRange", minPrice.value);
       };
 
       let maxInfo = `- ${selectedMax.value}`;
       priceIndicator.value = 
-        !selectedMin.value && !selectedMax.value 
+        selectedMin.value == 0 && selectedMax.value == 0
           ? "Any Price" 
-          : !selectedMax.value
+          : selectedMax.value == 0
           ? selectedMin.value
           : `${selectedMin.value} ${maxInfo}`
-
     });
+
+    const sanitizeMillionPrice = (price) => {
+      let splitted = price.split("");
+      return splitted.length == 4 || splitted.length == 5  
+        ? price.replace(/M/g,"00000").replace(/\./g,"")
+        : price.replace(/M/g,"000000").replace(/\./g,"")
+    };
+    const minChangeEvent = (e) => {
+      let price = e.target.value;
+      let priceValue = price.endsWith("K") 
+        ? price.replace(/K/g,"000")
+        : price.endsWith("M") 
+        ? sanitizeMillionPrice(price)
+        : price;
+      return priceValue;
+    }
+    const maxChangeEvent = (priceTag) => {
+      // let price = e.target.value;
+      let price = priceTag;
+      let priceValue = price.endsWith("K") 
+        ? price.replace(/K/g,"000")
+        : price.endsWith("M") 
+        ? sanitizeMillionPrice(price)
+        : price;
+      let priceNumber = parseInt(priceValue);
+      console.log("Parse Interger:", priceNumber);
+      return priceNumber;
+    }
 
     return {
       priceRanges,
       selectedMin,
       selectedMax,
-      priceIndicator
+      minPrice,
+      maxPrice,
+      priceIndicator,
+      selectMinRef,
+      selectMaxRef,
+      minChangeEvent,
+      maxChangeEvent
 
     }
   }
