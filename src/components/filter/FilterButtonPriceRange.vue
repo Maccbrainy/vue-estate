@@ -4,10 +4,10 @@
       <dropdown-button-select-box>
         <dropdown-button-select v-model="selectedMin" ref="selectMinRef" @change="minChangeEvent">
           <dropdown-button-select-option 
-            v-for="priceRange in priceRanges"
-            v-bind:key="priceRange.index"
+            v-for="(priceRange, index) in priceRanges"
+            v-bind:key="index"
             v-bind:value="priceRange">
-            {{ priceRange == "0" ? "No Min" : `$${priceRange}`}}
+            {{ index == 0 ? "No Min" : `$${priceRange}`}}
           </dropdown-button-select-option>
         </dropdown-button-select>
       </dropdown-button-select-box>
@@ -15,10 +15,10 @@
       <dropdown-button-select-box>
         <dropdown-button-select v-model="selectedMax" ref="selectMaxRef"> 
           <dropdown-button-select-option 
-            v-for="priceRange in priceRanges"
-            v-bind:key="priceRange.index" 
+            v-for="(priceRange, index) in priceRanges"
+            v-bind:key="index" 
             v-bind:value="priceRange">
-            {{ priceRange == "0" ? "No Max" : `$${priceRange}`}}
+            {{ index == 0 ? "No Max" : `$${priceRange}`}}
           </dropdown-button-select-option>
         </dropdown-button-select>
       </dropdown-button-select-box>
@@ -68,8 +68,8 @@ export default {
       "10M"
     ]);
     const store = useStore();
-    const selectedMin = ref("0");
-    const selectedMax = ref("0");
+    const selectedMin = ref(priceRanges.value[0]);
+    const selectedMax = ref(priceRanges.value[0]);
     const minPrice = ref("");
     const maxPrice = ref("");
     const priceIndicator = ref("");
@@ -79,9 +79,13 @@ export default {
 
     watchEffect(() => {
       minPrice.value = 
-        selectedMin.value == "0" ? null : maxChangeEvent(selectedMin.value);
+        selectedMin.value == priceRanges.value[0] 
+          ? null 
+          : maxChangeEvent(selectedMin.value);
       maxPrice.value = 
-        selectedMax.value == "0" ? null : maxChangeEvent(selectedMax.value);
+        selectedMax.value == priceRanges.value[0] 
+          ? null 
+          : maxChangeEvent(selectedMax.value);
 
       if (!minPrice.value){
         selectedMax.value = 0;
