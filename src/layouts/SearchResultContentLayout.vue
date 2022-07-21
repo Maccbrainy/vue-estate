@@ -217,9 +217,11 @@ export default {
       let maxPrice = getMaxPriceRange.value;
       let activeProperties = updatedActiveListings.value;
       if (!maxPrice && !minPrice) {
-        return agentBranch.value 
+        let defaultProperty = agentBranch.value 
           ? propertyListingByAgent.value 
-          : propertyListingByOthers.value
+          : propertyListingByOthers.value;
+        store.commit("setActiveListing", defaultProperty);
+        return defaultProperty;
       }
       if (activeProperties){
         const filteredPropertiesOnMinPriceOnly = activeProperties.filter(
