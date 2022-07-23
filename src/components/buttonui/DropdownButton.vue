@@ -22,7 +22,10 @@
           bg-white"
         v-on:click="toggleButtonOpenClose" 
         :disabled="isLoading">
-        {{ buttonTitle}}
+        <span 
+          v-if="filterActivated" 
+          class="my-auto w-3 h-3 rounded-full bg-teal mr-2"></span>
+        {{ buttonTitle }}
         <chevron-down 
           v-bind:class="{
             'transform rotate-180': buttonIsOpen,
@@ -44,6 +47,7 @@
           bg-white 
           ring-black ring-opacity-5 
           focus:outline-none"
+        v-bind="$attrs"
         role="menu" 
         aria-orientation="vertical" 
         aria-labelledby="menu-button" 
@@ -63,7 +67,12 @@ import { useStore } from "vuex";
 import ChevronDown from "@/assets/icons/ChevronDown.vue";
 export default {
   // Button title from the parent
-  props: ["buttonTitle", "menuTitle"],
+  inheritAttrs: false,
+  props: {
+    buttonTitle: String,
+    menuTitle: String,
+    filterActivated: Boolean,
+  },
   components:{
     ChevronDown,
   },
@@ -76,7 +85,7 @@ export default {
     });
     watchEffect(() => {
       isLoading.value = loadingIsActive.value
-    })
+    });
     return {
       buttonIsOpen,
       isLoading
