@@ -5,7 +5,7 @@
     menuTitle="Price Range">
     <div class="flex">
       <dropdown-button-select-box>
-        <dropdown-button-select v-model="selectedMin" @change="minChangeEvent">
+        <dropdown-button-select v-model="selectedMin">
           <dropdown-button-select-option 
             v-for="(priceRange, index) in priceRanges"
             v-bind:key="index"
@@ -38,6 +38,8 @@ import {
 } from "@/components/buttonui/index";
 import { ref, watchEffect, computed } from "vue";
 import { useStore } from "vuex";
+import { convertLetterKToZeros } from "@/helper/convertLetterKToZeros";
+import { convertLetterMToZeros } from "@/helper/convertLetterMToZeros";
 export default {
   name: "FilterButtonRange",
   components: {
@@ -81,11 +83,11 @@ export default {
       let minPrice = 
         selectedMin.value == priceRanges.value[0] 
           ? null 
-          : maxChangeEvent(selectedMin.value);
+          : convertLetterKToZeros(selectedMin.value, convertLetterMToZeros);
       let maxPrice = 
         selectedMax.value == priceRanges.value[0] 
           ? null 
-          : maxChangeEvent(selectedMax.value);
+          : convertLetterKToZeros(selectedMax.value, convertLetterMToZeros);
 
       if (!minPrice && maxPrice > 0){
         store.commit("setMinPriceRange", minPrice);
@@ -136,40 +138,11 @@ export default {
       return priceIndicator.value == "Any Price" ? false : true;
     });
 
-    const sanitizeMillionPrice = (price) => {
-      let splitted = price.split("");
-      return splitted.length == 4 || splitted.length == 5  
-        ? price.replace(/m/g,"00000").replace(/\./g,"")
-        : price.replace(/m/g,"000000").replace(/\./g,"")
-    };
-    const minChangeEvent = (e) => {
-      let price = e.target.value;
-      let priceValue = price.endsWith("K") 
-        ? price.replace(/k/g,"000")
-        : price.endsWith("m") 
-        ? sanitizeMillionPrice(price)
-        : price;
-      return priceValue;
-    }
-    const maxChangeEvent = (priceTag) => {
-      // let price = e.target.value;
-      let price = priceTag;
-      let priceValue = price.endsWith("k") 
-        ? price.replace(/k/g,"000")
-        : price.endsWith("m") 
-        ? sanitizeMillionPrice(price)
-        : price;
-      let priceNumber = parseInt(priceValue);
-      return priceNumber;
-    }
-
     return {
       priceRanges,
       selectedMin,
       selectedMax,
       priceIndicator,
-      minChangeEvent,
-      maxChangeEvent,
       buttonActivated
 
     }
