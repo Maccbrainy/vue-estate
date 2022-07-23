@@ -1,14 +1,17 @@
 <template>
-  <dropdown-button buttonTitle="All Beds" menuTitle="Bedrooms">
+  <dropdown-button
+    v-bind:filterActivated="buttonActivated" 
+    v-bind:buttonTitle="bedRoomFilterTitle" 
+    menuTitle="Bedrooms">
     <button-group-multi-buttons 
-      v-bind:options="bedOptions"
-      v-bind:isActiveTab="noOfBeds"
+      v-bind:options="bedOptionsDetails"
+      v-bind:isActiveTab="bedRoomFilterValue"
       v-on:getOptionId="numberOfBed">
     </button-group-multi-buttons>
   </dropdown-button>
 </template>
 <script>
-import { reactive, computed } from "vue";
+import { ref, reactive, computed } from "vue";
 import { 
   DropdownButton,
   ButtonGroupMultiButtons 
@@ -22,37 +25,49 @@ export default ({
   },
   setup() {
     const store = useStore();
-    const bedOptions = reactive([
+    const bedOptionsDetails = reactive([
       {
-        id: "Studio",
-        name: "Studio",
+        id: "All Beds",
+        name: "Studio+",
       },
       {
-        id: "1+",
+        id: "1",
         name: "1+",
       },
       {
-        id: "2+",
+        id: "2",
         name: "2+",
       },
       {
-        id: "3+",
+        id: "3",
         name: "3+",
       },
       {
-        id: "4+",
+        id: "4",
         name: "4+",
       }
     ]);
-    const noOfBeds = computed(() => bedOptions[0].id);
-    function numberOfBed(e){
-      console.log("You clicked me!", e.target.id);
-      store.commit("setNumberOfBedRoom", e.target.id);
-    }
+    const bedRoomFilterValue = ref(bedOptionsDetails[0].id);
+    const bedRoomFilterTitle = ref(`${bedOptionsDetails[0].id}`);
+
+    const numberOfBed = (e) =>{
+      let noOfBeds = e.target.id;
+      bedRoomFilterValue.value = noOfBeds;
+      let bedFilter = noOfBeds == bedOptionsDetails[0].id ? "" : noOfBeds;
+      //Remove + sign from bedroom filter title;
+      bedRoomFilterTitle.value = !bedFilter ? noOfBeds : `${noOfBeds}+ Beds`;
+      store.commit("setNumberOfBedRoom", bedFilter);
+      return noOfBeds;
+    };
+    const buttonActivated = computed(() => {
+      return bedRoomFilterTitle.value == bedOptionsDetails[0].id ? false : true;
+    });
     return {
-      noOfBeds,
       numberOfBed,
-      bedOptions,
+      bedOptionsDetails,
+      bedRoomFilterValue,
+      bedRoomFilterTitle,
+      buttonActivated
     }
   }
 })
