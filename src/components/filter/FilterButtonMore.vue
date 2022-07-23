@@ -1,5 +1,5 @@
 <template>
-  <dropdown-button buttonTitle="More">
+  <dropdown-button class="transform -translate-x-3/4" buttonTitle="More">
     <filter-route-tab></filter-route-tab>
     <dropdown-button-fieldset fieldsetTitle="Type of Listings">
       <dropdown-button-multi-check-boxes 
