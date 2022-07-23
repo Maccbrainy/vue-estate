@@ -9,9 +9,8 @@
       bg-white 
       text-base 
       font-bold 
-      hover:bg-gray-200
-      hover:border-transparent
-      focus:border-gray-600
+      hover:bg-gray-200 hover:border-transparent
+      active:bg-gray-400
       focus:border-transparent">
     <slot></slot>
   </button>
