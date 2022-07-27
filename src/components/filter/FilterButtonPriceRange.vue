@@ -38,8 +38,7 @@ import {
 } from "@/components/buttonui/index";
 import { ref, watchEffect, computed } from "vue";
 import { useStore } from "vuex";
-import { convertLetterKToZeros } from "@/helper/convertLetterKToZeros";
-import { convertLetterMToZeros } from "@/helper/convertLetterMToZeros";
+import { convertLetterKToZeros, convertLetterMToZeros } from "@/helper";
 export default {
   name: "FilterButtonRange",
   components: {
@@ -144,7 +143,6 @@ export default {
       selectedMax,
       priceIndicator,
       buttonActivated
-
     }
   }
 }
