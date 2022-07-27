@@ -2,13 +2,13 @@
   <dropdown-button-options>
     <dropdown-button-option 
       v-for="propertyOption in propertyOptions" 
-      v-bind:key="propertyOption">
+      v-bind:key="propertyOption.id">
       <dropdown-button-option-check-box
-        v-bind:checked="value.includes(propertyOption)"
-        @update:checked="check(propertyOption, $event)" 
-        v-bind:fieldId="propertyOption"
-        v-bind:label="propertyOption">
-        {{ propertyOption }}
+        v-bind:checked="value.includes(propertyOption.id)"
+        @update:checked="check(propertyOption.id, $event)" 
+        v-bind:fieldId="propertyOption.id"
+        v-bind:label="propertyOption.id">
+        {{ propertyOption.title }}
       </dropdown-button-option-check-box>
     </dropdown-button-option>
   </dropdown-button-options>
@@ -37,17 +37,17 @@ export default ({
     propertyOptions: {
       type: Array,
       required: true
-    }
+    },
   },
   emits: ["update:value"],
   setup(props, context) {
     // const store = useStore();
-    const check = (propertyOption, checked) => {
+    const check = (propertyOptionId, checked) => {
       let updatedValue = [...props.value];
       if (checked ){
-        updatedValue.push(propertyOption);
+        updatedValue.push(propertyOptionId);
       } else {
-        updatedValue.splice(updatedValue.indexOf(propertyOption), 1)
+        updatedValue.splice(updatedValue.indexOf(propertyOptionId), 1)
       }
       context.emit("update:value", updatedValue);
     }
