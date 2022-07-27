@@ -65,7 +65,7 @@
 <script>
 // import { useRouterPush } from "@/composables";
 //import { useRoute } from "vue-router";
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
 //import { useStore } from "vuex";
 import { FilterRouteTab } from "@/components/filter";
 import { 
@@ -98,14 +98,31 @@ export default ({
     // const router = useRouter();
     //const route = useRoute();
     const activeRouteTab = ref("");
-    const typeOfListing = ref([
-      "For Sale by Agent",
-      "For Sale by Owner",
-      "Foreclosures",
-      "Open Houses",
-      "New Construction",
-      "New Listings (Past Week)",
-      "Price Reduced (Past Week)",
+    const typeOfListing = reactive([
+      {
+        id: "saleByAgent",
+        title: "For Sale by Agent",
+      },
+      {
+        id: "saleByOwner",
+        title: "For Sale by Owner",
+      },
+      {
+        id: "foreclosures",
+        title: "Foreclosures",
+      },
+      {
+        id: "open_house_date",
+        title: "Open Houses",
+      },
+      {
+        id: "newest",
+        title: "New Listings (Past Week)",
+      },
+      {
+        id: "price_reduced_date",
+        title: "Price Reduced (Past Week)",
+      },
     ]);
 
     const bathroomOptions = ref([
