@@ -27,24 +27,53 @@ export default ({
     const store = useStore();
     const allHomeTypesTitle = "All Home Types";
     let checkedHomeType = ref([]);
-    let homeTypes = ref([
-      "Single", 
-      "Multi-Family", 
-      "Condo", 
-      "Land", 
-      "Mobile/Manufactured",
-      "Others"
+    const homeTypes = ref([
+      {
+        id: "single_family",
+        title: "House"
+      },
+      {
+        id: "condo",
+        title: "Condo"
+      },
+      {
+        id: "land",
+        title: "Land"
+      },
+      {
+        id: "multi_family",
+        title: "Multi-Family"
+      },
+      {
+        id: "mobile",
+        title: "Mobile"
+      },
+      {
+        id: "farm",
+        title: "Farm"
+      },
+      {
+        id: "other",
+        title: "Other"
+      },
     ]);
     watchEffect(() => {
       store.commit("setHomeType", checkedHomeType.value);
     });
-    const homeTypeTitle = computed(()=> {
+
+    const homeTypeTitle = computed(() => {
+      console.log("Hometype", checkedHomeType.value[0]);
       return checkedHomeType.value.length == 0
         ? allHomeTypesTitle
         : checkedHomeType.value.length == 1 
-        ? checkedHomeType.value[0]
+        ? getHomeTypeTitle(homeTypes.value, checkedHomeType.value[0])
         : `Home Types (${checkedHomeType.value.length})`
-    })
+    });
+
+    const getHomeTypeTitle = (types, theCheckedTypeId) => {
+      let typeChecked = types.filter((type) => type.id === theCheckedTypeId);
+      return typeChecked[0].title;
+    }
     const buttonActivated = computed(() => {
       return homeTypeTitle.value == allHomeTypesTitle ? false : true;
     });
