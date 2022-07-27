@@ -28,6 +28,9 @@ export default createStore({
     getPriceRangeMax(state){
       return state.propertyFilters.priceMaxRange;
     },
+    getNumberOfBed(state){
+      return state.propertyFilters.numberOfBed;
+    },
     getActiveBranch(state){
       return state.activeListBranch;
     },
