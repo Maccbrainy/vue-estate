@@ -71,6 +71,7 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { addCommaToNumberFormat } from "@/helper";
 import WidgetUtilitySummary from "@/components/WidgetUtilitySummary.vue";
 import WidgetImageSlider from "@/components/WidgetImageSlider.vue";
 import WidgetPriceDetail from "@/components/WidgetPriceDetail.vue";
@@ -108,13 +109,13 @@ export default {
     const propertyPriceMinMAx = computed(() => {
       return props.home.community.price_hint == "CALL" 
         ? "Contact For Price"
-        : `$${props.home.community.price_min} - $${props.home.community.price_max}/mo`
+        : `$${addCommaToNumberFormat(props.home.community.price_min)} - $${addCommaToNumberFormat(props.home.community.price_max)}/mo`
     })
     const propertyPrice = computed(() => {
       return !isRentalProperty.value 
-        ? `$${props.home.price}`
+        ? `$${addCommaToNumberFormat(props.home.price)}`
         : !props.home.community
-        ? `$${props.home.price}/mo`
+        ? `$${addCommaToNumberFormat(props.home.price)}/mo`
         : propertyPriceMinMAx.value
     })
     const propertyAddressLine = computed(() => {
@@ -176,7 +177,7 @@ export default {
         ? "Unknown" 
         : !props.home.building_size 
         ? "Unknown"
-        : props.home.building_size.size
+        : addCommaToNumberFormat(props.home.building_size.size)
     });
 
     const propertyListingBy = computed(() => {
