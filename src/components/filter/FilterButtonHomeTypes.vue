@@ -62,7 +62,6 @@ export default ({
     });
 
     const homeTypeTitle = computed(() => {
-      console.log("Hometype", checkedHomeType.value[0]);
       return checkedHomeType.value.length == 0
         ? allHomeTypesTitle
         : checkedHomeType.value.length == 1 
