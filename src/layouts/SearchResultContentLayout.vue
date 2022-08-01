@@ -13,7 +13,7 @@
         <div 
           class="flex justify-between flex-col flex-auto flex-start pl-2 pb-2">
           <h2 
-            v-if="otherBranch" 
+            v-if="activeBranch == 'Other Listings'" 
             class="bg-gray-100 text-base font-normal text-gray-500 px-4 py-4 mr-3 mb-3">
             Includes homes for sale by owner, plus foreclosures and auctions not listed by agents.
           </h2>
@@ -31,18 +31,18 @@
                   <dropdown-button-select-box>
                     <dropdown-button-select class="shadow-none border-none">
                       <dropdown-button-select-option value>
-                        Sort: Just For You
+                        Sort: Relevence
                       </dropdown-button-select-option>
-                      <dropdown-button-select-option value="Newest Listings">
+                      <dropdown-button-select-option value="newest">
                         Sort: Newest Listings</dropdown-button-select-option>
-                      <dropdown-button-select-option value="Bathrooms">
-                        Sort: Bathrooms</dropdown-button-select-option>
-                      <dropdown-button-select-option value="Bedrooms">
-                        Sort: Bedrooms</dropdown-button-select-option>
-                      <dropdown-button-select-option value="Most photos">
+                      <dropdown-button-select-option value="price_high">
+                        Sort: Price high</dropdown-button-select-option>
+                      <dropdown-button-select-option value="price_low">
+                        Sort: Price low</dropdown-button-select-option>
+                      <dropdown-button-select-option value="photos">
                         Sort: Most photos</dropdown-button-select-option>
-                      <dropdown-button-select-option value="Square feet">
-                        Sort: Square feet</dropdown-button-select-option>
+                      <dropdown-button-select-option value="sqft_high">
+                        Sort: Square feet high</dropdown-button-select-option>
                     </dropdown-button-select>
                   </dropdown-button-select-box>
                 </div>
@@ -50,7 +50,7 @@
             </div>
           </div>
           <no-search-term-match-for-agent-and-other-listings 
-            v-else-if="activeListingIsZeroAndThereIsFilterSelected">
+            v-else-if="filterIsActiveAndAllPropertiesIsZero">
           </no-search-term-match-for-agent-and-other-listings>
           <no-search-term-for-agent-or-other-listings v-else>
           </no-search-term-for-agent-or-other-listings>
@@ -120,20 +120,29 @@ export default {
   setup(props) {
     const store = useStore();
     const activeRouteTab = ref("");
-    const allPropertyListings = ref({});
+    const allPropertyListings = ref([]);
     const propertyListingByAgent = ref([]);
     const propertyListingByOthers = ref([]);
+    const activePropertyListings = ref([]);
     const listingTitle = ref("");
-    
-    const searchedData = computed(() => {
-      return store.getters.getSearchedData
-    });
-    const getIsActiveRouteTab = computed(() => {
-      return store.getters.getIsActiveRouteTab;
-    });
-    
-    console.log("Get route name:", getIsActiveRouteTab.value);
+
+    const isLoading = computed(() => store.getters.getIsLoading);
+    const error = computed(() => store.getters.getErrorCatch);
+    const searchedData = computed(() => store.getters.getSearchedData );
+    const activeBranch = computed(() => store.getters.getActiveBranch);
+    const getHomeTypes = computed(() => store.getters.getHomeType);
+    const getMinPriceRange = computed(() => store.getters.getPriceRangeMin);
+    const getMaxPriceRange = computed(() => store.getters.getPriceRangeMax);
+    const getNumberOfBedInProperty = computed(
+      () => store.getters.getNumberOfBed);
+
     watchEffect(async () => {
+      let sortType = "relevence";
+      let propertyType = getHomeTypes.value;
+      let bedNumber = getNumberOfBedInProperty.value;
+      let priceMin = getMinPriceRange.value;
+      let priceMax = getMaxPriceRange.value;
+
       switch (props.name) {
         case "RentPage":
         // case "RentsNearMe":
@@ -148,20 +157,26 @@ export default {
           activeRouteTab.value = "list-for-sale";
           // store.commit("setActiveRoutePath", "BuyPage");
           break;
-        // default:
-        //   console.log("Active Route path is default");
-        //   return;
       };
       store.commit("setIsLoading", true);
+
       const { propertyDetail } = await useFetch( 
         activeRouteTab.value, 
         props.slug, 
-        props.city
+        props.city,
+        sortType,
+        propertyType,
+        bedNumber,
+        priceMin,
+        priceMax
       );
+  
       if (!propertyDetail.value.data.properties){
-        return
+        return;
       }
       allPropertyListings.value = propertyDetail.value.data.properties;
+
+      console.log("allPropertyListings:", allPropertyListings.value);
 
       const { listingsByOthers, listingsByAgent } = 
         useSortListingsByAgentAndOthers(allPropertyListings.value );
@@ -177,84 +192,32 @@ export default {
       store.commit("setAllPropertyListings", allPropertyListings.value);
       store.commit("setIsLoading", false);
 
-      console.log("AgentLists:", listingsByAgent.value);
-      console.log("OthersLists:", listingsByOthers.value);
-
-    });
-    const isLoading = computed(() => {
-      return store.getters.getIsLoading;
-    });
-
-    const error = computed(() => {
-      return store.getters.getErrorCatch;
-    });
-
-    const activeBranch = computed(() => {
-      return store.getters.getActiveBranch;
-    });
-    const otherBranch = computed(() => 
-      activeBranch.value !== "Agent Listings" ? true : false)
-    const agentBranch = computed(() => 
-      activeBranch.value == "Agent Listings" ? true : false)
-    
-    const updatedActiveListings = computed(() => {
-      let updatedList = 
-        activeBranch.value === "Agent Listings" 
-          ? propertyListingByAgent.value
-          : propertyListingByOthers.value;
-      store.commit("setActiveListing", updatedList);
-      return updatedList;
-    });
-
-    const getMinPriceRange = computed(() => {
-      return store.getters.getPriceRangeMin;
-    });
-    const getMaxPriceRange = computed(() => {
-      return store.getters.getPriceRangeMax;
     });
     watchEffect(() => {
-      let minPrice = getMinPriceRange.value;
-      let maxPrice = getMaxPriceRange.value;
-      let activeProperties = updatedActiveListings.value;
-      if (!maxPrice && !minPrice) {
-        let defaultProperty = agentBranch.value 
-          ? propertyListingByAgent.value 
+      activePropertyListings.value = 
+        activeBranch.value == "Agent Listings" 
+          ? propertyListingByAgent.value
           : propertyListingByOthers.value;
-        store.commit("setActiveListing", defaultProperty);
-        return defaultProperty;
-      }
-      if (activeProperties){
-        const filteredPropertiesOnMinPriceOnly = activeProperties.filter(
-          (property) => property["price"] >= minPrice
-        );
-        const filteredPropertiesWithMaxPrice = 
-          filteredPropertiesOnMinPriceOnly.filter(
-            (property) => property["price"] <= maxPrice
-          )
-        const filteredProperties = maxPrice 
-          ? filteredPropertiesWithMaxPrice 
-          : filteredPropertiesOnMinPriceOnly;
-        store.commit("setActiveListing", filteredProperties);
-        console.log("Filtered Props", filteredProperties);
-      }
+      store.commit("setActiveListing", activePropertyListings.value);
+    });
 
-    });
-    const activePropertyListings = computed(() => {
-      return store.getters.getActiveListing;
-    });
-    const activeListingIsZeroAndThereIsFilterSelected = computed(() => {
-      let activeListLength = activePropertyListings.value.length;
-      let listingIsZeroAndThereIsFilter = 
-        agentBranch.value && 
-        activeListLength == 0 && 
-        activeListLength < propertyListingByAgent.value.length 
-          ? true
-          : otherBranch.value && 
-            activeListLength == 0 && 
-            activeListLength < propertyListingByOthers.value.length
-          ? true
-          : false
-      return listingIsZeroAndThereIsFilter;
+    const filterIsActiveAndAllPropertiesIsZero = computed(() => {
+      let filterIsActive;
+      if (getHomeTypes.value){
+        filterIsActive = true;
+      }
+      if (getNumberOfBedInProperty.value){
+        filterIsActive = true;
+      }
+      if (getMinPriceRange.value){
+        filterIsActive = true;
+      }
+      if (getMaxPriceRange.value){
+        filterIsActive = true;
+      }
+      return allPropertyListings.value.length == 0 && filterIsActive 
+        ? true 
+        : false;
     });
 
     const propertyCountIsGreaterThanOne = computed(() => {
@@ -265,13 +228,12 @@ export default {
       error,
       searchedData,
       listingTitle,
-      otherBranch,
-      updatedActiveListings,
+      activeBranch,
       activePropertyListings,
       allPropertyListings,
       propertyListingByAgent,
       propertyListingByOthers,
-      activeListingIsZeroAndThereIsFilterSelected,
+      filterIsActiveAndAllPropertiesIsZero,
       propertyCountIsGreaterThanOne
     }
   },
