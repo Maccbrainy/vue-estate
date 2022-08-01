@@ -26,6 +26,9 @@
             },
           }" 
           target="_blank">
+          <div class="absolute p-2 z-10">
+            <span class="text-xs text-blue-900 bg-white rounded-md p-1 uppercase font-semibold"> UPDATED - {{ propertyLastUpdated }}</span>
+          </div>
           <widget-image-slider v-bind:listingPhotos="propertyImages">
           </widget-image-slider>
           <div class="block w-72">
@@ -71,6 +74,7 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { formatDistanceStrict } from "date-fns";
 import { addCommaToNumberFormat } from "@/helper";
 import WidgetUtilitySummary from "@/components/WidgetUtilitySummary.vue";
 import WidgetImageSlider from "@/components/WidgetImageSlider.vue";
@@ -185,6 +189,12 @@ export default {
         ? "" 
         : `${props.home.branding.listing_office.list_item.name},`
     });
+    const propertyLastUpdated = computed(() => {
+      let todayDate = new Date();
+      let lastUpdated = new Date(props.home.last_update);
+      let lastUpdatedDistance = formatDistanceStrict(lastUpdated, todayDate, {addSuffix: true});
+      return lastUpdatedDistance;
+    });
     return{
       isRentalProperty,
       propertyImages,
@@ -194,6 +204,7 @@ export default {
       isRentalPropertyBath,
       isRentalPropertySqft,
       propertyListingBy,
+      propertyLastUpdated,
       isSalesAndSoldProperty: !isRentalProperty.value
     }
   }
