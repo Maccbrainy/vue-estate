@@ -1,7 +1,16 @@
 import { ref } from "vue";
 import store from "@/store";
 import axios from "axios";
-export async function useFetch(route, slug, city){
+export async function useFetch(
+  route, 
+  slug,
+  city, 
+  sortType, 
+  propertyType, 
+  bedNumber, 
+  priceMin, 
+  priceMax
+){
   const propertyDetail = ref(null);
   const errorCatch = ref(null);
   // const isLoading = ref(null);
@@ -9,6 +18,12 @@ export async function useFetch(route, slug, city){
   let routeName = route;
   let slugName = slug;
   let cityName = city.replace(/_/g," ");
+  let sortingType = sortType ? sortType : "relevance";
+  let propType = propertyType ? propertyType.join() : "";
+  console.log("Property type:", propType);
+  let bedsMin = bedNumber ? bedNumber : "";
+  let priceMinValue = priceMin ? priceMin : "";
+  let priceMaxValue = priceMax ? priceMax : ""
 
   try {
     errorCatch.value = false;
@@ -21,7 +36,11 @@ export async function useFetch(route, slug, city){
           state_code: slugName,
           offset: "0",
           limit: "40",
-          sort: "relevance"
+          sort: sortingType,
+          prop_type: propType,
+          beds_min: bedsMin,
+          price_min: priceMinValue,
+          price_max: priceMaxValue
         },
         headers: {
           "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
