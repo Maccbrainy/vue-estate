@@ -22,6 +22,9 @@ export default createStore({
     activeListing: {},
   },
   getters: {
+    getHomeType(state){
+      return state.propertyFilters.homeType;
+    },
     getPriceRangeMin(state){
       return state.propertyFilters.priceMinRange;
     },
