@@ -123,7 +123,6 @@ export default {
     const allPropertyListings = ref([]);
     const propertyListingByAgent = ref([]);
     const propertyListingByOthers = ref([]);
-    const activePropertyListings = ref([]);
     const listingTitle = ref("");
 
     const isLoading = computed(() => store.getters.getIsLoading);
@@ -145,18 +144,22 @@ export default {
 
       switch (props.name) {
         case "RentPage":
-        // case "RentsNearMe":
           activeRouteTab.value = "list-for-rent";
-          // store.commit("setActiveRoutePath", "RentPage");
           break;
         case "SoldPage":
           activeRouteTab.value = "list-sold";
           break;
         case "BuyPage":
-        // case "SalesNearMe":
           activeRouteTab.value = "list-for-sale";
-          // store.commit("setActiveRoutePath", "BuyPage");
           break;
+        // case "RentsNearMe":
+        //   activeRouteTab.value = "list-for-rent";
+        //   store.commit("setActiveRoutePath", "RentPage");
+        //   break;
+        // case "SalesNearMe":
+        //   activeRouteTab.value = "list-for-sale";
+        //   store.commit("setActiveRoutePath", "BuyPage");
+        //   break;
       };
       store.commit("setIsLoading", true);
 
@@ -180,7 +183,7 @@ export default {
 
       const { listingsByOthers, listingsByAgent } = 
         useSortListingsByAgentAndOthers(allPropertyListings.value );
-      const { listTitle } = useListingTitle(props.slug, props.city);
+      const { listTitle } = useListingTitle(props.name, props.slug, props.city);
 
       listingTitle.value = listTitle.value;
       propertyListingByAgent.value = listingsByAgent.value;
@@ -193,12 +196,12 @@ export default {
       store.commit("setIsLoading", false);
 
     });
-    watchEffect(() => {
-      activePropertyListings.value = 
-        activeBranch.value == "Agent Listings" 
-          ? propertyListingByAgent.value
-          : propertyListingByOthers.value;
-      store.commit("setActiveListing", activePropertyListings.value);
+    const activePropertyListings = computed(() => {
+      let activeListings = activeBranch.value == "Agent Listings" 
+        ? propertyListingByAgent.value
+        : propertyListingByOthers.value;
+      store.commit("setActiveListing", activeListings);
+      return activeListings;
     });
 
     const filterIsActiveAndAllPropertiesIsZero = computed(() => {
