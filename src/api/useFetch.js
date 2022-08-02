@@ -17,10 +17,9 @@ export async function useFetch(
 
   let routeName = route;
   let slugName = slug;
-  let cityName = city.replace(/_/g," ");
+  let cityName = city ? city.replace(/_/g," ") : "";
   let sortingType = sortType ? sortType : "relevance";
   let propType = propertyType ? propertyType.join() : "";
-  console.log("Property type:", propType);
   let bedsMin = bedNumber ? bedNumber : "";
   let priceMinValue = priceMin ? priceMin : "";
   let priceMaxValue = priceMax ? priceMax : ""

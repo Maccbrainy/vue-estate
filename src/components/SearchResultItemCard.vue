@@ -55,7 +55,7 @@
               class="flex justify-between">
               <span> 
                 {{ propertyListingBy }} 
-                {{ home.data_source_name }} #{{ home.mls.id }}
+                {{ home.data_source_name }} {{ propertyMLSId }}
               </span> 
               <span><external-link/>
               </span>
@@ -115,9 +115,13 @@ export default {
         ? "Contact For Price"
         : `$${addCommaToNumberFormat(props.home.community.price_min)} - $${addCommaToNumberFormat(props.home.community.price_max)}/mo`
     })
+
     const propertyPrice = computed(() => {
+      let salesOrSoldPrices = props.home.price
+        ? `$${addCommaToNumberFormat(props.home.price)}` 
+        : "Contact For Price";
       return !isRentalProperty.value 
-        ? `$${addCommaToNumberFormat(props.home.price)}`
+        ? salesOrSoldPrices
         : !props.home.community
         ? `$${addCommaToNumberFormat(props.home.price)}/mo`
         : propertyPriceMinMAx.value
@@ -126,7 +130,11 @@ export default {
       return !props.home.address.line ? "" : `${props.home.address.line},`
     });
     const bedPropertyNotOnRental = computed(() => {
-      return props.home.beds === 0 ? "Studio" : `${props.home.beds} bd` 
+      return props.home.beds === 0 
+        ? "Studio" 
+        : props.home.beds
+        ? `${props.home.beds} bd`
+        : ""  
     });
     const bedPropertyMin = computed(() => {
       return props.home.community.beds_min == 0 
@@ -195,6 +203,9 @@ export default {
       let lastUpdatedDistance = formatDistanceStrict(lastUpdated, todayDate, {addSuffix: true});
       return lastUpdatedDistance;
     });
+    const propertyMLSId = computed(() => {
+      return !props.home.mls ? "" : `#${props.home.mls.id}`
+    });
     return{
       isRentalProperty,
       propertyImages,
@@ -205,6 +216,7 @@ export default {
       isRentalPropertySqft,
       propertyListingBy,
       propertyLastUpdated,
+      propertyMLSId,
       isSalesAndSoldProperty: !isRentalProperty.value
     }
   }
