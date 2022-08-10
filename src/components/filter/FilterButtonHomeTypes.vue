@@ -1,17 +1,19 @@
 <template>
-  <dropdown-button 
-    v-bind:filterActivated="buttonActivated" 
-    v-bind:buttonTitle="homeTypeTitle" 
-    menuTitle="Home Type">
-    <dropdown-button-multi-check-boxes 
-      v-model:value="checkedHomeType" 
-      v-bind:propertyOptions="homeTypes">
-    </dropdown-button-multi-check-boxes>
-    <!-- <div>{{ checkedHomeType }}</div> -->
-  </dropdown-button>
+  <div>
+    <dropdown-button 
+      v-bind:filterActivated="buttonActivated" 
+      v-bind:buttonTitle="homeTypeTitle" 
+      menuTitle="Home Type">
+      <dropdown-button-multi-check-boxes 
+        v-model:value="checkedHomeType"
+        v-on:change="checkedSignal" 
+        v-bind:propertyOptions="homeTypes">
+      </dropdown-button-multi-check-boxes>
+    </dropdown-button>
+  </div>
 </template>
 <script>
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { 
   DropdownButton, 
@@ -57,9 +59,10 @@ export default ({
         title: "Other"
       },
     ]);
-    watchEffect(() => {
+
+    function checkedSignal(){
       store.commit("setHomeType", checkedHomeType.value);
-    });
+    };
 
     const homeTypeTitle = computed(() => {
       return checkedHomeType.value.length == 0
@@ -78,6 +81,7 @@ export default ({
     });
     return {
       homeTypes,
+      checkedSignal,
       checkedHomeType,
       homeTypeTitle,
       buttonActivated
