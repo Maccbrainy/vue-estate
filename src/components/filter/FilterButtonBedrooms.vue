@@ -1,14 +1,16 @@
 <template>
-  <dropdown-button
-    v-bind:filterActivated="buttonActivated" 
-    v-bind:buttonTitle="bedRoomFilterTitle" 
-    menuTitle="Bedrooms">
-    <button-group-multi-buttons 
-      v-bind:options="bedOptionsDetails"
-      v-bind:isActiveTab="bedRoomFilterValue"
-      v-on:getOptionId="numberOfBed">
-    </button-group-multi-buttons>
-  </dropdown-button>
+  <div>
+    <dropdown-button
+      v-bind:filterActivated="buttonActivated" 
+      v-bind:buttonTitle="bedRoomFilterTitle" 
+      menuTitle="Bedrooms">
+      <button-group-multi-buttons 
+        v-bind:options="bedOptionsDetails"
+        v-bind:isActiveTab="bedRoomFilterValue"
+        v-on:getOptionId="numberOfBed">
+      </button-group-multi-buttons>
+    </dropdown-button>
+  </div>
 </template>
 <script>
 import { ref, reactive, computed } from "vue";
