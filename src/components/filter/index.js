@@ -6,3 +6,4 @@ export { default as FilterButtonHomeTypes } from "@/components/filter/FilterButt
 export { default as FilterButtonLists } from "@/components/filter/FilterButtonLists.vue";
 export { default as FilterButtonMore } from "@/components/filter/FilterButtonMore.vue";
 export { default as FilterButtonContainer } from "@/components/filter/FilterButtonContainer.vue";
+export { default as FilterButtonSorting } from "@/components/filter/FilterButtonSorting.vue";
