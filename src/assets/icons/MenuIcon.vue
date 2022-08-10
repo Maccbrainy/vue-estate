@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="w-10 cursor-pointer text-teal pl-4 py-4"
+    class="w-10 cursor-pointer text-teal xs:pl-3 xs:py-3 pl-4 py-4"
     stroke="currentColor" 
     viewBox="0 0 24 24" 
     xmlns="http://www.w3.org/2000/svg">

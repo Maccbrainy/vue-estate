@@ -1,13 +1,14 @@
 <template>
-  <div class="w-10/12 lg:w-60 border-transparent border-8">
+  <div class="w-full xs:p-4 md:w-10/12 lg:w-60 border-transparent md:border-8">
     <h3 class="font-medium text-base text-gray-700">
       {{ listColumnTitle}}
     </h3>
-    <ul class="mt-2">
+    <ul class="mt-2 xs:flex xs:flex-wrap xs:list-disc xs:list-inside">
       <div v-for="list in listColumns" v-bind:key="list">
         <router-link :to="list.state_code || list.url">
           <li 
             class="
+              xs:pr-3
               font-normal 
               text-xs text-gray-600 
               pb-1 
@@ -24,11 +25,12 @@
         v-bind:class="{'hidden': showHide}">
         More<chevron-down/>
       </span>
-      <div v-if="showHide">
+      <div class="xs:flex xs:flex-wrap" v-if="showHide">
         <div v-for="list in fullListColumns" v-bind:key="list">
           <router-link :to="list.state_code || list.url">
             <li 
               class="
+                xs:pr-3
                 font-normal 
                 text-xs text-gray-600 
                 pb-1 
