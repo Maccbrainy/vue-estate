@@ -1,32 +1,34 @@
 <template>
-  <dropdown-button
-    v-bind:filterActivated="buttonActivated" 
-    v-bind:buttonTitle="priceIndicator" 
-    menuTitle="Price Range">
-    <div class="flex">
-      <dropdown-button-select-box>
-        <dropdown-button-select v-model="selectedMin">
-          <dropdown-button-select-option 
-            v-for="(priceRange, index) in priceRanges"
-            v-bind:key="index"
-            v-bind:value="priceRange">
-            {{ index == 0 ? "No Min" : `$${priceRange}`}}
-          </dropdown-button-select-option>
-        </dropdown-button-select>
-      </dropdown-button-select-box>
-      <button-separator></button-separator>
-      <dropdown-button-select-box>
-        <dropdown-button-select v-model="selectedMax"> 
-          <dropdown-button-select-option 
-            v-for="(priceRange, index) in priceRanges"
-            v-bind:key="index" 
-            v-bind:value="priceRange">
-            {{ index == 0 ? "No Max" : `$${priceRange}`}}
-          </dropdown-button-select-option>
-        </dropdown-button-select>
-      </dropdown-button-select-box>
-    </div>
-  </dropdown-button>
+  <div>
+    <dropdown-button
+      v-bind:filterActivated="buttonActivated" 
+      v-bind:buttonTitle="priceIndicator" 
+      menuTitle="Price Range">
+      <div class="flex">
+        <dropdown-button-select-box>
+          <dropdown-button-select v-model="selectedMin">
+            <dropdown-button-select-option 
+              v-for="(priceRange, index) in priceRanges"
+              v-bind:key="index"
+              v-bind:value="priceRange">
+              {{ index == 0 ? "No Min" : `$${priceRange}`}}
+            </dropdown-button-select-option>
+          </dropdown-button-select>
+        </dropdown-button-select-box>
+        <button-separator></button-separator>
+        <dropdown-button-select-box>
+          <dropdown-button-select v-model="selectedMax"> 
+            <dropdown-button-select-option 
+              v-for="(priceRange, index) in priceRanges"
+              v-bind:key="index" 
+              v-bind:value="priceRange">
+              {{ index == 0 ? "No Max" : `$${priceRange}`}}
+            </dropdown-button-select-option>
+          </dropdown-button-select>
+        </dropdown-button-select-box>
+      </div>
+    </dropdown-button>
+  </div>
 </template>
 <script>
 import { 
