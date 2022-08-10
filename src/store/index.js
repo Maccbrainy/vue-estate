@@ -13,6 +13,7 @@ export default createStore({
       numberOfBath: "",
       priceMinRange: null,
       priceMaxRange: null,
+      sorting:""
     },
     searchedData: {},
     successfulSearchHistory: [{}],
@@ -33,6 +34,9 @@ export default createStore({
     },
     getNumberOfBed(state){
       return state.propertyFilters.numberOfBed;
+    },
+    getPropertySorting(state){
+      return state.propertyFilters.sorting;
     },
     getActiveBranch(state){
       return state.activeListBranch;
@@ -112,6 +116,10 @@ export default createStore({
     //Invoked from FilterButtonHomeType component
     setHomeType(state, propertyPayLoad){
       state.propertyFilters.homeType = propertyPayLoad;
+    },
+    //Invoked from Filter button sorting component
+    setPropertySorting(state, propertyPayLoad){
+      state.propertyFilters.sorting = propertyPayLoad;
     },
     //Invoked from store action
     setIsLoading(state, isLoadingPayload){
