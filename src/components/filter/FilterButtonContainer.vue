@@ -1,7 +1,7 @@
 <template>
   <div class="sticky top-16 w-full h-16 bg-white z-40">
     <div class="flex align-center px-4 pt-2 pb-4 mb-2">
-      <button-box>
+      <button-box class="mf:justify-between">
         <filter-button-agent-and-other-listings
           v-bind:class="{'hidden':isNotBuyPage}">
         </filter-button-agent-and-other-listings>
