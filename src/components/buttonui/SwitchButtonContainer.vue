@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <span 
     class="
       flex 
       justify-center 
@@ -7,9 +7,9 @@
       mr-2 
       rounded-lg 
       bg-gray-100 
-      h-11">
+      h-auto">
     <slot></slot>
-  </div>
+  </span>
 </template>
 <script>
 export default {

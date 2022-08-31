@@ -8,13 +8,10 @@
           :id="fieldId"
           @input="$emit('update:checked', $event.target.checked)"
           class="hidden">
-        <div v-if="checked" class="flex items-center">
-          <checked-box-icon />
-          <div class="ml-2"><slot></slot></div>
-        </div>
-        <div class="flex items-center" v-else>
-          <check-box-icon />
-          <div class="ml-2"><slot></slot></div>
+        <div class="flex items-center">
+          <checked-box-icon v-if="checked"/>
+          <check-box-icon v-else />
+          <div class="ml-2 pr-1"><slot></slot></div>
         </div>
       </div>
     </label>

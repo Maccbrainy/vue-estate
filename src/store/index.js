@@ -8,21 +8,106 @@ export default createStore({
     activeRoutePath: "",
     activeListBranch: "",
     propertyFilters: {
+      lotSize:"",
+      searchRadius:"",
       homeType:[],
       numberOfBed: "",
       numberOfBath: "",
       priceMinRange: null,
       priceMaxRange: null,
-      sorting:""
+      sorting:"",
+      features:[],
+      age_min:"",
+      age_max:"",
+      allowsCats: "",
+      allowsDogs: "",
+      isForeclosures:"",
+      hasOpenHouses:"",
+      has3DTours:"",
+      isNewConstructions:"",
+      isContingents:"",
+      isNewPlans:"",
+    },
+    filterDescriptionInfo: {
+      filterIsActive: false,
+      filterMoreIsActive: false,
+      homeType: "",
+      priceRange: "",
+      bedroom: "",
+      features: "",
+      bathroom:""
     },
     searchedData: {},
-    successfulSearchHistory: [{}],
     allPropertyListings: {},
     propertyListingsByAgent: {},
     propertyListingsByNoneAgent: {},
     activeListing: {},
   },
   getters: {
+    //Consumed in searchResultContent component
+    getLotSize(state){
+      return state.propertyFilters.lotSize;
+    },
+    getSearchRadius(state){
+      return state.propertyFilters.searchRadius;
+    },
+    getAllowsCats(state){
+      return state.propertyFilters.allowsCats;
+    },
+    getAllowsDogs(state){
+      return state.propertyFilters.allowsDogs;
+    },
+    getIsForeclosure(state){
+      return state.propertyFilters.isForeclosures;
+    },
+    getHasOpenHouses(state){
+      return state.propertyFilters.hasOpenHouses;
+    },
+    getHas3DTours(state){
+      return state.propertyFilters.has3DTours;
+    },
+    getIsNewConstructions(state){
+      return state.propertyFilters.isNewConstructions;
+    },
+    getIsContingents(state){
+      return state.propertyFilters.isContingents;
+    },
+    getIsNewPlans(state){
+      return state.propertyFilters.isNewPlans;
+    },
+    getYearAgeMax(state){
+      return state.propertyFilters.age_max;
+    },
+    getYearAgeMin(state){
+      return state.propertyFilters.age_min;
+    },
+    getNumberOfBath(state){
+      return state.propertyFilters.numberOfBath;
+    },
+    getFilterIsActive(state){
+      return state.filterDescriptionInfo.filterIsActive;
+    },
+    getFilterMoreIsActive(state){
+      return state.filterDescriptionInfo.filterMoreIsActive;
+    },
+    getBathInfo(state){
+      return state.filterDescriptionInfo.bathroom;
+    },
+    getHomeTypeTitleInfo(state){
+      return state.filterDescriptionInfo.homeType;
+    },
+    getPriceInfo(state){
+      return state.filterDescriptionInfo.priceRange;
+    },
+    getBedroomInfo(state){
+      return state.filterDescriptionInfo.bedroom;
+    },
+    getHomeFeaturesInfo(state){
+      return state.filterDescriptionInfo.features;
+    },
+    getHomeFeatures(state){
+      return state.propertyFilters.features;
+    },
     getHomeType(state){
       return state.propertyFilters.homeType;
     },
@@ -69,17 +154,94 @@ export default createStore({
     getIsActiveRouteTab(state){
       return state.activeRoutePath;
     },
-    // getActivatedOtherRoutePath(state){
-    //   return state.activatedOtherRoutePath;
-    // }
-
   },
   mutations: {
+    //Invoked from FilterButtonMore component
+    setLotSize(state, payLoad){
+      state.propertyFilters.lotSize = payLoad;
+    },
+    //Invoked from FilterButtonMore component
+    setSearchRadius(state, payLoad){
+      state.propertyFilters.searchRadius = payLoad;
+    },
+    //Invoked from FilterButtonMore component
+    setIsNewPlans(state, payLoad){
+      state.propertyFilters.isNewPlans = payLoad;
+    },
+    //Invoked from FilterButtonMore component
+    setIsContingents(state, payLoad){
+      state.propertyFilters.isContingents = payLoad;
+    },
+    //Invoked from FilterButtonMore component
+    setIsNewConstructions(state, payLoad){
+      state.propertyFilters.isNewConstructions = payLoad;
+    },
+    //Invoked from FilterButtonMore component
+    setIsMatterPorts(state, payLoad){
+      state.propertyFilters.has3DTours = payLoad;
+    },
+    //Invoked from FilterButtonMore component
+    setIsHasOpenHousesOnly(state, payLoad){
+      state.propertyFilters.hasOpenHouses = payLoad;
+    },
+    //Invoked from FilterButtonMore component
+    setIsForeclosuresOnly(state, payLoad){
+      state.propertyFilters.isForeclosures = payLoad;
+    },
+    //Invoked from FilterButtonMore component
+    setIsCatsAllowed(state, payLoad){
+      state.propertyFilters.allowsCats = payLoad;
+    },
+    //Invoked from FilterButtonMore component
+    setIsDogsAllowed(state, payLoad){
+      state.propertyFilters.allowsDogs = payLoad;
+    },
+    //Invoked from filterCoreYearBuilt component
+    setYearBuiltAgeMin(state, yearPayLoad){
+      state.propertyFilters.age_min = yearPayLoad;
+    },
+    //Invoked from filterCoreYearBuilt component
+    setYearBuiltAgeMax(state, yearPayLoad){
+      state.propertyFilters.age_max = yearPayLoad;
+    },
+    //Invoked from filterCoreBathrooms component
+    setBathroomInfo(state, titlePayload){
+      state.filterDescriptionInfo.bathroom = titlePayload;
+    },
+    //Invoked from filterCoreBathrooms component
+    setNumberOfBathRoom(state, propertyPayLoad){
+      state.propertyFilters.numberOfBath = propertyPayLoad;
+    },
+    //Invoked from filterCoreFeatures component
+    setHomeFeaturesTitleInfo(state, titlePayload){
+      state.filterDescriptionInfo.features = titlePayload;
+    },
+    //Invoked from filterCoreFeatures component
+    setHomeFeatures(state, propertyPayLoad){
+      state.propertyFilters.features = propertyPayLoad;
+    },
+    //Invoked in SearchResultContentLayout
+    setFilterIsActive(state, payload){
+      state.filterDescriptionInfo.filterIsActive = payload;
+    },
+    //Invoked in SearchResultContentLayout
+    setFilterMoreIsActive(state, payload){
+      state.filterDescriptionInfo.filterMoreIsActive = payload;
+    },
+    //Invoked from filterCoreBedroom component
+    setBedroomInfo(state, titlePayload){
+      state.filterDescriptionInfo.bedroom = titlePayload;
+    },
+    //Invoked from filterCoreHomeTypes component
+    setHomeTypeTitleInfo(state, titlePayload){
+      state.filterDescriptionInfo.homeType = titlePayload;
+    },
+    //Invoked from filtercorePriceRange component
+    setPriceRangeInfo(state, priceInfoPayload){
+      state.filterDescriptionInfo.priceRange = priceInfoPayload;
+    },
     setSearchedData(state, searchedPayLoad){
       state.searchedData = searchedPayLoad;
-    },
-    setSuccessfulSearchHistory(state, searchedPayLoad){
-      state.successfulSearchHistory.unshift(searchedPayLoad);
     },
     //Invoked from https request in the searchResultContentLayout component
     setAllPropertyListings(state, propertyPayLoad){

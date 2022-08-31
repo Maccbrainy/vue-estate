@@ -1,8 +1,10 @@
 <template>
   <div 
     class="
-      md:w-1/4 
-      w-2/5 
+      xs:w-11/12
+      sf:w-10/12
+      lm:w-1/4
+      w-5/12 
       fixed 
       -top-0 
       -right-0 
@@ -15,6 +17,6 @@
 </template>
 <script>
 export default {
-  name: "MobileMenuContainer"
+  name: "MobileMenuContainer",
 }
 </script>

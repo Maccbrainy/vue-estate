@@ -20,19 +20,12 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, computed, watchEffect } from "vue";
+import { computed } from "vue";
 export default {
   setup() {
     const store = useStore();
-    const isLoading = ref(false);
-    const loadingIsActive = computed(() => {
-      return store.getters.getIsLoading;
-    });
-    watchEffect(() => {
-      isLoading.value = loadingIsActive.value;
-    });
     return {
-      isLoading,
+      isLoading: computed(() => store.getters.getIsLoading)
     }
   },
 }

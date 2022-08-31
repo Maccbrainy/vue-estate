@@ -20,12 +20,12 @@ export default {
   name: "NoSearchTermForAgentOrOtherListings",
   setup() {
     const store = useStore();
-    const numberOfListingsByAgent = computed(() => {
-      return store.getters.getPropertyListingsByAgent.length;
-    });
-    const numberOfListingsByOthers = computed(() => {
-      return store.getters.getPropertyListingsByNoneAgent.length;
-    });
+    const numberOfListingsByAgent = computed(
+      () => store.getters.getPropertyListingsByAgent.length);
+    const numberOfListingsByOthers = computed(
+      () => store.getters.getPropertyListingsByNoneAgent.length); 
+    const activeBranch = computed(() => store.getters.getActiveBranch);
+
     const numberOfListings = computed(() => {
       return !numberOfListingsByAgent.value 
         ? `${numberOfListingsByOthers.value} other` 
@@ -33,16 +33,16 @@ export default {
         ? `${numberOfListingsByAgent.value} agent` 
         : ""
     })
-    const activeBranch = computed(() => {
-      return store.getters.getActiveBranch;
-    });
+   
     const listingBranch = computed(() => {
       return activeBranch.value == "Agent Listings" ? "agent" : "other"
     });
 
     function seeTheHomes(){
       let changeActiveListingBranch = 
-        activeBranch.value == "Agent Listings" ? "Other Listings" : "Agent Listings" 
+        activeBranch.value == "Agent Listings" 
+          ? "Other Listings" 
+          : "Agent Listings" 
       store.commit("setActiveListBranch", changeActiveListingBranch);
     };
 

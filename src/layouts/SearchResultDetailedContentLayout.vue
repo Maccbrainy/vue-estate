@@ -1,11 +1,7 @@
 <template>
-  <nav-bar-container class="border-b">
-    <nav-bar-search-form></nav-bar-search-form>
-    <nav-bar></nav-bar>
-  </nav-bar-container>
-  <!-- <div v-if="isLoading">Loading...</div> -->
   <div 
     class="
+      border-t
       w-full 
       relative 
       -bottom-16 
@@ -69,11 +65,8 @@
 import { useRouter } from "vue-router";
 import { useFetchDetail } from "@/api/useFetchDetail.js";
 import { ref, onMounted } from "vue";
-import NavBarContainer from "@/components/NavBarContainer.vue";
-import NavBarSearchForm from "@/components/NavBarSearchForm.vue";
 import WidgetImageGrid from "@/components/WidgetImageGrid.vue";
 import WidgetUtilitySummary from "@/components/WidgetUtilitySummary.vue";
-import NavBar from "@/components/NavBar.vue";
 
 export default {
   name: "SearchResultDetailedContentLayout",
@@ -99,11 +92,8 @@ export default {
     },
   },
   components: {
-    NavBarContainer,
     WidgetImageGrid,
     WidgetUtilitySummary,
-    NavBarSearchForm,
-    NavBar,
   },
   setup(props) {
     const propertyDetail = ref({});

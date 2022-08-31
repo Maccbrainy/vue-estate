@@ -4,11 +4,10 @@
       v-bind:filterActivated="buttonActivated" 
       v-bind:buttonTitle="homeTypeTitle" 
       menuTitle="Home Type">
-      <dropdown-button-multi-check-boxes 
-        v-model:value="checkedHomeType"
-        v-on:change="checkedSignal" 
-        v-bind:propertyOptions="homeTypes">
-      </dropdown-button-multi-check-boxes>
+      <filter-core-home-types 
+        v-if="disableOnMobile" 
+        v-bind:listOptions="homeTypes">
+      </filter-core-home-types>
     </dropdown-button>
   </div>
 </template>
@@ -17,72 +16,35 @@ import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { 
   DropdownButton, 
-  DropdownButtonMultiCheckBoxes 
+  // DropdownButtonMultiCheckBoxes 
 } from "@/components/buttonui/index";
+import { FilterCoreHomeTypes } from "@/components/filter";
+import settingsData from "@/api/settingsData.json";
 export default ({
   name: "FilterButtonHomeTypes",
+  props: {
+    disableOnMobile: {
+      type: Boolean
+    }
+  },
   components: {
     DropdownButton,
-    DropdownButtonMultiCheckBoxes
+    FilterCoreHomeTypes
+    // DropdownButtonMultiCheckBoxes
   },
   setup() {
     const store = useStore();
-    const allHomeTypesTitle = "All Home Types";
-    let checkedHomeType = ref([]);
-    const homeTypes = ref([
-      {
-        id: "single_family",
-        title: "House"
-      },
-      {
-        id: "condo",
-        title: "Condo"
-      },
-      {
-        id: "land",
-        title: "Land"
-      },
-      {
-        id: "multi_family",
-        title: "Multi-Family"
-      },
-      {
-        id: "mobile",
-        title: "Mobile"
-      },
-      {
-        id: "farm",
-        title: "Farm"
-      },
-      {
-        id: "other",
-        title: "Other"
-      },
-    ]);
-
-    function checkedSignal(){
-      store.commit("setHomeType", checkedHomeType.value);
-    };
-
-    const homeTypeTitle = computed(() => {
-      return checkedHomeType.value.length == 0
-        ? allHomeTypesTitle
-        : checkedHomeType.value.length == 1 
-        ? getHomeTypeTitle(homeTypes.value, checkedHomeType.value[0])
-        : `Home Types (${checkedHomeType.value.length})`
-    });
-
-    const getHomeTypeTitle = (types, theCheckedTypeId) => {
-      let typeChecked = types.filter((type) => type.id === theCheckedTypeId);
-      return typeChecked[0].title;
-    }
-    const buttonActivated = computed(() => {
-      return homeTypeTitle.value == allHomeTypesTitle ? false : true;
-    });
+    const homeTypes = ref([...settingsData.homeTypes]);
+    const homeTypeTitle = computed(() => store.getters.getHomeTypeTitleInfo);
+    const buttonActivated = computed(() => 
+      homeTypeTitle.value == "All Rental Types" 
+        ? false 
+        : homeTypeTitle.value == "All Home Types"
+        ? false
+        : true 
+    );
     return {
       homeTypes,
-      checkedSignal,
-      checkedHomeType,
       homeTypeTitle,
       buttonActivated
     }

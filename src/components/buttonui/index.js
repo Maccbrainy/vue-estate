@@ -1,3 +1,5 @@
+export { default as ButtonRadio } from "@/components/buttonui/ButtonRadio.vue";
+export { default as ButtonSlot } from "@/components/buttonui/ButtonSlot.vue";
 // SearchResultContentLayout---Sort;
 export { default as DropdownButtonSelect } from "@/components/buttonui/DropdownButtonSelect.vue";
 export { default as DropdownButtonSelectOption } from "@/components/buttonui/DropdownButtonSelectOption.vue";

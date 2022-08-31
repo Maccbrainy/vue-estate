@@ -3,7 +3,7 @@
     <h3>{{ menuTitle }}</h3>
     <chevron-down v-bind:class="{ 'transform rotate-180': openMenu }" />
   </mobile-menu-item>
-  <ul v-if="openMenu" class="block pl-2 mt-2 font-normal mb-1">
+  <ul v-show="openMenu" class="block pl-2 mt-2 font-normal mb-1">
     <slot></slot>
   </ul>
 </template>

@@ -1,11 +1,6 @@
 <template>
   <home-page-layout>
     <template v-slot:header>
-      <nav-bar-container>
-        <nav-bar></nav-bar>
-      </nav-bar-container>
-    </template>
-    <template v-slot:default>
       <section class="px-4">
         <div class="flex flex-col overflow-visible">
           <div class="relative -bottom-16">
@@ -49,6 +44,8 @@
           </div>
         </div>
       </section>
+    </template>
+    <template v-slot:default>
       <section class="w-full relative top-32 mb-20 hidden">
         <div class="">
           <button
@@ -175,7 +172,6 @@
           class="
             flex 
             sf:grid 
-            space-x-4 
             justify-center 
             mt-10 
             w-9/12 
@@ -206,8 +202,8 @@
       </section>
     </template>
     <template v-slot:footer>
-      <section class="listColumns w-full flex relative top-40">
-        <div class="max-w-7xl flex m-auto">
+      <section class="listColumns w-full md:flex relative top-40">
+        <div class="max-w-7xl md:flex md:m-auto">
           <show-hide-list-columns 
             listColumnTitle="Real Estate Markets"
             suffix="Real Estate"
@@ -233,26 +229,21 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, computed, watch, onMounted, watchEffect
+import { ref, computed, watch, onMounted, watchEffect, reactive
 } from "vue";
 import { SearchBox, SearchInput } from "@/components/buttonui";
-import NavBarContainer from "@/components/NavBarContainer.vue";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
-import NavBar from "@/components/NavBar.vue";
 import ShowHideListColumns from "@/components/ShowHideListColumns.vue";
 import CallToActionCard from "@/components/CallToActionCard.vue";
 import HomePageLayout from "@/layouts/HomePageLayout.vue";
 import userGeolocation from "@/helper/userGeolocation";
 import jsonProperties from "@/api/autoComplete.json";
-// import SearchResultItemCard from "@/components/SearchResultItemCard.vue";
 import ExperimentalJson from "@/components/homes.json";
 import ChevronRight from "@/assets/icons/ChevronRight.vue";
 import ChevronLeft from "@/assets/icons/ChevronLeft.vue";
 export default {
   name: "HomePage",
   components: {
-    NavBarContainer,
-    NavBar,
     SearchBox,
     SearchInput,
     HomePageLayout,
@@ -430,16 +421,16 @@ export default {
 
     onMounted(() => {
       groupItems()
-      // navigator.geolocation.getCurrentPosition(
-      //   ({ coords: { latitude, longitude } }) => {
-      //     const userCordinates = reactive({
-      //       lat: latitude,
-      //       long: longitude,
-      //     })
-      //     userLocLat.value = userCordinates.lat;
-      //     userLocLong.value = userCordinates.long;
-      //     console.log("From HomePage onmounted", userCordinates); 
-      //   })
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          const userCordinates = reactive({
+            lat: latitude,
+            long: longitude,
+          })
+          userLocLat.value = userCordinates.lat;
+          userLocLong.value = userCordinates.long;
+          console.log("From HomePage lat", userCordinates); 
+        })
     });
     function groupItems(){
       let groupedItemsByIndex = {

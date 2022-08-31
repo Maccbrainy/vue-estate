@@ -23,7 +23,7 @@ import {
   DropdownButtonSelectOption, 
   DropdownButtonSelectBox 
 } from "@/components/buttonui";
-
+import settingsData from "@/api/settingsData.json";
 export default {
   name: "FilterButtonSorting",
   components: {
@@ -32,32 +32,7 @@ export default {
     DropdownButtonSelectBox
   }, 
   setup() {
-    const sortOptions = ref([
-      {
-        id: "relevance",
-        title: "Relevance",
-      },
-      {
-        id: "newest",
-        title: "Newest Listings",
-      },
-      {
-        id: "price_high",
-        title: "Price High",
-      },
-      {
-        id: "price_low",
-        title: "Price Low",
-      },
-      {
-        id: "photos",
-        title: "Most Photos",
-      },
-      {
-        id: "sqft_high",
-        title: "Sqft High",
-      },
-    ]);
+    const sortOptions = ref([...settingsData.sortOptions]);
     const store = useStore();
     const sorting = ref(sortOptions.value[1].id);
 

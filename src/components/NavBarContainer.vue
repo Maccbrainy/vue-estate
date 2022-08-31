@@ -13,13 +13,11 @@
       z-50">
     <vue-estate-logo class="sm:py-3 sm:pr-5 cursor-pointer"></vue-estate-logo>
     <slot></slot>
-    <menu-icon
-      v-if="!toggleMenu" 
-      v-on:click="toggleMenu = !toggleMenu"
-    ></menu-icon>
-    <mobile-menu v-if="toggleMenu"></mobile-menu>
+    <menu-icon v-on:click="toggleMenu = !toggleMenu"></menu-icon>
+    <mobile-menu v-show="toggleMenu"></mobile-menu>
     <close-mobile-menu 
-      v-if="toggleMenu" 
+      class="absolute right-6" 
+      v-show="toggleMenu" 
       v-on:click="toggleMenu = !toggleMenu"
     ></close-mobile-menu>
   </nav>

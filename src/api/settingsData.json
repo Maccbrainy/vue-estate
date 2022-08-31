@@ -1,0 +1,518 @@
+{
+    "routeNames": [
+      {
+        "id": "BuyPage",
+        "name": "Buy",
+        "queryFormat": "list-for-sale"
+      },
+      {
+        "id": "RentPage",
+        "name": "Rent",
+        "queryFormat": "list-for-rent"
+      },
+      {
+        "id": "SoldPage",
+        "name": "Sold",
+        "queryFormat": "list-sold"
+      }
+    ],
+    "agentType": [
+      {
+        "id": "Agent Listings",
+        "title": "Agent Listings"
+      },
+      {
+        "id": "Other Listings",
+        "title": "Other"
+      }
+    ],
+    "priceRangesForSale": [
+      {
+        "id":"0",
+        "title":"0"
+      },
+      {
+        "id":"10000",
+        "title":"10k"
+      },
+      {
+        "id":"20000",
+        "title":"20k"
+      },
+      {
+        "id":"30000",
+        "title":"30K"
+      },
+      {
+        "id":"50000",
+        "title":"50K"
+      },
+      {
+        "id":"100000",
+        "title":"100K"
+      },
+      {
+        "id":"200000",
+        "title":"200K"
+      },
+      {
+        "id":"300000",
+        "title":"300K"
+      },
+      {
+        "id":"400000",
+        "title":"400k"
+      },
+      {
+        "id":"500000",
+        "title":"500k"
+      },
+      {
+        "id":"600000",
+        "title":"600k"
+      },
+      {
+        "id":"700000",
+        "title":"700k"
+      },
+      {
+        "id":"800000",
+        "title":"800k"
+      },
+      {
+        "id":"900000",
+        "title":"900k"
+      },
+      {
+        "id":"1000000",
+        "title":"1m"
+      },
+      {
+        "id":"1500000",
+        "title":"1.5m"
+      },
+      {
+        "id":"2000000",
+        "title":"2m"
+      },
+      {
+        "id":"2250000",
+        "title":"2.25m"
+      },
+      {
+        "id":"2500000",
+        "title":"2.5m"
+      },
+      {
+        "id":"3000000",
+        "title":"3m"
+      },
+      {
+        "id":"3500000",
+        "title":"3.5m"
+      },
+      {
+        "id":"4000000",
+        "title":"4m"
+      },
+      {
+        "id":"4500000",
+        "title":"4.5m"
+      },
+      {
+        "id":"5000000",
+        "title":"5m"
+      },
+      {
+        "id":"8000000",
+        "title":"8m"
+      },
+      {
+        "id":"10000000",
+        "title":"10m"
+      },
+      {
+        "id":"20000000",
+        "title":"20m"
+      }
+    ],
+    "priceRangeForRent": [
+      {
+        "id":"0",
+        "title":"0"
+      },
+      {
+        "id":"400",
+        "title":"400"
+      },
+      {
+        "id":"500",
+        "title":"500"
+      },
+      {
+        "id":"600",
+        "title":"600"
+      },
+      {
+        "id":"700",
+        "title":"700"
+      },
+      {
+        "id":"800",
+        "title":"800"
+      },
+      {
+        "id":"900",
+        "title":"900"
+      },
+      {
+        "id":"1000",
+        "title":"1,000"
+      },
+      {
+        "id":"1100",
+        "title":"1,100"
+      },
+      {
+        "id":"1200",
+        "title":"1,200"
+      },
+      {
+        "id":"1300",
+        "title":"1,300"
+      },
+      {
+        "id":"1400",
+        "title":"1,400"
+      },
+      {
+        "id":"1500",
+        "title":"1,500"
+      },
+      {
+        "id":"1600",
+        "title":"1,600"
+      },
+      {
+        "id":"1700",
+        "title":"1,700"
+      },
+      {
+        "id":"1800",
+        "title":"1,800"
+      },
+      {
+        "id":"1900",
+        "title":"1,900"
+      },
+      {
+        "id":"2000",
+        "title":"2,000"
+      },
+      {
+        "id":"2200",
+        "title":"2,200"
+      },
+      {
+        "id":"2400",
+        "title":"2,400"
+      },
+      {
+        "id":"2600",
+        "title":"2,600"
+      },
+      {
+        "id":"2800",
+        "title":"2,800"
+      },
+      {
+        "id":"3000",
+        "title":"3,000"
+      },
+      {
+        "id":"3200",
+        "title":"3,200"
+      },
+      {
+        "id":"4000",
+        "title":"4,000"
+      }
+    ],
+    "homeTypes": [
+        {
+            "id": "single_family",
+            "title": "House"
+        },
+        {
+            "id": "condo",
+            "title": "Condo"
+        },
+        {
+            "id": "land",
+            "title": "Land"
+        },
+        {
+            "id": "multi_family",
+            "title": "Multi-Family"
+        },
+        {
+            "id": "mobile",
+            "title": "Mobile"
+        },
+        {
+            "id": "farm",
+            "title": "Farm"
+        },
+        {
+            "id": "other",
+            "title": "Other"
+        }
+    ],
+    "typeFeatures": [
+
+        {
+            "id": "waterfront",
+            "title": "Waterfront"
+        },
+        {
+            "id": "swimming_pool",
+            "title": "Swimming pool"
+         },
+        {
+            "id": "basement",
+            "title": "Basement"
+        },
+        {
+            "id": "hill_or_mountain_view",
+            "title": "Hill/Mountain view"
+        },
+        {
+          "id": "recreation_facilities",
+          "title": "Recreation Facilities"
+      },
+      {
+          "id": "garage_1_or_more",
+          "title": "Garage"
+       },
+      {
+          "id": "fireplace",
+          "title": "Fireplace"
+      },
+      {
+          "id": "hardwood_floors",
+          "title": "Hardwood floors"
+      },
+      {
+        "id": "golf_course_view",
+        "title": "Golf view"
+      }
+    ],
+    "typeAmenities": [
+      {
+        "id": "furnished",
+        "title": "Furnished"
+      },
+      {
+        "id": "dishwasher",
+        "title": "Dishwasher"
+      },
+      {
+          "id": "swimming_pool",
+          "title": "Swimming pool"
+       },
+      {
+          "id": "washer_dryer",
+          "title": "Washer/Dryer"
+      },
+      {
+        "id": "recreation_facilities",
+        "title": "Recreation Facilities"
+    },
+    {
+        "id": "garage_1_or_more",
+        "title": "Garage"
+     },
+    {
+        "id": "fireplace",
+        "title": "Fireplace"
+    },
+    {
+      "id": "community_elevator",
+      "title": "Elevator"
+    }
+  ],
+     "bedOptions": [
+        {
+          "id": "All Beds",
+          "name": "Studio+"
+        },
+        {
+          "id": "1",
+          "name": "1+"
+        },
+        {
+          "id": "2",
+          "name": "2+"
+        },
+        {
+          "id": "3",
+          "name": "3+"
+        },
+        {
+          "id": "4",
+          "name": "4+"
+        }
+      ],
+    "bathroomOptions": [
+        {
+            "id": "Any",
+            "name": "Any"
+          },
+          {
+            "id": "1",
+            "name": "1+"
+          },
+          {
+            "id": "2",
+            "name": "2+"
+          },
+          {
+            "id": "3",
+            "name": "3+"
+          },
+          {
+            "id": "4",
+            "name": "4+"
+          },
+          {
+            "id": "5",
+            "name": "5+"
+          }
+    ],
+    "sortOptions": [
+      {
+        "id": "relevance",
+        "title": "Relevance"
+      },
+      {
+        "id": "newest",
+        "title": "Newest Listings"
+      },
+      {
+        "id": "price_high",
+        "title": "Price High"
+      },
+      {
+        "id": "price_low",
+        "title": "Price Low"
+      },
+      {
+        "id": "photos",
+        "title": "Most Photos"
+      },
+      {
+        "id": "sqft_high",
+        "title": "Sqft High"
+      },
+      {
+        "id": "open_house_date",
+        "title": "Open Houses (Date)"
+      },
+      {
+        "id": "price_reduced_date",
+        "title": "Price Reduced (Date)"
+      }
+    ],
+    "searchRadiusInMiles": [
+      {
+        "id":"0",
+        "title": "No Miles"
+      },
+      {
+        "id":"1",
+        "title": "1 Mile"
+      },
+      {
+        "id":"2",
+        "title": "2 Miles"
+      },
+      {
+        "id":"3",
+        "title": "3 Miles"
+      },
+      {
+        "id":"4",
+        "title": "4 Miles"
+      },
+      {
+        "id":"5",
+        "title": "5 Miles"
+      },
+      {
+        "id":"6",
+        "title": "6 Miles"
+      },
+      {
+        "id":"7",
+        "title": "7 Miles"
+      },
+      {
+        "id":"8",
+        "title": "8 Miles"
+      },
+      {
+        "id":"9",
+        "title": "9 Miles"
+      },
+      {
+        "id":"10",
+        "title": "10 Miles"
+      }
+    ],
+    "lotSizes": [
+      {
+        "id":"0",
+        "title": "No Min"
+      },
+      {
+        "id":"0.045",
+        "title": "0.045+ acre (2000 sqft)"
+      },
+      {
+        "id":"0.07",
+        "title": "0.07+ acre (3000 sqft)"
+      },
+      {
+        "id":"0.09",
+        "title": "0.09+ acre (4000 sqft)"
+      },
+      {
+        "id":"0.1",
+        "title": "0.1+ acre (5000 sqft)"
+      },
+      {
+        "id":"0.25",
+        "title": "0.25 acre"
+      },
+      {
+        "id":"0.5",
+        "title": "0.5 acre"
+      },
+      {
+        "id":"1",
+        "title": "1+ acre "
+      },
+      {
+        "id":"2",
+        "title": "2+ acre"
+      },
+      {
+        "id":"5",
+        "title": "5+ acre"
+      },
+      {
+        "id":"10",
+        "title": "10+ acre"
+      }
+    ]
+}

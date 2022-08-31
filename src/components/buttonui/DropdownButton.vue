@@ -1,53 +1,46 @@
 <template>
   <li>
     <div class="mr-2">
-      <button 
-        type="button"
-        ref="menubutton"
+      <button-slot 
         v-bind:class="{ 
-          ' hover:bg-gray-200 active:bg-gray-400 text-gray-700': !isLoading,
-          'bg-gray-100 text-gray-400': isLoading}"
-        class="
-          z-30
-          inline-flex
-          justify-center 
-          w-full 
-          rounded-lg 
-          border border-gray-300 
-          shadow-sm 
-          px-4 
-          py-2 
-          text-base 
-          font-medium
-          bg-white"
+          'bg-gray-100': isLoading 
+        }" 
         v-on:click="toggleButtonOpenClose" 
         :disabled="isLoading">
         <span 
-          v-if="filterActivated" 
+          v-show="filterActivated" 
           class="my-auto w-3 h-3 rounded-full bg-teal mr-2"></span>
-        {{ buttonTitle }}
+        <span 
+          v-bind:class="{
+            'text-gray-400': isLoading 
+          }">
+          {{ buttonTitle }}
+        </span>
         <chevron-down 
           v-bind:class="{
             'transform rotate-180': buttonIsOpen,
             ' text-gray-400': isLoading 
-          }" />
-      </button>
+          }"/>
+      </button-slot>
       <fieldset
+        v-bind="$attrs"
         class="
           overflow-auto
           z-30
           origin-top-right 
-          absolute 
+          absolute
+          text-gray-600
+          font-normal
+          text-base 
           pb-2 
           mt-1
-          w-72
-          max-h-64
+          w-auto
+          max-h-80
           rounded-md 
           shadow-lg 
           bg-white 
           ring-black ring-opacity-5 
           focus:outline-none"
-        v-bind="$attrs"
         role="menu" 
         aria-orientation="vertical" 
         aria-labelledby="menu-button" 
@@ -65,6 +58,7 @@
 import { ref, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 import ChevronDown from "@/assets/icons/ChevronDown.vue";
+import { ButtonSlot } from "@/components/buttonui";
 export default {
   // Button title from the parent
   inheritAttrs: false,
@@ -74,6 +68,7 @@ export default {
     filterActivated: Boolean,
   },
   components:{
+    ButtonSlot,
     ChevronDown,
   },
   setup() {

@@ -1,12 +1,12 @@
 <template>
   <span role="group" class="flex bg-gray-600 bg-opacity-50 rounded-lg">
     <button-tab 
-      v-for="(tabButton, index) in tabButtons" 
+      v-for="(routeName, index) in routeNames" 
       v-bind:key="index"
-      v-bind:name="tabButton.namedRoute"
+      v-bind:name="routeName.queryFormat"
       v-on:click.prevent="activateTab"
-      v-bind:class="{'bg-white text-teal': tabButton.namedRoute == activeTabButton}"
-      >{{ tabButton.title }}</button-tab>
+      v-bind:class="{'bg-white text-teal': routeName.queryFormat == activeTabButton}"
+      >{{ routeName.name }}</button-tab>
   </span> 
 </template>
 <script>
@@ -14,6 +14,7 @@ import { ButtonTab } from "@/components/buttonui";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { ref, computed, watchEffect } from "vue";
+import settingsData from "@/api/settingsData.json";
 export default {
   name: "HomeTabButtons",
   components: {
@@ -24,26 +25,13 @@ export default {
     const route = useRoute();
     const store = useStore();
     const activeTabButton = ref(false);
-    const tabButtons = [
-      {
-        title: "Buy",
-        namedRoute: "list-for-sale",
-      },
-      {
-        title: "Rent",
-        namedRoute: "list-for-rent",
-      },
-      {
-        title: "Sold",
-        namedRoute: "list-sold",
-      }
-    ]
+    const routeNames = [...settingsData.routeNames];
     const getIsActiveRouteTab = computed(() => {
       return store.getters.getIsActiveRouteTab;
     });
     watchEffect(() => {
       let routingValue = 
-        route.name == "HomePage" ? "list-for-sale" : route.name;
+        route.name == "HomePage" ? routeNames[0].queryFormat : route.name;
       if (getIsActiveRouteTab.value == ""){
         store.commit("setActiveRoutePath", routingValue);
       } else {
@@ -53,7 +41,7 @@ export default {
 
     function activateTab(e){
       let routingValue = 
-        e.target.name == "list-for-sale" ? "HomePage" : e.target.name; 
+        e.target.name == routeNames[0].queryFormat ? "HomePage" : e.target.name; 
       router.push({
         name: routingValue
       });
@@ -64,7 +52,7 @@ export default {
       activeTabButton.value = getIsActiveRouteTab.value;
     });
     return {
-      tabButtons,
+      routeNames,
       activateTab,
       activeTabButton,
     }

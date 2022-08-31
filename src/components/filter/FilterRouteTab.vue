@@ -1,6 +1,6 @@
 <template>
   <button-group-multi-buttons 
-    v-bind:options="propertyListingTemplate"
+    v-bind:options="propertyRouteTemplate"
     v-bind:isActiveTab="activeRouteTemplate"
     v-on:getOptionId="setPropertyListingTemplate">
   </button-group-multi-buttons>
@@ -10,6 +10,7 @@ import { ref, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ButtonGroupMultiButtons } from "@/components/buttonui";
+import settingsData from "@/api/settingsData.json";
 export default {
   name: "FilterRouteTab",
   components: {
@@ -20,20 +21,8 @@ export default {
     const route = useRoute();
     const searchPayload = ref({});
     const activeRouteTemplate = ref("");
-    const propertyListingTemplate = ref([
-      {
-        id: "BuyPage",
-        name: "Buy",
-      },
-      {
-        id: "RentPage",
-        name: "Rent",
-      },
-      {
-        id: "SoldPage",
-        name: "Sold",
-      },
-    ]);
+    const propertyRouteTemplate = ref([...settingsData.routeNames]);
+
     const getIsActiveRouteTab = computed(() => {
       return store.getters.getIsActiveRouteTab;
     });
@@ -41,23 +30,20 @@ export default {
     //   return store.getters.getSearchedData;
     // });
     watchEffect(() => {
-      // if (getIsActiveRouteTab.value == ""){
       switch (getIsActiveRouteTab.value) {
         case "SalesNearMe":
-          store.commit("setActiveRoutePath", "BuyPage");
-          activeRouteTemplate.value = "BuyPage";
+          store.commit("setActiveRoutePath", propertyRouteTemplate.value[0].id);
+          activeRouteTemplate.value = propertyRouteTemplate.value[0].id;
           break;
         case "RentsNearMe":
-          store.commit("setActiveRoutePath", "RentPage");
-          activeRouteTemplate.value = "RentPage";
+          store.commit("setActiveRoutePath", propertyRouteTemplate.value[1].id);
+          activeRouteTemplate.value = propertyRouteTemplate.value[1].id;
           break;
         default:
           store.commit("setActiveRoutePath", getIsActiveRouteTab.value);
           activeRouteTemplate.value = getIsActiveRouteTab.value;
           break;
       }
-      // }
-      // activeRouteTemplate.value = getIsActiveRouteTab.value;
     });
 
     function setPropertyListingTemplate(e){
@@ -79,7 +65,7 @@ export default {
     };
     return {
       activeRouteTemplate,
-      propertyListingTemplate,
+      propertyRouteTemplate,
       setPropertyListingTemplate
     }
  },

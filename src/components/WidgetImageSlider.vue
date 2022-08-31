@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind:class="{ 'animate-pulse': !propertyListingPhotos }" 
+    v-bind:class="{ 'animate-pulse': !propertyListingPhotos}" 
     class="relative w-full h-44 bg-gray-200 rounded-xl overflow-hidden">
     <img
       v-bind:class="{ 'hidden': !propertyListingPhotos }" 

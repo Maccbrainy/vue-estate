@@ -30,7 +30,6 @@
   </mobile-menu-container>
 </template>
 <script>
-import { ref } from "vue";
 import {
   MobileMenuContainer,
   MobileMenuList,
@@ -46,12 +45,6 @@ export default {
     MobileMenuButtonItem,
     MobileMenuDropDown,
     MobileMenuDropDownItem 
-  },
-  setup() {
-    const openMenu = ref(false);
-    return{
-      openMenu,
-    }
   }
 }
 </script>
