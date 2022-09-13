@@ -7,12 +7,14 @@
       </nav-bar-container>
     </template>
     <template v-slot:default>
-      <router-view :key="$route.path"/>
+      <!-- :key="$route.name" -->
+      <router-view></router-view>
     </template>
     <template v-slot:footer></template>
   </base-layout>
 </template>
 <script>
+
 import BaseLayout from "@/layouts/BaseLayout.vue";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import NavBar from "@/components/NavBar.vue";
@@ -23,7 +25,7 @@ export default ({
     NavBarContainer,
     NavBar,
     NavBarSearchForm
-  }
+  },
 })
 </script>
 <style>
