@@ -14,7 +14,7 @@
               pb-1 
               cursor-pointer 
               hover:underline">
-            {{ list.state || list.name }} {{ suffix }}
+            <span class="xs:-ml-2">{{ list.state || list.name }} {{ suffix }}</span>
           </li>
         </router-link>
       </div>
@@ -36,14 +36,14 @@
                 pb-1 
                 cursor-pointer 
                 hover:underline">
-              {{ list.state || list.name }} {{ suffix }}
+              <span class="xs:-ml-2">{{ list.state || list.name }} {{ suffix }}</span>
             </li>
           </router-link>
         </div>
         <span 
           v-on:click="toggleShowHideData" 
           class="flex text-teal text-sm cursor-pointer hover:underline">
-          Less
+          Less<chevron-down class="transform rotate-180"/>
         </span>
       </div>
     </ul>
