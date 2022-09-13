@@ -229,14 +229,14 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, computed, watch, onMounted, watchEffect, reactive
+import { ref, computed, watch, onMounted
 } from "vue";
 import { SearchBox, SearchInput } from "@/components/buttonui";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
 import ShowHideListColumns from "@/components/ShowHideListColumns.vue";
 import CallToActionCard from "@/components/CallToActionCard.vue";
 import HomePageLayout from "@/layouts/HomePageLayout.vue";
-import userGeolocation from "@/helper/userGeolocation";
+// import userGeolocation from "@/helper/userGeolocation";
 import jsonProperties from "@/api/autoComplete.json";
 import ExperimentalJson from "@/components/homes.json";
 import ChevronRight from "@/assets/icons/ChevronRight.vue";
@@ -257,18 +257,16 @@ export default {
   setup() {
     const store = useStore();
     const stateSearchedData = ref("");
-    const userFindSwitch = ref("");
-    const searchNearMeModel = ref([]);
     const userLocLat = ref("");
     const userLocLong = ref("");
-    const { cordinates, userEnabledLocation } = userGeolocation();
+    // const { cordinates, userEnabledLocation } = userGeolocation();
     const findHomeAndRental = [
       {
         id: "BuyHome",
         title: "Buy a Home",
         description: "With over 1 million+ homes for sale available on the website, Vue Estate App can match you with a house you will want to call home.",
         icon: "BuyAHomeIcon",
-        url: "/houses-for-sale-near-me/",
+        urlId: "SalesNearMe",
         callToAction: "Find a Home"
       },
       {
@@ -276,7 +274,7 @@ export default {
         title: "Rent a Home",
         description: "With 35+ filters and custom keyword search, Vue Estate App can help you easily find a home or apartment for rent that you'll love.",
         icon: "RentAHomeIcon",
-        url: "/apartments-for-rent-near-me/",
+        urlId: "RentsNearMe",
         callToAction: "Find a Rental"
       }
     ];
@@ -286,7 +284,7 @@ export default {
         title: "See Neighborhoods",
         description: "With more neighborhood insights than any other real estate website, we've captured the color and diversity of communities",
         icon: "NeighborHoodsIcon",
-        url: "/neighborhoods/",
+        urlId: "neighborhoods",
         callToAction: "Learn more"
       }];
 
@@ -302,16 +300,11 @@ export default {
       return store.getters.getIsActiveRouteTab;
     });
 
-    watchEffect(() => {
-      switch (getIsActiveRoutePath.value) {
-        case "list-for-rent":
-          userFindSwitch.value = findHomeAndRental.reverse()
-          break;
-        default:
-          userFindSwitch.value = findHomeAndRental;
-          break;
-      }
-      searchNearMeModel.value = [...userFindSwitch.value, ...neighborhoods];
+    const searchNearMeModel = computed(()=> {
+      let compositionData = 
+        getIsActiveRoutePath.value == "list-for-rent" 
+          ? [...findHomeAndRental].reverse() : findHomeAndRental;
+      return [...compositionData, ...neighborhoods];
     });
 
     const autoComplete = ref(jsonProperties.property);
@@ -421,16 +414,16 @@ export default {
 
     onMounted(() => {
       groupItems()
-      navigator.geolocation.getCurrentPosition(
-        ({ coords: { latitude, longitude } }) => {
-          const userCordinates = reactive({
-            lat: latitude,
-            long: longitude,
-          })
-          userLocLat.value = userCordinates.lat;
-          userLocLong.value = userCordinates.long;
-          console.log("From HomePage lat", userCordinates); 
-        })
+      // navigator.geolocation.getCurrentPosition(
+      //   ({ coords: { latitude, longitude } }) => {
+      //     const userCordinates = reactive({
+      //       lat: latitude,
+      //       long: longitude,
+      //     })
+      //     userLocLat.value = userCordinates.lat;
+      //     userLocLong.value = userCordinates.long;
+      //     console.log("From HomePage lat", userCordinates); 
+      //   })
     });
     function groupItems(){
       let groupedItemsByIndex = {
@@ -454,10 +447,10 @@ export default {
       searchNearMeModel,
       userLocLat,
       userLocLong,
-      cordinates,
+      // cordinates,
       searchedDataFromStore,
       stateSearchedData,
-      userEnabledLocation,
+      // userEnabledLocation,
       marketPlaces: arrangeAscendingOrder,
       forProfessionals,
       exploreContact,
