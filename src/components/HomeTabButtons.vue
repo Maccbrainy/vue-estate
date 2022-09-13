@@ -13,7 +13,7 @@
 import { ButtonTab } from "@/components/buttonui";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
-import { ref, computed, watchEffect } from "vue";
+import { ref, computed } from "vue";
 import settingsData from "@/api/settingsData.json";
 export default {
   name: "HomeTabButtons",
@@ -24,37 +24,31 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
-    const activeTabButton = ref(false);
-    const routeNames = [...settingsData.routeNames];
-    const getIsActiveRouteTab = computed(() => {
-      return store.getters.getIsActiveRouteTab;
-    });
-    watchEffect(() => {
-      let routingValue = 
-        route.name == "HomePage" ? routeNames[0].queryFormat : route.name;
-      if (getIsActiveRouteTab.value == ""){
-        store.commit("setActiveRoutePath", routingValue);
-      } else {
-        store.commit("setActiveRoutePath", routingValue);
-      }
-    });
+    const routeNames = ref([...settingsData.routeNames]);
+    const getIsActiveRouteTab = computed(
+      () => store.getters.getIsActiveRouteTab);
 
     function activateTab(e){
+      if (e.target.name == getIsActiveRouteTab.value){
+        return;
+      }
       let routingValue = 
-        e.target.name == routeNames[0].queryFormat ? "HomePage" : e.target.name; 
+        e.target.name == routeNames.value[0].queryFormat ? "HomePage" : e.target.name; 
       router.push({
-        name: routingValue
+        name: routingValue,
       });
-      store.commit("setActiveRoutePath", e.target.name);
     };
-
-    watchEffect(() => {
-      activeTabButton.value = getIsActiveRouteTab.value;
+    const activeTabButton = computed(() => {
+      let routingValue =
+        route.name == "HomePage" ? routeNames.value[0].queryFormat : route.name;
+      store.commit("setActiveRoutePath", routingValue);
+      return routingValue;
     });
+
     return {
       routeNames,
       activateTab,
-      activeTabButton,
+      activeTabButton
     }
   }
 }
