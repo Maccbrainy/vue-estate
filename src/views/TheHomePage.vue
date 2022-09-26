@@ -229,8 +229,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, computed, watch, onMounted
-} from "vue";
+import { ref, computed, onMounted } from "vue";
 import { SearchBox, SearchInput } from "@/components/buttonui";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
 import ShowHideListColumns from "@/components/ShowHideListColumns.vue";
@@ -256,7 +255,6 @@ export default {
   },
   setup() {
     const store = useStore();
-    const stateSearchedData = ref("");
     const userLocLat = ref("");
     const userLocLong = ref("");
     // const { cordinates, userEnabledLocation } = userGeolocation();
@@ -287,14 +285,6 @@ export default {
         urlId: "neighborhoods",
         callToAction: "Learn more"
       }];
-
-    const searchedDataFromStore = computed(() => {
-      return store.getters.getSearchedData
-    });
-
-    watch(searchedDataFromStore, (val) => {
-      stateSearchedData.value = val;
-    });
 
     const getIsActiveRoutePath = computed(() => {
       return store.getters.getIsActiveRouteTab;
@@ -448,8 +438,6 @@ export default {
       userLocLat,
       userLocLong,
       // cordinates,
-      searchedDataFromStore,
-      stateSearchedData,
       // userEnabledLocation,
       marketPlaces: arrangeAscendingOrder,
       forProfessionals,
