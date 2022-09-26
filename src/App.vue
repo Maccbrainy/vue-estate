@@ -8,7 +8,7 @@
     </template>
     <template v-slot:default>
       <!-- :key="$route.name" -->
-      <router-view></router-view>
+      <router-view v-bind:key="$route.name"></router-view>
     </template>
     <template v-slot:footer></template>
   </base-layout>
