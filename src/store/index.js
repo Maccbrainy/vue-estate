@@ -1,16 +1,40 @@
 import { createStore } from "vuex";
 import { useRouterPush } from "@/composables";
-
+// import router from "@/router";
+function getDefaultPropertyFilterState(){
+  return {
+    lotSize:"",
+    searchRadius:"",
+    homeType: [],
+    numberOfBed: "",
+    numberOfBath: "",
+    priceMinRange: null,
+    priceMaxRange: null,
+    sorting:"",
+    features:[],
+    age_min:"",
+    age_max:"",
+    allowsCats: "",
+    allowsDogs: "",
+    isForeclosures: "",
+    hasOpenHouses:"",
+    has3DTours:"",
+    isNewConstructions:"",
+    isContingents:"",
+    isNewPlans: "",
+  }
+}
 export default createStore({
   state: {
     isLoading: false,
+    fetchingIsBusy: false,
     errorCatch: false,
     activeRoutePath: "",
     activeListBranch: "",
     propertyFilters: {
       lotSize:"",
       searchRadius:"",
-      homeType:[],
+      homeType: [],
       numberOfBed: "",
       numberOfBath: "",
       priceMinRange: null,
@@ -21,7 +45,7 @@ export default createStore({
       age_max:"",
       allowsCats: "",
       allowsDogs: "",
-      isForeclosures:"",
+      isForeclosures: "",
       hasOpenHouses:"",
       has3DTours:"",
       isNewConstructions:"",
@@ -37,13 +61,19 @@ export default createStore({
       features: "",
       bathroom:""
     },
-    searchedData: {},
-    allPropertyListings: {},
-    propertyListingsByAgent: {},
-    propertyListingsByNoneAgent: {},
-    activeListing: {},
+    searchedData: "",
+    allPropertyListings: [],
+    propertyListingsByAgent: [],
+    propertyListingsByNoneAgent: [],
+    activeListing: [],
   },
   getters: {
+    getStore(state){
+      return state;
+    },
+    getFilterDescriptionInfo(state){
+      return state.filterDescriptionInfo;
+    },
     //Consumed in searchResultContent component
     getLotSize(state){
       return state.propertyFilters.lotSize;
@@ -150,9 +180,9 @@ export default createStore({
     getActiveListing(state){
       return state.activeListing;
     },
-    //Consumed in HomeTabButtons
+    //Consumed in HomeTabButtons/filter components
     getIsActiveRouteTab(state){
-      return state.activeRoutePath;
+      return state.activeRoutePath; 
     },
   },
   mutations: {
@@ -240,6 +270,9 @@ export default createStore({
     setPriceRangeInfo(state, priceInfoPayload){
       state.filterDescriptionInfo.priceRange = priceInfoPayload;
     },
+    //Invoked in the searchResultContentLayout in onMounted life cycle;
+    //FilterRouteTab
+    //SearchInput
     setSearchedData(state, searchedPayLoad){
       state.searchedData = searchedPayLoad;
     },
@@ -283,26 +316,40 @@ export default createStore({
     setPropertySorting(state, propertyPayLoad){
       state.propertyFilters.sorting = propertyPayLoad;
     },
-    //Invoked from store action
+    //Invoked from searchResultComponent
     setIsLoading(state, isLoadingPayload){
       state.isLoading = isLoadingPayload;
+    },
+    //Invoked from searchResultComponent
+    setFetchingIsBusy(state, isLoadingPayload){
+      state.fetchingIsBusy = isLoadingPayload;
     },
     //Invoked from async request useFetchjs
     setCaughtError(state, errorPayload){
       state.errorCatch = errorPayload;
     },
-    //Invoked from HomeTabButtons
+    //Invoked from HomeButtonTab; searchResultContentLayout
     setActiveRoutePath(state, routePayload){
       state.activeRoutePath = routePayload;
     },
     //Invoked from SearchInput
     //Invoked from FilterRouteTab
-    setUseRouterPush(state, routePayload){
-      state.isLoading = true;
+    setUseRouterPush(_, routePayload){
       useRouterPush(routePayload);
+    },
+    //Invoked in searchResultContentLayout Components
+    setResetPropertyFilterState(state){
+      const defaultPropertyFilterState = getDefaultPropertyFilterState();
+      Object.keys(defaultPropertyFilterState).forEach(key => {
+        state.propertyFilters[key] = defaultPropertyFilterState[key]
+      });
     },
   },
 
-  actions: {},
+  actions: {
+    resetPropertyFilterState({ commit}){
+      commit("setResetPropertyFilterState");
+    },
+  },
   modules: {},
 });
