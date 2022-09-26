@@ -1,0 +1,9 @@
+export { default as ShareIcon } from "@/assets/icons/ShareIcon.vue";
+export { default as BedIcon } from "@/assets/icons/BedIcon.vue";
+export { default as BathRoomIcon } from "@/assets/icons/BathRoomIcon.vue";
+export { default as ThreeDTourIcon } from "@/assets/icons/3DViewIcon.vue";
+export { default as SaveSearch } from "@/assets/icons/SaveSearch.vue";
+export { default as SquareFeetIcon } from "@/assets/icons/SquareFeetIcon.vue";
+export { default as ImageCountIcon } from "@/assets/icons/ImageCountIcon.vue";
+export { default as ArrowBackIcon } from "@/assets/icons/ArrowBackIcon.vue";
+export { default as ChevronRight } from "@/assets/icons/ChevronRight.vue";
