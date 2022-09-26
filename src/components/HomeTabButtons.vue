@@ -1,13 +1,16 @@
 <template>
   <span role="group" class="flex bg-gray-600 bg-opacity-50 rounded-lg">
-    <button-tab 
-      v-for="(routeName, index) in routeNames" 
+    <button-tab
+      v-for="(routeName, index) in routeNames"
       v-bind:key="index"
       v-bind:name="routeName.queryFormat"
       v-on:click.prevent="activateTab"
-      v-bind:class="{'bg-white text-teal': routeName.queryFormat == activeTabButton}"
-      >{{ routeName.name }}</button-tab>
-  </span> 
+      v-bind:class="{
+        'bg-white text-teal': routeName.queryFormat == activeTabButton,
+      }"
+      >{{ routeName.name }}</button-tab
+    >
+  </span>
 </template>
 <script>
 import { ButtonTab } from "@/components/buttonui";
@@ -24,20 +27,21 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
+    const storeData = computed(() => store.getters.getStore);
     const routeNames = ref([...settingsData.routeNames]);
-    const getIsActiveRouteTab = computed(
-      () => store.getters.getIsActiveRouteTab);
 
-    function activateTab(e){
-      if (e.target.name == getIsActiveRouteTab.value){
+    function activateTab(e) {
+      if (e.target.name == storeData.value.activeRoutePath) {
         return;
       }
-      let routingValue = 
-        e.target.name == routeNames.value[0].queryFormat ? "HomePage" : e.target.name; 
+      let routingValue =
+        e.target.name == routeNames.value[0].queryFormat
+          ? "HomePage"
+          : e.target.name;
       router.push({
         name: routingValue,
       });
-    };
+    }
     const activeTabButton = computed(() => {
       let routingValue =
         route.name == "HomePage" ? routeNames.value[0].queryFormat : route.name;
@@ -48,8 +52,9 @@ export default {
     return {
       routeNames,
       activateTab,
-      activeTabButton
-    }
-  }
-}
+      activeTabButton,
+      storeData
+    };
+  },
+};
 </script>
