@@ -1,7 +1,7 @@
 <template>
   <base-layout>
     <template v-slot:header>
-      <nav-bar-container>
+      <nav-bar-container v-bind:key="$route.name">
         <nav-bar-search-form></nav-bar-search-form>
         <nav-bar></nav-bar>
       </nav-bar-container>
