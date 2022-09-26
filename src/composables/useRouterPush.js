@@ -1,73 +1,174 @@
 import router from "@/router";
 import store from "@/store";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 export default function useRouterPush(payLoad) {
-  const searchParams = ref("");
+  const searchParams = ref(payLoad);
+  if (!searchParams.value) return;
   const activeRoute = ref("");
-  const regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
+  const storeData = computed(() => store.getters.getStore);
+  // const regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
   const regExpWhiteSpaces = /\s/gi; //Regular Expression for White Space detection
-  searchParams.value = payLoad;
-  if (!searchParams.value) {
-    return
-  };
-
-  let cityParam = !searchParams.value.city ? "" : searchParams.value.city;
-
-  let slugParam = !searchParams.value.state_code
-    ? searchParams.value 
+  
+  let slugParam = regExpWhiteSpaces.test(searchParams.value.state_code) 
+    ? searchParams.value.state_code.replaceAll(" ", "_") 
     : searchParams.value.state_code;
-    
-  let searchedWithZipCode;
-  let searchedWithCityNameDefined;
-  let searchedDefault;
+  let city = searchParams.value.city;
+  let routeName = searchParams.value.activeRouteTab;
 
-  switch (searchParams.value.activeRouteTab) {
+  let cityParam = !city 
+    ? "" 
+    : regExpWhiteSpaces.test(city) 
+    ? city.replaceAll(" ", "_") 
+    : city 
+
+  switch (routeName) {
     case "list-for-rent":
-    case "RentPage":
       activeRoute.value = "RentPage";
-      searchedWithZipCode = `Apartments For Rent in ${slugParam} Zip Code`;
-      searchedWithCityNameDefined = `Apartments For Rent in ${cityParam}, ${slugParam} | Vue Estate`;
-      searchedDefault = `Apartments For Rent in ${slugParam} | Vue Estate`;
       break;
     case "list-sold":
-    case "SoldPage":
       activeRoute.value = "SoldPage";
-      searchedWithZipCode = `Recently Sold Properties in ${slugParam} Zip Code`;
-      searchedWithCityNameDefined = `${cityParam}, ${slugParam} Recently Sold Properties | Vue Estate`;
-      searchedDefault = `${slugParam} Recently Sold Properties | Vue Estate`;
       break;
-    default:
+    case "HomePage":
       activeRoute.value = "BuyPage";
-      searchedWithZipCode = `Homes For Sale & Real Estate in ${slugParam} Zip Code`;
-      searchedWithCityNameDefined = `${cityParam}, ${slugParam} Homes For Sale & ${cityParam}, ${slugParam} Real Estate | Vue Estate`;
-      searchedDefault = `${slugParam} Homes For Sale & ${slugParam} Real Estate | Vue Estate`;
+      break;
+    // case "list-for-sale":
+    //   activeRoute.value = "HomePage";
+    //   break;
+    default:
+      activeRoute.value = routeName;
+      break;
   };
-  /**Regular Expression
-   * for numeric characters only 
-   * thus to detect postal or zip codes search; 
-   * */
-  const titleParam = regExpNumbersOnly.test(slugParam) 
-    ? searchedWithZipCode 
-    : cityParam 
-    ? searchedWithCityNameDefined
-    : searchedDefault
-  /**Regular Expression
-   * for white space detections only  
-  * */
-  const removedWhiteSpacesFromCityParam = regExpWhiteSpaces.test(cityParam)
-    ? cityParam.replaceAll(" ", "_")
-    : cityParam;
 
-  store.commit("setActiveRoutePath", activeRoute.value);
+  let minPriceFilter = searchParams.value.priceMin || "";
+  let maxPriceFilter = searchParams.value.priceMax || "";
+  let bedFilter = searchParams.value.bed || "";
 
+  /**For variable homeTypeFilter and For variable features below;
+   * Check if vuex store searchedData is empty,
+   * If empty it means the user refreshed the page thus searchedData state lost
+   * Otherwise there is no page refresh action from the user
+   */
+  let homeTypeFilter =
+    storeData.value.searchedData && searchParams.value.homeType
+      ? `${searchParams.value.homeType.join()}`
+      : !storeData.value.searchedData && searchParams.value.homeType
+      ? `${searchParams.value.homeType}`
+      : "";
+  let features =
+    storeData.value.searchedData && searchParams.value.homeFeatures
+      ? `${searchParams.value.homeFeatures.join()}`
+      : !storeData.value.searchedData && searchParams.value.homeFeatures
+      ? `${searchParams.value.homeFeatures}`
+      : "";
+  let bathFilter = searchParams.value.bath || "";
+  let cats = searchParams.value.catsAllowed || "";
+  let dogs = searchParams.value.dogsAllowed || "";
+  let searchRadius = searchParams.value.radius 
+    ? `${searchParams.value.radius}` 
+    : "";
+  let lotSizeFilter = searchParams.value.lotSize 
+    ? `${searchParams.value.lotSize}` 
+    : "";
+  let ageMax = searchParams.value.ageMax ? `${searchParams.value.ageMax}` : "";
+  let ageMin = searchParams.value.ageMin ? `${searchParams.value.ageMin}` : "";
+  let foreclosureFilter = searchParams.value.foreclosure || "";
+  let openHousesFilter = searchParams.value.openHouses || "";
+  let three3DToursFilter = searchParams.value.threeDTours || "";
+  let newPlansFilter = searchParams.value.newPlans || "";
+  let newConstruct = searchParams.value.newConstruction || "";
+  let contingentsFilter = searchParams.value.contingents || "";
+  // let latMin = searchParams.value.lat ? searchParams.value.lat : "";
+  // let longMin = searchParams.value.long ? searchParams.value.long : "";
+  const queryContents = {
+    bed: bedFilter,
+    bath: bathFilter,
+    priceMin: minPriceFilter,
+    priceMax: maxPriceFilter,
+    homeType: homeTypeFilter,
+    dogsAllowed: dogs,
+    catsAllowed: cats,
+    homeFeatures: features,
+    yearBuiltMin: ageMin,
+    yearBuiltMax: ageMax,
+    lotSize: lotSizeFilter,
+    hasOpenHouses: openHousesFilter,
+    has3DTours: three3DToursFilter,
+    foreClosure: foreclosureFilter,
+    newConstruction: newConstruct,
+    newPlans: newPlansFilter,
+    radius: searchRadius,
+    contingents: contingentsFilter,
+    // lat: latMin,
+    // long: longMin,
+  }
+
+  let queryParams = Object.assign({}, queryContents);
+  /**Delete empty query parameter contents
+   * from the router
+   */
+  if (!queryParams.bed){
+    delete queryParams.bed;
+  }
+  if (!queryParams.bath) {
+    delete queryParams.bath;
+  }
+  if (!queryParams.priceMin){
+    delete queryParams.priceMin;
+  }
+  if (!queryParams.priceMax){
+    delete queryParams.priceMax;
+  }
+  if (!queryParams.homeType){
+    delete queryParams.homeType;
+  }
+  if (!queryParams.dogsAllowed){
+    delete queryParams.dogsAllowed;
+  }
+  if (!queryParams.catsAllowed){
+    delete queryParams.catsAllowed;
+  }
+  if (!queryParams.homeFeatures){
+    delete queryParams.homeFeatures;
+  }
+  if (!queryParams.yearBuiltMin){
+    delete queryParams.yearBuiltMin;
+  }
+  if (!queryParams.yearBuiltMax){
+    delete queryParams.yearBuiltMax;
+  }
+  if (!queryParams.lotSize){
+    delete queryParams.lotSize;
+  }
+  if (!queryParams.hasOpenHouses){
+    delete queryParams.hasOpenHouses;
+  }
+  if (!queryParams.has3DTours){
+    delete queryParams.has3DTours;
+  }
+  if (!queryParams.foreClosure){
+    delete queryParams.foreClosure;
+  }
+  if (!queryParams.newConstruction){
+    delete queryParams.newConstruction;
+  }
+  if (!queryParams.newPlans){
+    delete queryParams.newPlans;
+  }
+  if (!queryParams.radius){
+    delete queryParams.radius;
+  }
+  if (!queryParams.contingents){
+    delete queryParams.contingents;
+  }
   router.push({
     name: activeRoute.value,
     params: {
       slug: slugParam,
-      city: removedWhiteSpacesFromCityParam,
-      title: titleParam,
+      city: cityParam
     },
+    query: queryParams,
   });
+  console.log("USEROUTERPUSH RAN !!!!!!!!! AND USING ROUTE:", activeRoute.value);
   return {
     searchTerm: searchParams,
   }
