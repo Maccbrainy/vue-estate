@@ -1,49 +1,64 @@
 <template>
   <div class="w-full xs:p-4 md:w-10/12 lg:w-60 border-transparent md:border-8">
     <h3 class="font-medium text-base text-gray-700">
-      {{ listColumnTitle}}
+      {{ listColumnTitle }}
     </h3>
-    <ul class="mt-2 xs:flex xs:flex-wrap xs:list-disc xs:list-inside">
+    <ul
+      class="
+        mt-5
+        xs:flex xs:flex-wrap xs:list-disc xs:list-inside xs:justify-start
+      "
+    >
       <div v-for="list in listColumns" v-bind:key="list">
         <router-link :to="list.state_code || list.url">
-          <li 
+          <li
             class="
               xs:pr-3
-              font-normal 
-              text-xs text-gray-600 
-              pb-1 
-              cursor-pointer 
-              hover:underline">
-            <span class="xs:-ml-2">{{ list.state || list.name }} {{ suffix }}</span>
+              font-normal
+              text-xs text-gray-600
+              pb-1
+              cursor-pointer
+              hover:underline
+            "
+          >
+            <span class="xs:-ml-1"
+              >{{ list.state || list.name }} {{ suffix }}</span
+            >
           </li>
         </router-link>
       </div>
-      <span 
+      <span
         v-if="listColumnData.length > 4"
-        v-on:click="toggleShowHideData" 
+        v-on:click="toggleShowHideData"
         class="flex text-teal text-sm cursor-pointer hover:underline"
-        v-bind:class="{'hidden': showHide}">
-        More<chevron-down/>
+        v-bind:class="{ hidden: showHide }"
+      >
+        More<chevron-down />
       </span>
-      <div class="xs:flex xs:flex-wrap" v-if="showHide">
+      <div class="xs:flex xs:flex-wrap xs:justify-start" v-if="showHide">
         <div v-for="list in fullListColumns" v-bind:key="list">
           <router-link :to="list.state_code || list.url">
-            <li 
+            <li
               class="
                 xs:pr-3
-                font-normal 
-                text-xs text-gray-600 
-                pb-1 
-                cursor-pointer 
-                hover:underline">
-              <span class="xs:-ml-2">{{ list.state || list.name }} {{ suffix }}</span>
+                font-normal
+                text-xs text-gray-600
+                pb-1
+                cursor-pointer
+                hover:underline
+              "
+            >
+              <span class="xs:-ml-1"
+                >{{ list.state || list.name }} {{ suffix }}</span
+              >
             </li>
           </router-link>
         </div>
-        <span 
-          v-on:click="toggleShowHideData" 
-          class="flex text-teal text-sm cursor-pointer hover:underline">
-          Less<chevron-down class="transform rotate-180"/>
+        <span
+          v-on:click="toggleShowHideData"
+          class="flex text-teal text-sm cursor-pointer hover:underline"
+        >
+          Less<chevron-down class="transform rotate-180" />
         </span>
       </div>
     </ul>
@@ -55,38 +70,38 @@ import ChevronDown from "@/assets/icons/ChevronDown.vue";
 export default {
   name: "ShowHideListColumns",
   components: {
-    ChevronDown
+    ChevronDown,
   },
   props: {
     listColumnTitle: String,
     suffix: String,
-    listColumnData: Array 
+    listColumnData: Array,
   },
-  setup(props){
+  setup(props) {
     const showHide = ref(false);
     const listColumns = ref({});
     watchEffect(() => {
-      if (props.listColumnData.length > 4){
+      if (props.listColumnData.length > 4) {
         listColumns.value = props.listColumnData.slice(0, 4);
         return listColumns.value;
-      };
-      if (props.listColumnData.length <= 4){
+      }
+      if (props.listColumnData.length <= 4) {
         listColumns.value = props.listColumnData;
         return listColumns.value;
-      };
+      }
     });
     const fullListColumns = computed(() => {
-      return props.listColumnData.slice(4);
+      return props.listColumnData.slice(4)
     });
-    function toggleShowHideData(){
-      showHide.value = !showHide.value
-    };
+    function toggleShowHideData() {
+      showHide.value = !showHide.value;
+    }
     return {
       showHide,
       toggleShowHideData,
       listColumns,
-      fullListColumns
-    }
-  }
-}
+      fullListColumns,
+    };
+  },
+};
 </script>

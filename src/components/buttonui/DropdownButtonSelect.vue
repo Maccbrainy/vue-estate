@@ -24,8 +24,5 @@
 export default {
   props: ['modelValue'],
   emits: ['update:modelValue'],
-  setup() {
-    return{}
-  },
 }
 </script>
