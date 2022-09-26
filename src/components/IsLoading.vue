@@ -63,7 +63,8 @@
     <li 
       class="
         block
-        mt-4 
+        mt-4
+        mb-4 
         flex-initial
         border-solid border-transparent border-r-8 border-l-8 border-t-8
         xs:w-full 
