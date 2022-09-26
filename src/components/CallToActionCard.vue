@@ -1,8 +1,9 @@
 <template>
-  <div 
+  <div
     v-for="callTo in callToActionsData"
-    :key="callTo.id" 
-    class="flex flex-col items-center max-w-xs p-2 cursor-pointer">
+    :key="callTo.id"
+    class="flex flex-col items-center max-w-xs p-2 cursor-pointer"
+  >
     <component v-bind:is="callTo.icon"></component>
     <h1 class="text-gray-700 text-2xl font-semibold">
       {{ callTo.title }}
@@ -10,25 +11,28 @@
     <p class="font-normal text-base text-gray-600 mt-3 mb-5">
       {{ callTo.description }}
     </p>
-    <router-link 
-      :to="{ 
-        name: callTo.urlId
-      }">
+    <router-link
+      :to="{
+        name: callTo.urlId,
+      }"
+    >
       <button
         v-on:click="setLongitudeAndLatitude"
-        :id="callTo.urlId" 
-        type="button" 
+        :id="callTo.urlId"
+        type="button"
         class="
-          bg-teal 
-          px-4 
-          py-2 
-          shadow-xl 
-        text-white text-base 
-          font-bold 
-          rounded-lg 
-          border border-teal 
-          hover:bg-transparent hover:text-teal 
-        focus:bg-teal-lighter focus:text-teal">
+          bg-teal
+          px-4
+          py-2
+          shadow-xl
+          text-white text-base
+          font-bold
+          rounded-lg
+          border border-teal
+          hover:bg-transparent hover:text-teal
+          focus:bg-teal-lighter focus:text-teal
+        "
+      >
         {{ callTo.callToAction }}
       </button>
     </router-link>
@@ -47,10 +51,10 @@ export default {
   components: {
     BuyAHomeIcon,
     RentAHomeIcon,
-    NeighborHoodsIcon 
+    NeighborHoodsIcon,
   },
   props: {
-    callToActionsData: Array
+    callToActionsData: Array,
   },
   setup() {
     // const router = useRouter();
@@ -61,7 +65,7 @@ export default {
           const userCordinates = reactive({
             lat: latitude,
             long: longitude,
-          })
+          });
           console.log("From CallToAction", userCordinates);
           // let latitudeFilter = `lat=${userCordinates.lat}&`;
           // let longitudeFilter = `long=${userCordinates.long}`;
@@ -72,11 +76,12 @@ export default {
           //     long: longitudeFilter,
           //   }
           // })
-        });
-    }
+        }
+      );
+    };
     return {
-      setLongitudeAndLatitude
-    }
+      setLongitudeAndLatitude,
+    };
   },
-}
+};
 </script>
