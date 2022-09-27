@@ -29,43 +29,21 @@
       </div>
       <span
         v-if="listColumnData.length > 4"
-        v-on:click="toggleShowHideData"
+        v-on:click="toggleShowHideData = !toggleShowHideData"
         class="flex text-teal text-sm cursor-pointer hover:underline"
-        v-bind:class="{ hidden: showHide }"
       >
-        More<chevron-down />
+        <span v-show="toggleShowHideData" class="flex"
+          >Less <chevron-down class="transform rotate-180"
+        /></span>
+        <span v-show="!toggleShowHideData" class="flex"
+          >More <chevron-down
+        /></span>
       </span>
-      <div class="xs:flex xs:flex-wrap xs:justify-start" v-if="showHide">
-        <div v-for="list in fullListColumns" v-bind:key="list">
-          <router-link :to="list.state_code || list.url">
-            <li
-              class="
-                xs:pr-3
-                font-normal
-                text-xs text-gray-600
-                pb-1
-                cursor-pointer
-                hover:underline
-              "
-            >
-              <span class="xs:-ml-1"
-                >{{ list.state || list.name }} {{ suffix }}</span
-              >
-            </li>
-          </router-link>
-        </div>
-        <span
-          v-on:click="toggleShowHideData"
-          class="flex text-teal text-sm cursor-pointer hover:underline"
-        >
-          Less<chevron-down class="transform rotate-180" />
-        </span>
-      </div>
     </ul>
   </div>
 </template>
 <script>
-import { ref, watchEffect, computed } from "vue";
+import { ref, computed } from "vue";
 import ChevronDown from "@/assets/icons/ChevronDown.vue";
 export default {
   name: "ShowHideListColumns",
@@ -78,29 +56,27 @@ export default {
     listColumnData: Array,
   },
   setup(props) {
-    const showHide = ref(false);
-    const listColumns = ref({});
-    watchEffect(() => {
+    const toggleShowHideData = ref(false);
+    const listColumnsDefault = computed(() => {
+      let listData;
       if (props.listColumnData.length > 4) {
-        listColumns.value = props.listColumnData.slice(0, 4);
-        return listColumns.value;
+        listData = props.listColumnData.slice(0, 4);
       }
       if (props.listColumnData.length <= 4) {
-        listColumns.value = props.listColumnData;
-        return listColumns.value;
+        listData = props.listColumnData;
       }
+      return listData;
     });
-    const fullListColumns = computed(() => {
-      return props.listColumnData.slice(4)
+
+    const listColumns = computed(() => {
+      return toggleShowHideData.value
+        ? props.listColumnData
+        : listColumnsDefault.value;
     });
-    function toggleShowHideData() {
-      showHide.value = !showHide.value;
-    }
     return {
-      showHide,
       toggleShowHideData,
+      listColumnsDefault,
       listColumns,
-      fullListColumns,
     };
   },
 };
