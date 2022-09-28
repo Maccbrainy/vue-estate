@@ -8,10 +8,10 @@ export const addCommaToNumberFormat = (numberTag) => {
   return numberTag;
 };
 export const removeUnderScoresFromAString = (isAString) => {
-  let string = `${isAString}`.replace(/_/g, " ");
+  let string = isAString ? `${isAString}`.replace(/_/g, " ") : "";
   return string;
 };
 export const addUnderScoresToWhiteSpacesInAString = (isAString) => {
-  let string = isAString.replaceAll(" ", "_");
+  let string = isAString ? isAString.replaceAll(" ", "_") : "";
   return string;
 };
