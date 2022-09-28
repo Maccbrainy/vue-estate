@@ -4,10 +4,11 @@ import { ref, computed } from "vue";
 export default function useRouterPush(payLoad) {
   const searchParams = ref(payLoad);
   if (!searchParams.value) return;
+
   const activeRoute = ref("");
   const storeData = computed(() => store.getters.getStore);
   const regExpWhiteSpaces = /\s/gi; //Regular Expression for White Space detection
-  
+
   let slugParam = regExpWhiteSpaces.test(searchParams.value.state_code) 
     ? searchParams.value.state_code.replaceAll(" ", "_") 
     : searchParams.value.state_code;
@@ -18,21 +19,20 @@ export default function useRouterPush(payLoad) {
     ? "" 
     : regExpWhiteSpaces.test(city) 
     ? city.replaceAll(" ", "_") 
-    : city 
+    : city;
 
   switch (routeName) {
     case "list-for-rent":
+    case "RentsNearMe":
       activeRoute.value = "RentPage";
       break;
     case "list-sold":
       activeRoute.value = "SoldPage";
       break;
     case "HomePage":
+    case "SalesNearMe":
       activeRoute.value = "BuyPage";
       break;
-    // case "list-for-sale":
-    //   activeRoute.value = "HomePage";
-    //   break;
     default:
       activeRoute.value = routeName;
       break;
@@ -159,6 +159,7 @@ export default function useRouterPush(payLoad) {
   if (!queryParams.contingents){
     delete queryParams.contingents;
   }
+
   router.push({
     name: activeRoute.value,
     params: {
@@ -167,7 +168,8 @@ export default function useRouterPush(payLoad) {
     },
     query: queryParams,
   });
-  console.log("USEROUTERPUSH RAN !!!!!!!!! AND USING ROUTE:", activeRoute.value);
+
+  console.log("USEROUTERPUSH RAN === AND USING ROUTE:", activeRoute.value);
   return {
     searchTerm: searchParams,
   }
