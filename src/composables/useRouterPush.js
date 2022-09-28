@@ -6,7 +6,6 @@ export default function useRouterPush(payLoad) {
   if (!searchParams.value) return;
   const activeRoute = ref("");
   const storeData = computed(() => store.getters.getStore);
-  // const regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
   const regExpWhiteSpaces = /\s/gi; //Regular Expression for White Space detection
   
   let slugParam = regExpWhiteSpaces.test(searchParams.value.state_code) 
