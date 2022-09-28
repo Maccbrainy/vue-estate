@@ -7,3 +7,7 @@ export { default as SquareFeetIcon } from "@/assets/icons/SquareFeetIcon.vue";
 export { default as ImageCountIcon } from "@/assets/icons/ImageCountIcon.vue";
 export { default as ArrowBackIcon } from "@/assets/icons/ArrowBackIcon.vue";
 export { default as ChevronRight } from "@/assets/icons/ChevronRight.vue";
+export { default as DollarIcon } from "@/assets/icons/DollarIcon.vue";
+export { default as ParkingIcon } from "@/assets/icons/ParkingIcon.vue";
+export { default as OutdoorIcon } from "@/assets/icons/OutdoorIcon.vue";
+export { default as TemperatureIcon } from "@/assets/icons/TemperatureIcon.vue";
