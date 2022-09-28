@@ -1,7 +1,7 @@
 import { computed } from "vue";
 export default function useListingTitle(activeRoute, slug, city) {
   const slugParam = slug;
-  const cityParam = city ? city.replace(/_/g," ") : "";//remove all underscore from a string
+  const cityParam = city ? city.replace(/_/g, " ") : ""; //remove all underscore from a string
 
   let searchedWithZipCode;
   let searchedWithCityNameDefined;
@@ -11,36 +11,66 @@ export default function useListingTitle(activeRoute, slug, city) {
    * Regular Expression to Detect Numbers only
    * /^\d+$/
    */
-  function detectPostalCodeSearch(parameter, isZip, cityIsDefined, titleCityDefined, titleDefault){
-    return /^\d+$/.test(parameter) 
-      ? isZip 
-      : cityIsDefined 
-      ? titleCityDefined 
+  function detectPostalCodeSearch(
+    parameter,
+    isZip,
+    cityIsDefined,
+    titleCityDefined,
+    titleDefault
+  ) {
+    return /^\d+$/.test(parameter)
+      ? isZip
+      : cityIsDefined
+      ? titleCityDefined
       : titleDefault;
   }
   const listTitle = computed(() => {
     switch (activeRoute) {
+      case "RentsNearMe":
+        title = "Apartments For Rent Near Me";
+        break;
+      case "SalesNearMe":
+        title = "Houses For Sale Near Me";
+        break;
       case "RentPage":
         searchedWithZipCode = `Apartments For Rent in ${slugParam} Zip Code`;
         searchedWithCityNameDefined = `Apartments For Rent in ${cityParam}, ${slugParam}`;
         searchedDefault = `Apartments For Rent in ${slugParam}`;
-        title = detectPostalCodeSearch(slugParam, searchedWithZipCode, cityParam, searchedWithCityNameDefined, searchedDefault);
+        title = detectPostalCodeSearch(
+          slugParam,
+          searchedWithZipCode,
+          cityParam,
+          searchedWithCityNameDefined,
+          searchedDefault
+        );
         break;
       case "SoldPage":
         searchedWithZipCode = `Recently Sold Properties in ${slugParam} Zip Code`;
         searchedWithCityNameDefined = `Recently Sold Properties in ${cityParam}, ${slugParam}`;
         searchedDefault = `Recently Sold Properties in ${slugParam}`;
-        title = detectPostalCodeSearch(slugParam, searchedWithZipCode, cityParam, searchedWithCityNameDefined, searchedDefault);
+        title = detectPostalCodeSearch(
+          slugParam,
+          searchedWithZipCode,
+          cityParam,
+          searchedWithCityNameDefined,
+          searchedDefault
+        );
         break;
       case "BuyPage":
         searchedWithZipCode = `Homes For Sale & Real Estate in ${slugParam} Zip Code`;
         searchedWithCityNameDefined = `${cityParam}, ${slugParam} Homes For Sale & Real Estate`;
         searchedDefault = `${slugParam} Homes For Sale & Real Estate`;
-        title = detectPostalCodeSearch(slugParam, searchedWithZipCode, cityParam, searchedWithCityNameDefined, searchedDefault);
-    };
-    return title
+        title = detectPostalCodeSearch(
+          slugParam,
+          searchedWithZipCode,
+          cityParam,
+          searchedWithCityNameDefined,
+          searchedDefault
+        );
+    }
+    return title;
   });
   return {
     listTitle,
-  }
+  };
 }
