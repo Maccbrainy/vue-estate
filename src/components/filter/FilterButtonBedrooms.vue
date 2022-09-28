@@ -1,9 +1,10 @@
 <template>
   <div>
     <dropdown-button
-      v-bind:filterActivated="buttonActivated" 
-      v-bind:buttonTitle="bedRoomFilterTitle" 
-      menuTitle="Bedrooms">
+      v-bind:filterActivated="buttonActivated"
+      v-bind:buttonTitle="storeData.filterDescriptionInfo.bedroom"
+      menuTitle="Bedrooms"
+    >
       <filter-core-bedrooms></filter-core-bedrooms>
     </dropdown-button>
   </div>
@@ -14,23 +15,25 @@ import { DropdownButton } from "@/components/buttonui/index";
 import { useStore } from "vuex";
 import { FilterCoreBedrooms } from "@/components/filter";
 import settingsData from "@/api/settingsData.json";
-export default ({
+export default {
   name: "FilterButtonBedrooms",
   components: {
     DropdownButton,
-    FilterCoreBedrooms
+    FilterCoreBedrooms,
   },
   setup() {
     const store = useStore();
     const bedOptions = [...settingsData.bedOptions];
-    const bedRoomFilterTitle = computed(() => store.getters.getBedroomInfo)
+    const storeData = computed(() => store.getters.getStore);
     const buttonActivated = computed(() =>
-      bedRoomFilterTitle.value == bedOptions[0].id ? false : true
+      storeData.value.filterDescriptionInfo.bedroom == bedOptions[0].id
+        ? false
+        : true
     );
     return {
-      bedRoomFilterTitle,
-      buttonActivated
-    }
-  }
-})
+      storeData,
+      buttonActivated,
+    };
+  },
+};
 </script>

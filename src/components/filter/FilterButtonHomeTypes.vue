@@ -1,8 +1,9 @@
 <template>
   <div>
     <dropdown-button 
+      class="w-44"
       v-bind:filterActivated="buttonActivated" 
-      v-bind:buttonTitle="homeTypeTitle" 
+      v-bind:buttonTitle="storeData.filterDescriptionInfo.homeType" 
       menuTitle="Home Type">
       <filter-core-home-types 
         v-if="disableOnMobile" 
@@ -35,17 +36,17 @@ export default ({
   setup() {
     const store = useStore();
     const homeTypes = ref([...settingsData.homeTypes]);
-    const homeTypeTitle = computed(() => store.getters.getHomeTypeTitleInfo);
+    const storeData = computed(() => store.getters.getStore);
     const buttonActivated = computed(() => 
-      homeTypeTitle.value == "All Rental Types" 
+      storeData.value.filterDescriptionInfo.homeType == "All Rental Types" 
         ? false 
-        : homeTypeTitle.value == "All Home Types"
+        : storeData.value.filterDescriptionInfo.homeType == "All Home Types"
         ? false
         : true 
     );
     return {
       homeTypes,
-      homeTypeTitle,
+      storeData,
       buttonActivated
     }
   }

@@ -1,17 +1,18 @@
 <template>
   <div>
-    <dropdown-button 
-      v-bind:filterActivated="buttonActivated" 
-      v-bind:buttonTitle="priceIndicator" 
-      menuTitle="Price Range">
+    <dropdown-button
+      v-bind:filterActivated="buttonActivated"
+      v-bind:buttonTitle="storeData.filterDescriptionInfo.priceRange"
+      menuTitle="Price Range"
+    >
       <filter-core-price-range></filter-core-price-range>
     </dropdown-button>
   </div>
 </template>
 <script>
-import { DropdownButton } from "@/components/buttonui/index";
 import { computed } from "vue";
 import { useStore } from "vuex";
+import { DropdownButton } from "@/components/buttonui/index";
 import { FilterCorePriceRange } from "@/components/filter";
 export default {
   name: "FilterButtonRange",
@@ -21,14 +22,16 @@ export default {
   },
   setup() {
     const store = useStore();
-    const priceIndicator = computed(() => store.getters.getPriceInfo);
+    const storeData = computed(() => store.getters.getStore);
     const buttonActivated = computed(() =>
-      priceIndicator.value == "Any Price" ? false : true
+      storeData.value.filterDescriptionInfo.priceRange == "Any Price"
+        ? false
+        : true
     );
     return {
-      priceIndicator,
-      buttonActivated
-    }
-  }
-}
+      storeData,
+      buttonActivated,
+    };
+  },
+};
 </script>
