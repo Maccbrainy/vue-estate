@@ -4,7 +4,7 @@
       <dropdown-button-select 
         v-model="sorting"
         v-on:change="selectSignal" 
-        class="shadow-none border-none">
+        class="shadow-none border-none text-gray-600 font-medium">
         <dropdown-button-select-option 
           v-for="option in sortOptions" 
           v-bind:key="option.id"
@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { 
   DropdownButtonSelect, 
@@ -34,7 +34,9 @@ export default {
   setup() {
     const sortOptions = ref([...settingsData.sortOptions]);
     const store = useStore();
-    const sorting = ref(sortOptions.value[1].id);
+    const storeData = computed(() => store.getters.getStore);
+    const sorting = ref(
+      storeData.value.propertyFilters.sorting || sortOptions.value[0].id);
 
     function selectSignal(){
       store.commit("setPropertySorting", sorting.value);
@@ -42,7 +44,8 @@ export default {
     return {
       sortOptions,
       sorting,
-      selectSignal
+      selectSignal,
+      storeData
     }
   },
 }
