@@ -1,6 +1,6 @@
 <template>
-  <li class="p-2 cursor-pointer">
-    <button class="text-base font-medium"><slot></slot></button>
+  <li class="p-2 cursor-pointer text-base font-medium">
+    <slot></slot>
   </li>
 </template>
 <script>

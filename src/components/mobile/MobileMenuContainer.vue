@@ -9,7 +9,7 @@
       -top-0 
       -right-0 
       h-screen 
-      bg-gray-700 
+      bg-gray-700
       text-white 
       overflow-y-auto">
     <slot></slot>
