@@ -1,13 +1,12 @@
 <template>
   <base-layout>
     <template v-slot:header>
-      <nav-bar-container v-bind:key="$route.name">
+      <nav-bar-container v-bind:key="$route.path">
         <nav-bar-search-form></nav-bar-search-form>
         <nav-bar></nav-bar>
       </nav-bar-container>
     </template>
     <template v-slot:default>
-      <!-- :key="$route.name" -->
       <router-view v-bind:key="$route.name"></router-view>
     </template>
     <template v-slot:footer></template>
@@ -42,6 +41,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(255, 255, 255);
+}
+* {
+    box-sizing: border-box;
 }
 
 .leaflet-popup-content {

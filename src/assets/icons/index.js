@@ -1,3 +1,4 @@
+export { default as ChevronDown } from "@/assets/icons/ChevronDown.vue";
 export { default as ShareIcon } from "@/assets/icons/ShareIcon.vue";
 export { default as BedIcon } from "@/assets/icons/BedIcon.vue";
 export { default as BathRoomIcon } from "@/assets/icons/BathRoomIcon.vue";
