@@ -1,48 +1,61 @@
 <template>
   <div>
-    <button-group-multi-buttons 
+    <button-group-multi-buttons
       v-bind:options="bedOptions"
       v-bind:isActiveTab="bedRoomFilterValue"
-      v-on:getOptionId="numberOfBed">
+      v-on:getOptionId="numberOfBedHandler"
+    >
     </button-group-multi-buttons>
   </div>
 </template>
 <script>
-import { ref, watchEffect } from "vue";
-import { ButtonGroupMultiButtons } from "@/components/buttonui/index";
+import { computed, watchEffect, onBeforeMount } from "vue";
+import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import { ButtonGroupMultiButtons } from "@/components/buttonui/index";
 import settingsData from "@/api/settingsData.json";
-export default ({
+export default {
   name: "FilterCoreBedrooms",
   components: {
-    ButtonGroupMultiButtons
+    ButtonGroupMultiButtons,
   },
   setup() {
     const store = useStore();
+    const route = useRoute();
     const bedOptions = [...settingsData.bedOptions];
-    const bedRoomFilterValue = ref(bedOptions[0].id);
-    const bedRoomFilterTitle = ref(`${bedOptions[0].id}`);
+    const storeData = computed(() => store.getters.getStore);
+    const bedRoomFilterValue = computed(() =>
+      storeData.value.propertyFilters.numberOfBed
+        ? storeData.value.propertyFilters.numberOfBed
+        : bedOptions[0].id
+    );
 
-    const numberOfBed = (e) =>{
+    const numberOfBedHandler = (e) => {
       let noOfBeds = e.target.id;
-      bedRoomFilterValue.value = noOfBeds;
       let bedFilter = noOfBeds == bedOptions[0].id ? "" : noOfBeds;
-      //Remove + sign from bedroom filter title;
-      bedRoomFilterTitle.value = !bedFilter ? noOfBeds : `${noOfBeds}+ Beds`;
       store.commit("setNumberOfBedRoom", bedFilter);
       return noOfBeds;
     };
 
     watchEffect(() => {
-      store.commit("setBedroomInfo", bedRoomFilterTitle.value);
+      let titleFilter = storeData.value.propertyFilters.numberOfBed
+        ? `${storeData.value.propertyFilters.numberOfBed}+ Bedrooms`
+        : bedOptions[0].id;
+      store.commit("setBedroomInfo", titleFilter);
+    });
+    onBeforeMount(() => {
+      if (route.query.bed) {
+        console.log("ONMOUNTED BED:", route.query.bed);
+        store.commit("setNumberOfBedRoom", route.query.bed);
+      }
+      console.log(">> onBeforeMount COREBED");
     });
 
     return {
-      numberOfBed,
+      numberOfBedHandler,
       bedOptions,
       bedRoomFilterValue,
-      bedRoomFilterTitle,
-    }
-  }
-})
+    };
+  },
+};
 </script>

@@ -1,64 +1,78 @@
 <template>
   <div>
-    <dropdown-button-multi-check-boxes 
+    <dropdown-button-multi-check-boxes
       v-model:value="checkedHomeType"
-      v-on:change="checkedSignal" 
-      v-bind:propertyOptions="listOptions">
+      v-on:change="checkedSignal"
+      v-bind:propertyOptions="listOptions"
+    >
     </dropdown-button-multi-check-boxes>
   </div>
 </template>
 <script>
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, watchEffect, onBeforeMount } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 import { DropdownButtonMultiCheckBoxes } from "@/components/buttonui/index";
 import settingsData from "@/api/settingsData.json";
-export default ({
+export default {
   name: "FilterCoreHomeTypes",
   props: {
     listOptions: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   components: {
-    DropdownButtonMultiCheckBoxes
+    DropdownButtonMultiCheckBoxes,
   },
   setup(props) {
     const store = useStore();
-    let checkedHomeType = ref([]);
+    const route = useRoute();
+    const storeData = computed(() => store.getters.getStore);
+    let checkedHomeType = ref([...storeData.value.propertyFilters.homeType]);
     const routeNames = ref([...settingsData.routeNames]);
-
-    const getActiveRoutePath = computed(
-      () => store.getters.getIsActiveRouteTab);
-
-    watchEffect(() => {
-      let activeRoute = getActiveRoutePath.value;
-      let defaultTitle = 
-        activeRoute == routeNames.value[1].id 
-          ? "All Rental Types" 
+    const defaultTitle = computed(() => {
+      let title =
+        storeData.value.activeRoutePath == routeNames.value[1].id
+          ? "All Rental Types"
           : "All Home Types";
-
-      let typeTitle = 
-        checkedHomeType.value.length == 0
-          ? defaultTitle
-          : checkedHomeType.value.length == 1 
-          ? getHomeTypeTitle(props.listOptions, checkedHomeType.value[0])
-          : `Home Types (${checkedHomeType.value.length})`;
-      store.commit("setHomeTypeTitleInfo", typeTitle);
+      return title;
+    });
+    watchEffect(() => {
+      if (storeData.value.activeRoutePath) {
+        let typeTitle =
+          checkedHomeType.value.length == 0
+            ? defaultTitle.value
+            : checkedHomeType.value.length == 1
+            ? getHomeTypeTitle(props.listOptions, checkedHomeType.value[0])
+            : `Home Types (${checkedHomeType.value.length})`;
+        store.commit("setHomeTypeTitleInfo", typeTitle);
+      }
     });
 
-    const getHomeTypeTitle = (types, theCheckedTypeId) => {
+    function getHomeTypeTitle(types, theCheckedTypeId) {
       let typeChecked = types.filter((type) => type.id === theCheckedTypeId);
       return typeChecked[0].title;
-    };
+    }
 
-    function checkedSignal(){
+    function checkedSignal() {
       store.commit("setHomeType", checkedHomeType.value);
-    };
-
+    }
+    onBeforeMount(() => {
+      if (route.query.homeType) {
+        /** Regex to convert the incoming homeType string effect
+         * from the array.join() @useRouterPush.js function
+         * */
+        let regEx = /\s*(?:,|$)\s*/;
+        checkedHomeType.value = route.query.homeType.split(regEx);
+        store.commit("setHomeType", checkedHomeType.value);
+      }
+      console.log(">>>>HOMETYPE ONBEFOREMOUNT:");
+    });
     return {
       checkedSignal,
-      checkedHomeType
-    }
-  }
-})
+      defaultTitle,
+      checkedHomeType,
+    };
+  },
+};
 </script>
