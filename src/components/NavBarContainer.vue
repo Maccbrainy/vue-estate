@@ -46,7 +46,9 @@ export default {
     const route = useRoute();
     const toggleMenu = ref(false);
     const isHomeDetailedPage = computed(() =>
-      route.name == "HomeDetail" ? true : false
+      route.name == "RentPageDetail" || route.name == "SalesPageDetail"
+        ? true
+        : false
     );
     return {
       toggleMenu,
