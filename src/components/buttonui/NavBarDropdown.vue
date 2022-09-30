@@ -1,16 +1,16 @@
 <template>
   <ul
-    v-bind:class="{ 'group-hover:block': !isLoading}"
+    v-bind:class="{ 'group-hover:block': !storeData.isLoading}"
     class="
       z-30
-      top-10
+      mt-2
       left-0
       absolute 
       pb-1 pt-1
-      w-48
+      w-44
       hidden 
       rounded-md 
-      shadow 
+      shadow-lg
       bg-white" 
     role="menu" 
     aria-orientation="vertical" 
@@ -24,8 +24,10 @@ import { computed } from "vue";
 export default {
   setup() {
     const store = useStore();
+    const storeData = computed(() => store.getters.getStore);
+
     return {
-      isLoading: computed(() => store.getters.getIsLoading)
+      storeData,
     }
   },
 }
