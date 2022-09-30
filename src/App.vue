@@ -7,7 +7,7 @@
       </nav-bar-container>
     </template>
     <template v-slot:default>
-      <router-view v-bind:key="$route.name"></router-view>
+      <router-view v-bind:key="$route.path"></router-view>
     </template>
     <template v-slot:footer></template>
   </base-layout>
