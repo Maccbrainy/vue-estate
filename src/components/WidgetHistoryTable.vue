@@ -52,15 +52,21 @@
           <td v-else class="w-auto py-2 px-4">
             {{ `N/A` }}
           </td>
+
+
           <td v-if="propertyHistory.event_name" class="w-auto py-2 px-4">
             {{ propertyHistory.event_name }}
           </td>
           <td v-if="propertyHistory.tax" class="w-auto py-2 px-4">
             ${{ propertyHistory.tax }}
           </td>
+
+
           <td class="w-auto py-2 px-4">
             {{ propertyHistory.sqft }}
           </td>
+
+
           <td class="w-auto py-2 px-4 flex justify-between">
             <span>{{
               propertyHistory.datasource_name

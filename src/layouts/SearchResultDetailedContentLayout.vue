@@ -18,8 +18,9 @@
         ><chevron-right class="text-gray-600" />
         {{ `${propertyCity}, ${slug}` }}
       </router-link>
-      <router-link
-        :to="`/${propertyDetail[0].prop_status}/${postalCode}`"
+      <router-link 
+        v-if="propertyStatusData"
+        :to="`/${propertyStatusData}/${postalCode}`"
         class="text-teal inline-flex underline"
       >
         <chevron-right class="text-gray-600" /> {{ postalCode }}
@@ -76,25 +77,23 @@
               <div class="w-4/12">
                 <div
                   v-bind:class="{
-                    'animate-pulse bg-gray-200 w-full h-8': isLoading,
+                    'animate-pulse bg-gray-200 w-full h-8': isLoading && !propertyPrice,
                   }"
                 >
-                  <div v-show="propertyPrice && !isLoading">
+                  <div v-show="propertyPrice">
                     <h3 class="text-3xl text-gray-700 font-bold inline-flex">
                       ${{ propertyPrice }}
                     </h3>
-                    <div>
+                    <div v-show="propertyMortgageMonthlyPayment">
                       <div class="text-gray-700">
                         Est. Mortgage
-                        {{
-                          propertyDetail[0].mortgage.estimate.monthly_payment
-                        }}/mo*
+                        {{ propertyMortgageMonthlyPayment }}/mo*
                       </div>
                       <div class="flex underline text-teal text-base font-bold">
                         <span><dollar-icon /></span>
                         <a
                           class="px-2"
-                          v-bind:href="propertyDetail[0].mortgage.rates_url"
+                          v-bind:href="propertyMortgageRateUrl"
                           target="__blank"
                           >Get Pre-Qualified</a
                         >
@@ -120,15 +119,17 @@
                         text-gray-700
                       "
                     >
-                      <li>
+                      <li
+                        v-for="title in ['Map', 'Schools', 'Shop & Eat']"
+                        :key="title"
+                      >
                         <button
                           v-on:click="getMappingIdForContent"
-                          id="propertyMap"
+                          :id="title"
                           v-bind:class="{
                             'text-teal shadow-lg border hover:bg-white':
-                              activeMappingTable == `propertyMap`,
-                            'hover:bg-gray-200':
-                              activeMappingTable != `propertyMap`,
+                              activeMappingTable == title,
+                            'hover:bg-gray-200': activeMappingTable != title,
                           }"
                           type="button"
                           class="
@@ -140,53 +141,7 @@
                             py-2
                           "
                         >
-                          Map
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          v-on:click="getMappingIdForContent"
-                          id="propertySchoolMap"
-                          v-bind:class="{
-                            'text-teal shadow-lg border hover:bg-white':
-                              activeMappingTable == `propertySchoolMap`,
-                            'hover:bg-gray-200':
-                              activeMappingTable != `propertySchoolMap`,
-                          }"
-                          type="button"
-                          class="
-                            rounded-md
-                            text-base
-                            font-medium
-                            text-gray-700
-                            px-5
-                            py-2
-                          "
-                        >
-                          Schools
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          v-on:click="getMappingIdForContent"
-                          id="propertyShop&EatMap"
-                          v-bind:class="{
-                            'text-teal shadow-lg border hover:bg-white':
-                              activeMappingTable == `propertyShop&EatMap`,
-                            'hover:bg-gray-200':
-                              activeMappingTable != `propertyShop&EatMap`,
-                          }"
-                          type="button"
-                          class="
-                            rounded-md
-                            text-base
-                            font-medium
-                            text-gray-700
-                            px-5
-                            py-2
-                          "
-                        >
-                          Shop & Eat
+                          {{ title }}
                         </button>
                       </li>
                     </ul>
@@ -365,14 +320,14 @@
           'Sqft',
           'Source/Name',
         ]"
-        v-bind:propertyContentData="propertyDetail[0].property_history"
+        v-bind:propertyContentData="propertyPriceHistory"
       >
       </widget-history-table>
       <widget-history-table
         propertyTitle="Tax History"
         v-bind:propertyAddressName="propertyAddress"
         v-bind:propertyTableHeaderTitle="['Year', 'Assessment Total', 'Tax']"
-        v-bind:propertyContentData="propertyDetail[0].tax_history"
+        v-bind:propertyContentData="propertyTaxHistory"
       >
       </widget-history-table>
     </div>
@@ -382,7 +337,6 @@
 import { useFetchDetail } from "@/api/useFetchDetail.js";
 import { useRouter } from "vue-router";
 import { ref, watchEffect, computed } from "vue";
-import { getValueIfPropertyExist } from "@/composables";
 import { addCommaToNumberFormat, removeUnderScoresFromAString } from "@/helper";
 import WidgetImageGrid from "@/components/WidgetImageGrid.vue";
 import WidgetUtilitySummary from "@/components/WidgetUtilitySummary.vue";
@@ -396,6 +350,7 @@ import {
   TemperatureIcon,
   // ChevronDown,
 } from "@/assets/icons";
+import { useStore } from "vuex";
 
 export default {
   name: "SearchResultDetailedContentLayout",
@@ -434,11 +389,15 @@ export default {
   },
   setup(props) {
     const router = useRouter();
+    const store = useStore();
     const propertyDetail = ref({});
     const isLoading = ref(true);
     const openRecord = ref(false);
     const errorMessage = ref("");
     const propertyStatus = ref("");
+    const propertyStatusData = ref("");
+    const propertyMortgageMonthlyPayment = ref("");
+    const propertyMortgageRateUrl = ref("");
     const propertyPhotos = ref([]);
     const propertyClientFlagsDisplay = ref({});
     const lastUpdatedProperty = ref("");
@@ -455,10 +414,17 @@ export default {
       `This spacious approximately 1500 SF, two-bedroom, two and a half bathroom residence features 10' ceilings and 7" wide-plank white oak floors throughout. The gracious open concept living, dining and kitchen space is enhanced by custom automated window shades and due to south and west exposures benefits from gorgeous sunsets and open views. The kitchen offers warm grey walnut cabinetry with a polished Calacatta marble countertop, backsplash, and kitchen island. Gaggenau appliances include a stainless steel 36" five-burner gas cooktop, 30" electric oven, 30" speed oven, refrigerator, freezer and this spacious approximately 1500 SF, two-bedroom, two and a half bathroom residence features 10' ceilings and 7" wide-plank white oak floors throughout. The gracious open concept living, dining and kitchen space is enhanced by custom automated window shades and due to south and west exposures benefits from gorgeous sunsets and open views. The kitchen offers warm grey walnut cabinetry with a polished Calacatta marble countertop, backsplash, and kitchen island. Gaggenau appliances include a stainless steel 36" five-burner gas cooktop, 30" electric oven, 30" speed oven, refrigerator, freezer`
     );
     const descriptionCountMaximum = ref(844);
-    const activeMappingTable = ref("propertyMap");
+    const activeMappingTable = ref("Map");
+    const propertyPriceHistory = ref([]);
+    const propertyTaxHistory = ref([]);
+
+    const propertyAddress = removeUnderScoresFromAString(props.address);
+    const propertyCity = removeUnderScoresFromAString(props.city);
+
 
     watchEffect(async () => {
       isLoading.value = true;
+      store.commit("setFetchingIsBusy", true);
       const { propertyFullContents, error } = await useFetchDetail(
         props.propertyId
       );
@@ -466,14 +432,18 @@ export default {
       errorMessage.value = error.value;
 
       isLoading.value = false;
+      store.commit("setFetchingIsBusy", false);
 
       console.log("DETAILED INFO:", propertyDetail.value);
       console.log("DETAILED error:", errorMessage.value);
       console.log("DETAILED ROUTER:", router);
 
+      propertyStatusData.value = propertyDetail.value[0].prop_status;
+
       propertyStatus.value = removeUnderScoresFromAString(
-        propertyDetail.value[0].prop_status
+        propertyStatusData.value
       );
+
       propertyPhotos.value = propertyDetail.value[0].photos;
       propertyClientFlagsDisplay.value =
         propertyDetail.value[0].client_display_flags;
@@ -481,46 +451,55 @@ export default {
       propertyPrice.value = addCommaToNumberFormat(
         propertyDetail.value[0].price
       );
-      bedProperty.value = getValueIfPropertyExist(
-        propertyDetail.value[0],
-        "beds"
-      );
-      bedPropertyMin.value = getValueIfPropertyExist(
-        propertyDetail.value[0],
-        "community",
-        "beds_min"
-      );
-      bedPropertyMax.value = getValueIfPropertyExist(
-        propertyDetail.value[0],
-        "community",
-        "beds_max"
-      );
-      bathProperty.value = getValueIfPropertyExist(
-        propertyDetail.value[0],
-        "baths"
-      );
-      bathPropertyMin.value = getValueIfPropertyExist(
-        propertyDetail.value[0],
-        "community",
-        "baths_min"
-      );
-      bathPropertyMax.value = getValueIfPropertyExist(
-        propertyDetail.value[0],
-        "community",
-        "baths_max"
-      );
-      let propertySquareFeet = getValueIfPropertyExist(
-        propertyDetail.value[0],
-        "building_size",
-        "size"
-      );
-      propertySqft.value = propertySquareFeet
-        ? addCommaToNumberFormat(propertySquareFeet)
+      bedProperty.value = Object.hasOwn(propertyDetail.value[0], "beds")
+        ? propertyDetail.value[0].beds
         : "";
-    });
 
-    const propertyAddress = removeUnderScoresFromAString(props.address);
-    const propertyCity = removeUnderScoresFromAString(props.city);
+      let isCommunityARentalProperty = Object.hasOwn(
+        propertyDetail.value[0],
+        "community"
+      );
+
+      bedPropertyMin.value = isCommunityARentalProperty
+        ? propertyDetail.value[0].community.beds_min
+        : "";
+      bedPropertyMax.value = isCommunityARentalProperty
+        ? propertyDetail.value[0].community.beds_max
+        : "";
+
+      bathProperty.value = Object.hasOwn(propertyDetail.value[0], "baths")
+        ? propertyDetail.value[0].baths
+        : "";
+      bathPropertyMin.value = isCommunityARentalProperty
+        ? propertyDetail.value[0].community.baths_min
+        : "";
+
+      bathPropertyMax.value = isCommunityARentalProperty
+        ? propertyDetail.value[0].community.baths_max
+        : "";
+
+      propertySqft.value = Object.hasOwn(
+        propertyDetail.value[0],
+        "building_size"
+      )
+        ? addCommaToNumberFormat(propertyDetail.value[0].building_size.size)
+        : "";
+
+      let isPropertyMortgaged = Object.hasOwn(
+        propertyDetail.value[0],
+        "mortgage"
+      );
+
+      propertyMortgageMonthlyPayment.value = isPropertyMortgaged
+        ? propertyDetail.value[0].mortgage.estimate.monthly_payment
+        : "";
+      propertyMortgageRateUrl.value = isPropertyMortgaged
+        ? propertyDetail.value[0].mortgage.rates_url
+        : "";
+
+      propertyPriceHistory.value = propertyDetail.value[0].property_history;
+      propertyTaxHistory.value = propertyDetail.value[0].tax_history;
+    });
 
     const descriptionContentToShowAtDefault = computed(() => {
       let description;
@@ -542,9 +521,9 @@ export default {
     }
     const renderMappingContent = computed(() => {
       let mapContent =
-        activeMappingTable.value == "propertyMap"
+        activeMappingTable.value == "Map"
           ? "Map Content Coming soon"
-          : activeMappingTable.value == "propertySchoolMap"
+          : activeMappingTable.value == "Schools"
           ? "School Map content coming soon"
           : "Shops/Resturants Map coming soon";
       return mapContent;
@@ -562,6 +541,7 @@ export default {
       propertyAddress,
       propertyCity,
       propertyStatus,
+      propertyStatusData,
       propertyPhotos,
       propertyClientFlagsDisplay,
       lastUpdatedProperty,
@@ -573,7 +553,11 @@ export default {
       bathPropertyMin,
       bathPropertyMax,
       propertySqft,
+      propertyMortgageMonthlyPayment,
+      propertyMortgageRateUrl,
       getMappingIdForContent,
+      propertyPriceHistory,
+      propertyTaxHistory,
       activeMappingTable,
       renderMappingContent,
     };
