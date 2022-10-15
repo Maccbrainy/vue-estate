@@ -1,7 +1,4 @@
 <template>
-  <WidgetDaysInAWeekAndWorkingHours
-    v-model="getDateAndTime"
-  ></WidgetDaysInAWeekAndWorkingHours>
   <form v-on:submit.prevent="submitForm">
     <div class="flex gap-2">
       <contact-form-input
@@ -63,36 +60,42 @@
         hover:bg-transparent hover:text-red-600
       "
     >
-      Check Availability
+      Check availability
     </button>
-    <div class="text-xs text-teal pt-3">You agree to Vue Estate Terms of Use & Privacy Policy By choosing to contact a property, you also agree that property managers may call or text you about any inquiries you submit through our services, which may involve use of automated means and prerecorded/artificial voices. You don't need to consent as a condition of renting any property, or buying any other goods or services. Message/data rates may apply.</div>
+    <div class="text-xs text-teal pt-3">
+      You agree to Vue Estate Terms of Use & Privacy Policy By choosing to
+      contact a property, you also agree that property managers may call or text
+      you about any inquiries you submit through our services, which may involve
+      use of automated means and prerecorded/artificial voices. You don't need
+      to consent as a condition of renting any property, or buying any other
+      goods or services. Message/data rates may apply.
+    </div>
   </form>
 </template>
 <script>
 import { ref } from "vue";
-import { format } from "date-fns";
-import { setWorkingHoursRangeInADate } from "@/helper";
 import ContactFormInput from "@/components/ContactFormInput.vue";
-import WidgetDaysInAWeekAndWorkingHours from "@/components/WidgetDaysInAWeekAndWorkingHours.vue";
 
 export default {
   name: "WidgetContactForm",
+  props: {
+    propertyName: {
+      type: String,
+      required: true
+    }
+  },
   components: {
     ContactFormInput,
-    WidgetDaysInAWeekAndWorkingHours
   },
-  setup() {
-    let timeDate = setWorkingHoursRangeInADate(new Date());
-    const getDateAndTime = ref(timeDate[0].date);
+  setup(props) {
     const getFirstAndLastName = ref("");
     const getPhoneNumber = ref("");
     const getEmailAddress = ref("");
     const getMessage = ref(
-      "I am interested in this property and would like to schedule a viewing. Please let me know when this would be possible."
+      `I am interested in ${props.propertyName} and would like to schedule a viewing. Please let me know when this would be possible.`
     );
 
     const submitForm = () => {
-      let thisDate = getDateAndTime.value;
       const userData = {};
       let truthy =
         getFirstAndLastName.value &&
@@ -108,13 +111,11 @@ export default {
       userData.phoneNumber = getPhoneNumber.value;
       userData.emailAddress = getEmailAddress.value;
       userData.message = getMessage.value;
-      userData.scheduledDate = thisDate;
-      userData.scheduledTourTime = format(new Date(thisDate), "hh:mm a");
+
       console.log("Your Info:", userData);
     };
 
     return {
-      getDateAndTime,
       getFirstAndLastName,
       getPhoneNumber,
       getEmailAddress,

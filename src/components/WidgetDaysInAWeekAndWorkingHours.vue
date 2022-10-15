@@ -42,12 +42,12 @@
     </button>
     <ul
       ref="dateContentWidthRef"
-      class="overflow-hidden flex flex-row gap-2 flex-nowrap"
+      class="overflow-hidden flex flex-row gap-2 flex-nowrap w-full"
     >
       <li
         v-for="(date, index) in getTheDaysInAWeekRange"
         :key="date"
-        v-bind:ref="(el) => (dateItemRefs[index] = el)"
+        v-bind:ref="(el) => (dateItemRefs[index] = el)" class="flex-1"
       >
         <button
           v-on:click="getTheDayInformation($event, date, index)"
@@ -60,7 +60,7 @@
           }"
           class="
             border-gray-400
-            w-14
+            w-full
             min-w-max
             rounded-lg
             bg-white
@@ -141,7 +141,7 @@
         class="flex text-red-600 text-xs p-px items-center"
       >
         <information-icon />
-        <span class="px-1">Tour time has passed,check tour tomorrow</span>
+        <span class="px-1">Select your choice of your tour time</span>
       </div>
     </div>
   </div>
@@ -159,7 +159,7 @@ export default {
     InformationIcon
   },
   emits: ['update:modelValue', 'update:focused'],
-  setup(props, context) {
+  setup(_, context) {
     const focused = ref(null);
     const dateContentWidthRef = ref(null);
     const dateItemRefs = ref([]);
