@@ -1,132 +1,103 @@
 <template>
-  <switch-button-container 
-    v-show="isBuyPage" 
-    v-bind:class="{ 
-      'border border-gray-300': loadingIsActive,
-      'hover:bg-gray-300': isActiveBranch
-    }">
-    <button 
-      v-on:click="activateListingBranch"
-      :id="agentType[0].id" 
-      v-bind:class="{
-        'border border-gray-300 bg-white rounded-lg transition duration-700': 
-          isActiveBranch,
-        'bg-gray-100': loadingIsActive 
-      }">
-      <switch-button class="pr-4"
-        :id="agentType[0].id"
-        v-bind:class="{ 'text-gray-400': loadingIsActive }" 
-        v-bind:disabled="loadingIsActive">
-        <span>{{ agentType[0].title }}</span>
-        <span v-show="!loadingIsActive" class="xxs:hidden font-normal ml-1">({{ numberOfPropertyByAgent }})</span>
-      </switch-button>
-    </button>
-    <button 
-      v-on:click="activateListingBranch"
-      :id="agentType[1].id"
-      v-bind:class="{
-        'border border-gray-300 bg-white rounded-lg transition duration-700': !isActiveBranch,
-      }">
-      <switch-button
-        :id="agentType[1].id" 
-        v-bind:class="{ 'text-gray-400': loadingIsActive }" 
-        v-bind:disabled="loadingIsActive">
-        <span>{{ agentType[1].title }} </span>
-        <span v-show="!loadingIsActive" class="xxs:hidden font-normal ml-1"> ({{ numberOfPropertyByOther }})</span>
-      </switch-button>
-    </button>
-  </switch-button-container>
+  <div v-show="isBuyPage" class="relative flex justify-between">
+    <div
+      v-for="(type, arrayIndex) in agentType"
+      :key="type.id"
+      class="relative w-auto h-auto -mr-1"
+    >
+      <button
+        v-on:click="activateListingBranch(event, type)"
+        type="button"
+        :class="{ 'transform -translate-x-3': arrayIndex == 1 }"
+        class="
+          flex
+          justify-center
+          items-center
+          w-full
+          h-full
+          text-base
+          font-medium
+          text-gray-800
+          px-6
+          py-2
+          rounded-lg
+          outline-none
+          bg-gray-100
+          hover:bg-gray-200
+        "
+      >
+        <span
+          :class="{
+            'absolute w-full px-6 py-2 h-full bg-white border rounded-lg z-10':
+              type.id == storeData.activeListBranch,
+            'transform translate-x-0': arrayIndex == 0,
+          }"
+        ></span>
+        <span class="z-10">{{ type.title }}</span>
+        <span class="xxs:hidden z-10 font-normal px-1">{{
+          arrayIndex == 0
+            ? `(${numberOfPropertyByAgent})`
+            : `(${numberOfPropertyByOther})`
+        }}</span>
+      </button>
+    </div>
+  </div>
 </template>
 <script>
-import { computed, ref, watchEffect } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
-import {
-  SwitchButton, 
-  SwitchButtonContainer, 
-} from "@/components/buttonui/index";
 import settingsData from "@/api/settingsData.json";
 export default {
   name: "FilterButtonAgentAndOtherListings",
-  components: {
-    SwitchButton,
-    SwitchButtonContainer,
-  },
   setup() {
     const store = useStore();
-    const isBuyPage = ref(Boolean);
-    const numberOfPropertyByAgent = ref(Number);
-    const numberOfPropertyByOther = ref(Number);
-    const isActiveBranch = ref(Boolean);
     const agentType = [...settingsData.agentType];
     const routeNames = [...settingsData.routeNames];
 
-    const loadingIsActive = computed(() => store.getters.getIsLoading);
-    const activeBranch = computed(() => store.getters.getActiveBranch);
-    const getActiveRoutePath = computed(
-      () => store.getters.getIsActiveRouteTab);
-    const propertyListingsByAgent = computed(
-      () => store.getters.getPropertyListingsByAgent);
-    const propertyListingsByOther = computed(
-      () => store.getters.getPropertyListingsByNoneAgent);
-    const getNumberOfActiveProperties = computed(
-      () => store.getters.getActiveListing.length);
+    const storeData = computed(() => store.getters.getStore);
+    const isBuyPage = computed(() =>
+      storeData.value.activeRoutePath == routeNames[0].id ? true : false
+    );
 
-    const numberOfActiveProperties = computed(() => {
-      return getNumberOfActiveProperties.value > 0 
-        ? getNumberOfActiveProperties.value 
+    const numberOfActiveListing = computed(() => {
+      return storeData.value.activeListing.length > 0
+        ? storeData.value.activeListing.length
         : 0;
     });
-    const activateListingBranch = (e) => {
-      if (e.target.parentNode.id != activeBranch.value){
-        switch (e.target.parentNode.id) {
-          case agentType[1].id:
-            store.commit("setActiveListBranch", agentType[1].id);
-            break;
-          case agentType[0].id:
-            store.commit("setActiveListBranch", agentType[0].id);
-            break;
-        }
-      }
-    }
 
-    watchEffect(() => {
-      if (!activeBranch.value){
-        store.commit("setActiveListBranch", agentType[0].id);
-      }
+    const numberOfPropertyByAgent = computed(() => {
+      let numberAgent =
+        storeData.value.activeListBranch == agentType[0].id
+          ? numberOfActiveListing.value
+          : storeData.value.propertyListingsByAgent.length > 0
+          ? storeData.value.propertyListingsByAgent.length
+          : 0;
+      console.log("By Agent:", numberAgent);
+      return numberAgent;
     });
-    watchEffect(() => {
-      isBuyPage.value = 
-        getActiveRoutePath.value == routeNames[0].id ? true : false;
+    const numberOfPropertyByOther = computed(() => {
+      let numberOther =
+        storeData.value.activeListBranch == agentType[1].id
+          ? numberOfActiveListing.value
+          : storeData.value.propertyListingsByNoneAgent.length > 0
+          ? storeData.value.propertyListingsByNoneAgent.length
+          : 0;
+      console.log("By Others:", numberOther);
+      return numberOther;
     });
-    watchEffect(() => {
-      isActiveBranch.value = 
-        activeBranch.value === agentType[0].id ? true : false;
 
-      numberOfPropertyByAgent.value = isActiveBranch.value 
-        ? numberOfActiveProperties.value 
-        : propertyListingsByAgent.value.length > 0
-        ? propertyListingsByAgent.value.length
-        : 0;
-      console.log("By Agent:", numberOfPropertyByAgent.value);
+    const activateListingBranch = (_, type) => {
+      store.commit("setActiveListBranch", type.id);
+    };
 
-      numberOfPropertyByOther.value = !isActiveBranch.value
-        ? numberOfActiveProperties.value
-        : propertyListingsByOther.value.length > 0
-        ? propertyListingsByOther.value.length
-        : 0;
-      console.log("By Others:", numberOfPropertyByOther.value);
-    });
     return {
       isBuyPage,
       agentType,
-      activateListingBranch,
-      loadingIsActive,
-      isActiveBranch,
-      propertyListingsByAgent,
-      propertyListingsByOther,
+      storeData,
       numberOfPropertyByAgent,
-      numberOfPropertyByOther
-    }
-  }
-}
+      numberOfPropertyByOther,
+      activateListingBranch,
+    };
+  },
+};
 </script>

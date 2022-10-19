@@ -32,7 +32,3 @@ export { default as NavBarDropdownItem } from "@/components/buttonui/NavBarDropd
 export { default as SearchBox } from "@/components/buttonui/SearchBox.vue";
 export { default as SearchInput } from "@/components/buttonui/SearchInput.vue";
 
-//SwitchButton
-export { default as SwitchButton } from "@/components/buttonui/SwitchButton.vue";
-export { default as SwitchButtonContainer } from "@/components/buttonui/SwitchButtonContainer.vue";
-export { default as SwitchButtonClassActive } from "@/components/buttonui/SwitchButtonClassActive.vue";
