@@ -9,7 +9,7 @@
     <input
       v-model="searchData"
       v-bind:class="{
-        'rounded-b-lg focus:shadow-md ': !searchFilterIsActive,
+        'rounded-b-lg focus:shadow': !searchFilterIsActive,
       }"
       class="
         w-full
@@ -22,6 +22,7 @@
         focus:ring
         focus:ring-offset-1
         focus:ring-offset-white
+        focus:shadow
         pl-4
         py-1
         pr-20
@@ -45,6 +46,8 @@
         w-14
         rounded-tr-lg
         cursor-pointer
+        focus:bg-red-800
+        active:bg-red-600
       "
       v-bind="$attrs"
       role="button"
