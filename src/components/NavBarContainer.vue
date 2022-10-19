@@ -13,7 +13,7 @@
       px-4
       w-full
       py-2
-      z-50
+      z-30
     "
   >
     <vue-estate-logo class="sm:py-3 sm:pr-5 cursor-pointer"></vue-estate-logo>
@@ -21,7 +21,7 @@
     <menu-icon v-on:click="toggleMenu = !toggleMenu"></menu-icon>
     <mobile-menu v-show="toggleMenu"></mobile-menu>
     <close-mobile-menu
-      class="absolute right-6"
+      class="absolute right-6 text-white"
       v-show="toggleMenu"
       v-on:click="toggleMenu = !toggleMenu"
     ></close-mobile-menu>
