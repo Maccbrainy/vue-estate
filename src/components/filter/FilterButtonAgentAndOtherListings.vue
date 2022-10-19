@@ -23,12 +23,12 @@
           rounded-lg
           outline-none
           bg-gray-100
-          hover:bg-gray-200
+          hover:bg-gray-200 xs:px-4
         "
       >
         <span
           :class="{
-            'absolute w-full px-6 py-2 h-full bg-white border rounded-lg z-10':
+            'absolute w-full px-6 py-2 h-full bg-white border rounded-lg z-10 xs:px-4':
               type.id == storeData.activeListBranch,
             'transform translate-x-0': arrayIndex == 0,
           }"
