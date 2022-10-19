@@ -26,7 +26,7 @@
                   items-center 
                   top-4">
                 <div class="m-0">
-                  <div class="text-5xl sf:text-3xl font-bold shadow">
+                  <div class="text-5xl sf:text-3xl font-bold shadow-md">
                     <h1> 
                       Discover a place <br /> 
                       you'll love to live

@@ -5,12 +5,12 @@ module.exports = {
     extend: {
       screens: {
         "3xl": "2500px",
-        lf: {"max":"1240px"},
-        lm: {"min":"991px"},
-        mf: {"max":"990px"},
-        sf: {"max":"768px"},
-        xs: {"max":"638px"},
-        xxs: {"max":"410px"},
+        lf: { max: "1240px" },
+        lm: { min: "991px" },
+        mf: { max: "990px" },
+        sf: { max: "768px" },
+        xs: { max: "638px" },
+        xxs: { max: "410px" },
       },
       colors: {
         teal: {
@@ -18,6 +18,9 @@ module.exports = {
           DEFAULT: "#007889",
           light: "#3cb3bd",
         },
+      },
+      boxShadow: {
+        DEFAULT: '0 0 7px #3cb3bd',
       },
     },
   },
