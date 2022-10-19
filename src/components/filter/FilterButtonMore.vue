@@ -1,145 +1,149 @@
 <template>
-  <div 
-    class="
-      h-full 
-      bg-white 
-      shadow-lg 
-      rounded-lg 
-      z-40 
-      text-base text-gray-600 
-      font-normal">
-    <div class="h-2/3 px-2 pb-8 overflow-y-auto overflow-x-hidden sm:pt-6">
-      <filter-route-tab></filter-route-tab>
-      <dropdown-button-fieldset class="hidden mf:block" fieldsetTitle="Price">
-        <filter-core-price-range></filter-core-price-range>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset 
-        class="hidden mf:block" 
-        fieldsetTitle="Bedrooms">
-        <filter-core-bedrooms></filter-core-bedrooms>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset 
-        v-show="isRentPage" 
-        class="hidden mf:block" 
-        fieldsetTitle="Pets Allowed">
-        <button-radio v-model:value="isDogsAllowed">Dogs Allowed</button-radio>
-        <button-radio v-model:value="isCatsAllowed">Cats Allowed</button-radio>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset 
-        class="hidden mf:block" 
-        fieldsetTitle="Home Type">
-        <filter-core-home-types v-bind:listOptions="homeTypes">
-        </filter-core-home-types>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset v-if="!isSoldPage" fieldsetTitle="Features">
-        <filter-core-features 
-          v-bind:listOptionsOnSales="featuresOnSalePage"
-          v-bind:listOptionsOnRentals="featuresOnRentPage"
-          v-bind:routeTypes="routeNames">
-        </filter-core-features>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset 
-        v-if="isBuyPage" 
-        fieldsetTitle="More Property Types">
-        <button-radio v-model:value="foreclosureOnly">
-          Foreclosures Only</button-radio>
-        <button-radio v-model:value="isNewConstruction">
-          New Constructions</button-radio>
-        <button-radio v-model:value="isNewPlan">
-          Homes not yet built</button-radio>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset fieldsetTitle="Bathrooms">
-        <filter-core-bathrooms></filter-core-bathrooms>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset fieldsetTitle="Search Radius (Miles Away)">
-        <dropdown-button-select-box>
-          <dropdown-button-select v-model="searchRadius">
-            <dropdown-button-select-option 
-              v-for="searchRadiusInMile in searchRadiusesInMiles"
-              v-bind:key="searchRadiusInMile.title"
-              v-bind:value="searchRadiusInMile.id">
-              {{ searchRadiusInMile.title}}
-            </dropdown-button-select-option>
-          </dropdown-button-select>
-        </dropdown-button-select-box>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset fieldsetTitle="Square Feet">
-        <div class="flex">
-          <button-input 
-            v-model:in-focus="squarefeetMinFocus" 
-            v-model:search-text="squarefeetMin" 
-            placeholder="No Min">
-          </button-input>
-          <button-separator></button-separator>
-          <button-input 
-            v-model:in-focus="squarefeetMaxFocus" 
-            v-model:search-text="squarefeetMax"
-            placeholder="No Max">
-          </button-input>
-        </div>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset fieldsetTitle="Lot Size">
-        <dropdown-button-select-box>
-          <dropdown-button-select v-model="lotSize">
-            <dropdown-button-select-option 
-              v-for="lotSizeAcreage in lotSizeAcreages"
-              v-bind:key="lotSizeAcreage.title"
-              v-bind:value="lotSizeAcreage.id">
-              {{ lotSizeAcreage.title }}
-            </dropdown-button-select-option>
-          </dropdown-button-select>
-        </dropdown-button-select-box>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset fieldsetTitle="Year Built">
-        <!-- <filter-core-year-built></filter-core-year-built> -->
-        <div class="flex">
-          <button-input 
-            v-model:search-text="ageMin" 
-            v-model:in-focus="ageMinFocus" 
-            placeholder="Min Year">
-          </button-input>
-          <button-separator></button-separator>
-          <button-input 
-            v-model:search-text="ageMax" 
-            v-model:in-focus="ageMaxFocus" 
-            placeholder="Max Year">
-          </button-input>
-        </div>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset fieldsetTitle="MLS#">
-        <button-input 
-          placeholder="MLS#" 
-          v-model:in-focus="mlsFocus" 
-          v-model:search-text="mlsFind">
+  <div class="h-2/3 px-2 pb-8 overflow-y-auto overflow-x-hidden sm:pt-6" tabindex="-1">
+    <filter-route-tab></filter-route-tab>
+    <dropdown-button-fieldset class="hidden mf:block" fieldsetTitle="Price">
+      <filter-core-price-range></filter-core-price-range>
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset class="hidden mf:block" fieldsetTitle="Bedrooms">
+      <filter-core-bedrooms></filter-core-bedrooms>
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset
+      v-show="isRentPage"
+      class="hidden mf:block"
+      fieldsetTitle="Pets Allowed"
+    >
+      <button-radio @click="dogsHandler" v-model:value="isDogsAllowed"
+        >Dogs Allowed</button-radio
+      >
+      <button-radio @click="catsHandler" v-model:value="isCatsAllowed"
+        >Cats Allowed</button-radio
+      >
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset class="hidden mf:block" fieldsetTitle="Home Type">
+      <filter-core-home-types v-bind:listOptions="homeTypes">
+      </filter-core-home-types>
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset v-show="!isSoldPage" fieldsetTitle="Features">
+      <filter-core-features
+        v-bind:listOptionsOnSales="featuresOnSalePage"
+        v-bind:listOptionsOnRentals="featuresOnRentPage"
+        v-bind:routeTypes="routeNames"
+      >
+      </filter-core-features>
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset
+      v-show="isBuyPage"
+      fieldsetTitle="More Property Types"
+    >
+      <button-radio @click="foreclosureHandler" v-model:value="foreclosureOnly">
+        Foreclosures Only</button-radio
+      >
+      <button-radio
+        @click="isNewConstructionHandler"
+        v-model:value="isNewConstruction"
+      >
+        New Constructions</button-radio
+      >
+      <button-radio @click="isNewPlanHandler" v-model:value="isNewPlan">
+        Homes not yet built</button-radio
+      >
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset fieldsetTitle="Bathrooms">
+      <filter-core-bathrooms></filter-core-bathrooms>
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset fieldsetTitle="Search Radius (Miles Away)">
+      <dropdown-button-select-box>
+        <dropdown-button-select v-model="searchRadius">
+          <dropdown-button-select-option
+            v-for="searchRadiusInMile in searchRadiusesInMiles"
+            v-bind:key="searchRadiusInMile.title"
+            v-bind:value="searchRadiusInMile.id"
+          >
+            {{ searchRadiusInMile.title }}
+          </dropdown-button-select-option>
+        </dropdown-button-select>
+      </dropdown-button-select-box>
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset fieldsetTitle="Square Feet">
+      <div class="flex">
+        <button-input
+          v-model:in-focus="squarefeetMinFocus"
+          v-model:search-text="squarefeetMin"
+          placeholder="No Min"
+        >
         </button-input>
-      </dropdown-button-fieldset>
-      <dropdown-button-fieldset v-if="isBuyPage">
-        <button-radio v-model:value="isMatterPorts">3D tours Only</button-radio>
-        <button-radio v-model:value="hasOpenHousesOnly">
-          Open Houses</button-radio>
-        <button-radio v-model:value="isContingent">
-          Contingents Only</button-radio>
-      </dropdown-button-fieldset>
-    </div>
-    <div 
-      class="
-        w-full 
-        absolute 
-        md:bottom-0 
-        bottom-16 
-        px-4 py-2 
-        bg-white 
-        lm:rounded-lg">
-      <slot></slot>
-    </div>
+        <button-separator></button-separator>
+        <button-input
+          v-model:in-focus="squarefeetMaxFocus"
+          v-model:search-text="squarefeetMax"
+          placeholder="No Max"
+        >
+        </button-input>
+      </div>
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset fieldsetTitle="Lot Size">
+      <dropdown-button-select-box>
+        <dropdown-button-select v-model="lotSize">
+          <dropdown-button-select-option
+            v-for="lotSizeAcreage in lotSizeAcreages"
+            v-bind:key="lotSizeAcreage.title"
+            v-bind:value="lotSizeAcreage.id"
+          >
+            {{ lotSizeAcreage.title }}
+          </dropdown-button-select-option>
+        </dropdown-button-select>
+      </dropdown-button-select-box>
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset fieldsetTitle="Year Built">
+      <!-- <filter-core-year-built></filter-core-year-built> -->
+      <div class="flex">
+        <button-input
+          v-model:search-text="ageMin"
+          v-model:in-focus="ageMinFocus"
+          placeholder="Min Year"
+        >
+        </button-input>
+        <button-separator></button-separator>
+        <button-input
+          v-model:search-text="ageMax"
+          v-model:in-focus="ageMaxFocus"
+          placeholder="Max Year"
+        >
+        </button-input>
+      </div>
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset fieldsetTitle="MLS#">
+      <button-input
+        placeholder="MLS#"
+        v-model:in-focus="mlsFocus"
+        v-model:search-text="mlsFind"
+      >
+      </button-input>
+    </dropdown-button-fieldset>
+    <dropdown-button-fieldset v-show="isBuyPage">
+      <button-radio @click="threeDHandler" v-model:value="isMatterPorts">
+        3D tours Only</button-radio
+      >
+      <button-radio
+        @click="openHousesHandler"
+        v-model:value="hasOpenHousesOnly"
+      >
+        Open Houses</button-radio
+      >
+      <button-radio @click="contingentHandler" v-model:value="isContingent">
+        Contingents Only</button-radio
+      >
+    </dropdown-button-fieldset>
   </div>
 </template>
 <script>
-import { ref, watchEffect, computed } from "vue";
-import settingsData from "@/api/settingsData.json";
+import { useRoute } from "vue-router";
+import { ref, watchEffect, computed, onBeforeMount } from "vue";
 import { useStore } from "vuex";
-import { 
-  FilterRouteTab, 
+import settingsData from "@/api/settingsData.json";
+
+import {
+  FilterRouteTab,
   FilterCorePriceRange,
   FilterCoreBedrooms,
   FilterCoreHomeTypes,
@@ -147,16 +151,16 @@ import {
   FilterCoreBathrooms,
   // FilterCoreYearBuilt
 } from "@/components/filter";
-import { 
-  ButtonSeparator, 
+import {
+  ButtonSeparator,
   ButtonInput,
   ButtonRadio,
-  DropdownButtonFieldset, 
-  DropdownButtonSelectBox, 
-  DropdownButtonSelect, 
+  DropdownButtonFieldset,
+  DropdownButtonSelectBox,
+  DropdownButtonSelect,
   DropdownButtonSelectOption,
 } from "@/components/buttonui";
-export default ({
+export default {
   components: {
     ButtonInput,
     ButtonSeparator,
@@ -175,9 +179,8 @@ export default ({
   },
   setup() {
     const store = useStore();
+    const route = useRoute();
     const activeRouteTab = ref("");
-    // const filterMoreIsActive = ref(false);
-
     const routeNames = ref([...settingsData.routeNames]);
     const homeTypes = ref([...settingsData.homeTypes]);
     const searchRadiusesInMiles = ref([...settingsData.searchRadiusInMiles]);
@@ -185,8 +188,18 @@ export default ({
     const featuresOnRentPage = ref([...settingsData.typeAmenities]);
     const lotSizeAcreages = ref([...settingsData.lotSizes]);
 
-    // const checkedTypeOfListing = ref([]);
+    const storeData = computed(() => store.getters.getStore);
 
+    const isDogsAllowed = ref("");
+    const isCatsAllowed = ref("");
+    const foreclosureOnly = ref("");
+    const hasOpenHousesOnly = ref("");
+    const isMatterPorts = ref("");
+    const isNewConstruction = ref("");
+    const isContingent = ref("");
+    const isNewPlan = ref("");
+
+    const mlsFind = ref("");
     const squarefeetMinFocus = ref(null);
     const squarefeetMaxFocus = ref(null);
     const ageMinFocus = ref(null);
@@ -195,59 +208,63 @@ export default ({
 
     const squarefeetMin = ref("");
     const squarefeetMax = ref("");
-    const ageMin = ref("");
-    const ageMax = ref("");
-    const lotSize = ref(lotSizeAcreages.value[0].id);
-    const searchRadius = ref(searchRadiusesInMiles.value[0].id);
-    const isDogsAllowed = ref(false);
-    const isCatsAllowed = ref(false);
-    const foreclosureOnly = ref(false);
-    const hasOpenHousesOnly = ref(false);
-    const isMatterPorts = ref(false); 
-    const isNewConstruction = ref(false); 
-    const isContingent = ref(false); 
-    const isNewPlan = ref(false);
-    const mlsFind = ref("");
+    const ageMin = ref(storeData.value.propertyFilters.age_min);
+    const ageMax = ref(storeData.value.propertyFilters.age_max);
+    const lotSize = ref(
+      storeData.value.propertyFilters.lotSize || lotSizeAcreages.value[0].id
+    );
+    const searchRadius = ref(
+      storeData.value.propertyFilters.searchRadius ||
+        searchRadiusesInMiles.value[0].id
+    );
 
-    const isBuyPage = ref(Boolean);
-    const isRentPage = ref(Boolean);
-    const isSoldPage = ref(Boolean);
-
-    const getActiveRoutePath = computed(
-      () => store.getters.getIsActiveRouteTab);
-
+    watchEffect(() => {
+      isDogsAllowed.value = storeData.value.propertyFilters.allowsDogs;
+      isCatsAllowed.value = storeData.value.propertyFilters.allowsCats;
+      foreclosureOnly.value = storeData.value.propertyFilters.isForeclosures;
+      hasOpenHousesOnly.value = storeData.value.propertyFilters.hasOpenHouses;
+      isMatterPorts.value = storeData.value.propertyFilters.has3DTours;
+      isNewConstruction.value =
+        storeData.value.propertyFilters.isNewConstructions;
+      isContingent.value = storeData.value.propertyFilters.isContingents;
+      isNewPlan.value = storeData.value.propertyFilters.isNewPlans;
+    });
     watchEffect(() => {
       let regExpNumbersOnly = /^\d+$/;
       let ageMinIsANumber = regExpNumbersOnly.test(ageMin.value) ? true : false;
-      if (!ageMin.value && !ageMinFocus.value){
+      if (!ageMin.value && !ageMinFocus.value) {
         console.log("ageMin text:", "");
+        store.commit("setYearBuiltAgeMin", "");
       }
-      if (!ageMinFocus.value && ageMinIsANumber && ageMin.value.length == 4){
+      if (!ageMinFocus.value && ageMinIsANumber && ageMin.value.length == 4) {
         console.log("ageMinOnly text:", ageMin.value);
+        store.commit("setYearBuiltAgeMin", ageMin.value);
       }
     });
-    
+
     watchEffect(() => {
       let yearAgeMin = ageMin.value;
       let yearAgeMax = ageMax.value;
       let regExpNumbersOnly = /^\d+$/;
       let ageMaxIsANumber = regExpNumbersOnly.test(ageMax.value) ? true : false;
 
-      if (!yearAgeMax && !ageMinFocus.value && !ageMaxFocus.value){
+      if (!yearAgeMax && !ageMinFocus.value && !ageMaxFocus.value) {
+        store.commit("setYearBuiltAgeMax", "");
         console.log("ageMax text:", "");
       }
       if (
-        !ageMaxFocus.value && 
-        ageMaxIsANumber && 
-        ageMax.value.length == 4 && 
+        !ageMaxFocus.value &&
+        ageMaxIsANumber &&
+        ageMax.value.length == 4 &&
         !ageMinFocus.value
-      ){
+      ) {
         if (!yearAgeMin) {
           ageMin.value = 0;
         }
         if (yearAgeMin > yearAgeMax) {
           ageMin.value = yearAgeMax;
           ageMax.value = yearAgeMin;
+          store.commit("setYearBuiltAgeMin", ageMin.value);
           console.log("ageMin text:", ageMin.value);
         }
         // let isAgeMin = ageMin.value == 0 ? "" : ageMin.value;
@@ -257,26 +274,28 @@ export default ({
     });
     watchEffect(() => {
       let regExpNumbersOnly = /^\d+$/;
-      let isANumberProp = regExpNumbersOnly.test(squarefeetMin.value) 
-        ? true 
+      let isANumberProp = regExpNumbersOnly.test(squarefeetMin.value)
+        ? true
         : false;
       if (
-        !squarefeetMinFocus.value && 
-        isANumberProp && 
-        squarefeetMin.value.length > 2){
+        !squarefeetMinFocus.value &&
+        isANumberProp &&
+        squarefeetMin.value.length > 2
+      ) {
         console.log("squarefeetMin text:", squarefeetMin.value);
         console.log("sqftMin Is in focus:", squarefeetMinFocus.value);
       }
     });
     watchEffect(() => {
       let regExpNumbersOnly = /^\d+$/;
-      let isANumberProp = regExpNumbersOnly.test(squarefeetMax.value) 
-        ? true 
+      let isANumberProp = regExpNumbersOnly.test(squarefeetMax.value)
+        ? true
         : false;
       if (
-        !squarefeetMaxFocus.value && 
-        isANumberProp && 
-        squarefeetMax.value.length > 2){
+        !squarefeetMaxFocus.value &&
+        isANumberProp &&
+        squarefeetMax.value.length > 2
+      ) {
         console.log("squarefeetMax text:", squarefeetMax.value);
         console.log("sqftMax Is in focus:", squarefeetMaxFocus.value);
       }
@@ -289,56 +308,111 @@ export default ({
       let radius = searchRadius.value == 0 ? "" : searchRadius.value;
       store.commit("setSearchRadius", radius);
     });
-    watchEffect(() => {
-      let dogsAreAllowed = isDogsAllowed.value ? isDogsAllowed.value : "";
+    function dogsHandler() {
+      let dogsAreAllowed = isDogsAllowed.value ? "" : true;
       store.commit("setIsDogsAllowed", dogsAreAllowed);
-    });
-    watchEffect(() => {
-      let catsAreAllowed = isCatsAllowed.value ? isCatsAllowed.value : "";
+    }
+    function catsHandler() {
+      let catsAreAllowed = isCatsAllowed.value ? "" : true;
       store.commit("setIsCatsAllowed", catsAreAllowed);
-    });
-    watchEffect(() => {
-      let foreclosure = foreclosureOnly.value ? foreclosureOnly.value : "";
+    }
+    function foreclosureHandler() {
+      let foreclosure = foreclosureOnly.value ? "" : true;
       store.commit("setIsForeclosuresOnly", foreclosure);
-    });
-    watchEffect(() => {
-      let hasOpenHouses = hasOpenHousesOnly.value ? hasOpenHousesOnly.value : "";
+    }
+    function openHousesHandler() {
+      let hasOpenHouses = hasOpenHousesOnly.value ? "" : true;
       store.commit("setIsHasOpenHousesOnly", hasOpenHouses);
-    });
-    watchEffect(() => {
-      let has3Dtour = isMatterPorts.value ? isMatterPorts.value : "";
+    }
+    function threeDHandler() {
+      let has3Dtour = isMatterPorts.value ? "" : true;
       store.commit("setIsMatterPorts", has3Dtour);
-    });
-    watchEffect(() => {
-      let newConstruction = isNewConstruction.value 
-        ? isNewConstruction.value 
-        : "";
+    }
+    function isNewConstructionHandler() {
+      let newConstruction = isNewConstruction.value ? "" : true;
       store.commit("setIsNewConstructions", newConstruction);
-    });
-    watchEffect(() => {
-      let contingentOnly = isContingent.value ? isContingent.value : "";
+    }
+    function contingentHandler() {
+      let contingentOnly = isContingent.value ? "" : true;
       store.commit("setIsContingents", contingentOnly);
-    });
-    watchEffect(() => {
-      let yetToBeBuilt = isNewPlan.value ? isNewPlan.value : "";
+    }
+    function isNewPlanHandler() {
+      let yetToBeBuilt = isNewPlan.value ? "" : true;
       store.commit("setIsNewPlans", yetToBeBuilt);
-    });
+    }
     watchEffect(() => {
       if (!mlsFocus.value && mlsFind.value)
         alert("MLS# Search Filter coming soon!");
     });
 
-    watchEffect(() => {
-      isBuyPage.value = 
-        getActiveRoutePath.value == routeNames.value[0].id ? true : false;
-      isRentPage.value = 
-        getActiveRoutePath.value == routeNames.value[1].id ? true : false;
-      isSoldPage.value = 
-        getActiveRoutePath.value == routeNames.value[2].id ? true : false;
-    });
+    const isBuyPage = computed(() =>
+      storeData.value.activeRoutePath == routeNames.value[0].id ? true : false
+    );
+    const isRentPage = computed(() =>
+      storeData.value.activeRoutePath == routeNames.value[1].id ? true : false
+    );
+    const isSoldPage = computed(() =>
+      storeData.value.activeRoutePath == routeNames.value[2].id ? true : false
+    );
 
+    watchEffect(() => {
+      let isHasOpenHouses = route.query.hasOpenHouses || ""
+      store.commit("setIsHasOpenHousesOnly", isHasOpenHouses);
+      let isNewConstruction = route.query.newConstruction || "";
+      store.commit("setIsNewConstructions", isNewConstruction);
+    });
+    onBeforeMount(() => {
+      if (route.query.lotSize) {
+        lotSize.value = route.query.lotSize;
+        store.commit("setLotSize", lotSize.value);
+        console.log("ONMOUNTED lotSize:", lotSize.value);
+      }
+      if (route.query.hasOpenHouses) {
+        hasOpenHousesOnly.value = route.query.hasOpenHouses;
+        store.commit("setIsHasOpenHousesOnly", hasOpenHousesOnly.value);
+        console.log("ONMOUNTED hasOpenHouses:", hasOpenHousesOnly.value);
+      }
+      if (route.query.has3DTours) {
+        isMatterPorts.value = route.query.has3DTours;
+        store.commit("setIsMatterPorts", isMatterPorts.value);
+        console.log("ONMOUNTED has3DTours:", isMatterPorts.value);
+      }
+      if (route.query.foreClosure) {
+        foreclosureOnly.value = route.query.foreClosure;
+        store.commit("setIsForeclosuresOnly", foreclosureOnly.value);
+        console.log("ONMOUNTED foreClosure:", foreclosureOnly.value);
+      }
+      if (route.query.newConstruction) {
+        isNewConstruction.value = route.query.newConstruction;
+        store.commit("setIsNewConstructions", isNewConstruction.value);
+        console.log("ONMOUNTED newConstruction:", isNewConstruction.value);
+      }
+      if (route.query.newPlans) {
+        isNewPlan.value = route.query.newPlans;
+        store.commit("setIsNewPlans", isNewPlan.value);
+        console.log("ONMOUNTED newPlans:", isNewPlan.value);
+      }
+      if (route.query.radius) {
+        searchRadius.value = route.query.radius;
+        store.commit("setSearchRadius", searchRadius.value);
+        console.log("ONMOUNTED radius:", searchRadius.value);
+      }
+      if (route.query.contingents) {
+        isContingent.value = route.query.contingents;
+        store.commit("setIsContingents", isContingent.value);
+        console.log("ONMOUNTED contingents:", isContingent.value);
+      }
+      if (route.query.yearBuiltMin) {
+        ageMin.value = route.query.yearBuiltMin;
+        store.commit("setIsyearBuiltMin", ageMin.value);
+      }
+      if (route.query.yearBuiltMax) {
+        ageMax.value = route.query.yearBuiltMax;
+        store.commit("setIsyearBuiltMax", ageMax.value);
+      }
+      console.log(">> onBeforeMount FILTERBUTTONMORE");
+    });
     return {
-      // isANumberProp,
       routeNames,
       squarefeetMin,
       squarefeetMax,
@@ -356,7 +430,6 @@ export default ({
       searchRadius,
       searchRadiusesInMiles,
       activeRouteTab,
-      // checkedTypeOfListing,
       isDogsAllowed,
       isCatsAllowed,
       hasOpenHousesOnly,
@@ -370,7 +443,15 @@ export default ({
       isSoldPage,
       mlsFocus,
       mlsFind,
-    }
-  }
-})
+      openHousesHandler,
+      threeDHandler,
+      contingentHandler,
+      dogsHandler,
+      catsHandler,
+      foreclosureHandler,
+      isNewConstructionHandler,
+      isNewPlanHandler,
+    };
+  },
+};
 </script>
