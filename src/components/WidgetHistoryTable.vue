@@ -3,7 +3,7 @@
     <div class="text-gray-700 font-bold text-xl my-4 capitalize">
       {{ propertyTitle }} for {{ propertyAddressName }}
     </div>
-    <table
+    <table v-if="propertyHistories"
       class="
         table-fixed
         bg-gray-100
@@ -39,15 +39,18 @@
           :key="propertyHistory.date || propertyHistory.assessment"
           class="border w-full"
         >
-          <td class="w-auto py-2 px-4">
-            {{ propertyHistory.date || propertyHistory.year }}
+          <td v-if="propertyHistory.date" class="w-auto py-2 px-4">
+            {{ format(new Date(propertyHistory.date), " d/M/yyy")}}
+          </td>
+          <td v-else class="w-auto py-2 px-4">
+            {{ propertyHistory.year }}
           </td>
 
           <td v-if="propertyHistory.price" class="w-auto py-2 px-4">
-            ${{ propertyHistory.price }}
+            ${{ addCommaToNumberFormat(propertyHistory.price) }}
           </td>
           <td v-else-if="propertyHistory.assessment" class="w-auto py-2 px-4">
-            ${{ propertyHistory.assessment.total || "" }}
+            ${{ addCommaToNumberFormat(propertyHistory.assessment.total) }}
           </td>
           <td v-else class="w-auto py-2 px-4">
             {{ `N/A` }}
@@ -58,12 +61,12 @@
             {{ propertyHistory.event_name }}
           </td>
           <td v-if="propertyHistory.tax" class="w-auto py-2 px-4">
-            ${{ propertyHistory.tax }}
+            ${{ addCommaToNumberFormat(propertyHistory.tax) }}
           </td>
 
 
           <td class="w-auto py-2 px-4">
-            {{ propertyHistory.sqft }}
+            ${{ addCommaToNumberFormat(propertyHistory.sqft) }}
           </td>
 
 
@@ -154,6 +157,7 @@
         </tr>
       </tbody>
     </table>
+    <div v-else class="text-gray-400 text-lg -mt-3">No {{ propertyTitle }} for this property</div>
     <span
       v-show="propertyContentData.length > 4 && !toggleTable"
       class="bg-gradient-to-t from-white h-10 w-full -mt-12"
@@ -182,6 +186,8 @@
 </template>
 <script>
 import { ref, computed } from "vue";
+import { format } from "date-fns";
+import { addCommaToNumberFormat } from "@/helper";
 import { ChevronDown } from "@/assets/icons";
 export default {
   name: "WidgetHistoryTable",
@@ -207,13 +213,13 @@ export default {
     const openRecord = ref(false);
 
     const propertyHistoriesToShowAtDefault = computed(() => {
-      let historyData;
+      let historyData = "";
       if (props.propertyContentData.length > 4) {
         historyData = props.propertyContentData.filter((data, index) =>
           index < 4 ? data : ""
         );
       }
-      if (props.propertyContentData.length <= 4) {
+      if (props.propertyContentData.length > 0 && props.propertyContentData.length <= 4) {
         historyData = props.propertyContentData;
       }
       return historyData;
@@ -224,9 +230,11 @@ export default {
         : propertyHistoriesToShowAtDefault.value;
     });
     return {
+      format,
       toggleTable,
       openRecord,
       propertyHistories,
+      addCommaToNumberFormat
     };
   },
 };
