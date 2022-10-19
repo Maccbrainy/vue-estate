@@ -93,37 +93,34 @@
           BUILDABLE PLAN</span>
       </div>
     </div>
-    <div class="absolute right-0 p-1 z-20 cursor-pointer">
+    <div class="absolute right-0 p-1 z-10 cursor-pointer">
       <slot name="iconSlot"></slot>
     </div>
   </div>
 </template>
 <script>
-import { computed } from "vue";
+import { computed, inject } from "vue";
 import { ThreeDTourIcon } from "../assets/icons"; 
 import { format, formatDistanceStrict } from "date-fns";
 export default {
   name: "WidgetClientFlags",
-  props: {
-    propertyClientDisplayFlags: Object,
-    presentationStatus: String,
-    lastUpdateTime: String, 
-  },
   components: {
     // SaveSearch,
     ThreeDTourIcon
   },
-  setup(props) {
+  setup() {
+    const displayFlags = inject("displayClientFlags");
+
     const propertyStatus = computed(() =>
-      props.presentationStatus == "for sale"
+      displayFlags.status == "for_sale"
         ? "FOR SALE"
-        : props.presentationStatus == "for rent"
+        : displayFlags.status == "for_rent"
         ? "FOR RENT"
         : false
     );
     const propertyLastUpdated = computed(() => {
       let todayDate = new Date();
-      let lastUpdated = new Date(props.lastUpdateTime);
+      let lastUpdated = new Date(displayFlags.lastUpdates);
       let lastUpdatedDistance = formatDistanceStrict(lastUpdated, todayDate, {
         addSuffix: true,
       });
@@ -131,25 +128,25 @@ export default {
     });
     const isNewListing = computed(() => {
       let getValueIfPropertyExist = Object.hasOwn(
-        props.propertyClientDisplayFlags,
+        displayFlags.clientFlags,
         "is_new_listing") 
-        ? props.propertyClientDisplayFlags.is_new_listing 
+        ? displayFlags.clientFlags.is_new_listing 
         : false;
       return getValueIfPropertyExist; 
     });
     const hasOpenHouses = computed(() => {
       let getValueIfPropertyExist = Object.hasOwn(
-        props.propertyClientDisplayFlags,
+        displayFlags.clientFlags,
         "has_open_house") 
-        ? props.propertyClientDisplayFlags.has_open_house 
+        ? displayFlags.clientFlags.has_open_house 
         : false;
       if (getValueIfPropertyExist){
         let startDate = format(
-          new Date(props.propertyClientDisplayFlags.open_houses[0].start_date),
+          new Date(displayFlags.clientFlags.open_houses[0].start_date),
           "E,h"
         );
         let endDate = format(
-          new Date(props.propertyClientDisplayFlags.open_houses[0].end_date),
+          new Date(displayFlags.clientFlags.open_houses[0].end_date),
           "ha"
         );
         let openDateDuration = `OPEN ${startDate}-${endDate}`;
@@ -159,30 +156,30 @@ export default {
     });
     const has3Dtour = computed(() => {
       let getValueIfPropertyExist = Object.hasOwn(
-        props.propertyClientDisplayFlags,
+        displayFlags.clientFlags,
         "has_matterport") 
-        ? props.propertyClientDisplayFlags.has_matterport 
+        ? displayFlags.clientFlags.has_matterport 
         : false;
       return getValueIfPropertyExist;
     });
     const isNewPlan = computed(() => {
       let getValueIfPropertyExist = Object.hasOwn(
-        props.propertyClientDisplayFlags,
+        displayFlags.clientFlags,
         "is_new_plan") 
-        ? props.propertyClientDisplayFlags.is_new_plan 
+        ? displayFlags.clientFlags.is_new_plan 
         : false;
       return getValueIfPropertyExist;
     });
     const petsFriendly = computed(() => {
       let getCatValueIfPropertyExist = Object.hasOwn(
-        props.propertyClientDisplayFlags,
+        displayFlags.clientFlags,
         "allows_cats") 
-        ? props.propertyClientDisplayFlags.allows_cats
+        ? displayFlags.clientFlags.allows_cats
         : false;
       let getDogValueIfPropertyExist = Object.hasOwn(
-        props.propertyClientDisplayFlags,
+        displayFlags.clientFlags,
         "allows_dogs")
-        ? props.propertyClientDisplayFlags.allows_dogs 
+        ? displayFlags.clientFlags.allows_dogs 
         : false;
       return getCatValueIfPropertyExist || getDogValueIfPropertyExist;
     });
