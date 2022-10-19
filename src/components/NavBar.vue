@@ -7,7 +7,9 @@
           name: 'BuyPage',
           params: {
             slug: storeData.searchedData.state_code,
-            city: storeData.searchedData.city,
+            city: addUnderScoresToWhiteSpacesInAString(
+              storeData.searchedData.city
+            ),
           },
         }"
       >
@@ -18,7 +20,7 @@
         <nav-bar-dropdown-item
           class="cursor-text font-medium hover:no-underline"
         >
-          {{ storeData.searchedData.city }}
+          {{ removeUnderScoresFromAString(storeData.searchedData.city) }}
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item
           :title="`Homes for sale ${isTitle}`"
@@ -29,7 +31,9 @@
               name: 'BuyPage',
               params: {
                 slug: storeData.searchedData.state_code,
-                city: storeData.searchedData.city,
+                city: addUnderScoresToWhiteSpacesInAString(
+                  storeData.searchedData.city
+                ),
               },
             }"
           >
@@ -45,7 +49,9 @@
               name: 'BuyPage',
               params: {
                 slug: storeData.searchedData.state_code,
-                city: storeData.searchedData.city,
+                city: addUnderScoresToWhiteSpacesInAString(
+                  storeData.searchedData.city
+                ),
               },
               query: {
                 hasOpenHouses: true,
@@ -63,7 +69,9 @@
               name: 'BuyPage',
               params: {
                 slug: storeData.searchedData.state_code,
-                city: storeData.searchedData.city,
+                city: addUnderScoresToWhiteSpacesInAString(
+                  storeData.searchedData.city
+                ),
               },
               query: {
                 newConstruction: true,
@@ -81,7 +89,9 @@
               name: 'SoldPage',
               params: {
                 slug: storeData.searchedData.state_code,
-                city: storeData.searchedData.city,
+                city: addUnderScoresToWhiteSpacesInAString(
+                  storeData.searchedData.city
+                ),
               },
             }"
             >Sold Recently</router-link
@@ -113,7 +123,9 @@
           name: 'RentPage',
           params: {
             slug: storeData.searchedData.state_code,
-            city: storeData.searchedData.city,
+            city: addUnderScoresToWhiteSpacesInAString(
+              storeData.searchedData.city
+            ),
           },
         }"
       >
@@ -124,7 +136,7 @@
         <nav-bar-dropdown-item
           class="hover:bg-gray-200 cursor-text font-medium hover:no-underline"
         >
-          {{ storeData.searchedData.city }}
+          {{ removeUnderScoresFromAString(storeData.searchedData.city) }}
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item
           :title="`All rentals ${isTitle}`"
@@ -135,14 +147,16 @@
               name: 'RentPage',
               params: {
                 slug: storeData.searchedData.state_code,
-                city: storeData.searchedData.city,
+                city: addUnderScoresToWhiteSpacesInAString(
+                  storeData.searchedData.city
+                ),
               },
             }"
           >
             All Rentals</router-link
           >
         </nav-bar-dropdown-item>
-        <!-- <nav-bar-dropdown-item
+        <nav-bar-dropdown-item
           :title="`Apartments for Rents ${isTitle}`"
           class="text-teal hover:bg-gray-200"
         >
@@ -151,15 +165,15 @@
               name: 'RentPage',
               params: {
                 slug: storeData.searchedData.state_code,
-                city: storeData.searchedData.city,
+                city: addUnderScoresToWhiteSpacesInAString(storeData.searchedData.city),
               },
               query: {
                 homeType: `multi_family,condo`,
               },
             }"
-            >Apartments for Rents</router-link
+            >Apartments for Rent</router-link
           >
-        </nav-bar-dropdown-item> -->
+        </nav-bar-dropdown-item>
         <nav-bar-dropdown-item
           :title="`Houses for Rent ${isTitle}`"
           class="text-teal hover:bg-gray-200"
@@ -169,7 +183,9 @@
               name: 'RentPage',
               params: {
                 slug: storeData.searchedData.state_code,
-                city: storeData.searchedData.city,
+                city: addUnderScoresToWhiteSpacesInAString(
+                  storeData.searchedData.city
+                ),
               },
               query: {
                 homeType: `single_family`,
@@ -197,7 +213,7 @@
         <nav-bar-dropdown-item
           class="hover:no-underline cursor-auto font-medium"
         >
-          {{ storeData.searchedData.city }}
+          {{ removeUnderScoresFromAString(storeData.searchedData.city) }}
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item class="hover:bg-gray-200">
           <router-link to="/mortgages">Mortgage Overview</router-link>
@@ -209,13 +225,17 @@
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item class="hover:bg-gray-200">
           <router-link
-            :to="`/mortgage-rates/${storeData.searchedData.city},${storeData.searchedData.state_code}/`"
+            :to="`/mortgage-rates/${addUnderScoresToWhiteSpacesInAString(
+              storeData.searchedData.city
+            )},${storeData.searchedData.state_code}/`"
             >Mortgage Rates</router-link
           >
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item class="hover:bg-gray-200">
           <router-link
-            :to="`/refinance-rates/${storeData.searchedData.city},${storeData.searchedData.state_code}/`"
+            :to="`/refinance-rates/${addUnderScoresToWhiteSpacesInAString(
+              storeData.searchedData.city
+            )},${storeData.searchedData.state_code}/`"
             >Refinance Rates</router-link
           >
         </nav-bar-dropdown-item>
@@ -240,6 +260,13 @@
   </nav-bar-box>
 </template>
 <script>
+import { useStore } from "vuex";
+import { computed } from "vue";
+import {
+  addUnderScoresToWhiteSpacesInAString,
+  removeUnderScoresFromAString,
+} from "@/helper";
+
 import {
   NavBarBox,
   NavBarItem,
@@ -247,8 +274,6 @@ import {
   NavBarDropdown,
   NavBarDropdownItem,
 } from "@/components/buttonui";
-import { useStore } from "vuex";
-import { computed } from "vue";
 
 export default {
   name: "NavBar",
@@ -275,6 +300,8 @@ export default {
       storeData,
       currentSearchedData,
       isTitle,
+      addUnderScoresToWhiteSpacesInAString,
+      removeUnderScoresFromAString,
     };
   },
 };
