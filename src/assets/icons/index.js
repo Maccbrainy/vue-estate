@@ -1,3 +1,4 @@
+export { default as ScheduleTourIcon } from "@/assets/icons/ScheduleTourIcon.vue";
 export { default as InformationIcon } from "@/assets/icons/InformationIcon.vue";
 export { default as CloseMobileMenu } from "@/assets/icons/CloseMobileMenu.vue";
 export { default as FilterIcon } from "@/assets/icons/FilterIcon.vue";
