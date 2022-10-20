@@ -20,7 +20,11 @@
       <thead>
         <tr class="w-full py-3 text-gray-600">
           <th class="w-full text-left py-2 px-4">
-            {{ feature.category }}
+            {{
+              feature.parent_category
+                ? `${feature.category} (${feature.parent_category})`
+                : feature.category
+            }}
           </th>
         </tr>
       </thead>
@@ -37,7 +41,7 @@
       </tbody>
     </table>
     <span
-    v-show="propertyFeatureDetails.length > 2 && !toggleTable"
+      v-show="propertyFeatureDetails.length > 2 && !toggleTable"
       class="absolute bg-gradient-to-t from-white h-10 w-full -mt-14"
     >
     </span>
