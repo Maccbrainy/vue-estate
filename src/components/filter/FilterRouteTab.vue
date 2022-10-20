@@ -46,7 +46,7 @@ export default {
       store.commit("setActiveRoutePath", routeName);
       store.commit("setSearchedData", searchPayload.value);
       store.commit("setUseRouterPush", searchPayload.value);
-    }
+    };
     return {
       storeData,
       defaultCity,
