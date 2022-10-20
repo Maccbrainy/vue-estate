@@ -6,7 +6,9 @@
         <div v-if="currentSearchedData">
           <mobile-menu-drop-down-item
             class="hover:no-underline cursor-text text-gray-300"
-            >{{ storeData.searchedData.city }}</mobile-menu-drop-down-item
+            >{{
+              removeUnderScoresFromAString(storeData.searchedData.city)
+            }}</mobile-menu-drop-down-item
           >
           <mobile-menu-drop-down-item>
             <router-link
@@ -14,7 +16,9 @@
                 name: 'BuyPage',
                 params: {
                   slug: storeData.searchedData.state_code,
-                  city: storeData.searchedData.city,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
                 },
               }"
             >
@@ -27,7 +31,9 @@
                 name: 'BuyPage',
                 params: {
                   slug: storeData.searchedData.state_code,
-                  city: storeData.searchedData.city,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
                 },
                 query: {
                   hasOpenHouses: true,
@@ -43,7 +49,9 @@
                 name: 'BuyPage',
                 params: {
                   slug: storeData.searchedData.state_code,
-                  city: storeData.searchedData.city,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
                 },
                 query: {
                   newConstruction: true,
@@ -58,7 +66,9 @@
                 name: 'SoldPage',
                 params: {
                   slug: storeData.searchedData.state_code,
-                  city: storeData.searchedData.city,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
                 },
               }"
               >Recently Sold</router-link
@@ -70,14 +80,18 @@
         <div v-if="currentSearchedData">
           <mobile-menu-drop-down-item
             class="hover:no-underline cursor-text text-gray-300"
-            >{{ storeData.searchedData.city }}</mobile-menu-drop-down-item
+            >{{
+              removeUnderScoresFromAString(storeData.searchedData.city)
+            }}</mobile-menu-drop-down-item
           ><mobile-menu-drop-down-item
             ><router-link
               :to="{
                 name: 'RentPage',
                 params: {
                   slug: storeData.searchedData.state_code,
-                  city: storeData.searchedData.city,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
                 },
               }"
             >
@@ -90,7 +104,26 @@
                 name: 'RentPage',
                 params: {
                   slug: storeData.searchedData.state_code,
-                  city: storeData.searchedData.city,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
+                },
+                query: {
+                  homeType: `multi_family,condo`,
+                },
+              }"
+              >Apartments for Rent</router-link
+            ></mobile-menu-drop-down-item
+          >
+          <mobile-menu-drop-down-item>
+            <router-link
+              :to="{
+                name: 'RentPage',
+                params: {
+                  slug: storeData.searchedData.state_code,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
                 },
                 query: {
                   homeType: `single_family`,
@@ -99,15 +132,17 @@
               >Houses for Rent</router-link
             ></mobile-menu-drop-down-item
           >
-          <mobile-menu-drop-down-item>
-            Post A Rental Listing</mobile-menu-drop-down-item
-          >
         </div>
+        <mobile-menu-drop-down-item>
+          Post A Rental Listing</mobile-menu-drop-down-item
+        >
       </mobile-menu-drop-down>
       <mobile-menu-drop-down menuTitle="Mortgage">
         <mobile-menu-drop-down-item
           class="hover:no-underline cursor-text text-gray-300"
-          >{{ storeData.searchedData.city }}</mobile-menu-drop-down-item
+          >{{
+            removeUnderScoresFromAString(storeData.searchedData.city)
+          }}</mobile-menu-drop-down-item
         >
         <mobile-menu-drop-down-item
           >Mortgage Overview</mobile-menu-drop-down-item
@@ -138,6 +173,10 @@
 import { useStore } from "vuex";
 import { computed } from "vue";
 import {
+  addUnderScoresToWhiteSpacesInAString,
+  removeUnderScoresFromAString,
+} from "@/helper";
+import {
   MobileMenuContainer,
   MobileMenuList,
   MobileMenuButtonItem,
@@ -160,7 +199,12 @@ export default {
     const currentSearchedData = computed(() =>
       storeData.value.searchedData ? true : false
     );
-    return { storeData, currentSearchedData };
+    return {
+      storeData,
+      currentSearchedData,
+      addUnderScoresToWhiteSpacesInAString,
+      removeUnderScoresFromAString,
+    };
   },
 };
 </script>
