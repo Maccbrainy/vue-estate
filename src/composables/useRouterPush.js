@@ -24,6 +24,7 @@ export default function useRouterPush(payLoad) {
   switch (routeName) {
     case "list-for-rent":
     case "RentsNearMe":
+    case "RentPageDetail":
       activeRoute.value = "RentPage";
       break;
     case "list-sold":
@@ -31,6 +32,7 @@ export default function useRouterPush(payLoad) {
       break;
     case "HomePage":
     case "SalesNearMe":
+    case "SalesPageDetail":
       activeRoute.value = "BuyPage";
       break;
     default:
@@ -78,6 +80,8 @@ export default function useRouterPush(payLoad) {
   let contingentsFilter = searchParams.value.contingents || "";
   // let latMin = searchParams.value.lat ? searchParams.value.lat : "";
   // let longMin = searchParams.value.long ? searchParams.value.long : "";
+  let openMediaTable = searchParams.value.mediaTable || false;
+
   const queryContents = {
     bed: bedFilter,
     bath: bathFilter,
@@ -97,6 +101,7 @@ export default function useRouterPush(payLoad) {
     newPlans: newPlansFilter,
     radius: searchRadius,
     contingents: contingentsFilter,
+    mediaTable: openMediaTable,
     // lat: latMin,
     // long: longMin,
   }
@@ -158,6 +163,9 @@ export default function useRouterPush(payLoad) {
   }
   if (!queryParams.contingents){
     delete queryParams.contingents;
+  }
+  if (!queryParams.mediaTable){
+    delete queryParams.mediaTable;
   }
 
   router.push({
