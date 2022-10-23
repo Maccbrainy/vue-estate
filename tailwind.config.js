@@ -9,7 +9,7 @@ module.exports = {
         lm: { min: "991px" },
         mf: { max: "990px" },
         sf: { max: "768px" },
-        xs: { max: "638px" },
+        xs: { max: "640px" },
         xxs: { max: "410px" },
       },
       colors: {
