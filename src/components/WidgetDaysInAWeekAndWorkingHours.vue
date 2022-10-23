@@ -21,7 +21,7 @@
       />
     </button>
     <button
-      v-show="isChevronLeftVisibility == 0 || isChevronRightVisibility"
+      v-show="isChevronRightVisibility"
       class="absolute z-10 -right-2 transform translate-y-full"
     >
       <chevron-right
@@ -147,7 +147,7 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { setTheDaysInAWeekRange, setWorkingHoursRangeInADate } from "@/helper";
 import { ChevronRight, ChevronLeft, InformationIcon } from "@/assets/icons";
 export default {
@@ -177,13 +177,13 @@ export default {
 
     const moveSlide = (direction) => {
       let overAllScrollWidthLength = dateContentWidthRef.value.scrollWidth;
-      let contentWidthTheVisibleArea = dateContentWidthRef.value.offsetWidth;
-      // let contentWidthTheVisibleArea = dateContentWidthRef.value.clientWidth;
+      let containerWidthVisibleArea = dateContentWidthRef.value.offsetWidth;
+      // let containerWidthVisibleArea = dateContentWidthRef.value.clientWidth;
       if (direction === 1) {
-        moveSlideDirectionIndex.value -= contentWidthTheVisibleArea;
+        moveSlideDirectionIndex.value -= containerWidthVisibleArea;
       }
       if (direction === -1) {
-        moveSlideDirectionIndex.value += contentWidthTheVisibleArea;
+        moveSlideDirectionIndex.value += containerWidthVisibleArea;
       }
 
       dateItemRefs.value.forEach((data) => {
@@ -201,9 +201,12 @@ export default {
       //Show the chevronRight Icon when the remaining scroll length width is greater
       //than the Visible area of the contentWidth or otherwise hide chevronRight Icon;
       isChevronRightVisibility.value =
-        remainderOfOverAllScrollWidthLength > contentWidthTheVisibleArea
+        remainderOfOverAllScrollWidthLength > containerWidthVisibleArea
           ? true
           : false;
+
+        console.log("scrollWidth:", overAllScrollWidthLength);
+        console.log("offsetWidth:", containerWidthVisibleArea);
     };
 
     const getTheDayInformation = (_, date, index) => {
@@ -212,6 +215,20 @@ export default {
       context.emit('update:modelValue', getDateWorkingHours.value[0].date);
       return;
     };
+
+    onMounted(() => {
+      // let contentScrollWidth = dateContentWidthRef.value.scrollWidth;
+      let containerWidthVisibleAreaDefault = 480;
+      let containerWidthVisibleArea = dateContentWidthRef.value.offsetWidth;
+
+      setTimeout(() => {
+        isChevronRightVisibility.value =
+          containerWidthVisibleArea > containerWidthVisibleAreaDefault 
+            ? false 
+            : true;
+      }, 2000);
+
+    })
 
     return {
       focused,
