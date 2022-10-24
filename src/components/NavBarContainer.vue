@@ -1,7 +1,7 @@
 <template>
   <nav
     v-bind:class="{
-      'border-b': isHomeDetailedPage,
+      'border-b': isPropertyDetailedPage,
     }"
     class="
       fixed
@@ -16,9 +16,27 @@
       z-30
     "
   >
-    <vue-estate-logo class="sm:py-3 sm:pr-5 cursor-pointer"></vue-estate-logo>
+    <div
+      v-if="isPropertyDetailedPage"
+      class="
+        w-1/3
+        h-auto
+        flex flex-nowrap flex-initial
+        -ml-2
+        items-center
+        text-teal
+        font-semibold
+        md:hidden
+      "
+    >
+      <span><chevron-left /></span>
+      <span class="truncate">Back To Search</span>
+    </div>
+    <vue-estate-logo
+      class="sm:py-3 sm:pr-5 cursor-pointer sf:flex sf:justify-start sf:w-1/2"
+    ></vue-estate-logo>
     <slot></slot>
-    <menu-icon v-on:click="toggleMenu = !toggleMenu"></menu-icon>
+    <menu-icon v-on:click="toggleMenu = !toggleMenu" class="w-10"></menu-icon>
     <mobile-menu v-show="toggleMenu"></mobile-menu>
     <close-mobile-menu
       class="absolute right-6 text-white"
@@ -30,10 +48,13 @@
 <script>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import MenuIcon from "@/assets/icons/MenuIcon.vue";
-import CloseMobileMenu from "@/assets/icons/CloseMobileMenu.vue";
+import {
+  VueEstateLogo,
+  MenuIcon,
+  CloseMobileMenu,
+  ChevronLeft,
+} from "@/assets/icons";
 import MobileMenu from "@/components/mobile/MobileMenu.vue";
-import VueEstateLogo from "@/assets/icons/VueEstateLogo.vue";
 export default {
   name: "NavBarContainer",
   components: {
@@ -41,18 +62,19 @@ export default {
     MobileMenu,
     CloseMobileMenu,
     VueEstateLogo,
+    ChevronLeft,
   },
   setup() {
     const route = useRoute();
     const toggleMenu = ref(false);
-    const isHomeDetailedPage = computed(() =>
+    const isPropertyDetailedPage = computed(() =>
       route.name == "RentPageDetail" || route.name == "SalesPageDetail"
         ? true
         : false
     );
     return {
       toggleMenu,
-      isHomeDetailedPage,
+      isPropertyDetailedPage,
     };
   },
 };
