@@ -253,7 +253,7 @@
     <nav-bar-button class="flex justify-end flex-auto pr-2">
       Saved Homes
     </nav-bar-button>
-    <nav-bar-button class="pr-2">Searched Homes</nav-bar-button>
+    <nav-bar-button class="pr-2">Saved Searches</nav-bar-button>
     <nav-bar-button class="border border-gray-300 rounded-md mr-2">
       Sign up or Log in
     </nav-bar-button>
