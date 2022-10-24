@@ -16,7 +16,8 @@
       z-30
     "
   >
-    <div
+    <router-link
+      :to="historyRoutePath"
       v-if="isPropertyDetailedPage"
       class="
         w-1/3
@@ -30,8 +31,10 @@
       "
     >
       <span><chevron-left /></span>
-      <span class="truncate">Back To Search</span>
-    </div>
+      <span class="truncate">{{
+        removeUnderScoresFromAString($route.params.city)
+      }}</span>
+    </router-link>
     <vue-estate-logo
       class="sm:py-3 sm:pr-5 cursor-pointer sf:flex sf:justify-start sf:w-1/2"
     ></vue-estate-logo>
@@ -48,6 +51,8 @@
 <script>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
+import { removeUnderScoresFromAString } from "@/helper";
+
 import {
   VueEstateLogo,
   MenuIcon,
@@ -67,6 +72,9 @@ export default {
   setup() {
     const route = useRoute();
     const toggleMenu = ref(false);
+
+    const historyRoutePath = localStorage.getItem("historyRoute");
+
     const isPropertyDetailedPage = computed(() =>
       route.name == "RentPageDetail" || route.name == "SalesPageDetail"
         ? true
@@ -75,6 +83,8 @@ export default {
     return {
       toggleMenu,
       isPropertyDetailedPage,
+      historyRoutePath,
+      removeUnderScoresFromAString
     };
   },
 };
