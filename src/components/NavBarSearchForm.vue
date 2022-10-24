@@ -1,5 +1,9 @@
 <template>
-  <search-box v-show="!isHomePage" class="w-3/12 mf:w-full my-auto mt-1">
+  <search-box
+    v-show="!isHomePage"
+    class="w-3/12 mf:w-full my-auto mt-1"
+    v-bind:class="{ 'sf:hidden': isPropertyDetailedPage }"
+  >
     <search-input 
       class="h-10 focus:border focus:border-gray-900 bg-gray-100 focus:bg-white">
     </search-input>
@@ -22,7 +26,13 @@ export default {
         (routeName) => routeName == route.name);
       return routeNames.length == 1 ? true : false;
     });
-    return { isHomePage }
+
+    const isPropertyDetailedPage = computed(() =>
+      route.name == "RentPageDetail" || route.name == "SalesPageDetail"
+        ? true
+        : false
+    );
+    return { isHomePage, isPropertyDetailedPage }
   }
 }
 </script>
