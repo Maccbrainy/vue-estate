@@ -29,15 +29,12 @@ export default ({
 </script>
 <style>
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 html,
 body {
   margin: 0px;
   padding: 0px;
-  /* font-size: 16px;
-  line-height: 1.5;
-  letter-spacing: -0.1px; */
-  
-  /* font-family: 'Poppins', sans-serif; */
+  font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(255, 255, 255);
