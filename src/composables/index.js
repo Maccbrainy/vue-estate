@@ -5,6 +5,5 @@ export { default as useListingTitle } from "@/composables/useListingTitle";
 export { default as checkPresenceOfHyphenAndRemove } from "@/composables/checkPresenceOfHyphenAndRemove";
 export { default as checkWhiteSpacesAndReplaceWithHypen } from "@/composables/checkWhiteSpacesAndReplaceWithHypen";
 
-export { default as computedHomeResourcesSearched } from "@/composables/computedHomeResourcesSearched";
 export { default as useSortListingsByAgentAndOthers } from "@/composables/useSortListingsByAgentAndOthers";
 export { default as useAgentAndOtherListsIsEqualToZero } from "@/composables/useAgentAndOtherListsIsEqualToZero";

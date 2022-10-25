@@ -171,13 +171,14 @@ const routes = [
     path: "/C/:slug/:city/:address?/:propertyId/:postalCode?",
     name: "SalesPageDetail",
     // component: SearchResultDetailedContentLayout,
-    
+
     // route level code-splitting
     // this generates a separate chunk (SalesPageDetail.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(
-        /* webpackChunkName: "SalesPageDetail" */ "../layouts/SearchResultDetailedContentLayout.vue"),
+        /* webpackChunkName: "SalesPageDetail" */ "../layouts/SearchResultDetailedContentLayout.vue"
+      ),
     props: (route) => ({
       name: route.name,
       slug: route.params.slug,
@@ -185,6 +186,7 @@ const routes = [
       address: route.params.address,
       propertyId: route.params.propertyId,
       postalCode: route.params.postalCode,
+      mediaTable: route.query.mediaTable,
     }),
     meta: {
       title: "Vue-estate",
@@ -200,7 +202,8 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(
-        /* webpackChunkName: "RentPageDetail" */ "../layouts/SearchResultDetailedContentLayout.vue"),
+        /* webpackChunkName: "RentPageDetail" */ "../layouts/SearchResultDetailedContentLayout.vue"
+      ),
     props: (route) => ({
       name: route.name,
       slug: route.params.slug,
@@ -208,6 +211,7 @@ const routes = [
       address: route.params.address,
       propertyId: route.params.propertyId,
       postalCode: route.params.postalCode,
+      mediaTable: route.query.mediaTable,
     }),
     meta: {
       title: "Vue-estate",
@@ -286,7 +290,6 @@ router.afterEach((to) => {
     store.commit("setActiveListBranch", agentType[0].id);
   }
   store.commit("setActiveRoutePath", makeActiveRouteToBe);
-  console.log("AFTER ROUTE TO:", to);
 });
 
 export default router;
