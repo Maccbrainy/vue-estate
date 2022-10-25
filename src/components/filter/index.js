@@ -1,5 +1,4 @@
 export { default as FilterButtonPets } from "@/components/filter/FilterButtonPets.vue";
-export { default as FilterCoreYearBuilt } from "@/components/filter/FilterCoreYearBuilt.vue";
 export { default as FilterCoreBathrooms } from "@/components/filter/FilterCoreBathrooms.vue";
 export { default as FilterCoreFeatures } from "@/components/filter/FilterCoreFeatures.vue";
 export { default as FilterCorePriceRange } from "@/components/filter/FilterCorePriceRange.vue";

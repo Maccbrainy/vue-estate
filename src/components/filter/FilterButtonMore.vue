@@ -1,5 +1,8 @@
 <template>
-  <div class="h-2/3 px-2 pb-8 overflow-y-auto overflow-x-hidden sm:pt-6" tabindex="-1">
+  <div
+    class="h-2/3 px-2 pb-8 overflow-y-auto overflow-x-hidden sm:pt-6"
+    tabindex="-1"
+  >
     <filter-route-tab></filter-route-tab>
     <dropdown-button-fieldset class="hidden mf:block" fieldsetTitle="Price">
       <filter-core-price-range></filter-core-price-range>
@@ -95,7 +98,6 @@
       </dropdown-button-select-box>
     </dropdown-button-fieldset>
     <dropdown-button-fieldset fieldsetTitle="Year Built">
-      <!-- <filter-core-year-built></filter-core-year-built> -->
       <div class="flex">
         <button-input
           v-model:search-text="ageMin"
@@ -149,7 +151,6 @@ import {
   FilterCoreHomeTypes,
   FilterCoreFeatures,
   FilterCoreBathrooms,
-  // FilterCoreYearBuilt
 } from "@/components/filter";
 import {
   ButtonSeparator,
@@ -169,7 +170,6 @@ export default {
     DropdownButtonSelectBox,
     DropdownButtonSelect,
     DropdownButtonSelectOption,
-    // FilterCoreYearBuilt,
     FilterCoreBathrooms,
     FilterCoreFeatures,
     FilterCoreHomeTypes,
@@ -356,7 +356,7 @@ export default {
     );
 
     watchEffect(() => {
-      let isHasOpenHouses = route.query.hasOpenHouses || ""
+      let isHasOpenHouses = route.query.hasOpenHouses || "";
       store.commit("setIsHasOpenHousesOnly", isHasOpenHouses);
       let isNewConstruction = route.query.newConstruction || "";
       store.commit("setIsNewConstructions", isNewConstruction);
