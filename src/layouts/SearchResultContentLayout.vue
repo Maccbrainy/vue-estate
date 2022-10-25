@@ -12,7 +12,7 @@
           class="flex justify-between flex-col flex-auto flex-start pl-2 pb-2"
         >
           <h2
-            v-if="storeData.activeListBranch == agentType[1].id"
+            v-if="storeData.activeListBranch == agentType[1].id && isSalePage"
             class="
               bg-gray-100
               text-base
@@ -106,7 +106,7 @@
 <script>
 import { ref, computed, watchEffect, onMounted, onBeforeUnmount } from "vue";
 import { useStore } from "vuex";
-import { onBeforeRouteLeave } from "vue-router";
+import { onBeforeRouteLeave, useRoute } from "vue-router";
 import { useFetch } from "@/api/useFetch.js";
 import {
   FilterButtonContainer,
@@ -124,7 +124,6 @@ import {
   useListingTitle,
   useSortListingsByAgentAndOthers,
 } from "@/composables";
-// import { useRouter } from "vue-router";
 export default {
   name: "SearchResultContentLayout",
   // async beforeRouteEnter(to, from, next) {
@@ -214,7 +213,8 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    // const router = useRouter();
+    const route = useRoute();
+    const isSalePage = ref(false);
     const error = ref("");
     const isLoading = ref(false);
     const defaultCity = ref("San Francisco");
@@ -293,7 +293,6 @@ export default {
     //   console.log("ERROR DATA FETCH:", error.value);
     //   store.commit("setAllPropertyListings", propertyData.value);
     // };
-
 
     watchEffect(() => {
       let filterMoreIsActive = false;
@@ -458,36 +457,72 @@ export default {
     const activeFilterDescriptionEnteries = computed(() => {
       let activeFilterEntries = [];
       let filterEntries = {
-        bed: storeData.value.propertyFilters.numberOfBed 
+        bed: storeData.value.propertyFilters.numberOfBed
           ? `${storeData.value.propertyFilters.numberOfBed}+ Bedrooms`
           : "",
         bath: storeData.value.propertyFilters.numberOfBath
           ? `${storeData.value.propertyFilters.numberOfBath}+ Bathrooms`
-            : "",
+          : "",
         priceRange:
-          !storeData.value.propertyFilters.priceMinRange && !storeData.value.propertyFilters.priceMaxRange
+          !storeData.value.propertyFilters.priceMinRange &&
+          !storeData.value.propertyFilters.priceMaxRange
             ? ""
             : storeData.value.filterDescriptionInfo.priceRange,
-        homeType1st: removeUnderScoresFromAString(storeData.value.propertyFilters.homeType[0]),
-        homeType2nd: removeUnderScoresFromAString(storeData.value.propertyFilters.homeType[1]), 
-        homeType3rd: removeUnderScoresFromAString(storeData.value.propertyFilters.homeType[2]), 
-        homeType4th: removeUnderScoresFromAString(storeData.value.propertyFilters.homeType[3]), 
-        petFriendly: storeData.value.propertyFilters.allowsCats && storeData.value.propertyFilters.allowsDogs ? "Cats and Dogs friendly" : storeData.value.propertyFilters.allowsDogs ? "Dogs allowed" : storeData.value.propertyFilters.allowsCats ? "Cats allowed" : "",
-        homeFeaturesIst: removeUnderScoresFromAString(storeData.value.propertyFilters.features[0]),
-        homeFeatures2nd: removeUnderScoresFromAString(storeData.value.propertyFilters.features[1]),
-        homeFeatures3rd: removeUnderScoresFromAString(storeData.value.propertyFilters.features[2]),
-        homeFeatures4th: removeUnderScoresFromAString(storeData.value.propertyFilters.features[3]),
+        homeType1st: removeUnderScoresFromAString(
+          storeData.value.propertyFilters.homeType[0]
+        ),
+        homeType2nd: removeUnderScoresFromAString(
+          storeData.value.propertyFilters.homeType[1]
+        ),
+        homeType3rd: removeUnderScoresFromAString(
+          storeData.value.propertyFilters.homeType[2]
+        ),
+        homeType4th: removeUnderScoresFromAString(
+          storeData.value.propertyFilters.homeType[3]
+        ),
+        petFriendly:
+          storeData.value.propertyFilters.allowsCats &&
+          storeData.value.propertyFilters.allowsDogs
+            ? "Cats and Dogs friendly"
+            : storeData.value.propertyFilters.allowsDogs
+            ? "Dogs allowed"
+            : storeData.value.propertyFilters.allowsCats
+            ? "Cats allowed"
+            : "",
+        homeFeaturesIst: removeUnderScoresFromAString(
+          storeData.value.propertyFilters.features[0]
+        ),
+        homeFeatures2nd: removeUnderScoresFromAString(
+          storeData.value.propertyFilters.features[1]
+        ),
+        homeFeatures3rd: removeUnderScoresFromAString(
+          storeData.value.propertyFilters.features[2]
+        ),
+        homeFeatures4th: removeUnderScoresFromAString(
+          storeData.value.propertyFilters.features[3]
+        ),
         // yearBuiltMin: storeData.value.filterDescriptionInfo.yearBuiltMin,
         // yearBuiltMax: storeData.value.filterDescriptionInfo.yearBuiltMax,
-        hasOpenHouses: storeData.value.propertyFilters.hasOpenHouses ? "Open Houses" : "",
+        hasOpenHouses: storeData.value.propertyFilters.hasOpenHouses
+          ? "Open Houses"
+          : "",
         has3DTours: storeData.value.propertyFilters.has3DTours ? "3DTours" : "",
-        foreClosure: storeData.value.propertyFilters.isForeclosures ? "Foreclosures" : "",
-        newConstruction: storeData.value.propertyFilters.isNewConstructions ? "New Constructions" : "",
+        foreClosure: storeData.value.propertyFilters.isForeclosures
+          ? "Foreclosures"
+          : "",
+        newConstruction: storeData.value.propertyFilters.isNewConstructions
+          ? "New Constructions"
+          : "",
         newPlans: storeData.value.propertyFilters.isNewPlans ? "New Plans" : "",
-        searchRadius: storeData.value.propertyFilters.searchRadius ? `${storeData.value.propertyFilters.searchRadius} Mile(s)` : "",
-        contingents: storeData.value.propertyFilters.isContingents ? "Contingents" : "",
-        lotSize: storeData.value.propertyFilters.lotSize ? `${storeData.value.propertyFilters.lotSize}+ acre LotSize` : "",
-
+        searchRadius: storeData.value.propertyFilters.searchRadius
+          ? `${storeData.value.propertyFilters.searchRadius} Mile(s)`
+          : "",
+        contingents: storeData.value.propertyFilters.isContingents
+          ? "Contingents"
+          : "",
+        lotSize: storeData.value.propertyFilters.lotSize
+          ? `${storeData.value.propertyFilters.lotSize}+ acre Lot Size`
+          : "",
       };
       if (filterIsActive.value) {
         let entriesArray = Object.values(filterEntries);
@@ -518,7 +553,7 @@ export default {
     const isPostalCodeUsedByUser = computed(() => {
       //Test if search is Postal/zip is used by user
       let regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
-      return regExpNumbersOnly.test(props.slug)
+      return regExpNumbersOnly.test(props.slug);
     });
 
     watchEffect(async () => {
@@ -544,11 +579,13 @@ export default {
 
       let propertySlug = isRentsNearMeOrSalesNearMe.value
         ? isRoutesDefaultStateCode
-        : !isPostalCodeUsedByUser.value ? props.slug : "";
+        : !isPostalCodeUsedByUser.value
+        ? props.slug
+        : "";
       let propertyCity = isRentsNearMeOrSalesNearMe.value
         ? isRoutesDefaultCity
         : props.city;
-      
+
       let postalCode = isPostalCodeUsedByUser.value ? props.slug : "";
 
       const { propertyDetail, err } = await useFetch(
@@ -601,12 +638,16 @@ export default {
       listingTitle.value = listTitle.value;
       propertyListingByAgent.value = listingsByAgent.value;
       propertyListingByOthers.value = listingsByOthers.value;
+
+      //Store Route full path to local storage to be consumed in searchresultdetailed component
+      localStorage.setItem("historyRoute", route.fullPath);
     });
     watchEffect(() => {
       let isBuyPage =
         storeData.value.activeRoutePath == routeNames.value[0].id
           ? true
           : false;
+      isSalePage.value = isBuyPage;
       let isRentPage =
         storeData.value.activeRoutePath == routeNames.value[1].id
           ? true
@@ -624,7 +665,6 @@ export default {
           ? propertyListingByAgent.value
           : propertyListingByOthers.value;
       store.commit("setActiveListing", activePropertyListings.value);
-      console.log("WATCH FUNCTION FOR ACTIVE LISTING")
     });
 
     const filterIsNotActiveAndAllPropertiesIsZero = computed(() => {
@@ -667,10 +707,6 @@ export default {
           activeRouteTab: activeRoutePath,
         };
         store.commit("setSearchedData", searchPayload);
-
-        console.log(
-          "<><><><><><>SRCL IS MOUNTED when searchData is empty!!!<><><><><><><>"
-        );
       }
       console.log("<><><><><><>SRCL IS MOUNTED!!!<><><><><><><>");
       store.commit("setIsLoading", false);
@@ -683,11 +719,8 @@ export default {
           isRouteFromRentsNearOrSalesNearMe.value
         );
       }
-      console.log(">>> onBeforeRouteLeave PRICECORE");
     });
     onBeforeUnmount(() => {
-      // store.commit("setIsLoading", true);
-
       if (!isRouteFromRentsNearOrSalesNearMe.value) {
         store.dispatch("resetPropertyFilterState");
         console.log(
@@ -695,7 +728,6 @@ export default {
           isRouteFromRentsNearOrSalesNearMe.value
         );
       }
-      console.log("UNBEFOREUNMOUNT REACTED");
     });
     return {
       // setData,
@@ -703,6 +735,7 @@ export default {
       defaultStateCode,
       agentType,
       isLoading,
+      isSalePage,
       mapViewChanges,
       error,
       listingTitle,
