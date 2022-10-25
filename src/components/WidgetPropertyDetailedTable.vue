@@ -8,7 +8,7 @@
       :key="feature"
       class="
         table-fixed
-        bg-teal-lighter
+        bg-gray-100
         w-full
         h-auto
         overflow-hidden
@@ -52,12 +52,13 @@
         w-28
         px-4
         py-2
-        text-gray-600
-        font-bold
+        text-gray-500
+        font-semibold
         text-base
-        border border-gray-400
+        border
         rounded-lg
         bg-white
+        hover:border-gray-700
         active:border-gray-800
       "
     >
@@ -103,7 +104,7 @@ export default {
       return features;
     });
 
-    return { toggleTable, propertyFeatures }
+    return { toggleTable, propertyFeatures };
   },
 };
 </script>
