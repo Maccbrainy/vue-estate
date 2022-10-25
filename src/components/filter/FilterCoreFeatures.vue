@@ -88,7 +88,6 @@ export default {
           route.query.homeFeatures.split(regExStringToArray);
         store.commit("setHomeFeatures", checkedFeatures.value);
       }
-      console.log(">>>>CORE FEATURES ONBEFOREMOUNT");
     });
     return {
       checkedSignal,

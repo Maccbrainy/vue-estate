@@ -77,7 +77,6 @@ export default {
         checkedHomeType.value = route.query.homeType.split(regExStringToArray);
         store.commit("setHomeType", checkedHomeType.value);
       }
-      console.log(">>>>HOMETYPE ONBEFOREMOUNT:");
     });
     return {
       checkedSignal,
