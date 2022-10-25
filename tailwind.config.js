@@ -20,7 +20,7 @@ module.exports = {
         },
       },
       boxShadow: {
-        DEFAULT: '0 0 7px #3cb3bd',
+        DEFAULT: "0 0 7px #3cb3bd",
       },
     },
   },
@@ -33,4 +33,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};

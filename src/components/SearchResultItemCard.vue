@@ -27,11 +27,12 @@
               postalCode: home.address.postal_code,
             },
           }"
-          target="_blank" 
+          target="_blank"
           rel="noopener referrer"
         >
           <widget-client-flags
-            v-show="!storeData.isLoading && !storeData.fetchingIsBusy">
+            v-show="!storeData.isLoading && !storeData.fetchingIsBusy"
+          >
             <template v-slot:iconSlot>
               <save-search />
             </template>
@@ -135,7 +136,6 @@ export default {
   setup(props) {
     const store = useStore();
     const storeData = computed(() => store.getters.getStore);
-
 
     provide("displayClientFlags", {
       lastUpdates: props.home.last_update,

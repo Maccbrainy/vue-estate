@@ -12,17 +12,17 @@
   </dropdown-button>
 </template>
 <script>
-import { 
-  DropdownButton, 
-  DropdownButtonOptions, 
-  DropdownButtonOption 
+import {
+  DropdownButton,
+  DropdownButtonOptions,
+  DropdownButtonOption,
 } from "@/components/buttonui/index";
-export default ({
+export default {
   name: "FilterButtonLists",
   components: {
     DropdownButton,
     DropdownButtonOptions,
     DropdownButtonOption,
-  }
-})
+  },
+};
 </script>

@@ -7,9 +7,10 @@
           :checked="checked"
           :id="fieldId"
           @input="$emit('update:checked', $event.target.checked)"
-          class="hidden">
+          class="hidden"
+        />
         <div class="flex items-center">
-          <checked-box-icon v-if="checked"/>
+          <checked-box-icon v-if="checked" />
           <check-box-icon v-else />
           <div class="ml-2 pr-1"><slot></slot></div>
         </div>
@@ -24,18 +25,18 @@ export default {
   // props: ['modelValue'],
   props: {
     checked: {
-      type: Boolean
+      type: Boolean,
     },
     fieldId: {
       type: String,
-      required: true
+      required: true,
     },
     label: String,
   },
-  emits: ['update:checked'],
+  emits: ["update:checked"],
   components: {
     CheckBoxIcon,
-    CheckedBoxIcon
-  }
-}
+    CheckedBoxIcon,
+  },
+};
 </script>

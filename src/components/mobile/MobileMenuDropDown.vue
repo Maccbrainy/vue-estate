@@ -20,9 +20,9 @@ export default {
   },
   setup() {
     const openMenu = ref(false);
-    return{
+    return {
       openMenu,
-    }
-  }
-}
+    };
+  },
+};
 </script>

@@ -1,0 +1,76 @@
+<template>
+  <nav
+    v-bind:class="{
+      'border-b': isHomeDetailedPage,
+    }"
+    class="
+      fixed
+      flex
+      justify-between
+      bg-white
+      h-16
+      items-center
+      px-4
+      w-full
+      py-2
+      z-30
+    "
+  >
+    <vue-estate-logo class="sm:py-3 sm:pr-5 cursor-pointer"></vue-estate-logo>
+    <slot></slot>
+    <menu-icon v-on:click="toggleMenu = !toggleMenu"></menu-icon>
+    <mobile-menu ref="isMenuRef" v-show="toggleMenu"></mobile-menu>
+    <close-mobile-menu
+      class="absolute right-6 text-white"
+      v-show="toggleMenu"
+      v-on:click="toggleMenu = !toggleMenu"
+    ></close-mobile-menu>
+  </nav>
+</template>
+<script>
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useRoute } from "vue-router";
+import MenuIcon from "@/assets/icons/MenuIcon.vue";
+import CloseMobileMenu from "@/assets/icons/CloseMobileMenu.vue";
+import MobileMenu from "@/components/mobile/MobileMenu.vue";
+import VueEstateLogo from "@/assets/icons/VueEstateLogo.vue";
+export default {
+  name: "NavBarContainer",
+  components: {
+    MenuIcon,
+    MobileMenu,
+    CloseMobileMenu,
+    VueEstateLogo,
+  },
+  setup() {
+    const route = useRoute();
+    const toggleMenu = ref(false);
+    const isMenuRef = ref(null);
+    const isHomeDetailedPage = computed(() =>
+      route.name == "RentPageDetail" || route.name == "SalesPageDetail"
+        ? true
+        : false
+    );
+    function closeOnOutsideClick(event){
+      if (!isMenuRef.value || isMenuRef.value.contains(event.target)){
+        return;
+      }
+      toggleMenu.value = false;
+    }
+    onMounted(() => {
+      document.addEventListener("mousedown", closeOnOutsideClick);
+      document.addEventListener("touchstart", closeOnOutsideClick);
+    });
+
+    onUnmounted(() => {
+      document.removeEventListener("mousedown", closeOnOutsideClick);
+      document.removeEventListener("touchstart", closeOnOutsideClick);
+    });
+    return {
+      toggleMenu,
+      isMenuRef,
+      isHomeDetailedPage,
+    };
+  },
+};
+</script>

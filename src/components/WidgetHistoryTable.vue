@@ -3,7 +3,8 @@
     <div class="text-gray-700 font-bold text-xl my-4 capitalize">
       {{ propertyTitle }} for {{ propertyAddressName }}
     </div>
-    <table v-if="propertyHistories"
+    <table
+      v-if="propertyHistories"
       class="
         table-fixed
         bg-gray-100
@@ -41,7 +42,8 @@
           :key="propertyHistory.date || propertyHistory.assessment"
           class="border w-full"
         >
-          <td v-if="propertyTableHeaderTitle.length > 3"
+          <td
+            v-if="propertyTableHeaderTitle.length > 3"
             class="w-auto py-2 px-3 md:hidden"
             colspan="1"
           >
@@ -51,7 +53,7 @@
                   v-if="propertyHistory.date"
                   class="w-auto font-semibold text-gray-700"
                 >
-                  {{ format(new Date(propertyHistory.date), " d/M/yyy")}}
+                  {{ format(new Date(propertyHistory.date), " d/M/yyy") }}
                 </span>
                 <span
                   v-if="propertyHistory.event_name"
@@ -66,17 +68,23 @@
                   v-if="propertyHistory.price"
                   class="w-auto font-semibold text-gray-700"
                 >
-                  {{ `Price: $${addCommaToNumberFormat(propertyHistory.price)}` }}
+                  {{
+                    `Price: $${addCommaToNumberFormat(propertyHistory.price)}`
+                  }}
                 </span>
                 <span class="w-auto xs:hidden">
-                  {{ `Price/Sqft: $${addCommaToNumberFormat(propertyHistory.sqft)}` }}
+                  {{
+                    `Price/Sqft: $${addCommaToNumberFormat(
+                      propertyHistory.sqft
+                    )}`
+                  }}
                 </span>
               </div>
             </div>
           </td>
 
           <td v-if="propertyHistory.date" class="w-auto py-2 px-4 sf:hidden">
-            {{ format(new Date(propertyHistory.date), " d/M/yyy")}}
+            {{ format(new Date(propertyHistory.date), " d/M/yyy") }}
           </td>
           <td v-else class="w-auto py-2 px-4">
             {{ propertyHistory.year }}
@@ -92,19 +100,19 @@
             {{ `N/A` }}
           </td>
 
-
-          <td v-if="propertyHistory.event_name" class="w-auto py-2 px-4 sf:hidden">
+          <td
+            v-if="propertyHistory.event_name"
+            class="w-auto py-2 px-4 sf:hidden"
+          >
             {{ propertyHistory.event_name }}
           </td>
           <td v-if="propertyHistory.tax" class="w-auto py-2 px-4">
             ${{ addCommaToNumberFormat(propertyHistory.tax) }}
           </td>
 
-
           <td class="w-auto py-2 px-4 sf:hidden">
             ${{ addCommaToNumberFormat(propertyHistory.sqft) }}
           </td>
-
 
           <td class="w-auto py-2 px-4 flex justify-between sf:hidden">
             <span>{{
@@ -112,7 +120,8 @@
                 ? `${propertyHistory.source} | ${propertyHistory.datasource_name}`
                 : propertyHistory.source
             }}</span>
-            <button class="sf:hidden"
+            <button
+              class="sf:hidden"
               v-show="propertyHistory.event_name == `Sold`"
               v-on:click="openRecord = !openRecord"
             >
@@ -193,7 +202,9 @@
         </tr>
       </tbody>
     </table>
-    <div v-else class="text-gray-400 text-lg -mt-3">No {{ propertyTitle }} for this property</div>
+    <div v-else class="text-gray-400 text-lg -mt-3">
+      No {{ propertyTitle }} for this property
+    </div>
     <span
       v-show="propertyContentData.length > 2 && !toggleTable"
       class="bg-gradient-to-t from-white h-10 w-full -mt-12"
@@ -274,7 +285,7 @@ export default {
       toggleTable,
       openRecord,
       propertyHistories,
-      addCommaToNumberFormat
+      addCommaToNumberFormat,
     };
   },
 };

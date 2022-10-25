@@ -30,7 +30,7 @@ export const setWorkingHoursRangeInADate = (date) => {
 
   while (time <= endDayTime) {
     let thisTime = new Date(time);
-    if (isFuture(thisTime)){
+    if (isFuture(thisTime)) {
       timesOfTheDayArray.push({
         time: format(thisTime, "hh:mm a"),
         date: thisTime,
@@ -40,14 +40,15 @@ export const setWorkingHoursRangeInADate = (date) => {
     time.setTime(time.getTime() + thirtyMinutesInMilliSecond);
   }
   //Check for undefined/elapsed time and use endtime
-  if (timesOfTheDayArray.length == 0){
-    let timesOfTheDay = [{
+  if (timesOfTheDayArray.length == 0) {
+    let timesOfTheDay = [
+      {
         time: format(new Date(endDayTime.getTime()), "hh:mm a"),
         date: new Date(endDayTime.getTime()),
       },
     ];
     timesOfTheDayArray = timesOfTheDay;
-  } 
+  }
   return timesOfTheDayArray;
 };
 

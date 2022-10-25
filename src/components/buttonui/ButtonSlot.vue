@@ -6,17 +6,19 @@
       justify-center
       items-center
       z-30
-      justify-center 
-      rounded-lg 
-      border border-gray-300 
-      shadow-sm 
-      px-4 
-      py-2 
-      text-base  
+      justify-center
+      rounded-lg
+      border border-gray-300
+      shadow-sm
+      px-4
+      py-2
+      text-base
       font-medium
-      bg-white 
-      hover:bg-gray-200 
-      active:bg-gray-400">
+      bg-white
+      hover:bg-gray-200
+      active:bg-gray-400
+    "
+  >
     <slot></slot>
   </button>
 </template>

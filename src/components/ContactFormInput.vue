@@ -7,7 +7,7 @@
       }"
       class="relative border border-gray-500 rounded-lg h-auto overflow-hidden"
     >
-      <label 
+      <label
         v-bind:for="labelName"
         v-show="focused || dataValue"
         v-bind:class="{ 'bg-white w-full': isTextAreaType }"
@@ -21,7 +21,8 @@
           pt-px
           bg-transparent
         "
-        >{{ labelName }}</label>
+        >{{ labelName }}</label
+      >
       <input
         v-if="isInputType"
         v-on:focus="focused = true"
@@ -34,7 +35,7 @@
         class="outline-none w-full h-full bg-transparent py-5 px-4"
         required
       />
-      <textarea 
+      <textarea
         v-if="isTextAreaType"
         v-on:focus="focused = true"
         v-on:blur="focused = false"
@@ -43,7 +44,15 @@
         @input="$emit('update:dataValue', $event.target.value)"
         v-bind:type="typeName"
         v-bind:name="inputName"
-        class="w-full h-20 outline-none bg-transparent py-5 px-4 overflow-y-auto"
+        class="
+          w-full
+          h-20
+          outline-none
+          bg-transparent
+          py-5
+          px-4
+          overflow-y-auto
+        "
       ></textarea>
     </div>
     <div
@@ -86,19 +95,19 @@ export default {
     isInputType: {
       type: Boolean,
       required: true,
-    }
+    },
   },
   components: {
     InformationIcon,
   },
-  emits: ['update:dataValue', 'update:focused'],
+  emits: ["update:dataValue", "update:focused"],
   setup(props, context) {
     const focused = ref(null);
     const focusedCount = ref(0);
 
     watchEffect(() => {
-      context.emit('update:dataValue', props.dataValue);
-      if (focused.value){
+      context.emit("update:dataValue", props.dataValue);
+      if (focused.value) {
         focusedCount.value++;
       }
     });

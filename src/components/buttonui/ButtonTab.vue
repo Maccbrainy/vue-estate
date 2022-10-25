@@ -6,11 +6,13 @@
       inline-flex
       cursor-pointer
       rounded-lg
-      px-7 
-      py-2 
+      px-7
+      py-2
       text-xl
-      font-normal 
-      text-white">
-    <slot></slot> 
+      font-normal
+      text-white
+    "
+  >
+    <slot></slot>
   </button>
 </template>

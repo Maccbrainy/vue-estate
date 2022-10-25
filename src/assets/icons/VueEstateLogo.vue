@@ -5,7 +5,7 @@
 </template>
 <script>
 import { ref, computed, watchEffect } from "vue";
-import { useRouter } from "vue-router"
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 export default {
@@ -21,25 +21,25 @@ export default {
       switch (getIsActiveRouteTab.value) {
         case "RentPage":
         case "list-for-rent":
-          activeRouteTab.value = "list-for-rent"
+          activeRouteTab.value = "list-for-rent";
           break;
         case "SoldPage":
         case "list-sold":
-          activeRouteTab.value = "list-sold"
+          activeRouteTab.value = "list-sold";
           break;
         default:
-          activeRouteTab.value = "HomePage"
+          activeRouteTab.value = "HomePage";
           break;
       }
     });
-    function returnHomeAndKeepRouteState(){
+    function returnHomeAndKeepRouteState() {
       router.push({
-        name: activeRouteTab.value
+        name: activeRouteTab.value,
       });
     }
     return {
-      returnHomeAndKeepRouteState
-    }
-  }
-}
+      returnHomeAndKeepRouteState,
+    };
+  },
+};
 </script>

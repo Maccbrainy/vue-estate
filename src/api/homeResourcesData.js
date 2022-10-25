@@ -8,5 +8,5 @@ export default function homeResourcesData() {
   const homeResources = homeResourceReactivity.allHomes;
   return {
     homeResources,
-  }
+  };
 }

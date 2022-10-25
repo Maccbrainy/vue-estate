@@ -1,0 +1,2686 @@
+{
+    "routeNames": [
+      {
+        "id": "BuyPage",
+        "name": "Buy",
+        "queryFormat": "list-for-sale"
+      },
+      {
+        "id": "RentPage",
+        "name": "Rent",
+        "queryFormat": "list-for-rent"
+      },
+      {
+        "id": "SoldPage",
+        "name": "Sold",
+        "queryFormat": "list-sold"
+      }
+    ],
+    "agentType": [
+      {
+        "id": "Agent Listings",
+        "title": "Agent Listings"
+      },
+      {
+        "id": "Other Listings",
+        "title": "Other"
+      }
+    ],
+    "priceRangesForSale": [
+      {
+        "id":"0",
+        "title":"0"
+      },
+      {
+        "id":"10000",
+        "title":"10k"
+      },
+      {
+        "id":"20000",
+        "title":"20k"
+      },
+      {
+        "id":"30000",
+        "title":"30K"
+      },
+      {
+        "id":"50000",
+        "title":"50K"
+      },
+      {
+        "id":"100000",
+        "title":"100K"
+      },
+      {
+        "id":"200000",
+        "title":"200K"
+      },
+      {
+        "id":"300000",
+        "title":"300K"
+      },
+      {
+        "id":"400000",
+        "title":"400k"
+      },
+      {
+        "id":"500000",
+        "title":"500k"
+      },
+      {
+        "id":"600000",
+        "title":"600k"
+      },
+      {
+        "id":"700000",
+        "title":"700k"
+      },
+      {
+        "id":"800000",
+        "title":"800k"
+      },
+      {
+        "id":"900000",
+        "title":"900k"
+      },
+      {
+        "id":"1000000",
+        "title":"1m"
+      },
+      {
+        "id":"1500000",
+        "title":"1.5m"
+      },
+      {
+        "id":"2000000",
+        "title":"2m"
+      },
+      {
+        "id":"2250000",
+        "title":"2.25m"
+      },
+      {
+        "id":"2500000",
+        "title":"2.5m"
+      },
+      {
+        "id":"3000000",
+        "title":"3m"
+      },
+      {
+        "id":"3500000",
+        "title":"3.5m"
+      },
+      {
+        "id":"4000000",
+        "title":"4m"
+      },
+      {
+        "id":"4500000",
+        "title":"4.5m"
+      },
+      {
+        "id":"5000000",
+        "title":"5m"
+      },
+      {
+        "id":"8000000",
+        "title":"8m"
+      },
+      {
+        "id":"10000000",
+        "title":"10m"
+      },
+      {
+        "id":"20000000",
+        "title":"20m"
+      }
+    ],
+    "priceRangeForRent": [
+      {
+        "id":"0",
+        "title":"0"
+      },
+      {
+        "id":"400",
+        "title":"400"
+      },
+      {
+        "id":"500",
+        "title":"500"
+      },
+      {
+        "id":"600",
+        "title":"600"
+      },
+      {
+        "id":"700",
+        "title":"700"
+      },
+      {
+        "id":"800",
+        "title":"800"
+      },
+      {
+        "id":"900",
+        "title":"900"
+      },
+      {
+        "id":"1000",
+        "title":"1,000"
+      },
+      {
+        "id":"1100",
+        "title":"1,100"
+      },
+      {
+        "id":"1200",
+        "title":"1,200"
+      },
+      {
+        "id":"1300",
+        "title":"1,300"
+      },
+      {
+        "id":"1400",
+        "title":"1,400"
+      },
+      {
+        "id":"1500",
+        "title":"1,500"
+      },
+      {
+        "id":"1600",
+        "title":"1,600"
+      },
+      {
+        "id":"1700",
+        "title":"1,700"
+      },
+      {
+        "id":"1800",
+        "title":"1,800"
+      },
+      {
+        "id":"1900",
+        "title":"1,900"
+      },
+      {
+        "id":"2000",
+        "title":"2,000"
+      },
+      {
+        "id":"2200",
+        "title":"2,200"
+      },
+      {
+        "id":"2400",
+        "title":"2,400"
+      },
+      {
+        "id":"2600",
+        "title":"2,600"
+      },
+      {
+        "id":"2800",
+        "title":"2,800"
+      },
+      {
+        "id":"3000",
+        "title":"3,000"
+      },
+      {
+        "id":"3200",
+        "title":"3,200"
+      },
+      {
+        "id":"4000",
+        "title":"4,000"
+      }
+    ],
+    "homeTypes": [
+        {
+            "id": "single_family",
+            "title": "House"
+        },
+        {
+            "id": "condo",
+            "title": "Condo"
+        },
+        {
+            "id": "land",
+            "title": "Land"
+        },
+        {
+            "id": "multi_family",
+            "title": "Multi-Family"
+        },
+        {
+            "id": "mobile",
+            "title": "Mobile"
+        },
+        {
+            "id": "farm",
+            "title": "Farm"
+        },
+        {
+            "id": "other",
+            "title": "Other"
+        }
+    ],
+    "typeFeatures": [
+
+        {
+            "id": "waterfront",
+            "title": "Waterfront"
+        },
+        {
+            "id": "swimming_pool",
+            "title": "Swimming pool"
+         },
+        {
+            "id": "basement",
+            "title": "Basement"
+        },
+        {
+            "id": "hill_or_mountain_view",
+            "title": "Hill/Mountain view"
+        },
+        {
+          "id": "recreation_facilities",
+          "title": "Recreation Facilities"
+      },
+      {
+          "id": "garage_1_or_more",
+          "title": "Garage"
+       },
+      {
+          "id": "fireplace",
+          "title": "Fireplace"
+      },
+      {
+          "id": "hardwood_floors",
+          "title": "Hardwood floors"
+      },
+      {
+        "id": "golf_course_view",
+        "title": "Golf view"
+      }
+    ],
+    "typeAmenities": [
+      {
+        "id": "furnished",
+        "title": "Furnished"
+      },
+      {
+        "id": "dishwasher",
+        "title": "Dishwasher"
+      },
+      {
+          "id": "swimming_pool",
+          "title": "Swimming pool"
+       },
+      {
+          "id": "washer_dryer",
+          "title": "Washer/Dryer"
+      },
+      {
+        "id": "recreation_facilities",
+        "title": "Recreation Facilities"
+    },
+    {
+        "id": "garage_1_or_more",
+        "title": "Garage"
+     },
+    {
+        "id": "fireplace",
+        "title": "Fireplace"
+    },
+    {
+      "id": "community_elevator",
+      "title": "Elevator"
+    }
+  ],
+     "bedOptions": [
+        {
+          "id": "All Beds",
+          "name": "Studio+"
+        },
+        {
+          "id": "1",
+          "name": "1+"
+        },
+        {
+          "id": "2",
+          "name": "2+"
+        },
+        {
+          "id": "3",
+          "name": "3+"
+        },
+        {
+          "id": "4",
+          "name": "4+"
+        }
+      ],
+    "bathroomOptions": [
+        {
+            "id": "Any",
+            "name": "Any"
+          },
+          {
+            "id": "1",
+            "name": "1+"
+          },
+          {
+            "id": "2",
+            "name": "2+"
+          },
+          {
+            "id": "3",
+            "name": "3+"
+          },
+          {
+            "id": "4",
+            "name": "4+"
+          },
+          {
+            "id": "5",
+            "name": "5+"
+          }
+    ],
+    "sortOptions": [
+      {
+        "id": "relevance",
+        "title": "Relevance"
+      },
+      {
+        "id": "newest",
+        "title": "Newest"
+      },
+      {
+        "id": "price_high",
+        "title": "Price High"
+      },
+      {
+        "id": "price_low",
+        "title": "Price Low"
+      },
+      {
+        "id": "photos",
+        "title": "Most Photos"
+      },
+      {
+        "id": "sqft_high",
+        "title": "Sqft High"
+      },
+      {
+        "id": "open_house_date",
+        "title": "Open (Date)"
+      },
+      {
+        "id": "price_reduced_date",
+        "title": "Price Reduced"
+      }
+    ],
+    "searchRadiusInMiles": [
+      {
+        "id":"0",
+        "title": "No Miles"
+      },
+      {
+        "id":"1",
+        "title": "1 Mile"
+      },
+      {
+        "id":"2",
+        "title": "2 Miles"
+      },
+      {
+        "id":"3",
+        "title": "3 Miles"
+      },
+      {
+        "id":"4",
+        "title": "4 Miles"
+      },
+      {
+        "id":"5",
+        "title": "5 Miles"
+      },
+      {
+        "id":"6",
+        "title": "6 Miles"
+      },
+      {
+        "id":"7",
+        "title": "7 Miles"
+      },
+      {
+        "id":"8",
+        "title": "8 Miles"
+      },
+      {
+        "id":"9",
+        "title": "9 Miles"
+      },
+      {
+        "id":"10",
+        "title": "10 Miles"
+      }
+    ],
+    "lotSizes": [
+      {
+        "id":"0",
+        "title": "No Min"
+      },
+      {
+        "id":"0.045",
+        "title": "0.045+ acre (2000 sqft)"
+      },
+      {
+        "id":"0.07",
+        "title": "0.07+ acre (3000 sqft)"
+      },
+      {
+        "id":"0.09",
+        "title": "0.09+ acre (4000 sqft)"
+      },
+      {
+        "id":"0.1",
+        "title": "0.1+ acre (5000 sqft)"
+      },
+      {
+        "id":"0.25",
+        "title": "0.25 acre"
+      },
+      {
+        "id":"0.5",
+        "title": "0.5 acre"
+      },
+      {
+        "id":"1",
+        "title": "1+ acre "
+      },
+      {
+        "id":"2",
+        "title": "2+ acre"
+      },
+      {
+        "id":"5",
+        "title": "5+ acre"
+      },
+      {
+        "id":"10",
+        "title": "10+ acre"
+      }
+    ],
+      "properties": [
+        {
+          "property_id": "M3988943717",
+          "listing_id": "2947648272",
+          "products": [
+            "co_broke"
+          ],
+          "rdc_web_url": "https://www.realtor.com/realestateandhomes-detail/1909-Avenue-K_Brooklyn_NY_11230_M39889-43717",
+          "prop_type": "single_family",
+          "address": {
+            "city": "Brooklyn",
+            "line": "1909 Avenue K",
+            "postal_code": "11230",
+            "state_code": "NY",
+            "state": "New York",
+            "county": "Kings",
+            "fips_code": "36047",
+            "county_needed_for_uniq": false,
+            "lat": 40.623496,
+            "lon": -73.956773,
+            "neighborhood_name": "Central Brooklyn"
+          },
+          "branding": {
+            "listing_office": {
+              "list_item": {
+                "name": "LKNG PROPERTIES",
+                "photo": null,
+                "phone": null,
+                "slogan": null,
+                "show_realtor_logo": false,
+                "link": null,
+                "accent_color": null
+              }
+            }
+          },
+          "prop_status": "for_sale",
+          "price": 2950000,
+          "baths": 0,
+          "beds": 0,
+          "agents": [
+            {
+              "primary": true,
+              "photo": null,
+              "name": "Dominic Codio"
+            }
+          ],
+          "office": {
+            "id": "7e87ccdea6270ac95cc045a3543eeb1f",
+            "name": "LKNG PROPERTIES"
+          },
+          "last_update": "2022-09-10T15:09:10Z",
+          "client_display_flags": {
+            "presentation_status": "for_sale",
+            "is_showcase": false,
+            "lead_form_phone_required": true,
+            "price_change": 0,
+            "is_co_broke_email": true,
+            "has_open_house": false,
+            "is_co_broke_phone": false,
+            "is_new_listing": true,
+            "is_new_plan": false,
+            "is_turbo": false,
+            "is_office_standard_listing": false,
+            "suppress_map_pin": false,
+            "show_contact_a_lender_in_lead_form": false,
+            "show_veterans_united_in_lead_form": false,
+            "flip_the_market_enabled": true,
+            "is_showcase_choice_enabled": false
+          },
+          "lead_forms": {
+            "form": {
+              "name": {
+                "required": true,
+                "minimum_character_count": 1
+              },
+              "email": {
+                "required": true,
+                "minimum_character_count": 5
+              },
+              "phone": {
+                "required": true,
+                "minimum_character_count": 10,
+                "maximum_character_count": 11
+              },
+              "message": {
+                "required": false,
+                "minimum_character_count": 0
+              },
+              "show": true
+            },
+            "show_agent": false,
+            "show_broker": false,
+            "show_builder": false,
+            "show_contact_a_lender": false,
+            "show_veterans_united": false,
+            "form_type": "classic",
+            "lead_type": "co_broke",
+            "is_lcm_enabled": false,
+            "flip_the_market_enabled": true,
+            "local_phone": "(888)860-0947",
+            "local_phones": {
+              "comm_console_mweb": "(888)860-0947"
+            },
+            "show_text_leads": true,
+            "cashback_enabled": true,
+            "smarthome_enabled": false
+          },
+          "photo_count": 0,
+          "page_no": 1,
+          "rank": 1,
+          "list_tracking": "type|property|data|prop_id|3988943717|list_id|2947648272|page|rank|list_branding|listing_agent|listing_office|property_status|product_code|advantage_code^1|1|0|1|35T|G|0^^$0|1|2|$3|4|5|6|7|F|8|G|9|$A|H|B|I]|C|J|D|K|E|L]]",
+          "mls": {
+            "name": "MyStateMLS",
+            "id": "11106166",
+            "plan_id": null,
+            "abbreviation": "STNY",
+            "type": "mls"
+          },
+          "data_source_name": "mls"
+        },
+        {
+          "property_id": "M4665994661",
+          "listing_id": "2947647534",
+          "products": [
+            "core.agent",
+            "co_broke"
+          ],
+          "rdc_web_url": "https://www.realtor.com/realestateandhomes-detail/55-Austin-Pl-Apt-6S_Staten-Island_NY_10304_M46659-94661",
+          "prop_type": "condo",
+          "prop_sub_type": "condos",
+          "address": {
+            "city": "Staten Island",
+            "line": "55 Austin Pl Apt 6S",
+            "postal_code": "10304",
+            "state_code": "NY",
+            "state": "New York",
+            "county": "Richmond",
+            "fips_code": "36085",
+            "county_needed_for_uniq": false,
+            "lat": 40.631535,
+            "lon": -74.085634,
+            "neighborhood_name": "Tompkinsville"
+          },
+          "branding": {
+            "listing_office": {
+              "list_item": {
+                "name": "OUR ISLAND REAL ESTATE, INC.",
+                "photo": null,
+                "phone": null,
+                "slogan": null,
+                "show_realtor_logo": false,
+                "link": null,
+                "accent_color": null
+              }
+            }
+          },
+          "prop_status": "for_sale",
+          "price": 315000,
+          "baths_full": 1,
+          "baths": 1,
+          "beds": 2,
+          "building_size": {
+            "size": 869,
+            "units": "sqft"
+          },
+          "agents": [
+            {
+              "primary": true,
+              "advertiser_id": "2855459",
+              "id": "2855459",
+              "photo": {
+                "href": "https://ap.rdcpix.com/df924a8635743a5a1ed6a4f790279e70a-e3405470516od-r7_w110.jpg"
+              },
+              "name": "Jonathan Bruno"
+            }
+          ],
+          "office": {
+            "id": "6f659693a61825b1812a3195981c2951",
+            "name": "OUR ISLAND REAL ESTATE, INC."
+          },
+          "last_update": "2022-09-10T11:18:13Z",
+          "client_display_flags": {
+            "presentation_status": "for_sale",
+            "is_showcase": false,
+            "lead_form_phone_required": true,
+            "price_change": 0,
+            "is_co_broke_email": true,
+            "has_open_house": false,
+            "is_co_broke_phone": false,
+            "is_new_listing": true,
+            "is_new_plan": false,
+            "is_turbo": false,
+            "is_office_standard_listing": false,
+            "suppress_map_pin": false,
+            "show_contact_a_lender_in_lead_form": false,
+            "show_veterans_united_in_lead_form": false,
+            "is_showcase_choice_enabled": false
+          },
+          "lead_forms": {
+            "form": {
+              "name": {
+                "required": true,
+                "minimum_character_count": 1
+              },
+              "email": {
+                "required": true,
+                "minimum_character_count": 5
+              },
+              "phone": {
+                "required": true,
+                "minimum_character_count": 10,
+                "maximum_character_count": 11
+              },
+              "message": {
+                "required": false,
+                "minimum_character_count": 0
+              },
+              "show": true
+            },
+            "show_agent": false,
+            "show_broker": false,
+            "show_builder": false,
+            "show_contact_a_lender": false,
+            "show_veterans_united": false,
+            "form_type": "classic",
+            "lead_type": "co_broke",
+            "is_lcm_enabled": false,
+            "flip_the_market_enabled": false,
+            "show_text_leads": true,
+            "cashback_enabled": false,
+            "smarthome_enabled": false
+          },
+          "photo_count": 0,
+          "page_no": 1,
+          "rank": 2,
+          "list_tracking": "type|property|data|prop_id|4665994661|list_id|2947647534|page|rank|list_branding|listing_agent|listing_office|advertiser_id|agent|office|property_status|product_code|advantage_code^1|2|0|1|1P7AB|EAT0|35T|G|1^^$0|1|2|$3|4|5|6|7|I|8|J|9|$A|K|B|L]|C|$D|M|E|N]|F|O|G|P|H|Q]]",
+          "lot_size": {
+            "size": 865,
+            "units": "sqft"
+          },
+          "mls": {
+            "name": "StatenIsland",
+            "id": "1157499",
+            "plan_id": null,
+            "abbreviation": "SINY",
+            "type": "mls"
+          },
+          "data_source_name": "mls"
+        },
+        {
+          "property_id": "M3122824578",
+          "listing_id": "2926962072",
+          "products": [
+            "core.agent",
+            "core.broker"
+          ],
+          "rdc_web_url": "https://www.realtor.com/realestateandhomes-detail/5199-Amboy-Rd_Staten-Island_NY_10312_M31228-24578",
+          "prop_type": "land",
+          "address": {
+            "city": "Staten Island",
+            "line": "5199 Amboy Rd",
+            "postal_code": "10312",
+            "state_code": "NY",
+            "state": "New York",
+            "county": "Richmond",
+            "fips_code": "36085",
+            "county_needed_for_uniq": false,
+            "lat": 40.535182,
+            "lon": -74.183947,
+            "neighborhood_name": "South Shore"
+          },
+          "branding": {
+            "listing_office": {
+              "list_item": {
+                "name": "Re/Max Edge",
+                "photo": null,
+                "phone": null,
+                "slogan": null,
+                "show_realtor_logo": false,
+                "link": null,
+                "accent_color": null
+              }
+            }
+          },
+          "prop_status": "for_sale",
+          "price": 850000,
+          "baths": 0,
+          "beds": null,
+          "agents": [
+            {
+              "primary": true,
+              "advertiser_id": "3508810",
+              "id": "3508810",
+              "photo": {
+                "href": "https://ap.rdcpix.com/800806030/ab6468332296bfaa0ecfc40193aa2b1ba-e0od-r7_w110.jpg"
+              },
+              "name": "Michelle Hector Mesa"
+            }
+          ],
+          "office": {
+            "id": "ca428e0c7f3547a849f50a9d9f452f64",
+            "name": "Re/Max Edge"
+          },
+          "last_update": "2022-09-10T10:51:21Z",
+          "client_display_flags": {
+            "presentation_status": "for_sale",
+            "is_showcase": false,
+            "lead_form_phone_required": true,
+            "price_change": 0,
+            "is_co_broke_email": false,
+            "has_open_house": false,
+            "is_co_broke_phone": false,
+            "is_new_listing": true,
+            "is_new_plan": false,
+            "is_turbo": false,
+            "is_office_standard_listing": false,
+            "suppress_map_pin": false,
+            "show_contact_a_lender_in_lead_form": false,
+            "show_veterans_united_in_lead_form": false,
+            "is_showcase_choice_enabled": false
+          },
+          "lead_forms": {
+            "form": {
+              "name": {
+                "required": true,
+                "minimum_character_count": 1
+              },
+              "email": {
+                "required": true,
+                "minimum_character_count": 5
+              },
+              "phone": {
+                "required": true,
+                "minimum_character_count": 10,
+                "maximum_character_count": 11
+              },
+              "message": {
+                "required": false,
+                "minimum_character_count": 0
+              },
+              "show": true
+            },
+            "show_agent": false,
+            "show_broker": false,
+            "show_builder": false,
+            "show_contact_a_lender": false,
+            "show_veterans_united": false,
+            "form_type": "classic",
+            "lead_type": "co_broke",
+            "is_lcm_enabled": false,
+            "flip_the_market_enabled": false,
+            "show_text_leads": true,
+            "cashback_enabled": false,
+            "smarthome_enabled": false
+          },
+          "photo_count": 6,
+          "thumbnail": "https://ap.rdcpix.com/5b37faa9ac8e87c87f4b10cd8d681d49l-m4163264241x.jpg",
+          "page_no": 1,
+          "rank": 3,
+          "list_tracking": "type|property|data|prop_id|3122824578|list_id|2926962072|page|rank|list_branding|listing_agent|listing_office|advertiser_id|agent|office|broker|property_status|product_code|advantage_code^1|3|0|1|237EY|1ZNNA|1WVBG|35T|0|5^^$0|1|2|$3|4|5|6|7|J|8|K|9|$A|L|B|M]|C|$D|N|E|O|F|P]|G|Q|H|R|I|S]]",
+          "lot_size": {
+            "size": 14260,
+            "units": "sqft"
+          },
+          "mls": {
+            "name": "StatenIsland",
+            "id": "1144431",
+            "plan_id": null,
+            "abbreviation": "SINY",
+            "type": "mls"
+          },
+          "data_source_name": "mls"
+        },
+        {
+          "property_id": "M9606895993",
+          "listing_id": "2947646268",
+          "products": [
+            "core.agent",
+            "core.broker",
+            "co_broke"
+          ],
+          "rdc_web_url": "https://www.realtor.com/realestateandhomes-detail/429-9th-St_Brooklyn_NY_11215_M96068-95993",
+          "prop_type": "multi_family",
+          "address": {
+            "city": "Brooklyn",
+            "line": "429 9th St",
+            "postal_code": "11215",
+            "state_code": "NY",
+            "state": "New York",
+            "county": "Kings",
+            "fips_code": "36047",
+            "county_needed_for_uniq": false,
+            "lat": 40.667374,
+            "lon": -73.981965,
+            "neighborhood_name": "Central Slope"
+          },
+          "branding": {
+            "listing_office": {
+              "list_item": {
+                "name": "COMPASS",
+                "photo": null,
+                "phone": null,
+                "slogan": null,
+                "show_realtor_logo": false,
+                "link": null,
+                "accent_color": null
+              }
+            }
+          },
+          "prop_status": "for_sale",
+          "price": 3000000,
+          "baths_half": 1,
+          "baths_full": 4,
+          "baths": 5,
+          "beds": 4,
+          "building_size": {
+            "size": 3655,
+            "units": "sqft"
+          },
+          "agents": [
+            {
+              "primary": true,
+              "advertiser_id": "3388850",
+              "id": "3388850",
+              "photo": null,
+              "name": "Alexandra Foucard"
+            }
+          ],
+          "office": {
+            "id": "b513c44a4d8c00922c7155d8a90dfde5",
+            "name": "COMPASS"
+          },
+          "last_update": "2022-09-10T16:02:21Z",
+          "client_display_flags": {
+            "presentation_status": "for_sale",
+            "is_showcase": false,
+            "lead_form_phone_required": true,
+            "price_change": 0,
+            "is_co_broke_email": true,
+            "has_open_house": false,
+            "is_co_broke_phone": false,
+            "is_new_listing": true,
+            "is_new_plan": false,
+            "is_turbo": false,
+            "is_office_standard_listing": false,
+            "suppress_map_pin": false,
+            "show_contact_a_lender_in_lead_form": false,
+            "show_veterans_united_in_lead_form": false,
+            "flip_the_market_enabled": true,
+            "is_showcase_choice_enabled": false
+          },
+          "lead_forms": {
+            "form": {
+              "name": {
+                "required": true,
+                "minimum_character_count": 1
+              },
+              "email": {
+                "required": true,
+                "minimum_character_count": 5
+              },
+              "phone": {
+                "required": true,
+                "minimum_character_count": 10,
+                "maximum_character_count": 11
+              },
+              "message": {
+                "required": false,
+                "minimum_character_count": 0
+              },
+              "show": true
+            },
+            "show_agent": false,
+            "show_broker": false,
+            "show_builder": false,
+            "show_contact_a_lender": false,
+            "show_veterans_united": false,
+            "form_type": "classic",
+            "lead_type": "co_broke",
+            "is_lcm_enabled": false,
+            "flip_the_market_enabled": true,
+            "local_phone": "(888)860-0947",
+            "local_phones": {
+              "comm_console_mweb": "(888)860-0947"
+            },
+            "show_text_leads": true,
+            "cashback_enabled": true,
+            "smarthome_enabled": false
+          },
+          "photo_count": 6,
+          "thumbnail": "https://ap.rdcpix.com/03d37fe17da731b4c7a7da5e41ff2739l-m1592781990x.jpg",
+          "page_no": 1,
+          "rank": 4,
+          "list_tracking": "type|property|data|prop_id|9606895993|list_id|2947646268|page|rank|list_branding|listing_agent|listing_office|advertiser_id|agent|office|broker|property_status|product_code|advantage_code^1|4|0|1|20MUQ|1QT28|196HY|1|G|5^^$0|1|2|$3|4|5|6|7|J|8|K|9|$A|L|B|M]|C|$D|N|E|O|F|P]|G|Q|H|R|I|S]]",
+          "mls": {
+            "name": "Compass",
+            "id": "1130530922009080513",
+            "plan_id": null,
+            "abbreviation": "UCNY",
+            "type": "mls"
+          },
+          "data_source_name": "mls"
+        },
+        {
+          "property_id": "M3254960377",
+          "listing_id": "2947646272",
+          "products": [
+            "core.agent",
+            "core.broker",
+            "co_broke"
+          ],
+          "rdc_web_url": "https://www.realtor.com/realestateandhomes-detail/2-5th-Ave-Apt-7S_New-York_NY_10011_M32549-60377",
+          "prop_type": "condo",
+          "prop_sub_type": "coop",
+          "address": {
+            "city": "Manhattan",
+            "line": "2 5th Ave Apt 7S",
+            "postal_code": "10011",
+            "state_code": "NY",
+            "state": "New York",
+            "county": "New York",
+            "fips_code": "36061",
+            "county_needed_for_uniq": false,
+            "lat": 40.731998,
+            "lon": -73.997066,
+            "neighborhood_name": "Downtown Manhattan"
+          },
+          "branding": {
+            "listing_office": {
+              "list_item": {
+                "name": "COMPASS",
+                "photo": null,
+                "phone": null,
+                "slogan": null,
+                "show_realtor_logo": false,
+                "link": null,
+                "accent_color": null
+              }
+            }
+          },
+          "prop_status": "for_sale",
+          "price": 1800000,
+          "baths_full": 1,
+          "baths": 1,
+          "beds": 1,
+          "agents": [
+            {
+              "primary": true,
+              "advertiser_id": "3343888",
+              "id": "3343888",
+              "photo": null,
+              "name": "Harry Di Orio"
+            }
+          ],
+          "office": {
+            "id": "b513c44a4d8c00922c7155d8a90dfde5",
+            "name": "COMPASS"
+          },
+          "last_update": "2022-09-10T15:02:25Z",
+          "client_display_flags": {
+            "presentation_status": "for_sale",
+            "is_showcase": false,
+            "lead_form_phone_required": true,
+            "price_change": 0,
+            "is_co_broke_email": true,
+            "has_open_house": false,
+            "is_co_broke_phone": false,
+            "is_new_listing": true,
+            "is_new_plan": false,
+            "is_turbo": false,
+            "is_office_standard_listing": false,
+            "suppress_map_pin": false,
+            "show_contact_a_lender_in_lead_form": false,
+            "show_veterans_united_in_lead_form": false,
+            "is_showcase_choice_enabled": false
+          },
+          "lead_forms": {
+            "form": {
+              "name": {
+                "required": true,
+                "minimum_character_count": 1
+              },
+              "email": {
+                "required": true,
+                "minimum_character_count": 5
+              },
+              "phone": {
+                "required": true,
+                "minimum_character_count": 10,
+                "maximum_character_count": 11
+              },
+              "message": {
+                "required": false,
+                "minimum_character_count": 0
+              },
+              "show": true
+            },
+            "show_agent": false,
+            "show_broker": false,
+            "show_builder": false,
+            "show_contact_a_lender": false,
+            "show_veterans_united": false,
+            "form_type": "classic",
+            "lead_type": "co_broke",
+            "is_lcm_enabled": false,
+            "flip_the_market_enabled": false,
+            "show_text_leads": true,
+            "cashback_enabled": false,
+            "smarthome_enabled": false
+          },
+          "photo_count": 13,
+          "thumbnail": "https://ap.rdcpix.com/f7de0f8d1d390dde5c8f866c67e1fdc9l-m2586249795x.jpg",
+          "page_no": 1,
+          "rank": 5,
+          "list_tracking": "type|property|data|prop_id|3254960377|list_id|2947646272|page|rank|list_branding|listing_agent|listing_office|advertiser_id|agent|office|broker|property_status|product_code|advantage_code^1|5|0|1|1ZO5S|1QT28|196HY|1|G|5^^$0|1|2|$3|4|5|6|7|J|8|K|9|$A|L|B|M]|C|$D|N|E|O|F|P]|G|Q|H|R|I|S]]",
+          "mls": {
+            "name": "Compass",
+            "id": "1132031617569078665",
+            "plan_id": null,
+            "abbreviation": "UCNY",
+            "type": "mls"
+          },
+          "data_source_name": "mls"
+        }
+      ],
+    "detailedProperty": [
+      {
+        "meta": {
+          "build": "3.23.181",
+          "schema": "core.3",
+          "tracking": "type|meta|data|resource_type|property_detail|query|client_id|rdc_mobile_native,14.13.0.68|schema|core.3|tag_version|v2^^^$0|1|2|$3|4|5|$6|7|8|9|A|B]]]",
+          "returned_rows": 1,
+          "matching_rows": 1,
+          "tracking_params": {
+            "ldpPropertyStatus": "ldp:for_sale",
+            "pageType": "ldp",
+            "leadDelivery": "co_broke",
+            "leadEnhancements": "classic",
+            "listingActivity": "active",
+            "productType": "basic",
+            "propertyStatus": "for_sale",
+            "listingId": "2947648272",
+            "rentalDataSource": "unknown",
+            "communityId": "unknown",
+            "mprId": "3988943717",
+            "listingMls": "STNY",
+            "planId": "unknown",
+            "subId": "unknown",
+            "city": "Brooklyn",
+            "neighborhood": "Central Brooklyn",
+            "state": "NY",
+            "zip": "11230",
+            "listingBaths": "0",
+            "listingBeds": "0",
+            "listingSqFt": "unknown",
+            "listingEnhancements": "broker-phone-btm",
+            "listingPrice": "2950000",
+            "photoCount": "50",
+            "propertyType": "ldp:single_family",
+            "version": "1.0"
+          }
+        },
+        "properties": [
+          {
+            "property_id": "M3988943717",
+            "prop_status": "for_sale",
+            "listing_id": "2947648272",
+            "prop_type": "single_family",
+            "move_in_date": null,
+            "list_date": "2022-09-10T17:08:07Z",
+            "hoa_fee": 0,
+            "hoa_historic_fee": null,
+            "last_update": "2022-09-12T19:17:22Z",
+            "broker": {
+              "name": "LKNG PROPERTIES",
+              "phone1": {
+                "number": "(646) 657-3490",
+                "type": "broker"
+              }
+            },
+            "year_built": 1905,
+            "listing_status": "Active",
+            "beds": 0,
+            "description": "Rare opportunity to make an offer on this modern manse located in Midwood Brooklyn New York.",
+            "stories": null,
+            "schools": [
+              {
+                "nces_id": "360015302660",
+                "id": "0751465801",
+                "greatschools_id": "3602606",
+                "name": "Ps 193 Gil Hodges",
+                "education_levels": [
+                  "elementary"
+                ],
+                "funding_type": "public",
+                "lat": 40.621751,
+                "lon": -73.950341,
+                "student_count": 699,
+                "student_teacher_ratio": 12.5,
+                "location": {
+                  "city_slug_id": "Brooklyn_NY",
+                  "postal_code": "11210",
+                  "state": "NY",
+                  "county": "Kings County",
+                  "city": "BROOKLYN",
+                  "street": "2515 AVE L"
+                },
+                "phone": "(718) 338-9011",
+                "distance_in_miles": 0.4,
+                "grades": {
+                  "range": {
+                    "low": "PK",
+                    "high": "5"
+                  }
+                },
+                "relevance": "assigned",
+                "ratings": {
+                  "great_schools_rating": 8,
+                  "parent_rating": 3
+                }
+              },
+              {
+                "nces_id": "360015302755",
+                "id": "0751467051",
+                "greatschools_id": "3602695",
+                "name": "Andries Hudde School",
+                "education_levels": [
+                  "middle"
+                ],
+                "funding_type": "public",
+                "lat": 40.623696,
+                "lon": -73.946881,
+                "student_count": 692,
+                "student_teacher_ratio": 13.7,
+                "location": {
+                  "city_slug_id": "Brooklyn_NY",
+                  "postal_code": "11210",
+                  "state": "NY",
+                  "county": "Kings County",
+                  "city": "BROOKLYN",
+                  "street": "2500 NOSTRAND AVE"
+                },
+                "phone": "(718) 253-3700",
+                "distance_in_miles": 0.5,
+                "grades": {
+                  "range": {
+                    "low": "6",
+                    "high": "8"
+                  }
+                },
+                "relevance": "assigned",
+                "ratings": {
+                  "great_schools_rating": 6,
+                  "parent_rating": 2
+                }
+              },
+              {
+                "nces_id": "360015302032",
+                "id": "0751457401",
+                "greatschools_id": "3602018",
+                "name": "Midwood High School",
+                "education_levels": [
+                  "high"
+                ],
+                "funding_type": "public",
+                "lat": 40.632807,
+                "lon": -73.952479,
+                "student_count": 4156,
+                "student_teacher_ratio": 20.3,
+                "location": {
+                  "city_slug_id": "Brooklyn_NY",
+                  "postal_code": "11210",
+                  "state": "NY",
+                  "county": "Kings County",
+                  "city": "BROOKLYN",
+                  "street": "2839 BEDFORD AVE"
+                },
+                "phone": "(718) 724-8500",
+                "distance_in_miles": 0.7,
+                "grades": {
+                  "range": {
+                    "low": "9",
+                    "high": "12"
+                  }
+                },
+                "relevance": "assigned",
+                "ratings": {
+                  "great_schools_rating": 6,
+                  "parent_rating": 4
+                }
+              },
+              {
+                "nces_id": "360015302549",
+                "id": "0751464361",
+                "greatschools_id": "3602507",
+                "name": "School Of Science And Technology",
+                "education_levels": [
+                  "elementary"
+                ],
+                "funding_type": "public",
+                "lat": 40.632583,
+                "lon": -73.95433,
+                "student_count": 654,
+                "student_teacher_ratio": 12.5,
+                "location": {
+                  "city_slug_id": "Brooklyn_NY",
+                  "postal_code": "11210",
+                  "state": "NY",
+                  "county": "Kings County",
+                  "city": "BROOKLYN",
+                  "street": "725 E 23RD ST"
+                },
+                "phone": "(718) 434-5222",
+                "distance_in_miles": 0.6,
+                "grades": {
+                  "range": {
+                    "low": "PK",
+                    "high": "5"
+                  }
+                },
+                "relevance": "nearby",
+                "ratings": {
+                  "great_schools_rating": 4,
+                  "parent_rating": 4
+                }
+              },
+              {
+                "nces_id": "360015304070",
+                "id": "0751518911",
+                "greatschools_id": "3606324",
+                "name": "Is 381",
+                "education_levels": [
+                  "middle"
+                ],
+                "funding_type": "public",
+                "lat": 40.623699,
+                "lon": -73.946858,
+                "student_count": 254,
+                "student_teacher_ratio": 10.8,
+                "location": {
+                  "city_slug_id": "Brooklyn_NY",
+                  "postal_code": "11210",
+                  "state": "NY",
+                  "county": "Kings County",
+                  "city": "BROOKLYN",
+                  "street": "2500 NOSTRAND AVE"
+                },
+                "phone": "(718) 338-1534",
+                "distance_in_miles": 0.5,
+                "grades": {
+                  "range": {
+                    "low": "6",
+                    "high": "8"
+                  }
+                },
+                "relevance": "nearby",
+                "ratings": {
+                  "great_schools_rating": 9,
+                  "parent_rating": 4
+                }
+              },
+              {
+                "nces_id": "360015302009",
+                "id": "0751457201",
+                "greatschools_id": "3602004",
+                "name": "James Madison High School",
+                "education_levels": [
+                  "high"
+                ],
+                "funding_type": "public",
+                "lat": 40.609922,
+                "lon": -73.94817,
+                "student_count": 3811,
+                "student_teacher_ratio": 17.6,
+                "location": {
+                  "city_slug_id": "Brooklyn_NY",
+                  "postal_code": "11229",
+                  "state": "NY",
+                  "county": "Kings County",
+                  "city": "BROOKLYN",
+                  "street": "3787 BEDFORD AVE"
+                },
+                "phone": "(718) 758-7200",
+                "distance_in_miles": 1,
+                "grades": {
+                  "range": {
+                    "low": "9",
+                    "high": "12"
+                  }
+                },
+                "relevance": "nearby",
+                "ratings": {
+                  "great_schools_rating": 4,
+                  "parent_rating": 3
+                }
+              },
+              {
+                "nces_id": "00942915",
+                "id": "0751503811",
+                "greatschools_id": "3605267",
+                "name": "East Midwood Hebrew Day School",
+                "education_levels": [
+                  "elementary",
+                  "middle"
+                ],
+                "funding_type": "private",
+                "lat": 40.622414,
+                "lon": -73.95505,
+                "student_count": 215,
+                "location": {
+                  "city_slug_id": "Brooklyn_NY",
+                  "postal_code": "11210",
+                  "state": "NY",
+                  "county": "Kings County",
+                  "city": "Brooklyn",
+                  "street": "1256 East 21st Street"
+                },
+                "phone": "(718) 253-1555",
+                "distance_in_miles": 0.1,
+                "grades": {
+                  "range": {
+                    "low": "PK",
+                    "high": "8"
+                  }
+                },
+                "relevance": "nearby",
+                "ratings": {
+                  "great_schools_rating": null,
+                  "parent_rating": 4
+                }
+              },
+              {
+                "nces_id": "02046054",
+                "id": "0751505761",
+                "greatschools_id": "3605405",
+                "name": "Yeshivah Of Flatbush Joel Braverman High School",
+                "education_levels": [
+                  "high"
+                ],
+                "funding_type": "private",
+                "lat": 40.625528,
+                "lon": -73.9601,
+                "student_count": 645,
+                "location": {
+                  "city_slug_id": "Brooklyn_NY",
+                  "postal_code": "11230",
+                  "state": "NY",
+                  "county": "Kings County",
+                  "city": "Brooklyn",
+                  "street": "1609 Avenue J"
+                },
+                "phone": "(718) 377-1100",
+                "distance_in_miles": 0.2,
+                "grades": {
+                  "range": {
+                    "low": "9",
+                    "high": "12"
+                  }
+                },
+                "relevance": "nearby",
+                "ratings": {
+                  "great_schools_rating": null,
+                  "parent_rating": null
+                }
+              }
+            ],
+            "heating": null,
+            "cooling": null,
+            "feature_tags": [],
+            "branding": {
+              "listing_agent": {
+                "photo_attribution": {
+                  "name": "Dominic Codio",
+                  "photo": null,
+                  "phone": null,
+                  "slogan": null,
+                  "show_realtor_logo": false,
+                  "link": null,
+                  "accent_color": null
+                },
+                "details": {
+                  "name": "Dominic Codio",
+                  "photo": null,
+                  "phone": null,
+                  "slogan": null,
+                  "show_realtor_logo": false,
+                  "link": null,
+                  "accent_color": null,
+                  "state_license": null
+                }
+              },
+              "listing_office": {
+                "photo_attribution": {
+                  "name": "LKNG PROPERTIES",
+                  "photo": null,
+                  "phone": null,
+                  "slogan": null,
+                  "show_realtor_logo": false,
+                  "link": null,
+                  "accent_color": null
+                },
+                "details": {
+                  "name": "LKNG PROPERTIES",
+                  "photo": null,
+                  "phone": "(646) 657-3490",
+                  "slogan": null,
+                  "show_realtor_logo": false,
+                  "link": null,
+                  "accent_color": null
+                }
+              },
+              "team_name": null
+            },
+            "address": {
+              "city": "Brooklyn",
+              "line": "1909 Avenue K",
+              "postal_code": "11230",
+              "address_validation_code": "121",
+              "state_code": "NY",
+              "state": "New York",
+              "county": "Kings",
+              "fips_code": "36047",
+              "county_needed_for_uniq": false,
+              "time_zone": "America/New_York",
+              "lat": 40.623496,
+              "lon": -73.956773,
+              "neighborhood_name": "Central Brooklyn",
+              "neighborhoods": [
+                {
+                  "name": "Central Brooklyn",
+                  "city": "Brooklyn",
+                  "state_code": "NY",
+                  "level": "macro_neighborhood",
+                  "id": "18"
+                },
+                {
+                  "name": "Midwood",
+                  "city": "Brooklyn",
+                  "state_code": "NY",
+                  "level": "neighborhood",
+                  "id": "1"
+                }
+              ]
+            },
+            "features": [
+              {
+                "category": "Bedrooms",
+                "parent_category": "Interior",
+                "text": [
+                  "Bedrooms: 0"
+                ]
+              },
+              {
+                "category": "Homeowners Association",
+                "parent_category": "Community",
+                "text": [
+                  "Association: No",
+                  "Association Fee Amenities: Midwood",
+                  "Calculated Total Monthly Association Fees: 0"
+                ]
+              },
+              {
+                "category": "Other Property Info",
+                "parent_category": "Listing",
+                "text": [
+                  "Source Listing Status: Active",
+                  "County: 36047",
+                  "Availability Date: 2022-09-08",
+                  "Source Property Type: House (Detached)",
+                  "Area: Kings",
+                  "Source Neighborhood: Kings",
+                  "Property Subtype: House (Detached)",
+                  "Source System Name: C2C"
+                ]
+              },
+              {
+                "category": "Building and Construction",
+                "parent_category": "Features",
+                "text": [
+                  "Year Built: 1905",
+                  "Property Age: 117",
+                  "House Style: Modern",
+                  "Year Remodeled: 2015"
+                ]
+              },
+              {
+                "category": "Legal and finance",
+                "text": [
+                  "HOA Frequency: Monthly/0",
+                  "HOA fee: $0"
+                ]
+              }
+            ],
+            "mls": {
+              "name": "MyStateMLS",
+              "id": "11106166",
+              "plan_id": null,
+              "abbreviation": "STNY",
+              "type": "mls",
+              "disclaimer": {
+                "photo": null,
+                "href": null,
+                "text": "©2022, NYStateMLS, My State MLS. All rights reserved."
+              }
+            },
+            "client_display_flags": {
+              "presentation_status": "for_sale",
+              "is_showcase": false,
+              "lead_form_phone_required": true,
+              "price_change": 0,
+              "is_co_broke_email": true,
+              "has_open_house": false,
+              "is_foreclosure": false,
+              "is_short_sale": false,
+              "is_co_broke_phone": false,
+              "is_new_listing": true,
+              "is_new_plan": false,
+              "is_new_construction": false,
+              "is_turbo": false,
+              "is_office_standard_listing": false,
+              "suppress_map_pin": false,
+              "show_contact_a_lender_in_lead_form": false,
+              "show_veterans_united_in_lead_form": false,
+              "flip_the_market_enabled": true,
+              "is_showcase_choice_enabled": false
+            },
+            "tax_history": [
+              {
+                "assessment": {
+                  "building": 69480,
+                  "land": 25020,
+                  "total": 94500
+                },
+                "tax": 10292,
+                "year": "2021"
+              },
+              {
+                "assessment": {
+                  "building": 78600,
+                  "land": 25020,
+                  "total": 103620
+                },
+                "tax": 10352,
+                "year": "2020"
+              },
+              {
+                "assessment": {
+                  "building": 75960,
+                  "land": 25020,
+                  "total": 100980
+                },
+                "tax": 10137,
+                "year": "2019"
+              },
+              {
+                "assessment": {
+                  "building": 31960,
+                  "land": 13782,
+                  "total": 45742
+                },
+                "tax": 9569,
+                "year": "2018"
+              },
+              {
+                "assessment": {
+                  "building": 30100,
+                  "land": 13074,
+                  "total": 43174
+                },
+                "tax": 8801,
+                "year": "2017"
+              },
+              {
+                "assessment": {
+                  "building": 26280,
+                  "land": 14476,
+                  "total": 40756
+                },
+                "tax": 8148,
+                "year": "2016"
+              },
+              {
+                "assessment": {
+                  "building": 21829,
+                  "land": 18927,
+                  "total": 40756
+                },
+                "tax": 240,
+                "year": "2015"
+              },
+              {
+                "assessment": {
+                  "building": 17884,
+                  "land": 22500,
+                  "total": 40384
+                },
+                "tax": 7118,
+                "year": "2014"
+              },
+              {
+                "assessment": {
+                  "building": 18355,
+                  "land": 19764,
+                  "total": 38119
+                },
+                "tax": 5983,
+                "year": "2013"
+              },
+              {
+                "assessment": {
+                  "building": 12154,
+                  "land": 21810,
+                  "total": 33964
+                },
+                "tax": 5212,
+                "year": "2011"
+              },
+              {
+                "assessment": {
+                  "building": 15288,
+                  "land": 18676,
+                  "total": 33964
+                },
+                "tax": 5200,
+                "year": "2010"
+              },
+              {
+                "assessment": null,
+                "tax": 4507,
+                "year": "2009"
+              }
+            ],
+            "sold_history": [
+              {
+                "date": "2022-02-01T07:00:00Z",
+                "source": "public record",
+                "listing": {
+                  "price": 2350000
+                }
+              },
+              {
+                "date": "2016-04-12T07:00:00Z",
+                "source": "public record",
+                "listing": {
+                  "price": 870000
+                }
+              },
+              {
+                "date": "2015-07-06T07:00:00Z",
+                "source": "mls #390611",
+                "listing": {
+                  "price": 870000,
+                  "mls_id": "390611"
+                }
+              }
+            ],
+            "property_history": [
+              {
+                "event_name": "Listed",
+                "date": "2022-09-10T17:00:00Z",
+                "price": 2950000,
+                "price_range_min": null,
+                "price_range_max": null,
+                "price_changed": 0,
+                "sqft": 0,
+                "datasource_name": "MyStateMLS",
+                "source": "MLS #11106166"
+              },
+              {
+                "event_name": "Sold",
+                "date": "2022-02-01T17:00:00Z",
+                "price": 2350000,
+                "price_range_min": null,
+                "price_range_max": null,
+                "price_changed": 0,
+                "sqft": 2570,
+                "datasource_name": "",
+                "source": "Public Record"
+              },
+              {
+                "event_name": "Price Changed",
+                "date": "2021-07-16T17:00:00Z",
+                "price": 1799000,
+                "price_range_min": null,
+                "price_range_max": null,
+                "price_changed": -76000,
+                "sqft": 4400,
+                "datasource_name": "Brooklyn",
+                "source": "MLS #448231"
+              },
+              {
+                "event_name": "Price Changed",
+                "date": "2021-06-10T17:00:00Z",
+                "price": 1875000,
+                "price_range_min": null,
+                "price_range_max": null,
+                "price_changed": -75000,
+                "sqft": 4400,
+                "datasource_name": "Brooklyn",
+                "source": "MLS #448231"
+              },
+              {
+                "event_name": "Listed",
+                "date": "2021-02-15T17:00:00Z",
+                "price": 1950000,
+                "price_range_min": null,
+                "price_range_max": null,
+                "price_changed": 0,
+                "sqft": 4400,
+                "datasource_name": "Brooklyn",
+                "source": "MLS #448231"
+              },
+              {
+                "event_name": "Sold",
+                "date": "2016-04-12T17:00:00Z",
+                "price": 870000,
+                "price_range_min": null,
+                "price_range_max": null,
+                "price_changed": 0,
+                "sqft": 2570,
+                "datasource_name": "",
+                "source": "Public Record"
+              },
+              {
+                "event_name": "Sold",
+                "date": "2015-07-06T17:00:00Z",
+                "price": 870000,
+                "price_range_min": null,
+                "price_range_max": null,
+                "price_changed": -25000,
+                "sqft": 1800,
+                "datasource_name": "Brooklyn",
+                "source": "MLS #390611"
+              },
+              {
+                "event_name": "Listed",
+                "date": "2015-01-05T17:00:00Z",
+                "price": 895000,
+                "price_range_min": null,
+                "price_range_max": null,
+                "price_changed": 0,
+                "sqft": 1800,
+                "datasource_name": "Brooklyn",
+                "source": "MLS #390611"
+              }
+            ],
+            "public_records": [
+              {
+                "baths": null,
+                "baths_1qtr": null,
+                "baths_3qtr": null,
+                "baths_full": null,
+                "baths_half": null,
+                "beds": null,
+                "construction": null,
+                "cooling": null,
+                "cl_id": "B50C782ADD99B444048FFB416EDBE3FA",
+                "date_updated": "01/29/2022",
+                "distinct_baths": null,
+                "exterior1": null,
+                "exterior2": null,
+                "fireplace": null,
+                "garage": null,
+                "garage_spaces": null,
+                "heating": null,
+                "lot_size": 4000,
+                "pool": null,
+                "prop_type": "single_family",
+                "roofing": null,
+                "rooms": null,
+                "sqft": 0,
+                "stories": 2,
+                "style": null,
+                "units": null,
+                "view": null,
+                "year_built": 1905,
+                "year_renovated": 1905,
+                "zoning": "R2"
+              }
+            ],
+            "products": [
+              "co_broke"
+            ],
+            "office": {
+              "name": "LKNG PROPERTIES",
+              "mls_set": "O-STNY-15627",
+              "href": null,
+              "photo": null,
+              "email": null,
+              "slogan": null,
+              "phones": [
+                {
+                  "number": "646-657-3490",
+                  "type": "office",
+                  "primary": true
+                }
+              ],
+              "address": {
+                "city": "BROOKLYN",
+                "state_code": "NY"
+              },
+              "mls_membership": {
+                "member": {
+                  "office_system_id": "15627"
+                }
+              },
+              "id": "7e87ccdea6270ac95cc045a3543eeb1f"
+            },
+            "agents": [
+              {
+                "name": "Dominic Codio",
+                "profile_name": "Dominic Codio",
+                "href": null,
+                "photo": null,
+                "nrds_id": null,
+                "nrds_verified_id": null,
+                "office_name": "LKNG PROPERTIES",
+                "email": "lkngproperties@gmail.com",
+                "slogan": null,
+                "state_license": null,
+                "mls_memberships": {
+                  "member": {
+                    "agent_system_id": "135087",
+                    "name": "Dominic Codio",
+                    "office_system_id": "15627",
+                    "id": "135087",
+                    "abbreviation": "STNY"
+                  }
+                },
+                "primary": true
+              }
+            ],
+            "lead_forms": {
+              "form": {
+                "name": {
+                  "required": true,
+                  "minimum_character_count": 1
+                },
+                "email": {
+                  "required": true,
+                  "minimum_character_count": 5
+                },
+                "phone": {
+                  "required": true,
+                  "minimum_character_count": 10,
+                  "maximum_character_count": 11
+                },
+                "message": {
+                  "required": false,
+                  "minimum_character_count": 0
+                },
+                "show": true
+              },
+              "show_agent": false,
+              "show_broker": false,
+              "show_builder": false,
+              "show_contact_a_lender": false,
+              "show_veterans_united": false,
+              "form_type": "classic",
+              "lead_type": "co_broke",
+              "is_lcm_enabled": false,
+              "flip_the_market_enabled": true,
+              "local_phone": "(888)860-0947",
+              "local_phones": {
+                "comm_console_mweb": "(888)860-0947"
+              },
+              "show_text_leads": true,
+              "cashback_enabled": true,
+              "smarthome_enabled": false
+            },
+            "price": 2950000,
+            "rdc_web_url": "https://www.realtor.com/realestateandhomes-detail/1909-Avenue-K_Brooklyn_NY_11230_M39889-43717",
+            "rdc_app_url": "move-rdc://www.realtor.com/realestateandhomes-detail/1909-Avenue-K_Brooklyn_NY_11230_M39889-43717",
+            "baths": 0,
+            "photo_count": 50,
+            "raw": {
+              "status": "Active",
+              "style": [
+                "Modern"
+              ],
+              "tax_amount": null
+            },
+            "photo_attribution": [
+              "Presented by Dominic Codio with LKNG PROPERTIES"
+            ],
+            "mortgage": {
+              "rates_url": "https://www.realtor.com/mortgage/rates/?from=mobile#zip=11230&property_price=2950000&mlid=2947648272",
+              "estimate": {
+                "loan_amount": 2360000,
+                "rate": 5.288,
+                "term": 30,
+                "monthly_payment": 14969,
+                "principal_and_interest": 13088,
+                "monthly_property_taxes": 858,
+                "monthly_home_insurance": 1024,
+                "hoa_fees": 0,
+                "monthly_mortgage_insurance": 0,
+                "total_payment": 4711539,
+                "down_payment": 590000
+              }
+            },
+            "data_source_name": "mls",
+            "trend": {
+              "listing_count": {
+                "for_sale": 1110,
+                "rental": 814,
+                "sold": 26
+              },
+              "active_listing_count": 1110,
+              "asking_to_sold_price_percent_change": -3.79,
+              "median": {
+                "age_days": 111,
+                "listing_price": 749000,
+                "listing_price_sqft": 655,
+                "rental_listing_price": 2962,
+                "closing_price": 710500,
+                "by_prop_type": {
+                  "home": {
+                    "age_days": 110,
+                    "listing_price": 649000,
+                    "listing_price_sqft": 694,
+                    "closing_price": 602500
+                  },
+                  "condos": {
+                    "listing_price": 630000,
+                    "closing_price": 620000,
+                    "listing_price_sqft": null,
+                    "age_days": null
+                  },
+                  "condo_townhome_rowhome_coop": {
+                    "listing_price": 899000,
+                    "closing_price": null,
+                    "listing_price_sqft": null,
+                    "age_days": null
+                  },
+                  "land": {
+                    "listing_price": 1175000,
+                    "closing_price": null,
+                    "listing_price_sqft": null,
+                    "age_days": null
+                  },
+                  "multi_family": {
+                    "listing_price": 1298000,
+                    "closing_price": 1300000,
+                    "listing_price_sqft": null,
+                    "age_days": null
+                  },
+                  "single_family": {
+                    "listing_price": 1345000,
+                    "closing_price": 1343000,
+                    "listing_price_sqft": null,
+                    "age_days": null
+                  },
+                  "townhomes": {
+                    "listing_price": 1495000,
+                    "closing_price": null,
+                    "listing_price_sqft": null,
+                    "age_days": null
+                  }
+                }
+              },
+              "sales_to_inventory_count_percent": 2.34,
+              "sales_to_inventory_count_percent_market_type": "buyer",
+              "year": 2022,
+              "month": 8,
+              "geo": {
+                "state_code": "NY",
+                "city": "Brooklyn",
+                "neighborhood": "Central Brooklyn"
+              }
+            },
+            "detail_tracking": "type|property|data|prop_id|3988943717|list_id|2947648272|address|city|Brooklyn|state|NY|postal|11230|neighborhood|Central+Brooklyn|county|Kings|mls|id|11106166|abbr|STNY|price|detail_branding|listing_agent|listing_office|data_source|property_status|product_code|advantage_code^1R88G|35T|FSX|35T|G|0^^$0|1|2|$3|4|5|6|7|$8|9|A|B|C|D|E|F|G|H]|I|$J|K|L|M]|N|V|O|$P|W|Q|X]|R|I|S|Y|T|Z|U|10]]",
+            "photos": [
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m818978012x.jpg",
+                "tags": [
+                  {
+                    "label": "unknown",
+                    "probability": 0.740757405757904
+                  },
+                  {
+                    "label": "garage",
+                    "probability": 0.6094787120819092
+                  },
+                  {
+                    "label": "house_view",
+                    "probability": 0.6353631615638733
+                  },
+                  {
+                    "label": "road_view",
+                    "probability": 0.6912275552749634
+                  },
+                  {
+                    "label": "house_view",
+                    "probability": 0.744056761264801
+                  },
+                  {
+                    "label": "house_view",
+                    "probability": 0.8408408164978027
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2772305024x.jpg",
+                "tags": [
+                  {
+                    "label": "unknown",
+                    "probability": 0.8062660694122314
+                  },
+                  {
+                    "label": "house_view",
+                    "probability": 0.8523146510124207
+                  },
+                  {
+                    "label": "porch",
+                    "probability": 0.6951682567596436
+                  },
+                  {
+                    "label": "road_view",
+                    "probability": 0.6359123587608337
+                  },
+                  {
+                    "label": "house_view",
+                    "probability": 0.9550906419754028
+                  },
+                  {
+                    "label": "house_view",
+                    "probability": 0.47109878063201904
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3677560606x.jpg",
+                "tags": [
+                  {
+                    "label": "unknown",
+                    "probability": 0.9244408011436462
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3049080271x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999998807907104
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m1208326739x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999781847000122
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m887004113x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999970197677612
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m518584766x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999998807907104
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m922112604x.jpg",
+                "tags": [
+                  {
+                    "label": "living_room",
+                    "probability": 0.5684847235679626
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m1105782962x.jpg",
+                "tags": [
+                  {
+                    "label": "unknown",
+                    "probability": 0.9271107316017151
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m767584287x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.4190725088119507
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2985290542x.jpg",
+                "tags": [
+                  {
+                    "label": "living_room",
+                    "probability": 0.99985671043396
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m1318900617x.jpg",
+                "tags": [
+                  {
+                    "label": "living_room",
+                    "probability": 0.9972061514854431
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m419943725x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999977350234985
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3975943357x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999973773956299
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m103241778x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999966621398926
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2378319599x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.999995231628418
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3566395267x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.988563060760498
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3485015132x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.9632477760314941
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2089638462x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999849796295166
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m673880624x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999979734420776
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m1736709850x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999974966049194
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m4180949242x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.9999868869781494
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m1107216954x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.9982187151908875
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3751730672x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.999661922454834
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m658815586x.jpg",
+                "tags": [
+                  {
+                    "label": "unknown",
+                    "probability": 0.5904233455657959
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3782510825x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.9798837900161743
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2505833986x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.9999798536300659
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2233588068x.jpg",
+                "tags": [
+                  {
+                    "label": "unknown",
+                    "probability": 0.9999909400939941
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m4199202977x.jpg",
+                "tags": [
+                  {
+                    "label": "unknown",
+                    "probability": 0.758691668510437
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m1149232925x.jpg",
+                "tags": [
+                  {
+                    "label": "unknown",
+                    "probability": 0.9622547626495361
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m1858329937x.jpg",
+                "tags": [
+                  {
+                    "label": "unknown",
+                    "probability": 0.5333194732666016
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3503786261x.jpg",
+                "tags": [
+                  {
+                    "label": "unknown",
+                    "probability": 0.9607584476470947
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3171823031x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999991655349731
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m4225286524x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999994039535522
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m955754211x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999988079071045
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2858655887x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9134106636047363
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2557608531x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999995231628418
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3195344105x.jpg",
+                "tags": [
+                  {
+                    "label": "bedroom",
+                    "probability": 0.9999998807907104
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2574272129x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 1
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m248705409x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.999955415725708
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2071642602x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.9999997615814209
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2584288721x.jpg",
+                "tags": [
+                  {
+                    "label": "laundry_room",
+                    "probability": 0.9999997615814209
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2931667263x.jpg",
+                "tags": [
+                  {
+                    "label": "living_room",
+                    "probability": 0.9994180202484131
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m41592291x.jpg",
+                "tags": [
+                  {
+                    "label": "living_room",
+                    "probability": 0.9996098875999451
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m216782110x.jpg",
+                "tags": [
+                  {
+                    "label": "kitchen",
+                    "probability": 0.9999289512634277
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3663066965x.jpg",
+                "tags": [
+                  {
+                    "label": "kitchen",
+                    "probability": 0.9997918009757996
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m2715643720x.jpg",
+                "tags": [
+                  {
+                    "label": "kitchen",
+                    "probability": 0.9997968077659607
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m521582334x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.998244047164917
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m3867182794x.jpg",
+                "tags": [
+                  {
+                    "label": "bathroom",
+                    "probability": 0.8919262290000916
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              },
+              {
+                "description": "",
+                "href": "https://ap.rdcpix.com/72b6dea941979e121b4bda121000c387l-m1942559261x.jpg",
+                "tags": [
+                  {
+                    "label": "laundry_room",
+                    "probability": 0.9996849298477173
+                  }
+                ],
+                "type": "realtordotcom_mls_listing_image"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+}

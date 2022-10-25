@@ -103,8 +103,8 @@ export default {
   props: {
     propertyName: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
     ContactFormInput,

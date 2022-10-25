@@ -165,7 +165,9 @@
               name: 'RentPage',
               params: {
                 slug: storeData.searchedData.state_code,
-                city: addUnderScoresToWhiteSpacesInAString(storeData.searchedData.city),
+                city: addUnderScoresToWhiteSpacesInAString(
+                  storeData.searchedData.city
+                ),
               },
               query: {
                 homeType: `multi_family,condo`,

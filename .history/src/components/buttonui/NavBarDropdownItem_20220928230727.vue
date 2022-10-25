@@ -1,0 +1,13 @@
+<template>
+  <li 
+    class="
+      px-3 
+      py-1 
+      text-gray-600 
+      font-normal  
+      text-base
+      hover:underline 
+      hover:bg-gray-200">
+    <slot></slot>
+  </li>
+</template>

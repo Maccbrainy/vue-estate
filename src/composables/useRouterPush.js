@@ -9,16 +9,16 @@ export default function useRouterPush(payLoad) {
   const storeData = computed(() => store.getters.getStore);
   const regExpWhiteSpaces = /\s/gi; //Regular Expression for White Space detection
 
-  let slugParam = regExpWhiteSpaces.test(searchParams.value.state_code) 
-    ? searchParams.value.state_code.replaceAll(" ", "_") 
+  let slugParam = regExpWhiteSpaces.test(searchParams.value.state_code)
+    ? searchParams.value.state_code.replaceAll(" ", "_")
     : searchParams.value.state_code;
   let city = searchParams.value.city;
   let routeName = searchParams.value.activeRouteTab;
 
-  let cityParam = !city 
-    ? "" 
-    : regExpWhiteSpaces.test(city) 
-    ? city.replaceAll(" ", "_") 
+  let cityParam = !city
+    ? ""
+    : regExpWhiteSpaces.test(city)
+    ? city.replaceAll(" ", "_")
     : city;
 
   switch (routeName) {
@@ -38,7 +38,7 @@ export default function useRouterPush(payLoad) {
     default:
       activeRoute.value = routeName;
       break;
-  };
+  }
 
   let minPriceFilter = searchParams.value.priceMin || "";
   let maxPriceFilter = searchParams.value.priceMax || "";
@@ -64,11 +64,11 @@ export default function useRouterPush(payLoad) {
   let bathFilter = searchParams.value.bath || "";
   let cats = searchParams.value.catsAllowed || "";
   let dogs = searchParams.value.dogsAllowed || "";
-  let searchRadius = searchParams.value.radius 
-    ? `${searchParams.value.radius}` 
+  let searchRadius = searchParams.value.radius
+    ? `${searchParams.value.radius}`
     : "";
-  let lotSizeFilter = searchParams.value.lotSize 
-    ? `${searchParams.value.lotSize}` 
+  let lotSizeFilter = searchParams.value.lotSize
+    ? `${searchParams.value.lotSize}`
     : "";
   let ageMax = searchParams.value.ageMax ? `${searchParams.value.ageMax}` : "";
   let ageMin = searchParams.value.ageMin ? `${searchParams.value.ageMin}` : "";
@@ -104,67 +104,67 @@ export default function useRouterPush(payLoad) {
     mediaTable: openMediaTable,
     // lat: latMin,
     // long: longMin,
-  }
+  };
 
   let queryParams = Object.assign({}, queryContents);
   /**Delete empty query parameter contents
    * from the router
    */
-  if (!queryParams.bed){
+  if (!queryParams.bed) {
     delete queryParams.bed;
   }
   if (!queryParams.bath) {
     delete queryParams.bath;
   }
-  if (!queryParams.priceMin){
+  if (!queryParams.priceMin) {
     delete queryParams.priceMin;
   }
-  if (!queryParams.priceMax){
+  if (!queryParams.priceMax) {
     delete queryParams.priceMax;
   }
-  if (!queryParams.homeType){
+  if (!queryParams.homeType) {
     delete queryParams.homeType;
   }
-  if (!queryParams.dogsAllowed){
+  if (!queryParams.dogsAllowed) {
     delete queryParams.dogsAllowed;
   }
-  if (!queryParams.catsAllowed){
+  if (!queryParams.catsAllowed) {
     delete queryParams.catsAllowed;
   }
-  if (!queryParams.homeFeatures){
+  if (!queryParams.homeFeatures) {
     delete queryParams.homeFeatures;
   }
-  if (!queryParams.yearBuiltMin){
+  if (!queryParams.yearBuiltMin) {
     delete queryParams.yearBuiltMin;
   }
-  if (!queryParams.yearBuiltMax){
+  if (!queryParams.yearBuiltMax) {
     delete queryParams.yearBuiltMax;
   }
-  if (!queryParams.lotSize){
+  if (!queryParams.lotSize) {
     delete queryParams.lotSize;
   }
-  if (!queryParams.hasOpenHouses){
+  if (!queryParams.hasOpenHouses) {
     delete queryParams.hasOpenHouses;
   }
-  if (!queryParams.has3DTours){
+  if (!queryParams.has3DTours) {
     delete queryParams.has3DTours;
   }
-  if (!queryParams.foreClosure){
+  if (!queryParams.foreClosure) {
     delete queryParams.foreClosure;
   }
-  if (!queryParams.newConstruction){
+  if (!queryParams.newConstruction) {
     delete queryParams.newConstruction;
   }
-  if (!queryParams.newPlans){
+  if (!queryParams.newPlans) {
     delete queryParams.newPlans;
   }
-  if (!queryParams.radius){
+  if (!queryParams.radius) {
     delete queryParams.radius;
   }
-  if (!queryParams.contingents){
+  if (!queryParams.contingents) {
     delete queryParams.contingents;
   }
-  if (!queryParams.mediaTable){
+  if (!queryParams.mediaTable) {
     delete queryParams.mediaTable;
   }
 
@@ -172,7 +172,7 @@ export default function useRouterPush(payLoad) {
     name: activeRoute.value,
     params: {
       slug: slugParam,
-      city: cityParam
+      city: cityParam,
     },
     query: queryParams,
   });
@@ -180,5 +180,5 @@ export default function useRouterPush(payLoad) {
   console.log("USEROUTERPUSH RAN === AND USING ROUTE:", activeRoute.value);
   return {
     searchTerm: searchParams,
-  }
+  };
 }

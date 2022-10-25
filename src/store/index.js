@@ -1,28 +1,28 @@
 import { createStore } from "vuex";
 import { useRouterPush } from "@/composables";
 // import router from "@/router";
-function getDefaultPropertyFilterState(){
+function getDefaultPropertyFilterState() {
   return {
-    lotSize:"",
-    searchRadius:"",
+    lotSize: "",
+    searchRadius: "",
     homeType: [],
     numberOfBed: "",
     numberOfBath: "",
     priceMinRange: null,
     priceMaxRange: null,
-    sorting:"",
-    features:[],
-    age_min:"",
-    age_max:"",
+    sorting: "",
+    features: [],
+    age_min: "",
+    age_max: "",
     allowsCats: "",
     allowsDogs: "",
     isForeclosures: "",
-    hasOpenHouses:"",
-    has3DTours:"",
-    isNewConstructions:"",
-    isContingents:"",
+    hasOpenHouses: "",
+    has3DTours: "",
+    isNewConstructions: "",
+    isContingents: "",
     isNewPlans: "",
-  }
+  };
 }
 export default createStore({
   state: {
@@ -32,25 +32,25 @@ export default createStore({
     activeRoutePath: "",
     activeListBranch: "",
     propertyFilters: {
-      lotSize:"",
-      searchRadius:"",
+      lotSize: "",
+      searchRadius: "",
       homeType: [],
       numberOfBed: "",
       numberOfBath: "",
       priceMinRange: null,
       priceMaxRange: null,
-      sorting:"",
-      features:[],
-      age_min:"",
-      age_max:"",
+      sorting: "",
+      features: [],
+      age_min: "",
+      age_max: "",
       allowsCats: "",
       allowsDogs: "",
       isForeclosures: "",
-      hasOpenHouses:"",
-      has3DTours:"",
-      isNewConstructions:"",
-      isContingents:"",
-      isNewPlans:"",
+      hasOpenHouses: "",
+      has3DTours: "",
+      isNewConstructions: "",
+      isContingents: "",
+      isNewPlans: "",
     },
     filterDescriptionInfo: {
       filterIsActive: false,
@@ -59,7 +59,7 @@ export default createStore({
       priceRange: "",
       bedroom: "",
       features: "",
-      bathroom:""
+      bathroom: "",
     },
     searchedData: "",
     allPropertyListings: [],
@@ -68,286 +68,286 @@ export default createStore({
     activeListing: [],
   },
   getters: {
-    getStore(state){
+    getStore(state) {
       return state;
     },
-    getFilterDescriptionInfo(state){
+    getFilterDescriptionInfo(state) {
       return state.filterDescriptionInfo;
     },
     //Consumed in searchResultContent component
-    getLotSize(state){
+    getLotSize(state) {
       return state.propertyFilters.lotSize;
     },
-    getSearchRadius(state){
+    getSearchRadius(state) {
       return state.propertyFilters.searchRadius;
     },
-    getAllowsCats(state){
+    getAllowsCats(state) {
       return state.propertyFilters.allowsCats;
     },
-    getAllowsDogs(state){
+    getAllowsDogs(state) {
       return state.propertyFilters.allowsDogs;
     },
-    getIsForeclosure(state){
+    getIsForeclosure(state) {
       return state.propertyFilters.isForeclosures;
     },
-    getHasOpenHouses(state){
+    getHasOpenHouses(state) {
       return state.propertyFilters.hasOpenHouses;
     },
-    getHas3DTours(state){
+    getHas3DTours(state) {
       return state.propertyFilters.has3DTours;
     },
-    getIsNewConstructions(state){
+    getIsNewConstructions(state) {
       return state.propertyFilters.isNewConstructions;
     },
-    getIsContingents(state){
+    getIsContingents(state) {
       return state.propertyFilters.isContingents;
     },
-    getIsNewPlans(state){
+    getIsNewPlans(state) {
       return state.propertyFilters.isNewPlans;
     },
-    getYearAgeMax(state){
+    getYearAgeMax(state) {
       return state.propertyFilters.age_max;
     },
-    getYearAgeMin(state){
+    getYearAgeMin(state) {
       return state.propertyFilters.age_min;
     },
-    getNumberOfBath(state){
+    getNumberOfBath(state) {
       return state.propertyFilters.numberOfBath;
     },
-    getFilterIsActive(state){
+    getFilterIsActive(state) {
       return state.filterDescriptionInfo.filterIsActive;
     },
-    getFilterMoreIsActive(state){
+    getFilterMoreIsActive(state) {
       return state.filterDescriptionInfo.filterMoreIsActive;
     },
-    getBathInfo(state){
+    getBathInfo(state) {
       return state.filterDescriptionInfo.bathroom;
     },
-    getHomeTypeTitleInfo(state){
+    getHomeTypeTitleInfo(state) {
       return state.filterDescriptionInfo.homeType;
     },
-    getPriceInfo(state){
+    getPriceInfo(state) {
       return state.filterDescriptionInfo.priceRange;
     },
-    getBedroomInfo(state){
+    getBedroomInfo(state) {
       return state.filterDescriptionInfo.bedroom;
     },
-    getHomeFeaturesInfo(state){
+    getHomeFeaturesInfo(state) {
       return state.filterDescriptionInfo.features;
     },
-    getHomeFeatures(state){
+    getHomeFeatures(state) {
       return state.propertyFilters.features;
     },
-    getHomeType(state){
+    getHomeType(state) {
       return state.propertyFilters.homeType;
     },
-    getPriceRangeMin(state){
+    getPriceRangeMin(state) {
       return state.propertyFilters.priceMinRange;
     },
-    getPriceRangeMax(state){
+    getPriceRangeMax(state) {
       return state.propertyFilters.priceMaxRange;
     },
-    getNumberOfBed(state){
+    getNumberOfBed(state) {
       return state.propertyFilters.numberOfBed;
     },
-    getPropertySorting(state){
+    getPropertySorting(state) {
       return state.propertyFilters.sorting;
     },
-    getActiveBranch(state){
+    getActiveBranch(state) {
       return state.activeListBranch;
     },
     //Consumed in searchResultContentLayout component
-    getSearchedData(state){
-      return state.searchedData; 
+    getSearchedData(state) {
+      return state.searchedData;
     },
     //Consumed in filter button agent and other active
-    getIsLoading(state){
+    getIsLoading(state) {
       return state.isLoading;
     },
-    getErrorCatch(state){
+    getErrorCatch(state) {
       return state.errorCatch;
     },
     //Consumed in searchResultContentLayout component
-    getAllPropertyListings(state){
+    getAllPropertyListings(state) {
       return state.allPropertyListings;
     },
-    getPropertyListingsByAgent(state){
+    getPropertyListingsByAgent(state) {
       return state.propertyListingsByAgent;
     },
-    getPropertyListingsByNoneAgent(state){
+    getPropertyListingsByNoneAgent(state) {
       return state.propertyListingsByNoneAgent;
     },
-    getActiveListing(state){
+    getActiveListing(state) {
       return state.activeListing;
     },
     //Consumed in HomeTabButtons/filter components
-    getIsActiveRouteTab(state){
-      return state.activeRoutePath; 
+    getIsActiveRouteTab(state) {
+      return state.activeRoutePath;
     },
   },
   mutations: {
     //Invoked from FilterButtonMore component
-    setLotSize(state, payLoad){
+    setLotSize(state, payLoad) {
       state.propertyFilters.lotSize = payLoad;
     },
     //Invoked from FilterButtonMore component
-    setSearchRadius(state, payLoad){
+    setSearchRadius(state, payLoad) {
       state.propertyFilters.searchRadius = payLoad;
     },
     //Invoked from FilterButtonMore component
-    setIsNewPlans(state, payLoad){
+    setIsNewPlans(state, payLoad) {
       state.propertyFilters.isNewPlans = payLoad;
     },
     //Invoked from FilterButtonMore component
-    setIsContingents(state, payLoad){
+    setIsContingents(state, payLoad) {
       state.propertyFilters.isContingents = payLoad;
     },
     //Invoked from FilterButtonMore component
-    setIsNewConstructions(state, payLoad){
+    setIsNewConstructions(state, payLoad) {
       state.propertyFilters.isNewConstructions = payLoad;
     },
     //Invoked from FilterButtonMore component
-    setIsMatterPorts(state, payLoad){
+    setIsMatterPorts(state, payLoad) {
       state.propertyFilters.has3DTours = payLoad;
     },
     //Invoked from FilterButtonMore component
-    setIsHasOpenHousesOnly(state, payLoad){
+    setIsHasOpenHousesOnly(state, payLoad) {
       state.propertyFilters.hasOpenHouses = payLoad;
     },
     //Invoked from FilterButtonMore component
-    setIsForeclosuresOnly(state, payLoad){
+    setIsForeclosuresOnly(state, payLoad) {
       state.propertyFilters.isForeclosures = payLoad;
     },
     //Invoked from FilterButtonMore component
-    setIsCatsAllowed(state, payLoad){
+    setIsCatsAllowed(state, payLoad) {
       state.propertyFilters.allowsCats = payLoad;
     },
     //Invoked from FilterButtonMore component
-    setIsDogsAllowed(state, payLoad){
+    setIsDogsAllowed(state, payLoad) {
       state.propertyFilters.allowsDogs = payLoad;
     },
     //Invoked from filterCoreYearBuilt component
-    setYearBuiltAgeMin(state, yearPayLoad){
+    setYearBuiltAgeMin(state, yearPayLoad) {
       state.propertyFilters.age_min = yearPayLoad;
     },
     //Invoked from filterCoreYearBuilt component
-    setYearBuiltAgeMax(state, yearPayLoad){
+    setYearBuiltAgeMax(state, yearPayLoad) {
       state.propertyFilters.age_max = yearPayLoad;
     },
     //Invoked from filterCoreBathrooms component
-    setBathroomInfo(state, titlePayload){
+    setBathroomInfo(state, titlePayload) {
       state.filterDescriptionInfo.bathroom = titlePayload;
     },
     //Invoked from filterCoreBathrooms component
-    setNumberOfBathRoom(state, propertyPayLoad){
+    setNumberOfBathRoom(state, propertyPayLoad) {
       state.propertyFilters.numberOfBath = propertyPayLoad;
     },
     //Invoked from filterCoreFeatures component
-    setHomeFeaturesTitleInfo(state, titlePayload){
+    setHomeFeaturesTitleInfo(state, titlePayload) {
       state.filterDescriptionInfo.features = titlePayload;
     },
     //Invoked from filterCoreFeatures component
-    setHomeFeatures(state, propertyPayLoad){
+    setHomeFeatures(state, propertyPayLoad) {
       state.propertyFilters.features = propertyPayLoad;
     },
     //Invoked in SearchResultContentLayout
-    setFilterIsActive(state, payload){
+    setFilterIsActive(state, payload) {
       state.filterDescriptionInfo.filterIsActive = payload;
     },
     //Invoked in SearchResultContentLayout
-    setFilterMoreIsActive(state, payload){
+    setFilterMoreIsActive(state, payload) {
       state.filterDescriptionInfo.filterMoreIsActive = payload;
     },
     //Invoked from filterCoreBedroom component
-    setBedroomInfo(state, titlePayload){
+    setBedroomInfo(state, titlePayload) {
       state.filterDescriptionInfo.bedroom = titlePayload;
     },
     //Invoked from filterCoreHomeTypes component
-    setHomeTypeTitleInfo(state, titlePayload){
+    setHomeTypeTitleInfo(state, titlePayload) {
       state.filterDescriptionInfo.homeType = titlePayload;
     },
     //Invoked from filtercorePriceRange component
-    setPriceRangeInfo(state, priceInfoPayload){
+    setPriceRangeInfo(state, priceInfoPayload) {
       state.filterDescriptionInfo.priceRange = priceInfoPayload;
     },
     //Invoked in the searchResultContentLayout in onMounted life cycle;
     //FilterRouteTab
     //SearchInput
-    setSearchedData(state, searchedPayLoad){
+    setSearchedData(state, searchedPayLoad) {
       state.searchedData = searchedPayLoad;
     },
     //Invoked from https request in the searchResultContentLayout component
-    setAllPropertyListings(state, propertyPayLoad){
+    setAllPropertyListings(state, propertyPayLoad) {
       state.allPropertyListings = propertyPayLoad;
     },
     //Invoked from computedAgentAndNoneAgent
-    setListingsByAgent(state, propertyPayLoad){
+    setListingsByAgent(state, propertyPayLoad) {
       state.propertyListingsByAgent = propertyPayLoad;
     },
     //Invoked from computedAgentAndNoneAgent component
-    setListingsByNoneAgent(state, propertyPayLoad){
+    setListingsByNoneAgent(state, propertyPayLoad) {
       state.propertyListingsByNoneAgent = propertyPayLoad;
     },
     //Invoked from filter button Agent and Other Listings
-    setActiveListBranch(state, propertyPayLoad){
+    setActiveListBranch(state, propertyPayLoad) {
       state.activeListBranch = propertyPayLoad;
     },
     //Invoked from computedAgentAndNoneAgent component
-    setActiveListing(state, propertyPayLoad){
+    setActiveListing(state, propertyPayLoad) {
       state.activeListing = propertyPayLoad;
     },
     //Invoked from Filter button Price Range component
-    setMinPriceRange(state, propertyPayLoad){
+    setMinPriceRange(state, propertyPayLoad) {
       state.propertyFilters.priceMinRange = propertyPayLoad;
     },
     //Invoked from Filter button Price Range component
-    setMaxPriceRange(state, propertyPayLoad){
+    setMaxPriceRange(state, propertyPayLoad) {
       state.propertyFilters.priceMaxRange = propertyPayLoad;
     },
     //Invoked from Filter button Price Range component
-    setNumberOfBedRoom(state, propertyPayLoad){
+    setNumberOfBedRoom(state, propertyPayLoad) {
       state.propertyFilters.numberOfBed = propertyPayLoad;
     },
     //Invoked from FilterButtonHomeType component
-    setHomeType(state, propertyPayLoad){
+    setHomeType(state, propertyPayLoad) {
       state.propertyFilters.homeType = propertyPayLoad;
     },
     //Invoked from Filter button sorting component
-    setPropertySorting(state, propertyPayLoad){
+    setPropertySorting(state, propertyPayLoad) {
       state.propertyFilters.sorting = propertyPayLoad;
     },
     //Invoked from searchResultComponent
-    setIsLoading(state, isLoadingPayload){
+    setIsLoading(state, isLoadingPayload) {
       state.isLoading = isLoadingPayload;
     },
     //Invoked from searchResultComponent
-    setFetchingIsBusy(state, isLoadingPayload){
+    setFetchingIsBusy(state, isLoadingPayload) {
       state.fetchingIsBusy = isLoadingPayload;
     },
     //Invoked from async request useFetchjs
-    setCaughtError(state, errorPayload){
+    setCaughtError(state, errorPayload) {
       state.errorCatch = errorPayload;
     },
     //Invoked from HomeButtonTab; searchResultContentLayout
-    setActiveRoutePath(state, routePayload){
+    setActiveRoutePath(state, routePayload) {
       state.activeRoutePath = routePayload;
     },
     //Invoked from SearchInput
     //Invoked from FilterRouteTab
-    setUseRouterPush(_, routePayload){
+    setUseRouterPush(_, routePayload) {
       useRouterPush(routePayload);
     },
     //Invoked in searchResultContentLayout Components
-    setResetPropertyFilterState(state){
+    setResetPropertyFilterState(state) {
       const defaultPropertyFilterState = getDefaultPropertyFilterState();
-      Object.keys(defaultPropertyFilterState).forEach(key => {
-        state.propertyFilters[key] = defaultPropertyFilterState[key]
+      Object.keys(defaultPropertyFilterState).forEach((key) => {
+        state.propertyFilters[key] = defaultPropertyFilterState[key];
       });
     },
   },
 
   actions: {
-    resetPropertyFilterState({ commit}){
+    resetPropertyFilterState({ commit }) {
       commit("setResetPropertyFilterState");
     },
   },

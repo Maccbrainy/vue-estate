@@ -84,7 +84,7 @@ export default {
       toggleMenu,
       isPropertyDetailedPage,
       historyRoutePath,
-      removeUnderScoresFromAString
+      removeUnderScoresFromAString,
     };
   },
 };

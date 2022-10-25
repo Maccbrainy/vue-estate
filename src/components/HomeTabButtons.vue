@@ -53,7 +53,7 @@ export default {
       routeNames,
       activateTab,
       activeTabButton,
-      storeData
+      storeData,
     };
   },
 };

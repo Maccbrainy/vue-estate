@@ -2,95 +2,105 @@
   <div class="relative">
     <div class="absolute left-0 p-2 z-10">
       <div class="flex justify-start space-x-1">
-        <span 
-          v-if="propertyStatus" 
+        <span
+          v-if="propertyStatus"
           class="
             flex
             items-center
             cursor-default
-            text-xs text-blue-900 
-            bg-white 
-            rounded-md 
-            p-1 
-            uppercase 
-            font-semibold">
+            text-xs text-blue-900
+            bg-white
+            rounded-md
+            p-1
+            uppercase
+            font-semibold
+          "
+        >
           {{ propertyStatus }}
         </span>
-        <span 
-          v-if="isNewListing" 
+        <span
+          v-if="isNewListing"
           class="
             flex
             items-center
             cursor-default
-            text-xs text-blue-900 
-            bg-white 
-            rounded-md 
-            p-1 
-            uppercase 
-            font-semibold">
+            text-xs text-blue-900
+            bg-white
+            rounded-md
+            p-1
+            uppercase
+            font-semibold
+          "
+        >
           {{
             has3Dtour || hasOpenHouses ? `NEW` : `NEW - ${propertyLastUpdated}`
           }}
         </span>
-        <span 
-          v-if="has3Dtour" 
+        <span
+          v-if="has3Dtour"
           class="
             flex
             justify-center
             items-center
             cursor-default
-            text-xs text-blue-900 
-            bg-white 
-            rounded-md 
-            p-1 
-            uppercase 
-            font-semibold"
+            text-xs text-blue-900
+            bg-white
+            rounded-md
+            p-1
+            uppercase
+            font-semibold
+          "
           ><three-d-tour-icon />
           3D VIEW
         </span>
-        <span 
-          v-if="hasOpenHouses" 
+        <span
+          v-if="hasOpenHouses"
           class="
             flex
             items-center
             cursor-default
-            text-xs text-gray-600 
-            bg-white 
-            rounded-md 
-            p-1 
-            uppercase 
-            font-semibold"
+            text-xs text-gray-600
+            bg-white
+            rounded-md
+            p-1
+            uppercase
+            font-semibold
+          "
         >
           {{ hasOpenHouses }}
         </span>
-        <span 
-          v-if="petsFriendly" 
+        <span
+          v-if="petsFriendly"
           class="
             flex
             items-center
             cursor-default
-            text-xs text-gray-600 
-            bg-white 
-            rounded-md 
-            p-1 
-            uppercase 
-            font-semibold">
+            text-xs text-gray-600
+            bg-white
+            rounded-md
+            p-1
+            uppercase
+            font-semibold
+          "
+        >
           PET FRIENDLY</span
         >
-        <span 
-          v-if="isNewPlan" 
+        <span
+          v-if="isNewPlan"
           class="
             flex
             items-center
             cursor-default
-            text-xs text-gray-600 
-            bg-white 
-            rounded-md 
-            p-1 
-            uppercase 
-            font-semibold"
+            text-xs text-gray-600
+            bg-white
+            rounded-md
+            p-1
+            uppercase
+            font-semibold
+          "
         >
-          BUILDABLE PLAN</span>
+          BUILDABLE PLAN</span
+        >
       </div>
     </div>
     <div class="absolute right-0 p-1 z-10 cursor-pointer">
@@ -100,13 +110,13 @@
 </template>
 <script>
 import { computed, inject } from "vue";
-import { ThreeDTourIcon } from "../assets/icons"; 
+import { ThreeDTourIcon } from "../assets/icons";
 import { format, formatDistanceStrict } from "date-fns";
 export default {
   name: "WidgetClientFlags",
   components: {
     // SaveSearch,
-    ThreeDTourIcon
+    ThreeDTourIcon,
   },
   setup() {
     const displayFlags = inject("displayClientFlags");
@@ -129,18 +139,20 @@ export default {
     const isNewListing = computed(() => {
       let getValueIfPropertyExist = Object.hasOwn(
         displayFlags.clientFlags,
-        "is_new_listing") 
-        ? displayFlags.clientFlags.is_new_listing 
+        "is_new_listing"
+      )
+        ? displayFlags.clientFlags.is_new_listing
         : false;
-      return getValueIfPropertyExist; 
+      return getValueIfPropertyExist;
     });
     const hasOpenHouses = computed(() => {
       let getValueIfPropertyExist = Object.hasOwn(
         displayFlags.clientFlags,
-        "has_open_house") 
-        ? displayFlags.clientFlags.has_open_house 
+        "has_open_house"
+      )
+        ? displayFlags.clientFlags.has_open_house
         : false;
-      if (getValueIfPropertyExist){
+      if (getValueIfPropertyExist) {
         let startDate = format(
           new Date(displayFlags.clientFlags.open_houses[0].start_date),
           "E,h"
@@ -157,29 +169,33 @@ export default {
     const has3Dtour = computed(() => {
       let getValueIfPropertyExist = Object.hasOwn(
         displayFlags.clientFlags,
-        "has_matterport") 
-        ? displayFlags.clientFlags.has_matterport 
+        "has_matterport"
+      )
+        ? displayFlags.clientFlags.has_matterport
         : false;
       return getValueIfPropertyExist;
     });
     const isNewPlan = computed(() => {
       let getValueIfPropertyExist = Object.hasOwn(
         displayFlags.clientFlags,
-        "is_new_plan") 
-        ? displayFlags.clientFlags.is_new_plan 
+        "is_new_plan"
+      )
+        ? displayFlags.clientFlags.is_new_plan
         : false;
       return getValueIfPropertyExist;
     });
     const petsFriendly = computed(() => {
       let getCatValueIfPropertyExist = Object.hasOwn(
         displayFlags.clientFlags,
-        "allows_cats") 
+        "allows_cats"
+      )
         ? displayFlags.clientFlags.allows_cats
         : false;
       let getDogValueIfPropertyExist = Object.hasOwn(
         displayFlags.clientFlags,
-        "allows_dogs")
-        ? displayFlags.clientFlags.allows_dogs 
+        "allows_dogs"
+      )
+        ? displayFlags.clientFlags.allows_dogs
         : false;
       return getCatValueIfPropertyExist || getDogValueIfPropertyExist;
     });
@@ -190,8 +206,8 @@ export default {
       hasOpenHouses,
       has3Dtour,
       isNewPlan,
-      petsFriendly
-    }
+      petsFriendly,
+    };
   },
-}
+};
 </script>

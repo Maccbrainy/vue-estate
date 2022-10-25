@@ -31,4 +31,3 @@ export { default as NavBarDropdownItem } from "@/components/buttonui/NavBarDropd
 //SearchUI
 export { default as SearchBox } from "@/components/buttonui/SearchBox.vue";
 export { default as SearchInput } from "@/components/buttonui/SearchInput.vue";
-

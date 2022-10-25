@@ -116,7 +116,7 @@
         </div>
         <slot></slot>
       </fieldset>
-      <div 
+      <div
         v-if="isAdvancedDropdown"
         v-show="buttonIsOpen"
         class="
@@ -124,7 +124,8 @@
           bg-white
           mf:w-full mf:right-0
           overflow-hidden
-        ">
+        "
+      >
         <div class="hidden mf:m-3 mf:relative mf:flex mf:justify-end mf:pb-1">
           <close-mobile-menu
             v-on:click="buttonIsOpen = !buttonIsOpen"
@@ -146,7 +147,8 @@
             lm:absolute
             lm:transform
             lm:-translate-x-3/4
-          ">
+          "
+        >
           <slot name="moreAdvancedButtons"></slot>
           <div
             class="
@@ -158,7 +160,8 @@
               py-2
               bg-white
               lm:rounded-lg
-            ">
+            "
+          >
             <button
               type="button"
               class="
@@ -173,7 +176,8 @@
                 rounded-lg
                 hover:bg-teal-lighter hover:border-teal
                 focus:bg-teal focus:text-white focus:border-teal
-              ">
+              "
+            >
               Save Search
             </button>
             <button
@@ -190,7 +194,8 @@
                 rounded-lg
                 hover:bg-teal-lighter hover:text-teal hover:border-teal
                 focus:bg-teal focus:text-white focus:border-teal
-              ">
+              "
+            >
               {{ storeData.fetchingIsBusy ? "Loading ..." : "View Homes" }}
             </button>
           </div>

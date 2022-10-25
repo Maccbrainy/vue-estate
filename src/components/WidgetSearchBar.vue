@@ -1,18 +1,20 @@
 <template>
   <search-box>
     <search-input v-model="searchData">
-      <button 
+      <button
         class="
-        bg-red-600
-        hover:bg-red-800 
-          absolute 
-          right-0 
-          top-0 
+          bg-red-600
+          hover:bg-red-800
+          absolute
+          right-0
+          top-0
           w-16
           h-full
           rounded-r-md
-          cursor-pointer" 
-        role="button">
+          cursor-pointer
+        "
+        role="button"
+      >
         <search-icon />
       </button>
     </search-input>
@@ -32,7 +34,7 @@ export default {
   },
   setup() {
     const searchData = ref(null);
-    
+
     //Access to routing;
     const route = useRoute();
     const router = useRouter();
@@ -41,37 +43,39 @@ export default {
     const routeParamSlug = route.params.slug;
     validateSearchInfoCharacter(routeParamSlug);
 
-    function validateSearchInfoCharacter(argument){
+    function validateSearchInfoCharacter(argument) {
       let searchInfo = argument;
-      if (!argument){ 
+      if (!argument) {
         return;
       }
       let searchedInfoFirstLetterUpperCase = searchInfo.charAt(0).toUpperCase();
-      let validatedSearchInfo = 
-        searchedInfoFirstLetterUpperCase + 
+      let validatedSearchInfo =
+        searchedInfoFirstLetterUpperCase +
         searchInfo.split("").slice(1).join("").toLowerCase();
       routerBuildUrl(validatedSearchInfo);
     }
-    function routerBuildUrl(argument){
-      if ( !argument ) { return };
+    function routerBuildUrl(argument) {
+      if (!argument) {
+        return;
+      }
       // named route with params to let the router build the url;
       router.push({
         name: "BuyPage",
         params: {
           slug: argument,
-        } 
+        },
       });
     }
-    function onSubmit(){
+    function onSubmit() {
       const searchedInfoQuery = searchData.value;
       validateSearchInfoCharacter(searchedInfoQuery);
     }
-    return{
+    return {
       searchData,
       route,
       router,
       onSubmit,
-    }
+    };
   },
 };
 </script>

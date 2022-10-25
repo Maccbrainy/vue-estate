@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import store from "@/store";
 
-export default function useSortListingsByAgentAndOthers(dataProperties){
+export default function useSortListingsByAgentAndOthers(dataProperties) {
   // const activeListings = ref({});
 
   const listingsByAgent = computed(() => {
@@ -18,5 +18,5 @@ export default function useSortListingsByAgentAndOthers(dataProperties){
   return {
     listingsByOthers,
     listingsByAgent,
-  }
+  };
 }

@@ -9,7 +9,7 @@
 <script>
 export default {
   props: {
-    fieldsetTitle: [String, Number]
-  }
-}
+    fieldsetTitle: [String, Number],
+  },
+};
 </script>

@@ -1,13 +1,15 @@
 <template>
   <dropdown-button-options>
-    <dropdown-button-option 
-      v-for="propertyOption in propertyOptions" 
-      v-bind:key="propertyOption.id">
+    <dropdown-button-option
+      v-for="propertyOption in propertyOptions"
+      v-bind:key="propertyOption.id"
+    >
       <dropdown-button-option-check-box
         v-bind:checked="value.includes(propertyOption.id)"
-        @update:checked="check(propertyOption.id, $event)" 
+        @update:checked="check(propertyOption.id, $event)"
         v-bind:fieldId="propertyOption.id"
-        v-bind:label="propertyOption.id">
+        v-bind:label="propertyOption.id"
+      >
         {{ propertyOption.title }}
       </dropdown-button-option-check-box>
     </dropdown-button-option>
@@ -16,13 +18,13 @@
 <script>
 // import { ref } from "vue";
 // import { useStore } from "vuex";
-import { 
-  // DropdownButton, 
-  DropdownButtonOptions, 
+import {
+  // DropdownButton,
+  DropdownButtonOptions,
   DropdownButtonOption,
-  DropdownButtonOptionCheckBox, 
+  DropdownButtonOptionCheckBox,
 } from "@/components/buttonui/index";
-export default ({
+export default {
   name: "DropdownButtonMultiCheckBoxes",
   components: {
     // DropdownButton,
@@ -32,11 +34,11 @@ export default ({
   },
   props: {
     value: {
-      type: Array
+      type: Array,
     },
     propertyOptions: {
       type: Array,
-      required: true
+      required: true,
     },
   },
   emits: ["update:value"],
@@ -44,16 +46,16 @@ export default ({
     // const store = useStore();
     const check = (propertyOptionId, checked) => {
       let updatedValue = [...props.value];
-      if (checked ){
+      if (checked) {
         updatedValue.push(propertyOptionId);
       } else {
-        updatedValue.splice(updatedValue.indexOf(propertyOptionId), 1)
+        updatedValue.splice(updatedValue.indexOf(propertyOptionId), 1);
       }
       context.emit("update:value", updatedValue);
-    }
+    };
     return {
-      check
-    }
-  }
-})
+      check,
+    };
+  },
+};
 </script>

@@ -10,19 +10,20 @@
       class="
         inline-flex
         w-full
-        justify-center 
+        justify-center
         rounded-md
-        border border-gray-500 
+        border border-gray-500
         shadow-sm
         px-3
-        py-2 
+        py-2
         bg-white
-        focus:outline-none 
+        focus:outline-none
         focus:ring
-        focus:ring-offset-2 
-        focus:ring-offset-white 
-        focus:ring-teal-light"
-      />
+        focus:ring-offset-2
+        focus:ring-offset-white
+        focus:ring-teal-light
+      "
+    />
     <!-- <p v-show="!isANumber" class="text-sm font-thin italic">Must be a number</p> -->
   </div>
 </template>
@@ -31,21 +32,21 @@ import { watchEffect, ref } from "vue";
 export default {
   props: {
     placeholder: {
-      type: String
+      type: String,
     },
     searchText: [String, Number],
     isANumber: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
-  emits: ['update:searchText', 'update:inFocus'],
+  emits: ["update:searchText", "update:inFocus"],
   setup(_, context) {
     const focused = ref(null);
     watchEffect(() => {
-      context.emit('update:inFocus', focused.value);
+      context.emit("update:inFocus", focused.value);
       // console.log("isANUmberProp:", props.isANumber);
     });
-    return { focused }
-  }
-}
+    return { focused };
+  },
+};
 </script>

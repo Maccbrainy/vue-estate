@@ -5,24 +5,26 @@
     class="
       inline-flex
       w-full
-      justify-center 
+      justify-center
       rounded-md
       shadow-sm
       px-3
-      py-2 
-      bg-white 
-      focus:outline-none 
+      py-2
+      bg-white
+      focus:outline-none
       focus:ring
-      focus:ring-offset-2 
-      focus:ring-offset-white 
-      focus:ring-teal-light 
-      border border-gray-500">
+      focus:ring-offset-2
+      focus:ring-offset-white
+      focus:ring-teal-light
+      border border-gray-500
+    "
+  >
     <slot></slot>
   </select>
 </template>
 <script>
 export default {
-  props: ['modelValue'],
-  emits: ['update:modelValue'],
-}
+  props: ["modelValue"],
+  emits: ["update:modelValue"],
+};
 </script>
