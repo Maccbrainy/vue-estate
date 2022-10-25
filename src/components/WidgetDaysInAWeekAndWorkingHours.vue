@@ -3,17 +3,18 @@
     <button
       v-show="!isChevronLeftVisibility == 0"
       v-on:click="moveSlide(-1)"
-      class="absolute z-10 -left-2 transform translate-y-full"
+      class="absolute z-10 -left-3 mt-7"
     >
       <chevron-left
         class="
           text-gray-600
-          w-5
-          h-5
+          w-7
+          h-7
           p-1
           bg-white
+          border
           rounded-full
-          shadow-md
+          hover:shadow-md
           transform
           hover:scale-105
           active:bg-gray-300
@@ -22,19 +23,20 @@
     </button>
     <button
       v-show="isChevronRightVisibility"
-      class="absolute z-10 -right-2 transform translate-y-full"
+      class="absolute z-10 -right-3 mt-7"
     >
       <chevron-right
         v-on:click="moveSlide(1)"
         class="
           text-gray-600
-          w-5
+          w-7
           p-1
           bg-white
-          h-5
+          h-7
+          border
           hover:scale-105
           rounded-full
-          shadow-md
+          hover:shadow-md
           transform
           active:bg-gray-300
         "
@@ -47,12 +49,13 @@
       <li
         v-for="(date, index) in getTheDaysInAWeekRange"
         :key="date"
-        v-bind:ref="(el) => (dateItemRefs[index] = el)" class="flex-1"
+        v-bind:ref="(el) => (dateItemRefs[index] = el)"
+        class="flex-1"
       >
         <button
           v-on:click="getTheDayInformation($event, date, index)"
-          v-bind:value="date"
-          v-bind:id="date"
+          v-bind:value="`${date.dayOfWeek},${date.dayOfMonth} ${date.month}`"
+          v-bind:id="`${date.dayOfWeek},${date.dayOfMonth} ${date.month}`"
           v-bind:class="{
             'border-2 border-teal-light hover:border-teal-light':
               index == isActiveDate,
@@ -61,13 +64,15 @@
           class="
             border-gray-400
             w-full
-            min-w-max
+            lm:w-16
+            xs:w-16
+            min-w-full
             rounded-lg
             bg-white
             h-auto
             text-gray-600 text-sm
             px-3
-            py-1
+            py-2
             inline-block
             hover:bg-gray-100 hover:border-gray-200
           "
@@ -98,7 +103,7 @@
           for="Time"
           v-show="focused || modelValue"
           class="
-          bg-white
+            bg-white
             absolute
             w-full
             left-4
@@ -152,13 +157,13 @@ import { setTheDaysInAWeekRange, setWorkingHoursRangeInADate } from "@/helper";
 import { ChevronRight, ChevronLeft, InformationIcon } from "@/assets/icons";
 export default {
   name: "WidgetDaysInAWeekAndWorkingHours",
-  props: ['modelValue'],
+  props: ["modelValue"],
   components: {
     ChevronRight,
     ChevronLeft,
-    InformationIcon
+    InformationIcon,
   },
-  emits: ['update:modelValue', 'update:focused'],
+  emits: ["update:modelValue", "update:focused"],
   setup(_, context) {
     const focused = ref(null);
     const dateContentWidthRef = ref(null);
@@ -204,15 +209,12 @@ export default {
         remainderOfOverAllScrollWidthLength > containerWidthVisibleArea
           ? true
           : false;
-
-        console.log("scrollWidth:", overAllScrollWidthLength);
-        console.log("offsetWidth:", containerWidthVisibleArea);
     };
 
     const getTheDayInformation = (_, date, index) => {
       isActiveDate.value = index;
       getDateWorkingHours.value = setWorkingHoursRangeInADate(date.rawDate);
-      context.emit('update:modelValue', getDateWorkingHours.value[0].date);
+      context.emit("update:modelValue", getDateWorkingHours.value[0].date);
       return;
     };
 
@@ -223,12 +225,11 @@ export default {
 
       setTimeout(() => {
         isChevronRightVisibility.value =
-          containerWidthVisibleArea > containerWidthVisibleAreaDefault 
-            ? false 
+          containerWidthVisibleArea > containerWidthVisibleAreaDefault
+            ? false
             : true;
       }, 2000);
-
-    })
+    });
 
     return {
       focused,
