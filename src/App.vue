@@ -13,41 +13,16 @@
   </base-layout>
 </template>
 <script>
-
 import BaseLayout from "@/layouts/BaseLayout.vue";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import NavBar from "@/components/NavBar.vue";
 import NavBarSearchForm from "@/components/NavBarSearchForm.vue";
-export default ({
+export default {
   components: {
     BaseLayout,
     NavBarContainer,
     NavBar,
-    NavBarSearchForm
+    NavBarSearchForm,
   },
-})
+};
 </script>
-<style>
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-html,
-body {
-  margin: 0px;
-  padding: 0px;
-  font-family: 'Open Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(255, 255, 255);
-}
-* {
-    box-sizing: border-box;
-}
-
-.leaflet-popup-content {
-  width: 280px !important;
-  margin: 0px !important;
-}
-.leaflet-popup-content p {
-  margin: 1px 0px !important;
-}
-</style>
