@@ -66,13 +66,26 @@ export default {
     const checkedSignal = () => {
       store.commit("setHomeFeatures", checkedFeatures.value);
     };
+    /** regExStringToArray to convert the incoming homeFeature string
+     * from the array.join() effect of @useRouterPush.js function to a
+     * proper array
+     * */
+    const regExStringToArray = /\s*(?:,|$)\s*/;
+
+    watchEffect(() => {
+      let propertyFeatures = route.query.homeFeatures
+        ? route.query.homeFeatures.split(regExStringToArray)
+        : [];
+      checkedFeatures.value = propertyFeatures;
+      store.commit("setHomeFeatures", propertyFeatures);
+    });
     onBeforeMount(() => {
       if (route.query.homeFeatures) {
-        /** Regex to convert the incoming homeFeatures string effect
-         * from the array.join() @useRouterPush.js function
+        /** regExStringToArray to convert the incoming homeFeatures string
+         * from the array.join() effect of @useRouterPush.js function to a proper array
          * */
-        let regEx = /\s*(?:,|$)\s*/;
-        checkedFeatures.value = route.query.homeFeatures.split(regEx);
+        checkedFeatures.value =
+          route.query.homeFeatures.split(regExStringToArray);
         store.commit("setHomeFeatures", checkedFeatures.value);
       }
       console.log(">>>>CORE FEATURES ONBEFOREMOUNT");

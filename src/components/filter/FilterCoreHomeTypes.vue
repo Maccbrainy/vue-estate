@@ -57,13 +57,24 @@ export default {
     function checkedSignal() {
       store.commit("setHomeType", checkedHomeType.value);
     }
+
+    /** regExStringToArray to convert the incoming homeType string
+     * from the array.join() effect of @useRouterPush.js function to a
+     * proper array
+     * */
+    const regExStringToArray = /\s*(?:,|$)\s*/;
+
+    watchEffect(() => {
+      let homeType = route.query.homeType
+        ? route.query.homeType.split(regExStringToArray)
+        : [];
+      checkedHomeType.value = homeType;
+      store.commit("setHomeType", homeType);
+    });
+
     onBeforeMount(() => {
       if (route.query.homeType) {
-        /** Regex to convert the incoming homeType string effect
-         * from the array.join() @useRouterPush.js function
-         * */
-        let regEx = /\s*(?:,|$)\s*/;
-        checkedHomeType.value = route.query.homeType.split(regEx);
+        checkedHomeType.value = route.query.homeType.split(regExStringToArray);
         store.commit("setHomeType", checkedHomeType.value);
       }
       console.log(">>>>HOMETYPE ONBEFOREMOUNT:");
