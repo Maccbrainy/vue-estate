@@ -1,3 +1,4 @@
+//switch button ui
 export { default as ButtonRadio } from "@/components/buttonui/ButtonRadio.vue";
 export { default as ButtonSlot } from "@/components/buttonui/ButtonSlot.vue";
 // SearchResultContentLayout---Sort;
@@ -14,7 +15,6 @@ export { default as DropdownButtonMultiCheckBoxes } from "@/components/buttonui/
 
 //FilterButtonGroup //FilterButtonMore;
 export { default as ButtonBox } from "@/components/buttonui/ButtonBox.vue";
-export { default as ButtonTab } from "@/components/buttonui/ButtonTab.vue";
 export { default as ButtonSingular } from "@/components/buttonui/ButtonSingular.vue";
 export { default as ButtonGroup } from "@/components/buttonui/ButtonGroup.vue";
 export { default as ButtonGroupMultiButtons } from "@/components/buttonui/ButtonGroupMultiButtons.vue";

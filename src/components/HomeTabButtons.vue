@@ -1,43 +1,59 @@
 <template>
   <span role="group" class="flex bg-gray-600 bg-opacity-50 rounded-lg">
-    <button-tab
+    <button
       v-for="(routeName, index) in routeNames"
       v-bind:key="index"
+      v-on:mouseenter="mouseOverButton = true"
+      v-on:mouseleave="mouseOverButton = false"
       v-bind:name="routeName.queryFormat"
-      v-on:click.prevent="activateTab"
+      v-on:click.prevent="activateTab(routeName.queryFormat)"
       v-bind:class="{
-        'bg-white text-teal': routeName.queryFormat == activeTabButton,
+        'bg-white font-semibold text-teal':
+          routeName.queryFormat == activeTabButton && !mouseOverButton,
+        'font-semibold': routeName.queryFormat == activeTabButton,
       }"
-      >{{ routeName.name }}</button-tab
+      class="
+        relative
+        inline-flex
+        cursor-pointer
+        rounded-lg
+        px-7
+        py-2
+        text-xl
+        font-normal
+        text-white
+        hover:text-teal hover:bg-white
+      "
     >
+      {{ routeName.name }}
+    </button>
   </span>
 </template>
 <script>
-import { ButtonTab } from "@/components/buttonui";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import settingsData from "@/api/settingsData.json";
+
 export default {
   name: "HomeTabButtons",
-  components: {
-    ButtonTab,
-  },
+
   setup() {
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
+    const mouseOverButton = ref(null);
     const storeData = computed(() => store.getters.getStore);
     const routeNames = ref([...settingsData.routeNames]);
 
-    function activateTab(e) {
-      if (e.target.name == storeData.value.activeRoutePath) {
+    function activateTab(queryFormat) {
+      if (queryFormat == storeData.value.activeRoutePath) {
         return;
       }
       let routingValue =
-        e.target.name == routeNames.value[0].queryFormat
+        queryFormat == routeNames.value[0].queryFormat
           ? "HomePage"
-          : e.target.name;
+          : queryFormat;
       router.push({
         name: routingValue,
       });
@@ -49,11 +65,16 @@ export default {
       return routingValue;
     });
 
+    watchEffect(() => {
+      console.log("MouseOver is on:", mouseOverButton.value);
+    });
+
     return {
       routeNames,
       activateTab,
       activeTabButton,
       storeData,
+      mouseOverButton,
     };
   },
 };
