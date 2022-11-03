@@ -31,37 +31,31 @@ export default {
   name: "NoSearchTermForAgentOrOtherListings",
   setup() {
     const store = useStore();
-    const numberOfListingsByAgent = computed(
-      () => store.getters.getPropertyListingsByAgent.length
-    );
-    const numberOfListingsByOthers = computed(
-      () => store.getters.getPropertyListingsByNoneAgent.length
-    );
-    const activeBranch = computed(() => store.getters.getActiveBranch);
+    const storeData = computed(() => store.getters.getStore);
 
     const numberOfListings = computed(() => {
-      return !numberOfListingsByAgent.value
-        ? `${numberOfListingsByOthers.value} other`
-        : !numberOfListingsByOthers.value
-        ? `${numberOfListingsByAgent.value} agent`
+      return !storeData.value.propertyListingsByAgent.length
+        ? `${storeData.value.propertyListingsByNoneAgent.length} other`
+        : !storeData.value.propertyListingsByNoneAgent.length
+        ? `${storeData.value.propertyListingsByAgent.length} agent`
         : "";
     });
 
     const listingBranch = computed(() => {
-      return activeBranch.value == "Agent Listings" ? "agent" : "other";
+      return storeData.value.activeListBranch == "Agent Listings" ? "agent" : "other";
     });
 
     function seeTheHomes() {
       let changeActiveListingBranch =
-        activeBranch.value == "Agent Listings"
+        storeData.value.activeListBranch == "Agent Listings"
           ? "Other Listings"
           : "Agent Listings";
       store.commit("setActiveListBranch", changeActiveListingBranch);
     }
 
     const singularPluralWord = computed(() => {
-      return numberOfListingsByAgent.value > 1 ||
-        numberOfListingsByOthers.value > 1
+      return storeData.value.propertyListingsByAgent.length > 1 ||
+        storeData.value.propertyListingsByNoneAgent.length > 1
         ? true
         : false;
     });
@@ -69,8 +63,6 @@ export default {
     return {
       listingBranch,
       numberOfListings,
-      numberOfListingsByAgent,
-      numberOfListingsByOthers,
       seeTheHomes,
       singularPluralWord,
     };
