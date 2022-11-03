@@ -78,6 +78,7 @@ export default function useRouterPush(payLoad) {
   let newPlansFilter = searchParams.value.newPlans || "";
   let newConstruct = searchParams.value.newConstruction || "";
   let contingentsFilter = searchParams.value.contingents || "";
+  let sortFilter = searchParams.value.sortType || "";
   // let latMin = searchParams.value.lat ? searchParams.value.lat : "";
   // let longMin = searchParams.value.long ? searchParams.value.long : "";
   let openMediaTable = searchParams.value.mediaTable || false;
@@ -101,6 +102,7 @@ export default function useRouterPush(payLoad) {
     newPlans: newPlansFilter,
     radius: searchRadius,
     contingents: contingentsFilter,
+    sortType: sortFilter,
     mediaTable: openMediaTable,
     // lat: latMin,
     // long: longMin,
@@ -163,6 +165,9 @@ export default function useRouterPush(payLoad) {
   }
   if (!queryParams.contingents) {
     delete queryParams.contingents;
+  }
+  if (!queryParams.sortType) {
+    delete queryParams.sortType;
   }
   if (!queryParams.mediaTable) {
     delete queryParams.mediaTable;

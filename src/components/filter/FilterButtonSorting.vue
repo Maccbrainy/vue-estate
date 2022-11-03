@@ -2,7 +2,7 @@
   <div>
     <dropdown-button-select-box>
       <dropdown-button-select
-        v-model="sorting"
+        v-model="sortType"
         v-on:change="selectSignal"
         class="shadow-none border-none text-gray-600 font-medium"
       >
@@ -18,8 +18,9 @@
   </div>
 </template>
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, onBeforeMount } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 import {
   DropdownButtonSelect,
   DropdownButtonSelectOption,
@@ -34,19 +35,27 @@ export default {
     DropdownButtonSelectBox,
   },
   setup() {
+    const route = useRoute();
     const sortOptions = ref([...settingsData.sortOptions]);
     const store = useStore();
     const storeData = computed(() => store.getters.getStore);
-    const sorting = ref(
+    const sortType = ref(
       storeData.value.propertyFilters.sorting || sortOptions.value[0].id
     );
 
     function selectSignal() {
-      store.commit("setPropertySorting", sorting.value);
+      store.commit("setPropertySorting", sortType.value);
     }
+    onBeforeMount(() => {
+      if (route.query.sortType) {
+        sortType.value = route.query.sortType;
+        store.commit("setPropertySorting", route.query.sortType);
+      }
+    });
+
     return {
       sortOptions,
-      sorting,
+      sortType,
       selectSignal,
       storeData,
     };

@@ -57,6 +57,7 @@ const routes = [
       newPlans: route.query.newPlans,
       radius: route.query.radius,
       contingents: route.query.contingents,
+      sortType: route.query.sortType
     }),
     meta: {
       title: "Vue-estate",
@@ -88,6 +89,8 @@ const routes = [
       newPlans: route.query.newPlans,
       radius: route.query.radius,
       contingents: route.query.contingents,
+      sortType: route.query.sortType
+
     }),
     meta: {
       title: "Vue-estate",
@@ -119,6 +122,8 @@ const routes = [
       newPlans: route.query.newPlans,
       radius: route.query.radius,
       contingents: route.query.contingents,
+      sortType: route.query.sortType
+
     }),
     meta: {
       title: "Vue-estate",

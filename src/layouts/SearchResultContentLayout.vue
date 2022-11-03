@@ -200,6 +200,7 @@ export default {
     newPlans: String,
     radius: String,
     contingents: String,
+    sortType: String,
   },
   components: {
     IsLoading,
@@ -327,6 +328,7 @@ export default {
           storeData.value.propertyFilters.allowsDogs;
       }
       if (storeData.value.propertyFilters.sorting) {
+        filterIsActive.value = true;
         updateRouterParams.sortType = storeData.value.propertyFilters.sorting;
       }
       //Filter is Active From FilterMore
@@ -592,7 +594,7 @@ export default {
         queryEndpointType,
         propertySlug,
         propertyCity,
-        storeData.value.propertyFilters.sorting,
+        props.sortType,
         props.bed,
         props.bath,
         props.priceMin,
