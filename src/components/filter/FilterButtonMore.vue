@@ -26,7 +26,10 @@
       <filter-core-home-types v-bind:listOptions="homeTypes">
       </filter-core-home-types>
     </dropdown-button-fieldset>
-    <dropdown-button-fieldset v-show="!isSoldPage" fieldsetTitle="Features">
+    <dropdown-button-fieldset
+      v-if="isBuyPage || isRentPage"
+      fieldsetTitle="Features"
+    >
       <filter-core-features
         v-bind:listOptionsOnSales="featuresOnSalePage"
         v-bind:listOptionsOnRentals="featuresOnRentPage"
