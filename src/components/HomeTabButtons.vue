@@ -32,7 +32,7 @@
 <script>
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
-import { ref, computed, watchEffect } from "vue";
+import { ref, computed } from "vue";
 import settingsData from "@/api/settingsData.json";
 
 export default {
@@ -63,10 +63,6 @@ export default {
         route.name == "HomePage" ? routeNames.value[0].queryFormat : route.name;
       store.commit("setActiveRoutePath", routingValue);
       return routingValue;
-    });
-
-    watchEffect(() => {
-      console.log("MouseOver is on:", mouseOverButton.value);
     });
 
     return {
