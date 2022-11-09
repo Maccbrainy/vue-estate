@@ -14,11 +14,9 @@ export default {
     const store = useStore();
     const activeRouteTab = ref("");
 
-    const getIsActiveRouteTab = computed(() => {
-      return store.getters.getIsActiveRouteTab;
-    });
+    const storeData = computed(() => store.getters.getStore);
     watchEffect(() => {
-      switch (getIsActiveRouteTab.value) {
+      switch (storeData.value.activeRoutePath) {
         case "RentPage":
         case "list-for-rent":
           activeRouteTab.value = "list-for-rent";
