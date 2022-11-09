@@ -79,13 +79,13 @@
       </span>
       <li
         v-for="(home, index) in searchPreferences"
-        :key="index"
+        :key="home.city + index"
         :data-suggestion-item="index"
         :title="`${home.city}, ${home.state_code}`"
         :id="`${home.city}`"
         :nonce="`${home.state_code}`"
         role="option"
-        v-on:click="submitClicked"
+        v-on:click="submitClicked(home)"
         aria-selected="false"
         class="
           text-gray-600
@@ -230,10 +230,10 @@ export default {
         store.commit("setSearchedData", searchPayload.value);
       }
     }
-    async function submitClicked(e) {
+    async function submitClicked(home) {
       searchPayload.value = {
-        city: e.target.id,
-        state_code: e.target.nonce,
+        city: home.city,
+        state_code: home.state_code,
         activeRouteTab: route.name,
       };
       store.commit("setUseRouterPush", searchPayload.value);
