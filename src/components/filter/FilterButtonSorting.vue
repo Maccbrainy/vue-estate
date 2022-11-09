@@ -3,7 +3,7 @@
     <dropdown-button-select-box>
       <dropdown-button-select
         v-model="sortType"
-        v-on:change="selectSignal"
+        v-on:change="selectSortType"
         class="shadow-none border-none text-gray-600 font-medium"
       >
         <dropdown-button-select-option
@@ -43,8 +43,10 @@ export default {
       storeData.value.propertyFilters.sorting || sortOptions.value[0].id
     );
 
-    function selectSignal() {
-      store.commit("setPropertySorting", sortType.value);
+    function selectSortType() {
+      let sortOption =
+        sortType.value == sortOptions.value[0].id ? "" : sortType.value;
+      store.commit("setPropertySorting", sortOption);
     }
     onBeforeMount(() => {
       if (route.query.sortType) {
@@ -56,7 +58,7 @@ export default {
     return {
       sortOptions,
       sortType,
-      selectSignal,
+      selectSortType,
       storeData,
     };
   },
