@@ -59,7 +59,7 @@
                   class="text-base font-normal text-gray-500"
                 >
                   <span v-if="activePropertyListings.length > 0 && !isLoading">
-                    {{ activePropertyListings.length }}
+                    {{ totalItemsMatchingRowsInSearch }}
                     {{ propertyCountIsGreaterThanOne }}
                   </span>
                 </h2>
@@ -93,8 +93,9 @@
           </search-result-item-card>
         </ul>
         <widget-pagination
-          :total-items="allPropertyListings.length"
-          :per-page="offSetPage"
+          :total-items="totalItemsMatchingRowsInSearch"
+          :per-page="pageLimit"
+          :offset="pageOffSet"
           :current-page="setCurrentPage"
           @page-changed="onPageChange"
         ></widget-pagination>
@@ -163,7 +164,7 @@ export default {
   //     : "";
   //   let priceMax = "";
   //   let sortType = "relevance";
-  //   const { propertyDetail, err } = await useFetch(
+  //   const { propertyListResults, err } = await useFetch(
   //     queryEndpointType,
   //     latitude,
   //     longitude,
@@ -181,7 +182,7 @@ export default {
   //   );
   //   const { listTitle } = useListingTitle(to.name, slug, city);
   //   next( vm => {
-  //     vm.setData(propertyDetail, err, listTitle);
+  //     vm.setData(propertyListResults, err, listTitle);
   //   });
   // },
 
@@ -240,7 +241,9 @@ export default {
     const storeData = computed(() => store.getters.getStore);
     const isRouteFromRentsNearOrSalesNearMe = ref(false);
     const setCurrentPage = ref(1);
-    const offSetPage = ref(40);
+    const pageLimit = ref(40);
+    const pageOffSet = ref(0);//The offset of items to be ignored in response for paging
+    const totalItemsMatchingRowsInSearch = ref(0)
     // onBeforeRouteUpdate(async (to) => {
     //   console.log(">>>>>ONBEFOREROUTEUPDATE>>>>SRCL:", to.name);
     //   console.log("onBeforeRouteUpdate reacted!!!");
@@ -254,7 +257,7 @@ export default {
     //       : "list-for-sale";
     //   let latitude = "";
     //   let longitude = "";
-    //   const { propertyDetail, err } = await useFetch(
+    //   const { propertyListResults, err } = await useFetch(
     //     queryEndpointType,
     //     latitude,
     //     longitude,
@@ -280,7 +283,7 @@ export default {
     //     storeData.value.propertyFilters.age_max,
     //     storeData.value.propertyFilters.age_min,
     //   );
-    //   allPropertyListings.value = propertyDetail.value;
+    //   allPropertyListings.value = propertyListResults.value;
     //   error.value = err;
     //   const { listingsByOthers, listingsByAgent } =
     //     useSortListingsByAgentAndOthers(allPropertyListings.value );
@@ -294,7 +297,7 @@ export default {
     //   listingTitle.value = listTitle.value;
     //   propertyListingByAgent.value = listingsByAgent.value;
     //   propertyListingByOthers.value = listingsByOthers.value;
-    //   store.commit("setAllPropertyListings", propertyDetail.value);
+    //   store.commit("setAllPropertyListings", propertyListResults.value);
     // });
     // function setData(propertyData, err, title){
     //   allPropertyListings.value = propertyData.value;
@@ -303,10 +306,15 @@ export default {
     //   console.log("ERROR DATA FETCH:", error.value);
     //   store.commit("setAllPropertyListings", propertyData.value);
     // };
-    
-    const onPageChange = (pageName) => {
-      console.log("Pagination:", pageName);
-      setCurrentPage.value = pageName;
+
+    const onPageChange = (page) => {
+      setCurrentPage.value = page;
+      let offsetSize =
+        setCurrentPage.value === 1
+          ? 0
+          : (setCurrentPage.value - 1) * pageLimit.value;
+      pageOffSet.value = offsetSize;
+      console.log("Pagination:", page);
     }
     watchEffect(() => {
       let filterMoreIsActive = false;
@@ -603,7 +611,7 @@ export default {
 
       let postalCode = isPostalCodeUsedByUser.value ? props.slug : "";
 
-      const { propertyDetail, err } = await useFetch(
+      const { propertyListResults, propertyTotalMatchingRows, err } = await useFetch(
         queryEndpointType,
         propertySlug,
         propertyCity,
@@ -637,14 +645,15 @@ export default {
       store.commit("setFetchingIsBusy", false);
       store.commit("setIsLoading", false);
 
-      console.log("FETCH DATA AFTER NAVIGATION DATA!!!:", propertyDetail.value);
+      console.log("FETCH DATA AFTER NAVIGATION DATA!!!:", propertyListResults.value);
       console.log("FETCH DATA AFTER NAVIGATION ERROR!!!:", error.value);
-      if (propertyDetail.value.length < 1) {
+      if (propertyListResults.value.length < 1) {
         return;
       }
 
-      allPropertyListings.value = propertyDetail.value;
-      store.commit("setAllPropertyListings", propertyDetail.value);
+      allPropertyListings.value = propertyListResults.value;
+      totalItemsMatchingRowsInSearch.value = propertyTotalMatchingRows.value;
+      store.commit("setAllPropertyListings", propertyListResults.value);
 
       const { listingsByOthers, listingsByAgent } =
         useSortListingsByAgentAndOthers(allPropertyListings.value);
@@ -696,7 +705,7 @@ export default {
     });
     const propertyCountIsGreaterThanOne = computed(() => {
       let countSuffix = `available in Vue Estate`;
-      return activePropertyListings.value.length > 1
+      return totalItemsMatchingRowsInSearch.value > 1
         ? `homes ${countSuffix}`
         : `home ${countSuffix}`;
     });
@@ -747,7 +756,9 @@ export default {
     return {
       setCurrentPage,
       onPageChange,
-      offSetPage,
+      pageLimit,
+      pageOffSet,
+      totalItemsMatchingRowsInSearch,
       defaultCity,
       defaultStateCode,
       agentType,
