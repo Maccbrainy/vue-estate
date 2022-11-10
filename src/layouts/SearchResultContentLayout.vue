@@ -92,6 +92,12 @@
           >
           </search-result-item-card>
         </ul>
+        <widget-pagination
+          :total-items="allPropertyListings.length"
+          :per-page="offSetPage"
+          :current-page="setCurrentPage"
+          @page-changed="onPageChange"
+        ></widget-pagination>
       </div>
     </div>
     <no-search-term-match
@@ -124,6 +130,7 @@ import {
   useListingTitle,
   useSortListingsByAgentAndOthers,
 } from "@/composables";
+import WidgetPagination from "@/components/WidgetPagination.vue";
 export default {
   name: "SearchResultContentLayout",
   // async beforeRouteEnter(to, from, next) {
@@ -211,6 +218,7 @@ export default {
     NoSearchTermMatchForAgentAndOtherListings,
     NoSearchTermForAgentOrOtherListings,
     FilterButtonSorting,
+    WidgetPagination
   },
   setup(props) {
     const store = useStore();
@@ -231,7 +239,8 @@ export default {
     const agentType = ref([...settingsData.agentType]);
     const storeData = computed(() => store.getters.getStore);
     const isRouteFromRentsNearOrSalesNearMe = ref(false);
-
+    const setCurrentPage = ref(1);
+    const offSetPage = ref(40);
     // onBeforeRouteUpdate(async (to) => {
     //   console.log(">>>>>ONBEFOREROUTEUPDATE>>>>SRCL:", to.name);
     //   console.log("onBeforeRouteUpdate reacted!!!");
@@ -294,7 +303,11 @@ export default {
     //   console.log("ERROR DATA FETCH:", error.value);
     //   store.commit("setAllPropertyListings", propertyData.value);
     // };
-
+    
+    const onPageChange = (pageName) => {
+      console.log("Pagination:", pageName);
+      setCurrentPage.value = pageName;
+    }
     watchEffect(() => {
       let filterMoreIsActive = false;
       filterIsActive.value = false;
@@ -732,7 +745,9 @@ export default {
       }
     });
     return {
-      // setData,
+      setCurrentPage,
+      onPageChange,
+      offSetPage,
       defaultCity,
       defaultStateCode,
       agentType,
