@@ -29,7 +29,8 @@ export async function useFetch(
   longitude,
   postalCode
 ) {
-  const propertyDetail = ref([]);
+  const propertyListResults = ref([]);
+  const propertyTotalMatchingRows = ref(24040);
   const err = ref(null);
   let slugName = slug;
   let cityName = city ? city.replace(/_/g, " ") : "";
@@ -85,7 +86,7 @@ export async function useFetch(
   console.log("From useFetch longtitude:", longitude);
   console.log("From useFetch postalCode:", postalCode);
 
-  propertyDetail.value = [...settingsData.properties];
+  propertyListResults.value = [...settingsData.properties];
 
   // try {
   //   err.value = null;
@@ -126,8 +127,9 @@ export async function useFetch(
   //         "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`
   //       }
   //     });
-  //   propertyDetail.value = response.data.properties;
-  //   console.log("DATA FETCHED:", propertyDetail.value)
+  //   propertyTotalMatchingRows.value = response.data.meta.matching_rows
+  //   propertyListResults.value = response.data.properties;
+  //   console.log("DATA FETCHED:", propertyListResults.value)
   // } catch (err){
   //   err.value = err;
   //   console.log("Error in fetching from rapid api 1:", err);
@@ -135,7 +137,8 @@ export async function useFetch(
   // }
 
   return {
-    propertyDetail,
+    propertyListResults,
+    propertyTotalMatchingRows,
     err,
   };
 }
