@@ -2,7 +2,7 @@
   <div class="relative outline-none mt-1">
     <button
       v-show="!isChevronLeftVisibility == 0"
-      v-on:click="moveSlide(-1)"
+      v-on:click="moveSlide('left')"
       class="absolute z-10 -left-3 mt-7"
     >
       <chevron-left
@@ -26,7 +26,7 @@
       class="absolute z-10 -right-3 mt-7"
     >
       <chevron-right
-        v-on:click="moveSlide(1)"
+        v-on:click="moveSlide('right')"
         class="
           text-gray-600
           w-7
@@ -184,10 +184,10 @@ export default {
       let overAllScrollWidthLength = dateContentWidthRef.value.scrollWidth;
       let containerWidthVisibleArea = dateContentWidthRef.value.offsetWidth;
       // let containerWidthVisibleArea = dateContentWidthRef.value.clientWidth;
-      if (direction === 1) {
+      if (direction === "right") {
         moveSlideDirectionIndex.value -= containerWidthVisibleArea;
       }
-      if (direction === -1) {
+      if (direction === "left") {
         moveSlideDirectionIndex.value += containerWidthVisibleArea;
       }
 
