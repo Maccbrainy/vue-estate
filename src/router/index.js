@@ -3,11 +3,8 @@ import store from "@/store";
 import { computed } from "vue";
 import { removeUnderScoresFromAString } from "@/helper";
 
-import HomePage from "../views/TheHomePage.vue";
+import { TheHomePage, ThePropertyListPage } from "../views/";
 import settingsData from "@/api/settingsData.json";
-import SearchResultContentLayout from "@/layouts/SearchResultContentLayout.vue";
-// import SearchResultDetailedContentLayout from "@/layouts/SearchResultDetailedContentLayout.vue";
-import SiteMapsContentLayout from "@/layouts/SiteMapsContentLayout.vue";
 
 const storeData = computed(() => store.getters.getStore);
 const agentType = [...settingsData.agentType];
@@ -17,7 +14,7 @@ const routes = [
   {
     path: "/",
     name: "HomePage",
-    component: HomePage,
+    component: TheHomePage,
     meta: {
       title: "Vue-estate: Real Estate Listings, Homes For Sale, Housing Data",
     },
@@ -25,7 +22,7 @@ const routes = [
   {
     path: "/rent",
     name: "list-for-rent",
-    component: HomePage,
+    component: TheHomePage,
     meta: {
       title: "Rental Listings in your Neighbourhood | Vue-estate.com",
     },
@@ -33,7 +30,7 @@ const routes = [
   {
     path: "/for_sale/:slug/:city?",
     name: "BuyPage",
-    component: SearchResultContentLayout,
+    component: ThePropertyListPage,
     alias: ["/:slug/:city?"],
     props: (route) => ({
       name: route.name,
@@ -59,15 +56,12 @@ const routes = [
       contingents: route.query.contingents,
       sortType: route.query.sortType,
       page: route.query.page,
-    }),
-    meta: {
-      title: "Vue-estate",
-    },
+    })
   },
   {
     path: "/for_rent/:slug/:city?",
     name: "RentPage",
-    component: SearchResultContentLayout,
+    component: ThePropertyListPage,
     props: (route) => ({
       name: route.name,
       slug: route.params.slug,
@@ -97,7 +91,7 @@ const routes = [
   {
     path: "/sold/:slug/:city?",
     name: "SoldPage",
-    component: SearchResultContentLayout,
+    component: ThePropertyListPage,
     props: (route) => ({
       name: route.name,
       slug: route.params.slug,
@@ -133,7 +127,7 @@ const routes = [
   {
     path: "/houses-for-sale-near-me",
     name: "SalesNearMe",
-    component: SearchResultContentLayout,
+    component: ThePropertyListPage,
     props: (route) => ({
       name: route.name,
       lat: route.params.lat,
@@ -143,7 +137,7 @@ const routes = [
   {
     path: "/apartments-for-rent-near-me",
     name: "RentsNearMe",
-    component: SearchResultContentLayout,
+    component: ThePropertyListPage,
     props: (route) => ({
       name: route.name,
       lat: route.query.lat,
@@ -151,17 +145,9 @@ const routes = [
     }),
   },
   {
-    path: "/sitemaps/",
-    name: "SiteMaps",
-    component: SiteMapsContentLayout,
-    meta: {
-      title: "Homes in USA",
-    },
-  },
-  {
     path: "/",
     name: "list-sold",
-    component: HomePage,
+    component: TheHomePage,
     alias: "/list-sold",
     meta: {
       title: "Vue-estate: Real Estate Sold Listings, and Housing Data",
@@ -170,14 +156,12 @@ const routes = [
   {
     path: "/C/:slug/:city/:address?/:propertyId/:postalCode?",
     name: "SalesPageDetail",
-    // component: SearchResultDetailedContentLayout,
-
     // route level code-splitting
-    // this generates a separate chunk (SalesPageDetail.[hash].js) for this route
+    // this generates a separate chunk (ThePropertyDetailedPage.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(
-        /* webpackChunkName: "SalesPageDetail" */ "../layouts/SearchResultDetailedContentLayout.vue"
+        /* webpackChunkName: "ThePropertyDetailedPage" */ "../views/ThePropertyDetailedPage.vue"
       ),
     props: (route) => ({
       name: route.name,
@@ -192,14 +176,12 @@ const routes = [
   {
     path: "/P/:slug/:city/:address?/:propertyId/:postalCode?",
     name: "RentPageDetail",
-    // component: SearchResultDetailedContentLayout,
-
     // route level code-splitting
-    // this generates a separate chunk (RentPageDetail.[hash].js) for this route
+    // this generates a separate chunk (ThePropertyDetailedPage.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(
-        /* webpackChunkName: "RentPageDetail" */ "../layouts/SearchResultDetailedContentLayout.vue"
+        /* webpackChunkName: "ThePropertyDetailedPage" */ "../views/ThePropertyDetailedPage.vue"
       ),
     props: (route) => ({
       name: route.name,
@@ -224,12 +206,14 @@ const routes = [
   },
   {
     path: "/mortgage",
-    name: "TheMortgagePage",
+    name: "mortgagePage",
     // route level code-splitting
-    // this generates a separate chunk (mortgage.[hash].js) for this route
+    // this generates a separate chunk (TheMortgagePage.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "mortgage" */ "../views/TheMortgagePage.vue"),
+      import(
+        /* webpackChunkName: "TheMortgagePage" */ "../views/TheMortgagePage.vue"
+      ),
   },
 ];
 
