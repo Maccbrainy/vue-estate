@@ -17,6 +17,7 @@
           :disabled="isInFirstPage"
           type="button"
           class="
+            outline-none
             flex
             justify-center
             items-center
@@ -41,7 +42,7 @@
               currentPage === page.name,
             'bg-teal-lighter text-teal': currentPage !== page.name,
           }"
-          class="rounded-md flex-auto px-3 py-0.5 font-semibold"
+          class="outline-none rounded-md flex-auto px-3 py-0.5 font-semibold"
           :disabled="page.isDisabled"
         >
           {{ page.name }}
@@ -54,6 +55,7 @@
           :disabled="isInLastPage"
           type="button"
           class="
+            outline-none
             flex
             justify-center
             items-center
