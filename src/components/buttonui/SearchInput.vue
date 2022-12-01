@@ -87,6 +87,7 @@
         role="option"
         v-on:click="submitClicked(home)"
         aria-selected="false"
+        v-bind:ref="(el) => (suggestItemRef[index] = el)"
         class="
           text-gray-600
           border-b
@@ -118,12 +119,11 @@
   </div>
 </template>
 <script>
-import { ref, reactive, onMounted, watch, computed, onUnmounted } from "vue";
+import { ref, onMounted, watch, computed, onUnmounted } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import jsonProperties from "@/api/autoComplete.json";
-import SearchIcon from "@/assets/icons/SearchIcon.vue";
-import LocationIcon from "@/assets/icons/LocationIcon.vue";
+import autoComplete from "@/api/autoComplete.json";
+import { SearchIcon, LocationIcon } from "@/assets/icons";
 
 export default {
   name: "SearchInput",
@@ -141,9 +141,8 @@ export default {
     // const router = useRouter();
     const searchActive = ref(false);
     const currentDataIndex = ref(-1);
-
-    const autoComplete = reactive({ allProperties: jsonProperties.property });
-    const removeDuplicateHomeData = autoComplete.allProperties.reduce(
+    const suggestItemRef = ref([]);
+    const removeDuplicateHomeData = autoComplete.property.reduce(
       (accumulator, currentValue) => {
         let duplicateScreening = !accumulator.some(
           (obj) =>
@@ -254,6 +253,7 @@ export default {
         currentDataIndex.value < searchPreferences.value.length - 1
       ) {
         currentDataIndex.value++;
+        console.log("suggestItemRef:", suggestItemRef.value);
       } else if (
         searchFilterIsActive.value &&
         e.keyCode == 38 &&
@@ -264,6 +264,7 @@ export default {
     }
     return {
       autoComplete,
+      suggestItemRef,
       searchData,
       activeRouteTab,
       searchPayload,

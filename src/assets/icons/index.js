@@ -19,3 +19,5 @@ export { default as DollarIcon } from "@/assets/icons/DollarIcon.vue";
 export { default as ParkingIcon } from "@/assets/icons/ParkingIcon.vue";
 export { default as OutdoorIcon } from "@/assets/icons/OutdoorIcon.vue";
 export { default as TemperatureIcon } from "@/assets/icons/TemperatureIcon.vue";
+export { default as LocationIcon } from "@/assets/icons/LocationIcon.vue";
+export { default as SearchIcon } from "@/assets/icons/SearchIcon.vue";
