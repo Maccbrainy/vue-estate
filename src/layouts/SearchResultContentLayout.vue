@@ -1,13 +1,13 @@
 <template>
   <filter-button-container></filter-button-container>
-  <div class="flex flex-grow flex-auto flex-col z-0">
+  <div class="flex flex-grow flex-auto flex-col z-0 outline-none">
     <div
       v-bind:class="{
         'transform -translate-x-full': mapViewChanges,
       }"
-      class="w-1/2 sf:w-full block relative flex-1 -bottom-16"
+      class="w-1/2 sf:w-full block relative flex-1 -bottom-16 outline-none"
     >
-      <div tabindex="-1" class="flex flex-auto flex-col px-2 py-1">
+      <div tabindex="-1" class="flex flex-auto flex-col px-2 py-1 outline-none">
         <div
           class="flex justify-between flex-col flex-auto flex-start pl-2 pb-2"
         >
@@ -113,7 +113,7 @@
 <script>
 import { ref, computed, watchEffect, onMounted, onBeforeUnmount } from "vue";
 import { useStore } from "vuex";
-import { onBeforeRouteLeave, useRoute } from "vue-router";
+import { onBeforeRouteLeave, useRoute, onBeforeRouteUpdate } from "vue-router";
 import { useFetch } from "@/api/useFetch.js";
 import {
   FilterButtonContainer,
@@ -189,6 +189,7 @@ export default {
   props: {
     name: String,
     slug: [String, Number],
+    page: [String, Number],
     city: String,
     bed: String,
     bath: String,
@@ -219,7 +220,7 @@ export default {
     NoSearchTermMatchForAgentAndOtherListings,
     NoSearchTermForAgentOrOtherListings,
     FilterButtonSorting,
-    WidgetPagination
+    WidgetPagination,
   },
   setup(props) {
     const store = useStore();
@@ -242,84 +243,36 @@ export default {
     const isRouteFromRentsNearOrSalesNearMe = ref(false);
     const setCurrentPage = ref(1);
     const pageLimit = ref(40);
-    const pageOffSet = ref(0);//The offset of items to be ignored in response for paging
-    const totalItemsMatchingRowsInSearch = ref(0)
-    // onBeforeRouteUpdate(async (to) => {
-    //   console.log(">>>>>ONBEFOREROUTEUPDATE>>>>SRCL:", to.name);
-    //   console.log("onBeforeRouteUpdate reacted!!!");
-    //   isLoading.value = true;
-    //   store.commit("setFetchingIsBusy", true);
-    //   let queryEndpointType =
-    //     to.name == "RentPage"
-    //       ? "list-for-rent"
-    //       : to.name == "SoldPage"
-    //       ? "list-sold"
-    //       : "list-for-sale";
-    //   let latitude = "";
-    //   let longitude = "";
-    //   const { propertyListResults, err } = await useFetch(
-    //     queryEndpointType,
-    //     latitude,
-    //     longitude,
-    //     to.params.slug,
-    //     to.params.city,
-    //     storeData.value.propertyFilters.priceMinRange,
-    //     storeData.value.propertyFilters.priceMaxRange,
-    //     storeData.value.propertyFilters.numberOfBed,
-    //     storeData.value.propertyFilters.homeType,
-    //     storeData.value.propertyFilters.numberOfBath,
-    //     storeData.value.propertyFilters.features,
-    //     storeData.value.propertyFilters.sorting,
-    //     storeData.value.propertyFilters.allowsCats,
-    //     storeData.value.propertyFilters.allowsDogs,
-    //     storeData.value.propertyFilters.searchRadius,
-    //     storeData.value.propertyFilters.lotSize,
-    //     storeData.value.propertyFilters.isForeclosures,
-    //     storeData.value.propertyFilters.hasOpenHouses,
-    //     storeData.value.propertyFilters.has3DTours,
-    //     storeData.value.propertyFilters.isNewConstructions,
-    //     storeData.value.propertyFilters.isContingents,
-    //     storeData.value.propertyFilters.isNewPlans,
-    //     storeData.value.propertyFilters.age_max,
-    //     storeData.value.propertyFilters.age_min,
-    //   );
-    //   allPropertyListings.value = propertyListResults.value;
-    //   error.value = err;
-    //   const { listingsByOthers, listingsByAgent } =
-    //     useSortListingsByAgentAndOthers(allPropertyListings.value );
-    //   const { listTitle } = useListingTitle(
-    //     to.name,
-    //     to.params.slug,
-    //     to.params.city
-    //   );
-    //   isLoading.value = false;
-    //   store.commit("setFetchingIsBusy", false);
-    //   listingTitle.value = listTitle.value;
-    //   propertyListingByAgent.value = listingsByAgent.value;
-    //   propertyListingByOthers.value = listingsByOthers.value;
-    //   store.commit("setAllPropertyListings", propertyListResults.value);
-    // });
-    // function setData(propertyData, err, title){
-    //   allPropertyListings.value = propertyData.value;
-    //   error.value = err.value;
-    //   listingTitle.value = title;
-    //   console.log("ERROR DATA FETCH:", error.value);
-    //   store.commit("setAllPropertyListings", propertyData.value);
-    // };
+    const pageOffSet = ref(0); //The offset of items to be ignored in response for paging
+    const totalItemsMatchingRowsInSearch = ref(0);
+
+    onBeforeRouteUpdate((to, from) => {
+      if (to.query.page === from.query.page) {
+        setCurrentPage.value = 1
+        console.log("++++++++Reacted on page refresh true");
+      }
+    });
 
     const onPageChange = (page) => {
+      let updateRouterParams = {};
       setCurrentPage.value = page;
-      let offsetSize =
-        setCurrentPage.value === 1
-          ? 0
-          : (setCurrentPage.value - 1) * pageLimit.value;
-      pageOffSet.value = offsetSize;
-      console.log("Pagination:", page);
-    }
+
+      const {
+        activeRoutePath,
+        searchedData: { state_code, city },
+      } = storeData.value;
+      updateRouterParams.pagination = setCurrentPage.value == 1 ? null : setCurrentPage.value;
+      updateRouterParams.activeRouteTab = activeRoutePath;
+      updateRouterParams.state_code = state_code;
+      updateRouterParams.city = city;
+
+      store.commit("setUseRouterPush", updateRouterParams);
+    };
     watchEffect(() => {
       let filterMoreIsActive = false;
       filterIsActive.value = false;
       let updateRouterParams = {};
+
       if (storeData.value.propertyFilters.homeType.length > 0) {
         filterIsActive.value = true;
         updateRouterParams.homeType = storeData.value.propertyFilters.homeType;
@@ -352,6 +305,7 @@ export default {
         filterIsActive.value = true;
         updateRouterParams.sortType = storeData.value.propertyFilters.sorting;
       }
+
       //Filter is Active From FilterMore
       if (storeData.value.propertyFilters.features.length > 0) {
         filterIsActive.value = true;
@@ -421,10 +375,17 @@ export default {
         updateRouterParams.newPlans =
           storeData.value.propertyFilters.isNewPlans;
       }
+      const {
+        activeRoutePath,
+        searchedData: { state_code, city },
+      } = storeData.value;
+      updateRouterParams.activeRouteTab = activeRoutePath;
+      updateRouterParams.state_code = state_code;
+      updateRouterParams.city = city;
 
-      updateRouterParams.activeRouteTab = storeData.value.activeRoutePath;
-      updateRouterParams.state_code = storeData.value.searchedData.state_code;
-      updateRouterParams.city = storeData.value.searchedData.city;
+      //Pagination update to the route
+      updateRouterParams.pagination =
+          setCurrentPage.value == 1 ? null : setCurrentPage.value;
 
       if (
         filterIsActive.value &&
@@ -593,6 +554,10 @@ export default {
       let latitude = "";
       let longitude = "";
 
+      let pageOffsetSize = props.page ? (props.page - 1) * pageLimit.value : 0;
+      pageOffSet.value = pageOffsetSize;
+      // setCurrentPage.value = props.page;
+
       let isRoutesDefaultStateCode = isRentsNearMeOrSalesNearMe.value
         ? defaultStateCode.value
         : "";
@@ -611,33 +576,36 @@ export default {
 
       let postalCode = isPostalCodeUsedByUser.value ? props.slug : "";
 
-      const { propertyListResults, propertyTotalMatchingRows, err } = await useFetch(
-        queryEndpointType,
-        propertySlug,
-        propertyCity,
-        props.sortType,
-        props.bed,
-        props.bath,
-        props.priceMin,
-        props.priceMax,
-        props.homeType,
-        props.dogsAllowed,
-        props.catsAllowed,
-        props.homeFeatures,
-        props.yearBuiltMin,
-        props.yearBuiltMax,
-        props.lotSize,
-        props.hasOpenHouses,
-        props.has3DTours,
-        props.foreClosure,
-        props.newConstruction,
-        props.newPlans,
-        props.radius,
-        props.contingents,
-        latitude,
-        longitude,
-        postalCode
-      );
+      const { propertyListResults, propertyTotalMatchingRows, err } =
+        await useFetch(
+          queryEndpointType,
+          propertySlug,
+          propertyCity,
+          pageLimit.value,
+          pageOffsetSize,
+          props.sortType,
+          props.bed,
+          props.bath,
+          props.priceMin,
+          props.priceMax,
+          props.homeType,
+          props.dogsAllowed,
+          props.catsAllowed,
+          props.homeFeatures,
+          props.yearBuiltMin,
+          props.yearBuiltMax,
+          props.lotSize,
+          props.hasOpenHouses,
+          props.has3DTours,
+          props.foreClosure,
+          props.newConstruction,
+          props.newPlans,
+          props.radius,
+          props.contingents,
+          latitude,
+          longitude,
+          postalCode
+        );
 
       error.value = err.value;
 
@@ -645,7 +613,10 @@ export default {
       store.commit("setFetchingIsBusy", false);
       store.commit("setIsLoading", false);
 
-      console.log("FETCH DATA AFTER NAVIGATION DATA!!!:", propertyListResults.value);
+      console.log(
+        "FETCH DATA AFTER NAVIGATION DATA!!!:",
+        propertyListResults.value
+      );
       console.log("FETCH DATA AFTER NAVIGATION ERROR!!!:", error.value);
       if (propertyListResults.value.length < 1) {
         return;
@@ -731,26 +702,20 @@ export default {
           activeRouteTab: activeRoutePath,
         };
         store.commit("setSearchedData", searchPayload);
+
+      //Persist current page on page refresh from user using the Route url
+      setCurrentPage.value = parseInt(props.page) || 1;
       }
-      console.log("<><><><><><>SRCL IS MOUNTED!!!<><><><><><><>");
       store.commit("setIsLoading", false);
     });
     onBeforeRouteLeave((_, from) => {
       if (from.name == "RentsNearMe" || from.name == "SalesNearMe") {
         isRouteFromRentsNearOrSalesNearMe.value = true;
-        console.log(
-          "RentsNearMeORSalesNearMe @onBeforeRouteLeave:",
-          isRouteFromRentsNearOrSalesNearMe.value
-        );
       }
     });
     onBeforeUnmount(() => {
       if (!isRouteFromRentsNearOrSalesNearMe.value) {
         store.dispatch("resetPropertyFilterState");
-        console.log(
-          "RentsNearMeORSalesNearMe is:",
-          isRouteFromRentsNearOrSalesNearMe.value
-        );
       }
     });
     return {

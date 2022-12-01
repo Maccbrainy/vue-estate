@@ -14,7 +14,6 @@ export default function useRouterPush(payLoad) {
     : searchParams.value.state_code;
   let city = searchParams.value.city;
   let routeName = searchParams.value.activeRouteTab;
-
   let cityParam = !city
     ? ""
     : regExpWhiteSpaces.test(city)
@@ -39,10 +38,11 @@ export default function useRouterPush(payLoad) {
       activeRoute.value = routeName;
       break;
   }
-
+  console.log("pagination params:", searchParams.value.pagination)
   let minPriceFilter = searchParams.value.priceMin || "";
   let maxPriceFilter = searchParams.value.priceMax || "";
   let bedFilter = searchParams.value.bed || "";
+  let pagination = searchParams.value.pagination || null;
 
   /**For variable homeTypeFilter and For variable features below;
    * Check if vuex store searchedData is empty,
@@ -104,6 +104,7 @@ export default function useRouterPush(payLoad) {
     contingents: contingentsFilter,
     sortType: sortFilter,
     mediaTable: openMediaTable,
+    page: pagination,
     // lat: latMin,
     // long: longMin,
   };
@@ -169,6 +170,9 @@ export default function useRouterPush(payLoad) {
   if (!queryParams.sortType) {
     delete queryParams.sortType;
   }
+  if (!queryParams.page) {
+    delete queryParams.page;
+  }
   if (!queryParams.mediaTable) {
     delete queryParams.mediaTable;
   }
@@ -181,8 +185,6 @@ export default function useRouterPush(payLoad) {
     },
     query: queryParams,
   });
-
-  console.log("USEROUTERPUSH RAN === AND USING ROUTE:", activeRoute.value);
   return {
     searchTerm: searchParams,
   };

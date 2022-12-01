@@ -6,6 +6,8 @@ export async function useFetch(
   queryEndpointType,
   slug,
   city,
+  pageLimit,
+  pageOffSet,
   sorting,
   bedroom,
   bathroom,
@@ -58,6 +60,8 @@ export async function useFetch(
   console.log("From useFetch queryEndpointType:", queryEndpointType);
   console.log("From useFetch slug:", slugName);
   console.log("From useFetch cityName:", cityName);
+  console.log("From useFetch pageLimit:", pageLimit);
+  console.log("From useFetch pageOffSet:", pageOffSet);
   console.log("From useFetch sortingType:", sortingType);
   console.log("From useFetch propType:", propType);
   console.log("From useFetch bedsMin:", bedParam);
@@ -97,8 +101,8 @@ export async function useFetch(
   //       params: {
   //         city: cityName,
   //         state_code: slugName,
-  //         offset: "0",
-  //         limit: "40",
+  //         offset: pageOffSet,
+  //         limit: pageLimit,
   //         sort: sortingType,
   //         prop_type: propType,
   //         beds_min: bedParam,

@@ -57,7 +57,8 @@ const routes = [
       newPlans: route.query.newPlans,
       radius: route.query.radius,
       contingents: route.query.contingents,
-      sortType: route.query.sortType
+      sortType: route.query.sortType,
+      page: route.query.page,
     }),
     meta: {
       title: "Vue-estate",
@@ -89,12 +90,9 @@ const routes = [
       newPlans: route.query.newPlans,
       radius: route.query.radius,
       contingents: route.query.contingents,
-      sortType: route.query.sortType
-
-    }),
-    meta: {
-      title: "Vue-estate",
-    },
+      sortType: route.query.sortType,
+      page: route.query.page,
+    })
   },
   {
     path: "/sold/:slug/:city?",
@@ -122,12 +120,9 @@ const routes = [
       newPlans: route.query.newPlans,
       radius: route.query.radius,
       contingents: route.query.contingents,
-      sortType: route.query.sortType
-
-    }),
-    meta: {
-      title: "Vue-estate",
-    },
+      sortType: route.query.sortType,
+      page: route.query.page,
+    })
   },
   {
     path: "/new-for-sale-properties/:slug",
@@ -192,10 +187,7 @@ const routes = [
       propertyId: route.params.propertyId,
       postalCode: route.params.postalCode,
       mediaTable: route.query.mediaTable,
-    }),
-    meta: {
-      title: "Vue-estate",
-    },
+    })
   },
   {
     path: "/P/:slug/:city/:address?/:propertyId/:postalCode?",
@@ -217,10 +209,7 @@ const routes = [
       propertyId: route.params.propertyId,
       postalCode: route.params.postalCode,
       mediaTable: route.query.mediaTable,
-    }),
-    meta: {
-      title: "Vue-estate",
-    },
+    })
   },
   {
     path: "/neighborhoods",
@@ -263,8 +252,8 @@ router.afterEach((to) => {
   let addressParam = removeUnderScoresFromAString(to.params.address);
 
   if (to.name == "RentPage") {
-    isPostalTitle = `Homes For Sale & Real Estate in ${to.params.slug} Zip Code`;
-    isTitle = `${slugParam} Homes For Sale & ${slugParam} Real Estate | Vue Estate`;
+    isPostalTitle = `Apartments For Rents in ${to.params.slug} Zip Code`;
+    isTitle = `Apartments For Rents in ${slugParam} | Vue Estate`;
     makeActiveRouteToBe = to.name;
     setRouteMetaTitle = !isPostalCode ? isTitle : isPostalTitle;
   } else if (to.name == "SoldPage") {
