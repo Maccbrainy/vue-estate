@@ -96,13 +96,13 @@
         </div>
         <is-loading v-if="isLoading || storeData.isLoading"></is-loading>
         <ul class="flex flex-wrap">
-          <search-result-item-card
+          <property-item-card
             v-for="home in activePropertyListings"
             v-bind:key="home.property_id"
             v-bind:home="home"
             v-bind:routeName="name"
           >
-          </search-result-item-card>
+          </property-item-card>
         </ul>
         <widget-pagination
           :total-items="totalItemsMatchingRowsInSearch"
@@ -117,9 +117,9 @@
       v-if="filterIsNotActiveAndAllPropertiesIsZero && !isLoading"
     >
     </no-search-term-match>
-    <search-result-google-map v-model:mapView="mapViewChanges">
+    <widget-google-map v-model:mapView="mapViewChanges">
       <!-- v-bind:discoveredHomes="discoveredHomes" -->
-    </search-result-google-map>
+    </widget-google-map>
   </div>
 </template>
 <script>
@@ -134,16 +134,17 @@ import {
 import { removeUnderScoresFromAString } from "@/helper";
 import settingsData from "@/api/settingsData.json";
 import IsLoading from "@/components/IsLoading.vue";
-import NoSearchTermMatch from "@/components/NoSearchTermMatch.vue";
-import NoSearchTermMatchForAgentAndOtherListings from "@/components/NoSearchTermMatchForAgentAndOtherListings.vue";
-import NoSearchTermForAgentOrOtherListings from "@/components/NoSearchTermForAgentOrOtherListings.vue";
-import SearchResultGoogleMap from "@/components/SearchResultGoogleMap.vue";
-import SearchResultItemCard from "@/components/SearchResultItemCard.vue";
+import {
+  NoSearchTermMatch,
+  NoSearchTermMatchForAgentAndOtherListings,
+  NoSearchTermForAgentOrOtherListings,
+} from "@/components/not-found";
+import { WidgetGoogleMap, WidgetPagination } from "@/components/widgets";
+import PropertyItemCard from "@/components/PropertyItemCard.vue";
 import {
   useListingTitle,
   useSortListingsByAgentAndOthers,
 } from "@/composables";
-import WidgetPagination from "@/components/WidgetPagination.vue";
 export default {
   name: "ThePropertyListPage",
   // async beforeRouteEnter(to, from, next) {
@@ -225,14 +226,14 @@ export default {
   },
   components: {
     IsLoading,
-    SearchResultGoogleMap,
-    SearchResultItemCard,
+    PropertyItemCard,
     FilterButtonContainer,
     NoSearchTermMatch,
     NoSearchTermMatchForAgentAndOtherListings,
     NoSearchTermForAgentOrOtherListings,
     FilterButtonSorting,
     WidgetPagination,
+    WidgetGoogleMap,
   },
   setup(props) {
     const store = useStore();
@@ -253,7 +254,7 @@ export default {
     const agentType = ref([...settingsData.agentType]);
     const storeData = computed(() => store.getters.getStore);
     const isRouteFromRentsNearOrSalesNearMe = ref(false);
-    const setCurrentPage = ref(1);
+    const setCurrentPage = ref(parseInt(props.page) || 1);
     const pageLimit = ref(40);
     const pageOffSet = ref(0); //The offset of items to be ignored in response for paging
     const totalItemsMatchingRowsInSearch = ref(0);
@@ -261,147 +262,152 @@ export default {
     onBeforeRouteUpdate((to, from) => {
       if (to.query.page === from.query.page) {
         setCurrentPage.value = 1;
+        store.commit("setPropertyPagination", setCurrentPage.value);
       }
     });
 
     const onPageChange = (page) => {
-      let updateRouterParams = {};
-      setCurrentPage.value = page;
-
-      const {
-        activeRoutePath,
-        searchedData: { state_code, city },
-      } = storeData.value;
-      updateRouterParams.pagination =
-        setCurrentPage.value == 1 ? null : setCurrentPage.value;
-      updateRouterParams.activeRouteTab = activeRoutePath;
-      updateRouterParams.state_code = state_code;
-      updateRouterParams.city = city;
-
-      store.commit("setUseRouterPush", updateRouterParams);
+      setCurrentPage.value = parseInt(page);
+      store.commit("setPropertyPagination", setCurrentPage.value);
     };
     watchEffect(() => {
       let filterMoreIsActive = false;
       filterIsActive.value = false;
       let updateRouterParams = {};
-
-      if (storeData.value.propertyFilters.homeType.length > 0) {
-        filterIsActive.value = true;
-        updateRouterParams.homeType = storeData.value.propertyFilters.homeType;
-      }
-      if (storeData.value.propertyFilters.numberOfBed) {
-        filterIsActive.value = true;
-        updateRouterParams.bed = storeData.value.propertyFilters.numberOfBed;
-      }
-      if (storeData.value.propertyFilters.priceMinRange) {
-        filterIsActive.value = true;
-        updateRouterParams.priceMin =
-          storeData.value.propertyFilters.priceMinRange;
-      }
-      if (storeData.value.propertyFilters.priceMaxRange) {
-        filterIsActive.value = true;
-        updateRouterParams.priceMax =
-          storeData.value.propertyFilters.priceMaxRange;
-      }
-      if (storeData.value.propertyFilters.allowsCats) {
-        filterIsActive.value = true;
-        updateRouterParams.catsAllowed =
-          storeData.value.propertyFilters.allowsCats;
-      }
-      if (storeData.value.propertyFilters.allowsDogs) {
-        filterIsActive.value = true;
-        updateRouterParams.dogsAllowed =
-          storeData.value.propertyFilters.allowsDogs;
-      }
-      if (storeData.value.propertyFilters.sorting) {
-        filterIsActive.value = true;
-        updateRouterParams.sortType = storeData.value.propertyFilters.sorting;
-      }
-
-      //Filter is Active From FilterMore
-      if (storeData.value.propertyFilters.features.length > 0) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.homeFeatures =
-          storeData.value.propertyFilters.features;
-      }
-      if (storeData.value.propertyFilters.numberOfBath) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.bath = storeData.value.propertyFilters.numberOfBath;
-      }
-      if (storeData.value.propertyFilters.searchRadius) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.radius =
-          storeData.value.propertyFilters.searchRadius;
-      }
-      if (storeData.value.propertyFilters.lotSize) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.lotSize = storeData.value.propertyFilters.lotSize;
-      }
-      if (storeData.value.propertyFilters.age_max) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.ageMax = storeData.value.propertyFilters.age_max;
-      }
-      if (storeData.value.propertyFilters.age_min) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.ageMin = storeData.value.propertyFilters.age_min;
-      }
-      if (storeData.value.propertyFilters.isForeclosures) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.foreclosure =
-          storeData.value.propertyFilters.isForeclosures;
-      }
-      if (storeData.value.propertyFilters.hasOpenHouses) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.openHouses =
-          storeData.value.propertyFilters.hasOpenHouses;
-      }
-      if (storeData.value.propertyFilters.has3DTours) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.threeDTours =
-          storeData.value.propertyFilters.has3DTours;
-      }
-      if (storeData.value.propertyFilters.isNewConstructions) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.newConstruction =
-          storeData.value.propertyFilters.isNewConstructions;
-      }
-      if (storeData.value.propertyFilters.isContingents) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.contingents =
-          storeData.value.propertyFilters.isContingents;
-      }
-      if (storeData.value.propertyFilters.isNewPlans) {
-        filterIsActive.value = true;
-        filterMoreIsActive = true;
-        updateRouterParams.newPlans =
-          storeData.value.propertyFilters.isNewPlans;
-      }
       const {
         activeRoutePath,
         searchedData: { state_code, city },
+        propertyFilters: {
+          homeType,
+          numberOfBed,
+          priceMinRange,
+          priceMaxRange,
+          allowsCats,
+          allowsDogs,
+          sorting,
+          features,
+          numberOfBath,
+          searchRadius,
+          lotSize,
+          age_max,
+          age_min,
+          isForeclosures,
+          hasOpenHouses,
+          has3DTours,
+          isNewConstructions,
+          isContingents,
+          isNewPlans,
+          pagination,
+        },
       } = storeData.value;
+
+      if (homeType.length > 0) {
+        filterIsActive.value = true;
+        updateRouterParams.homeType = homeType;
+      }
+      if (numberOfBed) {
+        filterIsActive.value = true;
+        updateRouterParams.bed = numberOfBed;
+      }
+      if (priceMinRange) {
+        filterIsActive.value = true;
+        updateRouterParams.priceMin = priceMinRange;
+      }
+      if (priceMaxRange) {
+        filterIsActive.value = true;
+        updateRouterParams.priceMax = priceMaxRange;
+      }
+      if (allowsCats) {
+        filterIsActive.value = true;
+        updateRouterParams.catsAllowed = allowsCats;
+      }
+      if (allowsDogs) {
+        filterIsActive.value = true;
+        updateRouterParams.dogsAllowed = allowsDogs;
+      }
+      if (sorting) {
+        filterIsActive.value = true;
+        updateRouterParams.sortType = sorting;
+      }
+      //Pagination update to the route
+      if (pagination) {
+        filterIsActive.value = true;
+        updateRouterParams.pagination = pagination;
+      }
+
+      //Filter is Active From FilterMore
+      if (features.length > 0) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.homeFeatures = features;
+      }
+      if (numberOfBath) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.bath = numberOfBath;
+      }
+      if (searchRadius) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.radius = searchRadius;
+      }
+      if (lotSize) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.lotSize = lotSize;
+      }
+      if (age_max) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.ageMax = age_max;
+      }
+      if (age_min) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.ageMin = age_min;
+      }
+      if (isForeclosures) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.foreclosure = isForeclosures;
+      }
+      if (hasOpenHouses) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.openHouses = hasOpenHouses;
+      }
+      if (has3DTours) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.threeDTours = has3DTours;
+      }
+      if (isNewConstructions) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.newConstruction = isNewConstructions;
+      }
+      if (isContingents) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.contingents = isContingents;
+      }
+      if (isNewPlans) {
+        filterIsActive.value = true;
+        filterMoreIsActive = true;
+        updateRouterParams.newPlans = isNewPlans;
+      }
+
       updateRouterParams.activeRouteTab = activeRoutePath;
       updateRouterParams.state_code = state_code;
       updateRouterParams.city = city;
 
       //Pagination update to the route
-      updateRouterParams.pagination =
-        setCurrentPage.value == 1 ? null : setCurrentPage.value;
+      // updateRouterParams.pagination =
+      //   setCurrentPage.value == 1 ? null : setCurrentPage.value;
 
       if (
         filterIsActive.value &&
-        storeData.value.activeRoutePath == "BuyPage" &&
+        activeRoutePath == "BuyPage" &&
         props.name == "BuyPage" &&
         storeData.value.searchedData
       ) {
@@ -412,7 +418,7 @@ export default {
         (filterIsActive.value && props.name == "SalesNearMe") ||
         (filterIsActive.value && props.name == "RentsNearMe")
       ) {
-        updateRouterParams.activeRouteTab = storeData.value.activeRoutePath;
+        // updateRouterParams.activeRouteTab = activeRoutePath;
         updateRouterParams.state_code = "CA";
         updateRouterParams.city = "San Francisco";
         console.log("001filterIsActive.value && SalesNearMe OR RentsNearMe");
@@ -431,7 +437,7 @@ export default {
       }
       if (
         filterIsActive.value &&
-        storeData.value.activeRoutePath == "RentPage" &&
+        activeRoutePath == "RentPage" &&
         props.name == "RentPage" &&
         storeData.value.searchedData
       ) {
@@ -440,7 +446,7 @@ export default {
       }
       if (
         filterIsActive.value &&
-        storeData.value.activeRoutePath == "SoldPage" &&
+        activeRoutePath == "SoldPage" &&
         props.name == "SoldPage" &&
         storeData.value.searchedData
       ) {
@@ -450,6 +456,7 @@ export default {
       store.commit("setFilterIsActive", filterIsActive.value);
       store.commit("setFilterMoreIsActive", filterMoreIsActive);
     });
+    
     const activeFilterDescriptionEnteries = computed(() => {
       let activeFilterEntries = [];
       let filterEntries = {
@@ -568,7 +575,6 @@ export default {
 
       let pageOffsetSize = props.page ? (props.page - 1) * pageLimit.value : 0;
       pageOffSet.value = pageOffsetSize;
-      // setCurrentPage.value = props.page;
 
       let isRoutesDefaultStateCode = isRentsNearMeOrSalesNearMe.value
         ? defaultStateCode.value
@@ -717,10 +723,12 @@ export default {
 
         //Persist current page on page refresh from user using the Route url
         setCurrentPage.value = parseInt(props.page) || 1;
+        store.commit("setPropertyPagination", setCurrentPage.value);
       }
       store.commit("setIsLoading", false);
     });
     onBeforeRouteLeave((_, from) => {
+      
       if (from.name == "RentsNearMe" || from.name == "SalesNearMe") {
         isRouteFromRentsNearOrSalesNearMe.value = true;
       }
