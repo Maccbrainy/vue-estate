@@ -13,7 +13,7 @@
   </base-layout>
 </template>
 <script>
-import BaseLayout from "@/layouts/BaseLayout.vue";
+import { BaseLayout } from "@/layouts/";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import NavBar from "@/components/NavBar.vue";
 import NavBarSearchForm from "@/components/NavBarSearchForm.vue";
