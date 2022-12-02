@@ -1,8 +1,8 @@
 import { createStore } from "vuex";
 import { useRouterPush } from "@/composables";
-// import router from "@/router";
 function getDefaultPropertyFilterState() {
   return {
+    pagination: null,
     lotSize: "",
     searchRadius: "",
     homeType: [],
@@ -32,6 +32,7 @@ export default createStore({
     activeRoutePath: "",
     activeListBranch: "",
     propertyFilters: {
+      pagination: null,
       lotSize: "",
       searchRadius: "",
       homeType: [],
@@ -137,11 +138,11 @@ export default createStore({
     setHomeFeatures(state, propertyPayLoad) {
       state.propertyFilters.features = propertyPayLoad;
     },
-    //Invoked in SearchResultContentLayout
+    //Invoked in PropertyListPage
     setFilterIsActive(state, payload) {
       state.filterDescriptionInfo.filterIsActive = payload;
     },
-    //Invoked in SearchResultContentLayout
+    //Invoked in PropertyListPage
     setFilterMoreIsActive(state, payload) {
       state.filterDescriptionInfo.filterMoreIsActive = payload;
     },
@@ -157,13 +158,13 @@ export default createStore({
     setPriceRangeInfo(state, priceInfoPayload) {
       state.filterDescriptionInfo.priceRange = priceInfoPayload;
     },
-    //Invoked in the searchResultContentLayout in onMounted life cycle;
+    //Invoked in the PropertyListPage in onMounted life cycle;
     //FilterRouteTab
     //SearchInput
     setSearchedData(state, searchedPayLoad) {
       state.searchedData = searchedPayLoad;
     },
-    //Invoked from https request in the searchResultContentLayout component
+    //Invoked from https request in the PropertyListPage component
     setAllPropertyListings(state, propertyPayLoad) {
       state.allPropertyListings = propertyPayLoad;
     },
@@ -215,7 +216,7 @@ export default createStore({
     setCaughtError(state, errorPayload) {
       state.errorCatch = errorPayload;
     },
-    //Invoked from HomeButtonTab; searchResultContentLayout
+    //Invoked from HomeButtonTab; PropertyListPage
     setActiveRoutePath(state, routePayload) {
       state.activeRoutePath = routePayload;
     },
@@ -224,7 +225,12 @@ export default createStore({
     setUseRouterPush(_, routePayload) {
       useRouterPush(routePayload);
     },
-    //Invoked in searchResultContentLayout Components
+    //Invoked in PropertyListPage
+    setPropertyPagination(state, pagePayLoad){
+      let pagination = pagePayLoad == 1 ? null : pagePayLoad;
+      state.propertyFilters.pagination = pagination;
+    },
+    //Invoked in PropertyListPage Components
     setResetPropertyFilterState(state) {
       const defaultPropertyFilterState = getDefaultPropertyFilterState();
       Object.keys(defaultPropertyFilterState).forEach((key) => {
