@@ -203,9 +203,12 @@ const routes = [
       import(
         /* webpackChunkName: "neighborhoods" */ "../views/TheMortgagePage.vue"
       ),
+      meta: {
+        title: "Neighborhoods | Vue-estate.com",
+      },
   },
   {
-    path: "/mortgage",
+    path: "/mortgages",
     name: "mortgagePage",
     // route level code-splitting
     // this generates a separate chunk (TheMortgagePage.[hash].js) for this route
@@ -214,6 +217,9 @@ const routes = [
       import(
         /* webpackChunkName: "TheMortgagePage" */ "../views/TheMortgagePage.vue"
       ),
+      meta: {
+        title: "Mortgages | Vue-estate.com",
+      },
   },
 ];
 

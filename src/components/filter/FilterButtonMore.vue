@@ -1,6 +1,13 @@
 <template>
   <div
-    class="h-2/3 px-2 pb-8 overflow-y-auto overflow-x-hidden sm:pt-6"
+    class="
+      h-2/3
+      px-2
+      pb-8
+      overflow-y-auto overflow-x-hidden
+      sm:pt-6
+      overscroll-contain
+    "
     tabindex="-1"
   >
     <filter-route-tab></filter-route-tab>
