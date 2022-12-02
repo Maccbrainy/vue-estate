@@ -152,20 +152,6 @@
         >
         <mobile-menu-drop-down-item>Mortgage Rates</mobile-menu-drop-down-item>
       </mobile-menu-drop-down>
-      <mobile-menu-drop-down menuTitle="Local Info">
-        <mobile-menu-drop-down-item
-          >All vue-estate neighborhood guide</mobile-menu-drop-down-item
-        >
-      </mobile-menu-drop-down>
-      <mobile-menu-drop-down menuTitle="Additional Resources">
-        <mobile-menu-drop-down-item
-          >Vue Estate app blog</mobile-menu-drop-down-item
-        >
-        <mobile-menu-drop-down-item
-          >Get leads by Zip code</mobile-menu-drop-down-item
-        >
-        <mobile-menu-drop-down-item>Help center</mobile-menu-drop-down-item>
-      </mobile-menu-drop-down>
     </mobile-menu-list>
   </mobile-menu-container>
 </template>
