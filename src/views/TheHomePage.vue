@@ -28,13 +28,17 @@
                   top-4
                 "
               >
-                <div class="m-0">
-                  <div class="text-5xl sf:text-3xl font-bold shadow-md">
-                    <h1>
-                      Discover a place <br />
-                      you'll love to live
-                    </h1>
-                  </div>
+                <div
+                  class="
+                    text-center text-5xl
+                    sf:text-3xl
+                    font-bold
+                    shadow-md
+                    transform
+                    translate-y-4
+                  "
+                >
+                  <h1>Real Estate Market Place</h1>
                 </div>
                 <div class="mt-16 mb-3">
                   <home-tab-buttons></home-tab-buttons>
@@ -49,208 +53,142 @@
       </section>
     </template>
     <template v-slot:default>
-      <section class="w-full relative top-32 mb-20 hidden">
-        <div class="">
+      <section class="relative top-32">
+        <div class="hidden w-full relative box-border overflow-hidden">
           <button
+            v-if="moveIndex < 0"
             v-on:click="moveSlides(-1)"
             class="absolute z-10 left-0 top-1/2"
-            :class="{ hidden: moveIndex == 0 }"
           >
             <chevron-left
               class="
                 text-gray-800
-                w-10
-                h-10
+                w-8
+                h-8
                 p-2
                 ml-3
                 bg-white
                 rounded-full
                 shadow-md
-                hover:bg-gray-100
+                transform
+                hover:scale-105
                 active:bg-gray-300
               "
             />
           </button>
           <button
-            v-if="moveIndex != -300"
+            v-if="moveIndex != -1000"
             class="absolute z-10 right-0 top-1/2"
           >
             <chevron-right
               v-on:click="moveSlides(1)"
               class="
                 text-gray-800
-                w-10
-                h-10
+                w-8
+                h-8
                 p-2
                 mr-3
                 bg-white
                 rounded-full
                 shadow-md
-                hover:bg-gray-100
+                transform
+                hover:scale-105
                 active:bg-gray-300
               "
             />
           </button>
-          <div class="flex">
-            <!-- <ul
-              v-for="(groupedItem, index) in groupedItems" 
-              v-bind:key="groupedItem"
-              v-bind:ref="el => itemsUl[index] = el"
-              v-bind:id="`grouped-item-${index}`" 
-              class="flex flex-nowrap duration-700">
-              <search-result-item-card 
-                v-for="(home, i) in groupedItem"
-                v-bind:key="home.property_id || home.id"
-                v-bind:ref="el => itemRefs[i] = el"
-                v-bind:home="home"
-                class="duration-700">
-              </search-result-item-card>
-              <li class="
-                block 
-                flex-initial
-                border-solid border-transparent border-r-8 border-l-8 border-t-8 
-                pb-4
-                xs:w-full 
-                sm:w-full 
-                md:w-full 
-                lg:w-6/12 
-                xl:w-6/12 
-                2xl:w-4/12
-                3xl:w-3/12"
-                 
-                v-bind:class="{'hidden': moveIndex !== -300}">
-                  <div class="relative w-full h-44 bg-gray-200 rounded-xl overflow-hidden">
-                    See more homes for sale
-                  </div>
-                </li>
-            </ul> -->
-          </div>
-        </div>
-      </section>
-      <section class="hidden w-full relative box-border top-32 overflow-hidden">
-        <button
-          v-if="moveIndex < 0"
-          v-on:click="moveSlides(-1)"
-          class="absolute z-10 left-0 top-1/2"
-        >
-          <chevron-left
-            class="
-              text-gray-800
-              w-8
-              h-8
-              p-2
-              ml-3
-              bg-white
-              rounded-full
-              shadow-md
-              transform
-              hover:scale-105
-              active:bg-gray-300
-            "
-          />
-        </button>
-        <button v-if="moveIndex != -1000" class="absolute z-10 right-0 top-1/2">
-          <chevron-right
-            v-on:click="moveSlides(1)"
-            class="
-              text-gray-800
-              w-8
-              h-8
-              p-2
-              mr-3
-              bg-white
-              rounded-full
-              shadow-md
-              transform
-              hover:scale-105
-              active:bg-gray-300
-            "
-          />
-        </button>
-        <ul class="flex flex-nowrap">
-          <!-- <search-result-item-card 
+          <ul class="flex flex-nowrap">
+            <!-- <search-result-item-card 
             v-for="(home, i) in reference"
             v-bind:key="home.property_id || home.id"
             v-bind:ref="el => itemRefs[i] = el"
             v-bind:home="home"
             class="duration-700">
           </search-result-item-card> -->
-          <li
-            v-if="moveIndex == -1000"
-            class="
-              block
-              flex-initial
-              border-solid border-transparent border-r-8 border-l-8 border-t-8
-              pb-4
-              xs:w-full
-              sm:w-full
-              md:w-full
-              lg:w-6/12
-              xl:w-6/12
-              2xl:w-4/12
-              3xl:w-3/12
-            "
-          >
-            <div
+            <li
+              v-if="moveIndex == -1000"
               class="
-                relative
-                w-full
-                h-44
-                bg-gray-200
-                rounded-xl
-                overflow-hidden
+                block
+                flex-initial
+                border-solid border-transparent border-r-8 border-l-8 border-t-8
+                pb-4
+                xs:w-full
+                sm:w-full
+                md:w-full
+                lg:w-6/12
+                xl:w-6/12
+                2xl:w-4/12
+                3xl:w-3/12
               "
             >
-              See more homes for sale
-            </div>
-          </li>
-        </ul>
-      </section>
-      <section
-        class="
-          max-w-6xl
-          mf:w-full
-          m-auto
-          flex flex-col
-          text-center
-          relative
-          top-32
-        "
-      >
+              <div
+                class="
+                  relative
+                  w-full
+                  h-44
+                  bg-gray-200
+                  rounded-xl
+                  overflow-hidden
+                "
+              >
+                See more homes for sale
+              </div>
+            </li>
+          </ul>
+        </div>
         <div
-          class="text-4xl sf:text-3xl sf:w-10/12 m-auto text-gray-700 font-bold"
+          class="
+            max-w-6xl
+            mf:w-full
+            m-auto
+            flex flex-col
+            text-center
+            relative
+            pb-10
+          "
         >
-          <h1>See how Vue Estate App can help</h1>
+          <div
+            class="
+              text-4xl
+              sf:text-3xl sf:w-10/12
+              m-auto
+              text-gray-700
+              font-bold
+            "
+          >
+            <h1>See how Vue Estate App can help</h1>
+          </div>
+          <div
+            class="flex sf:grid justify-center mt-10 w-9/12 lf:w-11/12 m-auto"
+          >
+            <call-to-action-card v-bind:callToActionsData="searchNearMeModel">
+            </call-to-action-card>
+          </div>
         </div>
-        <div class="flex sf:grid justify-center mt-10 w-9/12 lf:w-11/12 m-auto">
-          <call-to-action-card v-bind:callToActionsData="searchNearMeModel">
-          </call-to-action-card>
+        <div
+          class="
+            absolute
+            w-full
+            my-8
+            mx-auto
+            flex flex-col
+            justify-center
+            items-center
+          "
+        >
+          <div class="mb-6">
+            <h1 class="text-gray-700 text-xl font-semibold">
+              Check out a neighborhood
+            </h1>
+          </div>
+          <search-box class="w-6/12 xs:w-11/12 sf:w-10/12 text-xl">
+            <search-input class="h-14 bg-gray-100"></search-input>
+          </search-box>
         </div>
-      </section>
-      <section
-        class="
-          w-full
-          my-8
-          mx-auto
-          flex flex-col
-          justify-center
-          items-center
-          relative
-          top-40
-        "
-      >
-        <div class="mb-6">
-          <h1 class="text-gray-700 text-xl font-semibold">
-            Check out a neighborhood
-          </h1>
-        </div>
-        <search-box class="w-6/12 xs:w-11/12 sf:w-10/12 text-xl">
-          <search-input class="h-14 bg-gray-100"></search-input>
-        </search-box>
       </section>
     </template>
     <template v-slot:footer>
-      <section class="listColumns w-full md:flex relative top-40">
+      <section class="listColumns w-full md:flex relative top-80">
         <div class="max-w-7xl md:flex md:m-auto">
           <show-hide-list-columns
             listColumnTitle="Real Estate Markets"
@@ -286,14 +224,11 @@ import { SearchBox, SearchInput } from "@/components/buttonui";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
 import ShowHideListColumns from "@/components/ShowHideListColumns.vue";
 import CallToActionCard from "@/components/CallToActionCard.vue";
-import HomePageLayout from "@/layouts/HomePageLayout.vue";
-// import userGeolocation from "@/helper/userGeolocation";
+import { HomePageLayout } from "@/layouts";
 import jsonProperties from "@/api/autoComplete.json";
-import ExperimentalJson from "@/components/homes.json";
-import ChevronRight from "@/assets/icons/ChevronRight.vue";
-import ChevronLeft from "@/assets/icons/ChevronLeft.vue";
+import { ChevronRight, ChevronLeft } from "@/assets/icons";
 export default {
-  name: "HomePage",
+  name: "TheHomePage",
   components: {
     SearchBox,
     SearchInput,
@@ -307,9 +242,9 @@ export default {
   },
   setup() {
     const store = useStore();
+    const storeData = computed(() => store.getters.getStore);
     const userLocLat = ref("");
     const userLocLong = ref("");
-    // const { cordinates, userEnabledLocation } = userGeolocation();
     const findHomeAndRental = [
       {
         id: "BuyHome",
@@ -342,13 +277,9 @@ export default {
       },
     ];
 
-    const getIsActiveRoutePath = computed(() => {
-      return store.getters.getIsActiveRouteTab;
-    });
-
     const searchNearMeModel = computed(() => {
       let compositionData =
-        getIsActiveRoutePath.value == "list-for-rent"
+        storeData.value.activeRoutePath == "list-for-rent"
           ? [...findHomeAndRental].reverse()
           : findHomeAndRental;
       return [...compositionData, ...neighborhoods];
@@ -423,81 +354,27 @@ export default {
         url: "",
       },
     ];
-    const expJson = ref(ExperimentalJson.homes);
-    const groupedItems = ref({});
     const itemRefs = ref([]);
-    const reference = ref([]);
     const moveIndex = ref(0);
     const itemsUl = ref([]);
 
-    const translateAmount = ref(500);
-
-    reference.value = expJson.value.slice(0, 13);
-
-    const endOfSlide = computed(() => {
-      return expJson.value.length >= 13 ? true : false;
-    });
-    function moveSlides(direction) {
-      let x = window.innerWidth / 2;
-      let y = x - 183;
-      // console.log("ItemsRefs Length:", itemRefs.value.length);
-      // // console.log("Inner Width:", window.innerWidth);
-      // // console.log("itemRefs scrollWidth:", itemRefs.value.$el.scrollWidth);
-      // // console.log("itemRefs clientWidth:", itemRefs.value.$el.clientWidth);
-      // console.log("itemRefs getBoundingClientRect:", itemRefs.value.$el.offsetWidth);
-      // direction === 1
-      //   ? moveIndex.value  -= 100
-      //   : moveIndex.value  += 100;
-
-      // itemsUl.value.forEach(
-      //   pages => ( pages.attributes[0].ownerElement.style.transform = `translateX(${moveIndex.value}%)`));
-
-      // console.log("moveIndex:", moveIndex.value);
-
-      direction === 1 ? (moveIndex.value -= y) : (moveIndex.value += y);
-
-      itemRefs.value.forEach(
-        (pages) =>
-          (pages.$el.style.transform = `translateX(${moveIndex.value}%)`)
-      );
-    }
+    const moveSlides = () => {
+      console.log("moveSlide");
+    };
 
     onMounted(() => {
       groupItems();
-      // navigator.geolocation.getCurrentPosition(
-      //   ({ coords: { latitude, longitude } }) => {
-      //     const userCordinates = reactive({
-      //       lat: latitude,
-      //       long: longitude,
-      //     })
-      //     userLocLat.value = userCordinates.lat;
-      //     userLocLong.value = userCordinates.long;
-      //     console.log("From HomePage lat", userCordinates);
-      //   })
     });
     function groupItems() {
-      let groupedItemsByIndex = {
-        0: expJson.value.slice(0, 5),
-        1: expJson.value.slice(6, 11),
-        2: expJson.value.slice(12, 15),
-      };
-      groupedItems.value = groupedItemsByIndex;
-      // reference.value = expJson.value.slice(0,13);
+      console.log("Working on slide");
     }
 
     return {
       itemRefs,
       itemsUl,
-      reference,
-      expJson,
-      translateAmount,
-      // groupedItems,
-      endOfSlide,
       searchNearMeModel,
       userLocLat,
       userLocLong,
-      // cordinates,
-      // userEnabledLocation,
       marketPlaces: arrangeAscendingOrder,
       forProfessionals,
       exploreContact,
