@@ -1,39 +1,41 @@
 import { ref } from "vue";
-// import axios from "axios";
-import settingsData from "@/api/settingsData.json";
+import axios from "axios";
+// import settingsData from "@/api/settingsData.json";
 
-// const url = "https://realty-in-us.p.rapidapi.com/properties/detail"
+const url = "https://realty-in-us.p.rapidapi.com/properties/detail"
 
 export async function useFetchDetail(propertyId) {
   const propertyFullContents = ref([]);
-  const error = ref(null);
+  const errorFetch = ref({});
 
-  console.log("From useFetchDetail:", propertyId);
-  propertyFullContents.value = [...settingsData.detailedProperty[0].properties];
+  // console.log("From useFetchDetail propertyId:", propertyId);
+  // propertyFullContents.value = [...settingsData.detailedProperty[0].properties];
 
-  // try {
-  //   const response = await axios.get(url, {
-  //     params: {
-  //       property_id: `${propertyId}`
-  //     },
-  //     headers: {
-  //       "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
-  //       "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`
-  //     }
-  //   });
-  //   const {
-  //     data: { listing }
-  //   } = response;
-  //   propertyFullContents.value = listing;
-  //   console.log("Detailed Properties fetched:", propertyFullContents.value);
-  // } catch (err) {
-  //   console.error(err);
-  //   error.value = err;
-  // } finally {
-  //   console.log("Fetching is completed")
-  // }
+  try {
+    errorFetch.value = {};
+    const response = await axios.get(url, {
+      params: {
+        property_id: `${propertyId}`
+      },
+      headers: {
+        "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
+        "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`
+      }
+    });
+    const {
+      data: { listing }
+    } = response;
+    propertyFullContents.value = listing;
+    console.log("====///The detailed\\\\:", response);
+  } catch (err) {
+    console.error(err);
+    errorFetch.value.isError = true;
+    errorFetch.value.description = err;
+  } finally {
+    console.log("Fetching is completed")
+  }
   return {
     propertyFullContents,
-    error,
+    errorFetch,
   };
 }
