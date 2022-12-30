@@ -403,8 +403,10 @@ export default {
       }
 
       updateRouterParams.activeRouteTab = activeRoutePath;
-      updateRouterParams.state_code = state_code;
-      updateRouterParams.city = city;
+      updateRouterParams.state_code = useIsPostalCode(props.slug)
+        ? props.slug
+        : state_code;
+      updateRouterParams.city = useIsPostalCode(props.slug) ? "" : city;
 
       //Pagination update to the route
       // updateRouterParams.pagination =
