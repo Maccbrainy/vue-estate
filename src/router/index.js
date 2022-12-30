@@ -221,6 +221,14 @@ const routes = [
         title: "Mortgages | Vue-estate.com",
       },
   },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "pageNotFound",
+    component: TheHomePage,
+      meta: {
+        title: "Page Not Found | Vue-estate.com",
+      },
+  },
 ];
 
 const router = createRouter({

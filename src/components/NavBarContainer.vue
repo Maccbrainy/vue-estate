@@ -1,7 +1,7 @@
 <template>
   <nav
     v-bind:class="{
-      'border-b': isPropertyDetailedPage,
+      'border-b': isPropertyDetailedPage || $route.name == 'pageNotFound',
     }"
     class="
       fixed

@@ -1,6 +1,6 @@
 <template>
   <search-box
-    v-show="!isHomePage"
+    v-show="!isHomePage && $route.name != 'pageNotFound'"
     class="w-3/12 mf:w-full my-auto mt-1"
     v-bind:class="{ 'sf:hidden': isPropertyDetailedPage }"
   >

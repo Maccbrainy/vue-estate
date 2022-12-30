@@ -1,7 +1,7 @@
 <template>
   <home-page-layout>
     <template v-slot:header>
-      <section class="px-4">
+      <section v-show="$route.name != 'pageNotFound'" class="px-4">
         <div class="flex flex-col overflow-visible">
           <div class="relative -bottom-16">
             <div class="w-full h-100 overflow-hidden">
@@ -48,6 +48,43 @@
                 </search-box>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      <section v-show="$route.name == 'pageNotFound'" class="relative top-16 pb-20 overflow-x-hidden">
+        <div class="w-full flex flex-col justify-center gap-5 px-4 mt-20">
+          <div class="flex flex-col justify-center items-center gap-2">
+            <h1 class="text-5xl text-gray-700 font-semibold">404</h1>
+            <p>Something went off course</p>
+            <p>Don't worry, your home is on the horizon.</p>
+          </div>
+          <div class="flex flex-row items-center justify-center gap-5">
+            <router-link
+              v-for="callTo in findHomeAndRental"
+              :key="callTo.urlId"
+              :to="{
+                name: callTo.urlId,
+              }"
+            >
+              <button
+                :id="callTo.urlId"
+                type="button"
+                class="
+                  bg-red-600
+                  px-4
+                  py-2
+                  shadow-xl
+                  text-white text-base
+                  font-bold
+                  rounded-lg
+                  border border-red-600
+                  hover:bg-transparent hover:text-red-600
+                  focus:bg-red-50 focus:text-red-600
+                "
+              >
+                {{ callTo.callToAction }}
+              </button>
+            </router-link>
           </div>
         </div>
       </section>
