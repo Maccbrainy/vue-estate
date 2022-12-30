@@ -553,11 +553,11 @@ export default {
         : false;
     });
 
-    const isPostalCodeUsedByUser = computed(() => {
+    const useIsPostalCode = (slug) => {
       //Test if search is Postal/zip is used by user
       let regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
-      return regExpNumbersOnly.test(props.slug);
-    });
+      return regExpNumbersOnly.test(slug);
+    };
 
     watchEffect(async () => {
       isLoading.value = true;
@@ -585,14 +585,14 @@ export default {
 
       let propertySlug = isRentsNearMeOrSalesNearMe.value
         ? isRoutesDefaultStateCode
-        : !isPostalCodeUsedByUser.value
-        ? props.slug
-        : "";
+        : useIsPostalCode(props.slug)
+        ? ""
+        : props.slug;
       let propertyCity = isRentsNearMeOrSalesNearMe.value
         ? isRoutesDefaultCity
         : props.city;
 
-      let postalCode = isPostalCodeUsedByUser.value ? props.slug : "";
+      let postalCode = useIsPostalCode(props.slug) ? props.slug : "";
 
       const { propertyListResults, propertyTotalMatchingRows, err } =
         await useFetch(
