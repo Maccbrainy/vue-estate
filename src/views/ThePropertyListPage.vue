@@ -258,6 +258,11 @@ export default {
     const pageLimit = ref(40);
     const pageOffSet = ref(0); //The offset of items to be ignored in response for paging
     const totalItemsMatchingRowsInSearch = ref(0);
+    const useIsPostalCode = (slug) => {
+      //Test if search is Postal/zip is used by user
+      let regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
+      return regExpNumbersOnly.test(slug);
+    };
 
     onBeforeRouteUpdate((to, from) => {
       if (to.query.page === from.query.page) {
