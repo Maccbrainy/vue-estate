@@ -102,17 +102,21 @@
       >
         <arrow-back-icon /> Back to Search
       </router-link>
-      <button class="text-gray-600 inline-flex capitalize cursor-text">
-        {{ removeUnderScoresFromAString(propertyDetail[0].prop_status) }}
+      <button class="text-gray-600 inline-flex cursor-text">
+        {{ name == "SalesPageDetail" ? "For Sale" : "For Rent" }}
       </button>
       <router-link
-        :to="`/${slug}/${city}`"
+        :to="`/${
+          name == 'SalesPageDetail' ? 'for_sale' : 'for_rent'
+        }/${slug}/${city}`"
         class="text-teal inline-flex underline"
         ><chevron-right class="text-gray-600 w-4 h-4 p-1" />
         {{ `${propertyCity}, ${slug}` }}
       </router-link>
       <router-link
-        :to="`/${propertyDetail[0].prop_status}/${postalCode}`"
+        :to="`/${
+          name == 'SalesPageDetail' ? 'for_sale' : 'for_rent'
+        }/${postalCode}`"
         class="text-teal inline-flex underline"
       >
         <chevron-right class="text-gray-600 w-4 h-4 p-1" /> {{ postalCode }}
