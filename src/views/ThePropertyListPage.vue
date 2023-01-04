@@ -3,7 +3,7 @@
   <div class="flex flex-grow flex-auto flex-col z-0 outline-none">
     <div
       v-bind:class="{
-        'transform -translate-x-full': mapViewChanges,
+        'transform -translate-x-full': mapViewFullScreen,
       }"
       class="
         w-1/2
@@ -117,13 +117,20 @@
       v-if="filterIsNotActiveAndAllPropertiesIsZero && !isLoading"
     >
     </no-search-term-match>
-    <widget-google-map v-model:mapView="mapViewChanges">
+    <widget-google-map>
       <!-- v-bind:discoveredHomes="discoveredHomes" -->
     </widget-google-map>
   </div>
 </template>
 <script>
-import { ref, computed, watchEffect, onMounted, onBeforeUnmount } from "vue";
+import {
+  ref,
+  computed,
+  watchEffect,
+  onMounted,
+  onBeforeUnmount,
+  inject,
+} from "vue";
 import { useStore } from "vuex";
 import { onBeforeRouteLeave, useRoute, onBeforeRouteUpdate } from "vue-router";
 import { useFetch } from "@/api/useFetch.js";
@@ -238,6 +245,7 @@ export default {
   setup(props) {
     const store = useStore();
     const route = useRoute();
+    const { mapViewFullScreen } = inject("provider");
     const isSalePage = ref(false);
     const error = ref("");
     const isLoading = ref(false);
@@ -249,7 +257,6 @@ export default {
     const activePropertyListings = ref([]);
     const listingTitle = ref("");
     const filterIsActive = ref(false);
-    const mapViewChanges = ref(false);
     const routeNames = ref([...settingsData.routeNames]);
     const agentType = ref([...settingsData.agentType]);
     const storeData = computed(() => store.getters.getStore);
@@ -756,7 +763,7 @@ export default {
       agentType,
       isLoading,
       isSalePage,
-      mapViewChanges,
+      mapViewFullScreen,
       error,
       listingTitle,
       storeData,
