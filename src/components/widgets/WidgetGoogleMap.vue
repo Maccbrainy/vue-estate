@@ -3,8 +3,8 @@
     role="region"
     aria-label="Interactive Google Map showing listings in .... Details about each listing, including address and price, can be found in the search results under the h2 heading."
     v-bind:class="{
-      'map-half-size': !expandOrReduceMap,
-      'map-full-size': expandOrReduceMap,
+      'map-half-size': !mapViewFullScreen,
+      'map-full-size': mapViewFullScreen,
     }"
     class="
       fixed
@@ -18,7 +18,6 @@
       transition-all
       delay-500
       duration-1000
-      ease-in-out
       sf:hidden
     "
   >
@@ -39,16 +38,29 @@
           <span class="text-5xl text-white font-bold">Coming Soon</span>
         </div>
         <button
-          v-on:click="mapHandler"
-          v-bind:title="expandOrReduceMap ? `Reduce map` : `Expand map`"
-          class="absolute bg-white shadow-lg rounded-md px-2 py-1.5 m-3"
+          v-on:click="mapViewChangesCallback"
+          v-bind:title="mapViewFullScreen ? `Show Lists` : `Expand map`"
+          class="
+            absolute
+            flex
+            gap-1
+            bg-white
+            shadow-lg
+            rounded-md
+            px-2
+            py-1.5
+            m-3
+            font-normal
+            text-base
+          "
         >
           <chevron-left
             class="text-teal"
             v-bind:class="{
-              'transform rotate-180': expandOrReduceMap,
+              'transform rotate-180': mapViewFullScreen,
             }"
-        />
+          />
+          <span>{{ mapViewFullScreen ? "Show List" : "" }}</span>
         </button>
         <div
           id="mapId"
@@ -59,22 +71,17 @@
   </section>
 </template>
 <script>
-import { ref } from "vue";
+import { inject } from "vue";
 import { ChevronLeft } from "@/assets/icons";
 export default {
   components: {
-    ChevronLeft
+    ChevronLeft,
   },
-  emits: ["update:mapView"],
-  setup(_, context) {
-    const expandOrReduceMap = ref(false);
-    const mapHandler = () => {
-      expandOrReduceMap.value = !expandOrReduceMap.value;
-      context.emit("update:mapView", expandOrReduceMap.value);
-    };
+  setup() {
+    const { mapViewFullScreen, mapViewChangesCallback } = inject("provider");
     return {
-      expandOrReduceMap,
-      mapHandler,
+      mapViewFullScreen,
+      mapViewChangesCallback,
     };
   },
 };
