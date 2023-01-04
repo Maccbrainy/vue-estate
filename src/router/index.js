@@ -31,7 +31,6 @@ const routes = [
     path: "/for_sale/:slug/:city?",
     name: "BuyPage",
     component: ThePropertyListPage,
-    alias: ["/:slug/:city?"],
     props: (route) => ({
       name: route.name,
       slug: route.params.slug,
