@@ -98,7 +98,7 @@
         >
           <div
             v-show="!fetchingIsBusy && propertyImages.length > 1"
-            v-on:click="getModalMediaTable"
+            v-on:click="$emit('openMediaTable', $event)"
             class="
               absolute
               top-0
@@ -129,7 +129,7 @@
         >
           <img
             v-if="propertyImages.length > 2"
-            v-on:click="getModalMediaTable"
+            v-on:click="$emit('openMediaTable', $event)"
             v-bind:src="propertyImages[2].href"
             alt=""
             class="absolute inset-0 w-full h-full object-center object-cover"
