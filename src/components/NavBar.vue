@@ -97,7 +97,7 @@
             >Sold Recently</router-link
           >
         </nav-bar-dropdown-item>
-        <nav-bar-dropdown-item class="border-t hover:bg-gray-200">
+        <!-- <nav-bar-dropdown-item class="border-t hover:bg-gray-200">
           <router-link
             v-if="currentSearchedData"
             :to="`/new-for-sale-properties/#/`"
@@ -113,7 +113,7 @@
           >
             See Newest Listings
           </router-link>
-        </nav-bar-dropdown-item>
+        </nav-bar-dropdown-item> -->
       </nav-bar-dropdown>
     </nav-bar-item>
     <nav-bar-item>
@@ -196,20 +196,20 @@
             >Houses for Rent</router-link
           >
         </nav-bar-dropdown-item>
-        <nav-bar-dropdown-item
+        <!-- <nav-bar-dropdown-item
           :title="`See Newest Listings in the state`"
           class="border-t hover:bg-gray-200"
         >
           <router-link :to="`/new-for-rent-properties/#/`">
             See Newest Listings</router-link
           >
-        </nav-bar-dropdown-item>
-        <nav-bar-dropdown-item class="border-t hover:bg-gray-200">
+        </nav-bar-dropdown-item> -->
+        <!-- <nav-bar-dropdown-item v-on:click="saveHomePropertyCallback" class="border-t hover:bg-gray-200">
           <router-link to="/#">Post A Rental Listings</router-link>
-        </nav-bar-dropdown-item>
+        </nav-bar-dropdown-item> -->
       </nav-bar-dropdown>
     </nav-bar-item>
-    <nav-bar-item>
+    <!-- <nav-bar-item>
       <router-link to="/mortgages">Mortgage</router-link>
       <nav-bar-dropdown v-if="currentSearchedData">
         <nav-bar-dropdown-item
@@ -251,19 +251,27 @@
           <router-link to="/#">Refinance Calculator</router-link>
         </nav-bar-dropdown-item>
       </nav-bar-dropdown>
-    </nav-bar-item>
-    <nav-bar-button class="flex justify-end flex-auto pr-2">
+    </nav-bar-item> -->
+    <nav-bar-button
+      v-on:click="saveHomePropertyCallback"
+      class="flex justify-end flex-auto pr-2"
+    >
       Saved Homes
     </nav-bar-button>
-    <nav-bar-button class="pr-2">Saved Searches</nav-bar-button>
-    <nav-bar-button class="border border-gray-300 rounded-md mr-2">
+    <nav-bar-button v-on:click="saveHomePropertyCallback" class="pr-2"
+      >Saved Searches</nav-bar-button
+    >
+    <nav-bar-button
+      v-on:click="saveHomePropertyCallback"
+      class="border border-gray-300 rounded-md mr-2"
+    >
       Sign up or Log in
     </nav-bar-button>
   </nav-bar-box>
 </template>
 <script>
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, inject } from "vue";
 import {
   addUnderScoresToWhiteSpacesInAString,
   removeUnderScoresFromAString,
@@ -288,6 +296,7 @@ export default {
   },
   setup() {
     const store = useStore();
+    const { saveHomePropertyCallback } = inject("provider");
     const storeData = computed(() => store.getters.getStore);
 
     const currentSearchedData = computed(() =>
@@ -304,6 +313,7 @@ export default {
       isTitle,
       addUnderScoresToWhiteSpacesInAString,
       removeUnderScoresFromAString,
+      saveHomePropertyCallback,
     };
   },
 };

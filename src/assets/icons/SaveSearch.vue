@@ -1,5 +1,5 @@
 <template>
-  <button
+  <button v-on:click="saveHomePropertyCallback"
     :class="{
       'border xs:border-none sm:bg-white sm:px-2 sm:hover:bg-gray-200 sm:hover:border-transparent':
         $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail',
@@ -48,7 +48,12 @@
   </button>
 </template>
 <script>
+import { inject } from "vue";
 export default {
   name: "SaveSearch",
+  setup() {
+    const { saveHomePropertyCallback } = inject("provider");
+    return { saveHomePropertyCallback };
+  },
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
   <button
+    v-on:click="saveHomePropertyCallback"
     class="
-      sm:bg-white
-      sm:px-2
+      sm:bg-white sm:px-2
       px-1
       py-1
       border
@@ -34,12 +34,22 @@
         d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
       />
     </svg>
-    <span v-show="$route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail'" class="xs:hidden px-1">Share</span>
+    <span
+      v-show="
+        $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail'
+      "
+      class="xs:hidden px-1"
+      >Share</span
+    >
   </button>
 </template>
 <script>
+import { inject } from "vue";
 export default {
-  name: "ShareIcon"
-}
+  name: "ShareIcon",
+  setup() {
+    const { saveHomePropertyCallback } = inject("provider");
+    return { saveHomePropertyCallback };
+  },
+};
 </script>
-

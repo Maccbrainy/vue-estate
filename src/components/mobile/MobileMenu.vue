@@ -1,7 +1,7 @@
 <template>
   <mobile-menu-container>
     <mobile-menu-list>
-      <mobile-menu-button-item>Sign up or Login</mobile-menu-button-item>
+      <mobile-menu-button-item v-on:click="saveHomePropertyCallback">Sign up or Login</mobile-menu-button-item>
       <mobile-menu-drop-down menuTitle="Buy">
         <div v-if="currentSearchedData">
           <mobile-menu-drop-down-item
@@ -57,7 +57,7 @@
                   newConstruction: true,
                 },
               }"
-              >New Construction Homes</router-link
+              >New Construction</router-link
             ></mobile-menu-drop-down-item
           >
           <mobile-menu-drop-down-item
@@ -73,6 +73,11 @@
               }"
               >Recently Sold</router-link
             ></mobile-menu-drop-down-item
+          >
+        </div>
+        <div v-else>
+          <mobile-menu-drop-down-item class="cursor-text text-gray-300 -mt-1 no-underline"
+            >No search history found</mobile-menu-drop-down-item
           >
         </div>
       </mobile-menu-drop-down>
@@ -133,11 +138,11 @@
             ></mobile-menu-drop-down-item
           >
         </div>
-        <mobile-menu-drop-down-item>
+        <mobile-menu-drop-down-item v-on:click="saveHomePropertyCallback">
           Post A Rental Listing</mobile-menu-drop-down-item
         >
       </mobile-menu-drop-down>
-      <mobile-menu-drop-down menuTitle="Mortgage">
+      <!-- <mobile-menu-drop-down menuTitle="Mortgage">
         <mobile-menu-drop-down-item
           class="hover:no-underline cursor-text text-gray-300"
           >{{
@@ -151,13 +156,13 @@
           >Get Pre-Qualified</mobile-menu-drop-down-item
         >
         <mobile-menu-drop-down-item>Mortgage Rates</mobile-menu-drop-down-item>
-      </mobile-menu-drop-down>
+      </mobile-menu-drop-down> -->
     </mobile-menu-list>
   </mobile-menu-container>
 </template>
 <script>
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, inject } from "vue";
 import {
   addUnderScoresToWhiteSpacesInAString,
   removeUnderScoresFromAString,
@@ -180,6 +185,7 @@ export default {
   },
   setup() {
     const store = useStore();
+    const { saveHomePropertyCallback } = inject("provider");
     const storeData = computed(() => store.getters.getStore);
 
     const currentSearchedData = computed(() =>
@@ -190,6 +196,7 @@ export default {
       currentSearchedData,
       addUnderScoresToWhiteSpacesInAString,
       removeUnderScoresFromAString,
+      saveHomePropertyCallback
     };
   },
 };
