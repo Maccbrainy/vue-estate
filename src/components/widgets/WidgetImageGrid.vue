@@ -11,14 +11,27 @@
         cursor-pointer
       "
     >
-      <widget-save-share
-        class="absolute right-4 top-2 z-20"
-      ></widget-save-share>
+    <div
+        class="
+          absolute
+          right-4
+          top-2
+          z-20
+          inline-flex
+          space-x-4
+          items-align
+          text-gray-600 text-lg
+          xs:hidden
+        "
+      >
+        <save-search />
+        <share-icon />
+      </div>
       <widget-client-flags v-if="!fetchingIsBusy">
         <template v-slot:iconSlot>
           <div class="sm:hidden flex m-2 space-x-3">
             <save-search />
-            <share-icon class="text-white" />
+            <share-icon  />
           </div>
         </template>
       </widget-client-flags>
@@ -156,7 +169,6 @@ export default {
   components: {
     ImageCountIcon,
     WidgetClientFlags,
-    WidgetSaveShare,
     ShareIcon,
     SaveSearch,
   },

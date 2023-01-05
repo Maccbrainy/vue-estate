@@ -18,8 +18,10 @@
           <div class="text-2xl font-semibold text-gray-700">
             {{ `$${contextProvider.price}` }}
           </div>
-          <widget-save-share class="space-x-4 transform translate-x-16">
-          </widget-save-share>
+          <div class="flex space-x-4 -mr-8">
+            <save-search></save-search>
+            <share-icon></share-icon>
+          </div>
           <button
             type="button"
             v-on:mouseover="showContactForm = true"
