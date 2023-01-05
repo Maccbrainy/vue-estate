@@ -8,6 +8,7 @@
     </template>
     <template v-slot:default>
       <router-view v-bind:key="$route.path"></router-view>
+      <teleport-modal></teleport-modal>
     </template>
     <template v-slot:footer></template>
   </base-layout>
@@ -17,12 +18,14 @@ import { BaseLayout } from "@/layouts/";
 import NavBarContainer from "@/components/NavBarContainer.vue";
 import NavBar from "@/components/NavBar.vue";
 import NavBarSearchForm from "@/components/NavBarSearchForm.vue";
+import TeleportModal from "./components/modals/TeleportModal.vue";
 export default {
   components: {
     BaseLayout,
     NavBarContainer,
     NavBar,
     NavBarSearchForm,
+    TeleportModal,
   },
 };
 </script>
