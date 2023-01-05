@@ -34,6 +34,9 @@ export default {
         console.log("Teleport:", modal.name, teleportModalFormRequests.value);
       }
     };
+    const saveHomePropertyCallback = () => {
+      alert("Backend functionalities coming soon!")
+    }
 
     app.provide("provider", {
       mapViewChangesCallback,
@@ -41,6 +44,7 @@ export default {
       teleportModalCallback,
       teleportModalMediaTable,
       teleportModalFormRequests,
+      saveHomePropertyCallback
     });
   },
 };
