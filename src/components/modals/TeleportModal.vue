@@ -69,38 +69,8 @@
                 mr-8
               "
             >
-              <button
-                class="
-                  bg-white
-                  px-2
-                  py-1
-                  rounded-lg
-                  cursor-pointer
-                  flex
-                  items-center
-                  border
-                  hover:bg-gray-200 hover:border-transparent
-                "
-              >
-                <save-search class="text-gray-800" />
-                <span class="p-1 font-semibold">Save</span>
-              </button>
-              <button
-                class="
-                  bg-white
-                  px-2
-                  rounded-lg
-                  cursor-pointer
-                  flex
-                  py-1
-                  items-center
-                  border
-                  hover:bg-gray-200 hover:border-transparent
-                "
-              >
-                <share-icon class="text-gray-800" />
-                <span class="px-1 font-semibold">Share</span>
-              </button>
+              <save-search class="text-gray-800" />
+              <share-icon class="text-gray-800" />
             </div>
           </div>
           <close-mobile-menu
