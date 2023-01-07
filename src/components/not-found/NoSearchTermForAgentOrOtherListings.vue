@@ -34,10 +34,16 @@ export default {
     const storeData = computed(() => store.getters.getStore);
 
     const numberOfListings = computed(() => {
-      return !storeData.value.propertyListingsByAgent.length
-        ? `${storeData.value.propertyListingsByNoneAgent.length} other`
-        : !storeData.value.propertyListingsByNoneAgent.length
-        ? `${storeData.value.propertyListingsByAgent.length} agent`
+      const {
+        totalItemsMatchRows,
+        propertyListingsByAgent,
+        propertyListingsByNoneAgent,
+      } = storeData.value;
+
+      return propertyListingsByAgent.length == 0
+        ? `${propertyListingsByNoneAgent.length} other`
+        : propertyListingsByNoneAgent.length == 0
+        ? `${totalItemsMatchRows} agent`
         : "";
     });
 

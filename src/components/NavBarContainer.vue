@@ -36,7 +36,14 @@
       }}</span>
     </router-link>
     <vue-estate-logo
-      class="sm:py-3 sm:pr-5 cursor-pointer sf:flex sf:justify-start sf:w-1/2"
+      class="
+        sm:py-3 sm:pr-5
+        cursor-pointer
+        sf:flex sf:justify-start
+        items-center
+        sf:w-1/2
+        md:w-32
+      "
     ></vue-estate-logo>
     <slot></slot>
     <menu-icon v-on:click="toggleMenu = !toggleMenu" class="w-10"></menu-icon>

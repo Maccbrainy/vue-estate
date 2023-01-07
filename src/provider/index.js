@@ -7,6 +7,7 @@ export default {
     const teleportModalFormRequests = ref({
       name: "",
       for_modal: false,
+      description: ""
     });
 
     const mapViewChangesCallback = () => {
@@ -31,11 +32,16 @@ export default {
       if (modal.name == "Request For Info") {
         teleportModalFormRequests.value.name = modal.name;
         teleportModalFormRequests.value.for_modal = modal.open_modal;
+        teleportModalFormRequests.value.description = modal.description;
         console.log("Teleport:", modal.name, teleportModalFormRequests.value);
       }
     };
     const saveHomePropertyCallback = () => {
       alert("Backend functionalities coming soon!")
+    }
+
+    const saveSearchCallback = () => {
+      alert("Save search Backend functionalities coming soon!")
     }
 
     app.provide("provider", {
@@ -44,7 +50,8 @@ export default {
       teleportModalCallback,
       teleportModalMediaTable,
       teleportModalFormRequests,
-      saveHomePropertyCallback
+      saveHomePropertyCallback,
+      saveSearchCallback
     });
   },
 };

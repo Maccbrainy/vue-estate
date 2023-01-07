@@ -24,7 +24,11 @@
       stroke="currentColor"
       :class="{
         'xs:text-white text-teal':
-          $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail',
+          ($route.name == 'SalesPageDetail' && !teleportModalMediaTable) ||
+          ($route.name == 'RentPageDetail' && !teleportModalMediaTable),
+        'text-teal':
+          ($route.name == 'SalesPageDetail' && teleportModalMediaTable) ||
+          ($route.name == 'RentPageDetail' && teleportModalMediaTable),
       }"
       class="w-7 h-7 text-white"
     >
@@ -48,8 +52,9 @@ import { inject } from "vue";
 export default {
   name: "ShareIcon",
   setup() {
-    const { saveHomePropertyCallback } = inject("provider");
-    return { saveHomePropertyCallback };
+    const { saveHomePropertyCallback, teleportModalMediaTable } =
+      inject("provider");
+    return { saveHomePropertyCallback, teleportModalMediaTable };
   },
 };
 </script>

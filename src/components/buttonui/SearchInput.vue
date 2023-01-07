@@ -199,6 +199,7 @@ export default {
           state_code: "CA",
           activeRouteTab: route.name,
         };
+        store.commit("setIsLoading", true);
         store.commit("setUseRouterPush", defaultSearch);
         store.commit("setSearchedData", defaultSearch);
       }
@@ -211,6 +212,7 @@ export default {
               .children[1].nonce,
           activeRouteTab: route.name,
         };
+        store.commit("setIsLoading", true);
         store.commit("setUseRouterPush", searchPayload.value);
         store.commit("setSearchedData", searchPayload.value);
       }
@@ -224,7 +226,7 @@ export default {
             ].nonce,
           activeRouteTab: route.name,
         };
-
+        store.commit("setIsLoading", true);
         store.commit("setUseRouterPush", searchPayload.value);
         store.commit("setSearchedData", searchPayload.value);
       }
@@ -235,6 +237,7 @@ export default {
         state_code: home.state_code,
         activeRouteTab: route.name,
       };
+      store.commit("setIsLoading", true);
       store.commit("setUseRouterPush", searchPayload.value);
       store.commit("setSearchedData", searchPayload.value);
     }

@@ -60,8 +60,8 @@ export async function useFetch(
   //is_pending
 
   // console.log("From useFetch queryEndpointType:", queryEndpointType);
-  // console.log("From useFetch slug:", slugName);
-  // console.log("From useFetch cityName:", cityName);
+  console.log("From useFetch slug:", slugName);
+  console.log("From useFetch cityName:", cityName);
   // console.log("From useFetch pageLimit:", pageLimit);
   // console.log("From useFetch pageOffSet:", pageOffSet);
   // console.log("From useFetch sortingType:", sortingType);
@@ -90,7 +90,7 @@ export async function useFetch(
   // console.log("From useFetch ageMin:", ageMin);
   // console.log("From useFetch latitude:", latitude);
   // console.log("From useFetch longtitude:", longitude);
-  // console.log("From useFetch postalCode:", postalCode);
+  console.log("From useFetch postalCode:", postalCode);
 
 
   try {

@@ -72,6 +72,7 @@
           }"
           class="
             relative
+            flex
             mobile-height
             lm:h-96
             col-span-4
@@ -99,7 +100,14 @@
             v-if="propertyImages.length > 0"
             v-bind:src="propertyImages[0].href"
             alt=""
-            class="absolute inset-0 w-full h-full object-center object-cover"
+            class="
+              absolute
+              inset-0
+              flex-initial
+              w-full
+              h-full
+              object-center object-cover
+            "
           />
         </div>
         <div
@@ -155,7 +163,7 @@
 <script>
 import { ref } from "vue";
 import { ImageCountIcon, SaveSearch, ShareIcon } from "@/assets/icons";
-import { WidgetClientFlags, WidgetSaveShare } from "@/components/widgets";
+import { WidgetClientFlags } from "@/components/widgets";
 export default {
   name: "WidgetImageGrid",
   props: {
@@ -173,23 +181,7 @@ export default {
     SaveSearch,
   },
   setup() {
-    // const store = useStore();
-    // const route = useRoute();
     const openMediaTable = ref(false);
-    // const getModalMediaTable = () => {
-    // let updateRouterParams = {};
-    // openMediaTable.value = !openMediaTable.value;
-    // context.emit("update:mediaViewTable", openMediaTable.value);
-    // updateRouterParams.mediaTable = openMediaTable.value;
-    // updateRouterParams.state_code = route.params.slug;
-    // updateRouterParams.city = route.params.city;
-    // updateRouterParams.postalCode = route.params.postalCode;
-    // updateRouterParams.propertyId = route.params.propertyId;
-    // updateRouterParams.address = route.params.address;
-    // store.commit("setUseRouterPush", updateRouterParams);
-    // console.log("DETAILED ROUTER:", route);
-
-    // }
     return { openMediaTable };
   },
 };

@@ -25,8 +25,10 @@
         <widget-image-slider
           :routeName="getPageDetailRouteName"
           :stateCode="home.address.state_code"
-          :cityName="propertyCity"
-          :addressLocation="propertyAddress"
+          :cityName="addUnderScoresToWhiteSpacesInAString(home.address.city)"
+          :addressLocation="
+            addUnderScoresToWhiteSpacesInAString(home.address.line)
+          "
           :propertyIdCode="home.property_id"
           :postalAddressCode="home.address.postal_code"
           :listingPhotos="propertyImages"
@@ -37,8 +39,8 @@
             name: getPageDetailRouteName,
             params: {
               slug: home.address.state_code,
-              city: propertyCity,
-              address: propertyAddress,
+              city: addUnderScoresToWhiteSpacesInAString(home.address.city),
+              address: addUnderScoresToWhiteSpacesInAString(home.address.line),
               propertyId: home.property_id,
               postalCode: home.address.postal_code,
             },
@@ -61,8 +63,7 @@
             >
             </widget-utility-summary>
             <widget-location-detail
-              v-bind:fetchingIsBusy="storeData.fetchingIsBusy"
-              v-bind:streetOrName="isRentalPropertyName"
+              v-bind:streetOrName="propertyAddress"
               v-bind:city="home.address.city"
               v-bind:state="home.address.state_code"
               v-bind:postal-code="home.address.postal_code"
@@ -70,11 +71,23 @@
             </widget-location-detail>
           </div>
         </router-link>
-        <div v-if="isSalesAndSoldProperty" class="my-1 pt-2 border-t">
-          <div class="uppercase pb-2 text-xs text-gray-600">
+        <div
+          v-if="isSalesAndSoldProperty"
+          :class="{ 'border-t': !storeData.fetchingIsBusy }"
+          class="my-1 pt-2"
+        >
+          <div
+            v-bind:class="{
+              'animate-pulse bg-gray-200 w-full my-1 h-3 ':
+                storeData.fetchingIsBusy,
+            }"
+            class="uppercase pb-2 text-xs text-gray-600"
+          >
             <a
+              v-if="!storeData.fetchingIsBusy"
               v-bind:href="home.rdc_web_url"
               target="__blank"
+              rel="noopener noreferrer"
               class="flex justify-between"
             >
               <span>
@@ -87,6 +100,13 @@
         </div>
         <button
           v-if="isRentalProperty"
+          v-on:click="
+            teleportModalCallback({
+              name: 'Request For Info',
+              open_modal: true,
+              description: `${home.address.line}, ${home.address.city}, ${home.address.state_code}, ${home.address.postal_code}`,
+            })
+          "
           class="
             w-full
             my-2
@@ -109,7 +129,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { computed, provide } from "vue";
+import { computed, provide, inject } from "vue";
 import {
   addCommaToNumberFormat,
   addUnderScoresToWhiteSpacesInAString,
@@ -145,11 +165,13 @@ export default {
   setup(props) {
     const store = useStore();
     const storeData = computed(() => store.getters.getStore);
+    const { teleportModalCallback } = inject("provider");
 
     provide("displayClientFlags", {
       lastUpdates: props.home.last_update,
       status: storeData.value.activeRoutePath,
       clientFlags: props.home.client_display_flags,
+      hasOpenHouses: props.home.open_houses,
     });
 
     const getPageDetailRouteName = computed(() =>
@@ -157,21 +179,16 @@ export default {
         ? "RentPageDetail"
         : "SalesPageDetail"
     );
-    const propertyAddress = addUnderScoresToWhiteSpacesInAString(
-      props.home.address.line
-    );
-    const propertyCity = addUnderScoresToWhiteSpacesInAString(
-      props.home.address.city
-    );
+
     const isRentalProperty = computed(() =>
       storeData.value.activeRoutePath === "RentPage" ? true : false
     );
     const propertyImages = computed(() => {
       return props.home.thumbnail
         ? props.home.thumbnail
-        : !props.home.photos
-        ? "defaultImage"
-        : props.home.photos;
+        : props.home.photos
+        ? props.home.photos
+        : [];
     });
     const propertyPriceMinMAx = computed(() => {
       return props.home.community.price_hint == "CALL"
@@ -190,19 +207,6 @@ export default {
         : !props.home.community
         ? `$${addCommaToNumberFormat(props.home.price)}/mo`
         : propertyPriceMinMAx.value;
-    });
-    const propertyAddressLine = computed(() => {
-      return !props.home.address.line ? "" : `${props.home.address.line},`;
-    });
-
-    const isRentalPropertyName = computed(() => {
-      return !isRentalProperty.value
-        ? propertyAddressLine.value
-        : !props.home.community
-        ? propertyAddressLine.value
-        : !props.home.community.name
-        ? propertyAddressLine.value
-        : `${props.home.community.name},`;
     });
 
     const bathPropertyMin = computed(() => {
@@ -232,16 +236,14 @@ export default {
 
     const propertyListingBy = computed(() => {
       let hasPropertyBranding = Object.hasOwn(props.home, "branding");
-      let hasPropertylistingOffice = Object.hasOwn(
-        props.home.branding,
-        "listing_office"
-      );
+      let hasPropertylistingOffice = hasPropertyBranding
+        ? Object.hasOwn(props.home.branding, "listing_office")
+        : false;
       // let hasPropertylistingOfficeList_item = Object.hasOwn(props.home.branding.listing_office, "list_item");
 
-      let branding =
-        hasPropertyBranding && hasPropertylistingOffice
-          ? `${props.home.branding.listing_office.list_item.name},`
-          : "";
+      let branding = hasPropertylistingOffice
+        ? `${props.home.branding.listing_office.list_item.name},`
+        : "";
       return branding;
     });
 
@@ -263,19 +265,24 @@ export default {
         : "";
       return getValueIfPropertyExist;
     });
-
+    const propertyAddress = computed(() =>
+      !isRentalProperty.value
+        ? props.home.address.line
+        : Object.hasOwn(props.home, "community")
+        ? props.home.community.name
+        : props.home.address.line
+    );
     const propertyMLSId = computed(() => {
       return !props.home.mls ? "" : `#${props.home.mls.id}`;
     });
     return {
+      teleportModalCallback,
       storeData,
       getPageDetailRouteName,
       isRentalProperty,
       propertyAddress,
-      propertyCity,
       propertyImages,
       propertyPrice,
-      isRentalPropertyName,
       bedProperty,
       bedPropertyMin,
       bedPropertyMax,
@@ -286,6 +293,7 @@ export default {
       propertyListingBy,
       propertyMLSId,
       isSalesAndSoldProperty: !isRentalProperty.value,
+      addUnderScoresToWhiteSpacesInAString,
     };
   },
 };

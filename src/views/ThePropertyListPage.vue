@@ -16,7 +16,6 @@
         transition-all
         delay-500
         duration-1000
-        ease-in-out
       "
     >
       <div tabindex="-1" class="flex flex-auto flex-col px-2 py-1 outline-none">
@@ -42,7 +41,7 @@
           <div class="pt-1 mb-1">
             <h1
               v-bind:class="{
-                'animate-pulse bg-gray-200 h-6 w-3/4':
+                'animate-pulse bg-gray-200 h-6 w-1/4':
                   !listingTitle && isLoading,
               }"
               class="text-lg font-bold text-gray-600"
@@ -52,14 +51,25 @@
               </span>
             </h1>
             <ul
-              v-show="filterIsActive"
-              class="flex list-disc list-inside text-xs text-gray-400 space-x-2"
+              v-show="
+                filterIsActive && storeData.activeListBranch == agentType[0].id
+              "
+              :class="{
+                    'animate-pulse bg-gray-200 mt-0.5 h-2 w-1/4': isLoading,
+                    'list-disc list-inside': !isLoading,
+                  }"
+              class="flex text-xs text-gray-400 space-x-2"
             >
               <li
                 v-for="activeFilterEntry in activeFilterDescriptionEnteries"
                 v-bind:key="activeFilterEntry"
+                v-show="!isLoading"
               >
-                <span class="-ml-1 capitalize">{{ activeFilterEntry }}</span>
+                <span
+                  class="-ml-1 capitalize"
+                >
+                  <span>{{ activeFilterEntry }}</span>
+                </span>
               </li>
             </ul>
             <div class="flex w-full justify-between pt-3">
@@ -71,7 +81,10 @@
                   class="text-base font-normal text-gray-500"
                 >
                   <span v-if="activePropertyListings.length > 0 && !isLoading">
-                    {{ totalItemsMatchingRowsInSearch }}
+                    {{ 
+                      `${totalItemsMatchingRowsInSearch.toLocaleString()}`
+                      
+                      }}
                     {{ propertyCountIsGreaterThanOne }}
                   </span>
                 </h2>
@@ -105,10 +118,16 @@
           </property-item-card>
         </ul>
         <widget-pagination
+          v-show="
+            !isLoading &&
+            storeData.activeListBranch != agentType[1].id &&
+            activePropertyListings.length > 0
+          "
           :total-items="totalItemsMatchingRowsInSearch"
           :per-page="pageLimit"
           :offset="pageOffSet"
           :current-page="setCurrentPage"
+          :total-items-in-current-page="activePropertyListings.length"
           @page-changed="onPageChange"
         ></widget-pagination>
       </div>
@@ -154,58 +173,6 @@ import {
 } from "@/composables";
 export default {
   name: "ThePropertyListPage",
-  // async beforeRouteEnter(to, from, next) {
-  //   let queryEndpointType =
-  //     to.name == "RentPage"
-  //       ? "list-for-rent"
-  //       : to.name == "SoldPage"
-  //       ? "list-sold"
-  //       : to.name == "RentsNearMe"
-  //       ? "list-for-rent"
-  //       : "list-for-sale";
-  //   let slug =
-  //     to.params.lat && to.params.long
-  //       ? ""
-  //       : to.params.slug
-  //       ? to.params.slug
-  //       : "CA";
-  //   let city =
-  //     to.params.lat && to.params.long
-  //       ? ""
-  //       : to.params.city
-  //       ? to.params.city
-  //       : "San Francisco";
-  //   //Extract numbers from a string with floats(.) in longitude and latitudes
-  //   let latitude = to.params.lat
-  //     ? `${to.params.lat}`.replace(/[^\d.-]/g, '')
-  //     : "";
-  //   let longitude = to.params.long
-  //     ? `${to.params.long}`.replace(/[^\d.-]/g, '')
-  //     : "";
-  //   let priceMax = "";
-  //   let sortType = "relevance";
-  //   const { propertyListResults, err } = await useFetch(
-  //     queryEndpointType,
-  //     latitude,
-  //     longitude,
-  //     slug,
-  //     city,
-  //     from.params.price,
-  //     priceMax,
-  //     to.params.bed,
-  //     to.params.homeType,
-  //     to.params.bath,
-  //     to.params.homeFeatures,
-  //     sortType,
-  //     to.params.catsAllowed,
-  //     to.params.dogsAllowed,
-  //   );
-  //   const { listTitle } = useListingTitle(to.name, slug, city);
-  //   next( vm => {
-  //     vm.setData(propertyListResults, err, listTitle);
-  //   });
-  // },
-
   props: {
     name: String,
     slug: [String, Number],
@@ -567,11 +534,6 @@ export default {
         : false;
     });
 
-    const useIsPostalCode = (slug) => {
-      //Test if search is Postal/zip is used by user
-      let regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
-      return regExpNumbersOnly.test(slug);
-    };
 
     watchEffect(async () => {
       isLoading.value = true;
@@ -604,11 +566,11 @@ export default {
         : props.slug;
       let propertyCity = isRentsNearMeOrSalesNearMe.value
         ? isRoutesDefaultCity
-        : props.city;
+        : useIsPostalCode(props.slug) ? "" : props.city;
 
       let postalCode = useIsPostalCode(props.slug) ? props.slug : "";
 
-      const { propertyListResults, propertyTotalMatchingRows, err } =
+      const { propertyListResults, propertyTotalMatchingRows, errorFetch } =
         await useFetch(
           queryEndpointType,
           propertySlug,
@@ -639,8 +601,7 @@ export default {
           postalCode
         );
 
-      error.value = err.value;
-
+      error.value = errorFetch.value;
       isLoading.value = false;
       store.commit("setFetchingIsBusy", false);
       store.commit("setIsLoading", false);
@@ -649,7 +610,8 @@ export default {
         "FETCH DATA AFTER NAVIGATION DATA!!!:",
         propertyListResults.value
       );
-      console.log("FETCH DATA AFTER NAVIGATION ERROR!!!:", error.value);
+      console.log("FETCH DATA ERROR!!!:", error.value);
+
       if (propertyListResults.value.length < 1) {
         return;
       }
@@ -657,6 +619,7 @@ export default {
       allPropertyListings.value = propertyListResults.value;
       totalItemsMatchingRowsInSearch.value = propertyTotalMatchingRows.value;
       store.commit("setAllPropertyListings", propertyListResults.value);
+      store.commit("setTotalItemsMatchRows", propertyTotalMatchingRows.value);
 
       const { listingsByOthers, listingsByAgent } =
         useSortListingsByAgentAndOthers(allPropertyListings.value);
@@ -739,6 +702,7 @@ export default {
         setCurrentPage.value = parseInt(props.page) || 1;
         store.commit("setPropertyPagination", setCurrentPage.value);
       }
+      // isLoading.value = false;
       store.commit("setIsLoading", false);
     });
     onBeforeRouteLeave((_, from) => {

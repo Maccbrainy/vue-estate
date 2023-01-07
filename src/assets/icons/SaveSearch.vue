@@ -1,5 +1,6 @@
 <template>
-  <button v-on:click="saveHomePropertyCallback"
+  <button
+    v-on:click="saveHomePropertyCallback"
     :class="{
       'border xs:border-none sm:bg-white sm:px-2 sm:hover:bg-gray-200 sm:hover:border-transparent':
         $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail',
@@ -21,7 +22,11 @@
       viewBox="0 0 32 32"
       :class="{
         'xs:text-white text-teal':
-          $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail',
+          ($route.name == 'SalesPageDetail' && !teleportModalMediaTable) ||
+          ($route.name == 'RentPageDetail' && !teleportModalMediaTable),
+        'text-teal':
+          ($route.name == 'SalesPageDetail' && teleportModalMediaTable) ||
+          ($route.name == 'RentPageDetail' && teleportModalMediaTable),
       }"
       class="text-white"
       xmlns="http://www.w3.org/2000/svg"
@@ -52,8 +57,9 @@ import { inject } from "vue";
 export default {
   name: "SaveSearch",
   setup() {
-    const { saveHomePropertyCallback } = inject("provider");
-    return { saveHomePropertyCallback };
+    const { saveHomePropertyCallback, teleportModalMediaTable } =
+      inject("provider");
+    return { saveHomePropertyCallback, teleportModalMediaTable };
   },
 };
 </script>

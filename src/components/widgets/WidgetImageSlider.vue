@@ -4,7 +4,7 @@
     v-on:mouseenter="isHover = true"
     v-on:mouseleave="isHover = false"
     v-bind:class="{
-      'animate-pulse bg-gray-200': isDefaultImage || storeData.isLoading,
+      'animate-pulse bg-gray-200': storeData.fetchingIsBusy,
     }"
     class="
       relative
@@ -19,13 +19,7 @@
     "
   >
     <div
-      v-for="(photo, index) in listingPhotos"
-      :key="photo[index]"
-      v-bind:ref="(el) => (slideItemRef[index] = el)"
-      v-show="!isDefaultImage && !storeData.isLoading"
-      :class="{
-        'bg-white': photo.href,
-      }"
+      v-if="listingPhotosIsAString"
       class="w-full h-full min-w-full"
     >
       <router-link
@@ -43,6 +37,49 @@
         rel="noopener noreferrer"
       >
         <img
+          v-if="!storeData.fetchingIsBusy"
+          v-bind:src="listingPhotos"
+          alt=""
+          class="
+            w-full
+            h-full
+            object-center object-cover
+            transform
+            delay-300
+            duration-300
+            ease-in
+            hover:scale-105
+            cursor-pointer
+          "
+        />
+      </router-link>
+    </div>
+    <div
+      v-for="(photo, index) in listingImages"
+      :key="photo[index]"
+      v-bind:ref="(el) => (slideItemRef[index] = el)"
+      :class="{
+        'animate-pulse bg-gray-200': storeData.fetchingIsBusy,
+      }"
+      class="w-full h-full min-w-full"
+      v-else
+    >
+      <router-link
+        :to="{
+          name: routeName,
+          params: {
+            slug: stateCode,
+            city: cityName,
+            address: addressLocation,
+            propertyId: propertyIdCode,
+            postalCode: postalAddressCode,
+          },
+        }"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          v-if="!storeData.fetchingIsBusy"
           v-bind:src="photo.href"
           alt=""
           class="
@@ -63,7 +100,7 @@
     <span
       v-for="navigation in slideNavigations"
       :key="navigation.id"
-      v-show="isHover"
+      v-show="isHover && !listingPhotosIsAString"
       v-on:click="slideHandle(navigation.id)"
       :class="{
         'left-0': navigation.id == 'left',
@@ -136,7 +173,7 @@ export default {
       type: String,
     },
     listingPhotos: {
-      type: Object,
+      type: [Object, Array, String],
     },
     maxVisibleIndicator: {
       type: Number,
@@ -168,8 +205,19 @@ export default {
     const slideCounter = ref(0);
     const slideMoveSize = ref(0);
     const storeData = computed(() => store.getters.getStore);
+
+
+    const listingPhotosIsAString = computed(() =>
+      typeof props.listingPhotos === "string" ? true : false
+    );
+    const listingImages = computed(() =>
+      typeof props.listingPhotos === "string"
+        ? [...props.listingPhotos]
+        : props.listingPhotos
+    );
+
     const isDefaultImage = computed(() =>
-      props.listingPhotos == "defaultImage" ? true : false
+      listingImages.value.length < 1 ? true : false
     );
 
     const carousalIndicators = computed(() => {
@@ -182,7 +230,7 @@ export default {
 
     const slideHandle = (direction) => {
       // const carousalChamberRef = carousalChamberRef;
-      const { clientWidth } = slideItemRef.value[0];
+      const clientWidth  = slideItemRef.value[0].clientWidth;
       if (direction == "right") {
         slideCounter.value++;
         slideMoveSize.value -= clientWidth;
@@ -223,20 +271,24 @@ export default {
       });
     };
     const tieBeginingAndEndSlideItemsTogether = () => {
-      carousalChamberRef.value.insertAdjacentHTML(
-        "afterbegin",
-        slideItemRef.value[slideItemRef.value.length - 1].outerHTML
-      );
-      carousalChamberRef.value.insertAdjacentHTML(
-        "beforeend",
-        slideItemRef.value[0].outerHTML
-      );
+      if (!listingPhotosIsAString.value && props.listingPhotos.length > 0) {
+        carousalChamberRef.value.insertAdjacentHTML(
+          "afterbegin",
+          slideItemRef.value[slideItemRef.value.length - 1].outerHTML
+        );
+        carousalChamberRef.value.insertAdjacentHTML(
+          "beforeend",
+          slideItemRef.value[0].outerHTML
+        );
+      }
     };
     onMounted(() => {
       tieBeginingAndEndSlideItemsTogether();
     });
     return {
       isDefaultImage,
+      listingImages,
+      listingPhotosIsAString,
       isHover,
       storeData,
       slideNavigations,

@@ -5,7 +5,6 @@ export { default as WidgetImageSlider } from "@/components/widgets/WidgetImageSl
 export { default as WidgetPagination } from "@/components/widgets/WidgetPagination.vue";
 export { default as WidgetGoogleMap } from "@/components/widgets/WidgetGoogleMap.vue";
 export { default as WidgetDaysInAWeekAndWorkingHours } from "@/components/widgets/WidgetDaysInAWeekAndWorkingHours.vue";
-export { default as WidgetSaveShare } from "@/components/widgets/WidgetSaveShare.vue";
 export { default as WidgetImageGrid } from "@/components/widgets/WidgetImageGrid.vue";
 export { default as WidgetUtilitySummary } from "@/components/widgets/WidgetUtilitySummary.vue";
 export { default as WidgetHistoryTable } from "@/components/widgets/WidgetHistoryTable.vue";

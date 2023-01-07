@@ -9,7 +9,6 @@
         <filter-button-bedrooms class="mf:hidden"></filter-button-bedrooms>
         <filter-button-pets class="mf:hidden"></filter-button-pets>
         <filter-button-home-types
-          v-if="true"
           v-bind:disableOnMobile="!openFilter"
           class="mf:hidden"
         >
@@ -30,6 +29,7 @@
           </dropdown-button>
         </div>
         <button-slot
+          v-on:click="saveSearchCallback"
           class="
             mf:hidden
             border-teal-light
@@ -44,7 +44,7 @@
   </div>
 </template>
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, inject } from "vue";
 import { useStore } from "vuex";
 import { ButtonBox, ButtonSlot, DropdownButton } from "@/components/buttonui";
 import {
@@ -68,10 +68,12 @@ export default {
     DropdownButton,
   },
   setup() {
+    const { saveSearchCallback } = inject("provider");
     const openFilter = ref(false);
     const store = useStore();
     const storeData = computed(() => store.getters.getStore);
     return {
+      saveSearchCallback,
       openFilter,
       storeData,
     };

@@ -8,7 +8,7 @@
       class="w-full h-28 bg-white z-20 border-b-2 shadow-sm mf:hidden"
     >
       <div
-        v-if="propertyDetail.length > 0"
+        v-if="Object.keys(propertyDetail).length > 0"
         class="w-full lm:max-w-5xl mx-auto px-4 mt-4"
       >
         <div class="flex justify-between mt-2">
@@ -41,7 +41,7 @@
             "
           >
             <span>{{
-              propertyDetail[0].lead_forms.form.show
+              propertyDetail.lead_forms[0].form.show
                 ? "Check Availability"
                 : "Schedule A Tour"
             }}</span>
@@ -85,7 +85,6 @@
       </div>
     </div>
     <div
-      v-if="propertyDetail.length > 0"
       class="
         sf:hidden
         md:px-4
@@ -128,7 +127,9 @@
       </button>
     </div>
     <widget-image-grid
-      v-on:openMediaTable="isMediaTableModalOpen = !isMediaTableModalOpen"
+      v-on:openMediaTable="
+        teleportModalCallback({ name: `isMediaTable`, open_modal: true })
+      "
       v-bind:fetchingIsBusy="isLoading"
       v-bind:propertyImages="propertyPhotos"
     >
@@ -157,7 +158,7 @@
                       <span
                         v-if="!isLoading"
                         class="underline text-teal cursor-pointer"
-                        >{{ propertyDetail[0].address.neighborhood_name }}</span
+                        >{{ propertyDetail.address.neighborhood_name }}</span
                       >
                     </span>
                   </h1>
@@ -178,11 +179,11 @@
               <div class="max-w-xs">
                 <div
                   v-bind:class="{
-                    'animate-pulse bg-gray-200 w-full h-8':
-                      isLoading && !contextProvider.price,
+                    'animate-pulse bg-gray-200 w-10/12 h-8':
+                      isLoading
                   }"
                 >
-                  <div v-show="contextProvider.price">
+                  <div v-if="contextProvider.price">
                     <h3
                       class="
                         text-3xl text-gray-700
@@ -193,12 +194,12 @@
                     >
                       ${{ contextProvider.price }}
                     </h3>
-                    <div v-show="contextProvider.mortgageMonthlyPayment">
-                      <div class="text-gray-700">
+                    <div>
+                      <div v-show="contextProvider.mortgageMonthlyPayment" class="text-gray-700">
                         Est. Mortgage
                         {{ contextProvider.mortgageMonthlyPayment }}/mo*
                       </div>
-                      <div class="flex underline text-teal text-base font-bold">
+                      <div v-show="contextProvider.mortgageRateUrl" class="flex underline text-teal text-base font-bold">
                         <span><dollar-icon /></span>
                         <a
                           class="px-2"
@@ -261,8 +262,7 @@
                 </div>
 
                 <div
-                  v-if="propertyDetail.length > 0"
-                  id="#descriptionModule"
+                  v-if="Object.keys(propertyDetail).length > 0"
                   class="relative my-6"
                 >
                   <div class="text-gray-700 font-bold text-xl my-4">
@@ -271,13 +271,13 @@
                   <p class="text-gray-700 text-base pb-4">
                     {{
                       toggleAndShowMoreDescription
-                        ? propertyDetail[0].description
+                        ? propertyDetail.description
                         : descriptionContentToShowAtDefault
                     }}
                   </p>
                   <span
-                    v-show="
-                      propertyDetail[0].description.length >
+                    v-if="
+                      propertyDetail.description.length >
                         descriptionCountMaximum && !toggleAndShowMoreDescription
                     "
                     class="
@@ -291,8 +291,8 @@
                   >
                   </span>
                   <button
-                    v-show="
-                      propertyDetail[0].description.length >
+                    v-if="
+                      propertyDetail.description.length >
                       descriptionCountMaximum
                     "
                     v-on:click="
@@ -316,7 +316,7 @@
                 </div>
                 <div
                   v-if="
-                    propertyDetail.length > 0 && propertyDetail[0].open_houses
+                    Object.keys(propertyDetail).length > 0 && propertyDetail.client_display_flags.has_open_house
                   "
                   id="#OpenHousesModule"
                   class="relative my-6"
@@ -326,7 +326,7 @@
                   </div>
                   <div class="flex flex-col">
                     <ul
-                      v-for="openHouse in propertyDetail[0].open_houses"
+                      v-for="openHouse in propertyDetail.open_houses"
                       :key="openHouse"
                       class="
                         flex flex-row
@@ -368,7 +368,7 @@
             "
           >
             <div
-              v-if="!isLoading && propertyDetail[0].lead_forms.form.show"
+              v-if="!isLoading && propertyDetail.lead_forms[0].form.show"
               class="text-gray-700"
             >
               <div>
@@ -377,15 +377,15 @@
                 </h2>
                 <h3
                   v-if="
-                    propertyDetail.length > 0 &&
-                    propertyDetail[0].lead_forms.show_provider
+                    Object.keys(propertyDetail).length > 0 &&
+                    propertyDetail.lead_forms[0].show_text_leads
                   "
                   class="flex flex-col my-2 text-sm"
                 >
                   <span class="font-semibold">{{
-                    propertyDetail[0].office.name
+                    propertyDetail.office.name
                   }}</span>
-                  <span>{{ propertyDetail[0].office.phones[0].number }}</span>
+                  <!-- <span>{{ propertyDetail.office.phones[0].number }}</span> -->
                 </h3>
               </div>
               <widget-contact-form
@@ -393,7 +393,7 @@
               >
               </widget-contact-form>
             </div>
-            <div id="#RequestForTourModule" class="text-center">
+            <div class="text-center" v-else>
               <h2>Request for tour as early as</h2>
               <p class="font-bold">Today at 2:30pm</p>
               <button
@@ -402,7 +402,7 @@
                   'Request For Info',
                 ]"
                 :key="requestType"
-                v-on:click="getScheduleORRequestModalToOpen(requestType)"
+                v-on:click="teleportModalCallback({name:requestType, open_modal: true})"
                 type="button"
                 class="
                   w-full
@@ -426,30 +426,38 @@
           </div>
         </div>
       </div>
-      <div id="#HighlightModule" class="w-full border rounded-lg max-h-96">
+      <div 
+        v-if="Object.keys(propertyDetail).length > 0" 
+        class="w-full border rounded-lg max-h-96">
         <div class="text-gray-700 font-bold text-xl px-5 pt-5 pb-2">
           {{ `Home Highlights` }}
         </div>
         <div class="block lm:flex mt-1 pb-5">
           <div class="lm:w-1/2 px-5 text-gray-600 text-base">
             <div class="w-9/12">
-              <div class="flex justify-between py-1">
+              <div v-if="propertyDetail.garage" class="flex justify-between py-1">
                 <span class="inline-flex">
-                  <parking-icon /><span class="px-3">Parking</span></span
+                  <parking-icon /><span class="px-3">Parking/Garage</span></span
                 >
-                <span class="font-bold">No Info</span>
+                <span class="font-semibold">{{`${propertyDetail.garage}`}}</span>
               </div>
               <div class="flex justify-between py-1">
                 <span class="inline-flex">
-                  <outdoor-icon /><span class="px-3">Outdoor</span></span
+                  <outdoor-icon /><span class="px-3">Year built</span></span
                 >
-                <span class="font-bold">No Info</span>
+                <span class="font-semibold">{{ propertyDetail.year_built }}</span>
               </div>
-              <div class="flex justify-between py-1">
+              <div v-if="propertyDetail.heating" class="flex justify-between py-1">
                 <span class="inline-flex">
                   <temperature-icon /><span class="px-3">A/C</span></span
                 >
-                <span class="font-bold">No Info</span>
+                <span class="font-semibold">{{`${propertyDetail.heating}`}}</span>
+              </div>
+              <div v-if="propertyDetail.hoa_fee" class="flex justify-between py-1">
+                <span class="inline-flex">
+                  <parking-icon /><span class="px-3">HOA</span></span
+                >
+                <span class="font-semibold">{{`$${propertyDetail.hoa_fee}`}}</span>
               </div>
             </div>
           </div>
@@ -457,21 +465,23 @@
             <div class="w-9/12">
               <div class="flex justify-between py-1">
                 <span class="inline-flex">
-                  <parking-icon /><span class="px-3">HOA</span></span
-                >
-                <span class="font-bold">No Info</span>
-              </div>
-              <div class="flex justify-between py-1">
-                <span class="inline-flex">
                   <parking-icon /><span class="px-3">Price/Sqft</span></span
                 >
-                <span class="font-bold">No Info</span>
+                <span class="font-semibold">No Info</span>
+              </div>
+              <div v-if="propertyDetail.pending" class="flex justify-between py-1">
+                <span class="inline-flex">
+                  <parking-icon /><span class="px-3">Pending</span></span
+                >
+                <span class="font-semibold">{{propertyDetail.pending}}</span>
               </div>
               <div class="flex justify-between py-1">
                 <span class="inline-flex">
                   <parking-icon /><span class="px-3">Listed</span></span
                 >
-                <span class="font-bold">No Info</span>
+                <span class="font-semibold">{{
+                  `${format(new Date(propertyDetail.list_date), "d/M/yyy")}`
+            }}</span>
               </div>
             </div>
           </div>
@@ -480,11 +490,11 @@
       <widget-property-detailed-table
         v-if="!isLoading"
         v-bind:addressOfProperty="propertyAddress"
-        v-bind:propertyFeatureDetails="propertyDetail[0].features"
+        v-bind:propertyFeatureDetails="propertyDetail.features"
       >
       </widget-property-detailed-table>
       <widget-history-table
-        v-if="!isLoading"
+        v-if="contextProvider.priceHistory"
         propertyTitle="Property History"
         v-bind:propertyAddressName="propertyAddress"
         v-bind:propertyTableHeaderTitle="[
@@ -498,14 +508,14 @@
       >
       </widget-history-table>
       <widget-history-table
-        v-if="!isLoading"
+        v-if="contextProvider.taxHistory"
         propertyTitle="Tax History"
         v-bind:propertyAddressName="propertyAddress"
         v-bind:propertyTableHeaderTitle="['Year', 'Assessment Total', 'Tax']"
         v-bind:propertyContentData="contextProvider.taxHistory"
       >
       </widget-history-table>
-      <div id="#contactAnAgentModule" class="relative my-6">
+      <div class="relative my-6">
         <div class="relative text-gray-700 font-bold text-xl my-4">
           {{ `Contact an Agent` }}
         </div>
@@ -567,8 +577,8 @@
       </div>
       <div
         v-if="
-          propertyDetail.length > 0 &&
-          propertyDetail[0].lead_forms.show_provider
+          Object.keys(propertyDetail).length > 0 &&
+          propertyDetail.lead_forms[0].show_text_leads
         "
         id="#ListingProviderModule"
         class="relative my-6 top-12"
@@ -578,34 +588,34 @@
         </h2>
         <p class="text-base text-gray-500">
           {{
-            `${propertyDetail[0].office.name}, ${propertyDetail[0].office.phones[0].number}`
+            `${propertyDetail.office.name}`
           }}
         </p>
       </div>
       <div id="#propertyDescriptionModule" class="relative my-4 top-12">
         <p
-          v-if="propertyDetail.length > 0"
+          v-if="Object.keys(propertyDetail).length > 0"
           class="text-xs text-gray-500 font-normal text-justify"
         >
           {{
             `${propertyAddress}, ${propertyCity}, ${slug} ${postalCode} is a ${
               contextProvider.bed == 0
                 ? "Studio,"
-                : `${contextProvider.bed} bedroom,`
+                : !contextProvider.bed? `(no info on bedroom),`:`${contextProvider.bed} bedroom,`
             } ${
-              contextProvider.bath > 0 ? `${contextProvider.bed} bathroom,` : ""
+              contextProvider.bath > 0 ? `${contextProvider.bath} bathroom,` : ""
             } ${
               contextProvider.sqft ? `${contextProvider.sqft} sqft,` : ""
             } ${removeUnderScoresFromAString(
-              propertyDetail[0].prop_type
+              propertyDetail.prop_type
             )} built in ${
-              propertyDetail[0].year_built
+              propertyDetail.year_built
             }. ${propertyAddress} is located in ${
-              propertyDetail[0].address.neighborhood_name
+              propertyDetail.address.neighborhood_name
             }, ${propertyCity}. This property is currently available ${removeUnderScoresFromAString(
-              propertyDetail[0].prop_status
+              propertyDetail.prop_status
             )} and was listed by Realtor on ${format(
-              new Date(propertyDetail[0].list_date),
+              new Date(propertyDetail.list_date),
               "d/M/yyy"
             )}.`
           }}
@@ -615,10 +625,6 @@
   </div>
 </template>
 <script>
-import { useFetchDetail } from "@/api/useFetchDetail.js";
-import { useRoute } from "vue-router";
-import { useStore } from "vuex";
-import { format } from "date-fns";
 import {
   ref,
   watchEffect,
@@ -626,7 +632,12 @@ import {
   onMounted,
   onUnmounted,
   provide,
+  inject
 } from "vue";
+// import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+import { useFetchDetail } from "@/api/useFetchDetail.js";
+import { format } from "date-fns";
 import { addCommaToNumberFormat, removeUnderScoresFromAString } from "@/helper";
 import {
   ArrowBackIcon,
@@ -637,9 +648,10 @@ import {
   TemperatureIcon,
   ChevronDown,
   ScheduleTourIcon,
+  SaveSearch, 
+  ShareIcon
 } from "@/assets/icons";
 import {
-  WidgetSaveShare,
   WidgetImageGrid,
   WidgetUtilitySummary,
   WidgetHistoryTable,
@@ -676,7 +688,6 @@ export default {
     },
   },
   components: {
-    WidgetSaveShare,
     WidgetRequestInfoForm,
     WidgetScheduleTour,
     WidgetContactForm,
@@ -692,9 +703,10 @@ export default {
     ChevronDown,
     ScheduleTourIcon,
     WidgetPropertyDetailedTable,
+    SaveSearch, 
+    ShareIcon
   },
   setup(props) {
-    const route = useRoute();
     const store = useStore();
 
     const {
@@ -710,12 +722,13 @@ export default {
     const showHideSecondaryNavBar = ref(false);
 
     const propertyDetail = ref({});
-    const isLoading = ref(true);
+    const isLoading = ref(false);
     const errorMessage = ref("");
 
     const contextProvider = ref({});
 
     const propertyPhotos = ref([]);
+    const storeData = computed(()=> store.getters.getStore)
 
     const toggleAndShowMoreDescription = ref(false);
     const descriptionCountMaximum = ref(844);
@@ -732,11 +745,11 @@ export default {
     watchEffect(async () => {
       isLoading.value = true;
       store.commit("setFetchingIsBusy", true);
-      const { propertyFullContents, error } = await useFetchDetail(
+      const { propertyFullContents, errorFetch } = await useFetchDetail(
         props.propertyId
       );
       propertyDetail.value = propertyFullContents.value;
-      errorMessage.value = error.value;
+      errorMessage.value = errorFetch.value;
 
       isLoading.value = false;
       store.commit("setFetchingIsBusy", false);
@@ -744,72 +757,74 @@ export default {
 
       console.log("DETAILED INFO:", propertyDetail.value);
       console.log("DETAILED error:", errorMessage.value);
-      console.log("DETAILED ROUTER:", route);
 
-      contextProvider.value.status = propertyDetail.value[0].prop_status;
+      contextProvider.value.status = propertyDetail.value.prop_status;
       contextProvider.value.clientFlags =
-        propertyDetail.value[0].client_display_flags;
-      contextProvider.value.lastUpdates = propertyDetail.value[0].last_update;
+        propertyDetail.value.client_display_flags;
+      contextProvider.value.lastUpdates = propertyDetail.value.last_update;
 
-      propertyPhotos.value = propertyDetail.value[0].photos;
+      propertyPhotos.value = propertyDetail.value.photos;
 
       contextProvider.value.price = addCommaToNumberFormat(
-        propertyDetail.value[0].price
+        propertyDetail.value.price
       );
       // propertyPrice.value = addCommaToNumberFormat(
-      //   propertyDetail.value[0].price
+      //   propertyDetail.value.price
       // );
-      contextProvider.value.bed = Object.hasOwn(propertyDetail.value[0], "beds")
-        ? propertyDetail.value[0].beds
+      contextProvider.value.bed = Object.hasOwn(propertyDetail.value, "beds")
+        ? propertyDetail.value.beds
         : "";
 
       let isCommunityARentalProperty = Object.hasOwn(
-        propertyDetail.value[0],
+        propertyDetail.value,
         "community"
       );
 
       contextProvider.value.bedMin = isCommunityARentalProperty
-        ? propertyDetail.value[0].community.beds_min
+        ? propertyDetail.value.community.beds_min
         : "";
       contextProvider.value.bedMax = isCommunityARentalProperty
-        ? propertyDetail.value[0].community.beds_max
+        ? propertyDetail.value.community.beds_max
         : "";
 
       contextProvider.value.bath = Object.hasOwn(
-        propertyDetail.value[0],
+        propertyDetail.value,
         "baths"
       )
-        ? propertyDetail.value[0].baths
+        ? propertyDetail.value.baths
         : "";
       contextProvider.value.bathMin = isCommunityARentalProperty
-        ? propertyDetail.value[0].community.baths_min
+        ? propertyDetail.value.community.baths_min
         : "";
 
       contextProvider.value.bathMax = isCommunityARentalProperty
-        ? propertyDetail.value[0].community.baths_max
+        ? propertyDetail.value.community.baths_max
         : "";
 
       contextProvider.value.sqft = Object.hasOwn(
-        propertyDetail.value[0],
-        "building_size"
+        propertyDetail.value,
+        "sqft"
       )
-        ? addCommaToNumberFormat(propertyDetail.value[0].building_size.size)
+        ? addCommaToNumberFormat(propertyDetail.value.sqft)
         : "";
 
       let isPropertyMortgaged = Object.hasOwn(
-        propertyDetail.value[0],
+        propertyDetail.value,
         "mortgage"
       );
 
-      contextProvider.value.mortgageMonthlyPayment = isPropertyMortgaged
-        ? propertyDetail.value[0].mortgage.estimate.monthly_payment
+      contextProvider.value.mortgageMonthlyPayment = 
+        isPropertyMortgaged && 
+        storeData.value.activeRouthPath == "SalesPageDetail"
+        ? propertyDetail.value.mortgage.estimate.monthly_payment
         : "";
       contextProvider.value.mortgageRateUrl = isPropertyMortgaged
-        ? propertyDetail.value[0].mortgage.rates_url
+        ? propertyDetail.value.mortgage.rates_url
         : "";
       contextProvider.value.priceHistory =
-        propertyDetail.value[0].property_history;
-      contextProvider.value.taxHistory = propertyDetail.value[0].tax_history;
+        propertyDetail.value.property_history;
+      contextProvider.value.taxHistory = propertyDetail.value.tax_history;
+      contextProvider.value.openHouses = propertyDetail.value.open_houses;
     });
 
     provide("displayClientFlags", contextProvider.value);
@@ -817,18 +832,18 @@ export default {
     const descriptionContentToShowAtDefault = computed(() => {
       let propertyDescription = "";
       if (
-        propertyDetail.value[0].description.length >
+        propertyDetail.value.description.length >
         descriptionCountMaximum.value
       ) {
-        propertyDescription = propertyDetail.value[0].description
+        propertyDescription = propertyDetail.value.description
           .slice(0, descriptionCountMaximum.value)
           .concat(`...`);
       }
       if (
-        propertyDetail.value[0].description.length <=
+        propertyDetail.value.description.length <=
         descriptionCountMaximum.value
       ) {
-        propertyDescription = propertyDetail.value[0].description;
+        propertyDescription = propertyDetail.value.description;
       }
       return propertyDescription;
     });
@@ -893,6 +908,7 @@ export default {
     });
 
     return {
+      storeData,
       toggleTable,
       historyRoutePath,
       contextProvider,

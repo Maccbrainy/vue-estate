@@ -162,7 +162,7 @@
               lm:rounded-lg
             "
           >
-            <button
+            <button v-on:click="saveSearchCallback"
               type="button"
               class="
                 w-full
@@ -205,7 +205,7 @@
   </li>
 </template>
 <script>
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted, inject } from "vue";
 import { useStore } from "vuex";
 import { ChevronDown, CloseMobileMenu, FilterIcon } from "@/assets/icons";
 import { ButtonSlot } from "@/components/buttonui";
@@ -231,6 +231,7 @@ export default {
   setup() {
     const buttonIsOpen = ref(false);
     const store = useStore();
+    const { saveSearchCallback } = inject("provider");
     const fieldSetRef = ref(null);
     const menuRef = ref(null);
     const storeData = computed(() => store.getters.getStore);
@@ -267,6 +268,7 @@ export default {
       fieldSetRef,
       menuRef,
       isBuyPage,
+      saveSearchCallback,
     };
   },
 };

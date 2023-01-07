@@ -1,6 +1,9 @@
 <template>
   <div
     class="
+      flex
+      flex-col
+      space-y-0.5
       text-base
       font-normal
       overflow-ellipsis
@@ -9,26 +12,33 @@
       text-gray-600
     "
   >
-    <span
-      v-bind:class="{ 'animate-pulse bg-gray-200 w-16 h-4': fetchingIsBusy }"
+    <div
+      v-bind:class="{ 'animate-pulse bg-gray-200 my-1 full h-3': storeData.fetchingIsBusy }"
     >
-      <span v-show="!fetchingIsBusy">{{ streetOrName }}</span>
-    </span>
-    <br />
-    <span
-      v-bind:class="{ 'animate-pulse bg-gray-200 w-16 h-4': fetchingIsBusy }"
+      <span v-if="!storeData.fetchingIsBusy">{{ streetOrName }}</span>
+    </div>
+
+    <div
+      v-bind:class="{ 'animate-pulse bg-gray-200 w-full h-3': storeData.fetchingIsBusy }"
     >
-      <span v-show="!fetchingIsBusy">
+      <span v-if="!storeData.fetchingIsBusy">
         {{ city }},
         {{ state }}
         {{ postalCode }}</span
       >
-    </span>
+    </div>
   </div>
 </template>
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
 export default {
   name: "WidgetLocationDetail",
-  props: ["streetOrName", "city", "state", "postalCode", "fetchingIsBusy"],
+  props: ["streetOrName", "city", "state", "postalCode"],
+  setup(){
+    const store = useStore();
+    const storeData = computed(() => store.getters.getStore);
+    return { storeData }
+  }
 };
 </script>

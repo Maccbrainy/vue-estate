@@ -38,7 +38,7 @@ export default function useRouterPush(payLoad) {
       activeRoute.value = routeName;
       break;
   }
-  console.log("pagination params:", searchParams.value.pagination)
+
   let minPriceFilter = searchParams.value.priceMin || "";
   let maxPriceFilter = searchParams.value.priceMax || "";
   let bedFilter = searchParams.value.bed || "";

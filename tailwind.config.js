@@ -8,9 +8,10 @@ module.exports = {
         lf: { max: "1240px" },
         lm: { min: "991px" },
         mf: { max: "990px" },
+        md: { min: "768px" },
         sf: { max: "767px" },
         xs: { max: "640px" },
-        xxs: { max: "410px" },
+        xxs: { max: "416px" },
       },
       colors: {
         teal: {

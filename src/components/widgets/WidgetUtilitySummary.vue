@@ -2,7 +2,7 @@
   <div class="flex flex-row space-x-4 whitespace-nowrap">
     <div
       v-bind:class="{
-        'animate-pulse bg-gray-200 w-16 h-5 ': fetchingIsBusy,
+        'animate-pulse bg-gray-200 w-16 my-1 h-3 ': fetchingIsBusy,
       }"
     >
       <div
@@ -17,7 +17,7 @@
     </div>
     <div
       v-bind:class="{
-        'animate-pulse bg-gray-200 w-16 h-5': fetchingIsBusy,
+        'animate-pulse bg-gray-200 w-16 my-1 h-3': fetchingIsBusy,
       }"
     >
       <div
@@ -32,7 +32,7 @@
     </div>
     <div
       v-bind:class="{
-        'animate-pulse bg-gray-200 w-16 h-5': fetchingIsBusy,
+        'animate-pulse bg-gray-200 w-16 my-1 h-3': fetchingIsBusy,
       }"
     >
       <div
@@ -98,7 +98,7 @@ export default {
     });
 
     const bathPropertyOnSale = computed(() =>
-      props.bedroom > 0 ? `${props.bedroom} baths` : ""
+      props.bathroom > 0 ? `${props.bathroom} baths` : ""
     );
     const bathPropertyMin = computed(() =>
       props.bathroomMin == 0 ? "" : `${props.bathroomMin} -`

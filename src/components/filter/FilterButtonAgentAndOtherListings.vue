@@ -6,7 +6,7 @@
       class="relative w-auto h-auto -mr-1"
     >
       <button
-        v-on:click="activateListingBranch(event, type)"
+        v-on:click="activateListingBranch(type)"
         type="button"
         :class="{ 'transform -translate-x-3': arrayIndex == 1 }"
         class="
@@ -25,11 +25,13 @@
           bg-gray-100
           hover:bg-gray-200
           xs:px-4
+          transition-all
+          duration-500
         "
       >
         <span
           :class="{
-            'absolute w-full px-6 py-2 h-full bg-white border rounded-lg z-10 xs:px-4':
+            'absolute w-full px-6 py-2 h-full bg-white border rounded-lg z-10 xs:px-4 transition-all duration-500':
               type.id == storeData.activeListBranch,
             'transform translate-x-0': arrayIndex == 0,
           }"
@@ -38,7 +40,7 @@
         <span class="xxs:hidden z-10 font-normal px-1">{{
           arrayIndex == 0
             ? `(${numberOfPropertyByAgent})`
-            : `(${numberOfPropertyByOther})`
+            : `(${storeData.propertyListingsByNoneAgent.length})`
         }}</span>
       </button>
     </div>
@@ -60,34 +62,13 @@ export default {
       storeData.value.activeRoutePath == routeNames[0].id ? true : false
     );
 
-    const numberOfActiveListing = computed(() => {
-      return storeData.value.activeListing.length > 0
-        ? storeData.value.activeListing.length
-        : 0;
-    });
-
     const numberOfPropertyByAgent = computed(() => {
-      let numberAgent =
-        storeData.value.activeListBranch == agentType[0].id
-          ? numberOfActiveListing.value
-          : storeData.value.propertyListingsByAgent.length > 0
-          ? storeData.value.propertyListingsByAgent.length
-          : 0;
-      console.log("By Agent:", numberAgent);
-      return numberAgent;
-    });
-    const numberOfPropertyByOther = computed(() => {
-      let numberOther =
-        storeData.value.activeListBranch == agentType[1].id
-          ? numberOfActiveListing.value
-          : storeData.value.propertyListingsByNoneAgent.length > 0
-          ? storeData.value.propertyListingsByNoneAgent.length
-          : 0;
-      console.log("By Others:", numberOther);
-      return numberOther;
+      return storeData.value.totalItemsMatchRows > 500
+        ? "500+"
+        : storeData.value.totalItemsMatchRows;
     });
 
-    const activateListingBranch = (_, type) => {
+    const activateListingBranch = (type) => {
       store.commit("setActiveListBranch", type.id);
     };
 
@@ -96,7 +77,7 @@ export default {
       agentType,
       storeData,
       numberOfPropertyByAgent,
-      numberOfPropertyByOther,
+      // numberOfPropertyByOther,
       activateListingBranch,
     };
   },

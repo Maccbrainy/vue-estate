@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
-    <div class="absolute left-0 p-2 z-10">
-      <div class="flex justify-start space-x-1">
+    <div class="w-10/12 absolute left-0 p-2 z-10">
+      <div class="flex justify-start flex-wrap gap-1">
         <span
           v-if="propertyStatus"
           class="
@@ -110,6 +110,7 @@
 </template>
 <script>
 import { computed, inject } from "vue";
+import { useStore } from "vuex";
 import { ThreeDTourIcon } from "@/assets/icons";
 import { format, formatDistanceStrict } from "date-fns";
 export default {
@@ -119,6 +120,8 @@ export default {
     ThreeDTourIcon,
   },
   setup() {
+    const store = useStore();
+    const storeData = computed(() => store.getters.getStore);
     const displayFlags = inject("displayClientFlags");
 
     const propertyStatus = computed(() =>
@@ -149,18 +152,23 @@ export default {
       let getValueIfPropertyExist = Object.hasOwn(
         displayFlags.clientFlags,
         "has_open_house"
-      )
-        ? displayFlags.clientFlags.has_open_house
-        : false;
-      if (getValueIfPropertyExist) {
-        let startDate = format(
-          new Date(displayFlags.clientFlags.open_houses[0].start_date),
-          "E,h"
-        );
-        let endDate = format(
-          new Date(displayFlags.clientFlags.open_houses[0].end_date),
-          "ha"
-        );
+      );
+
+      if (getValueIfPropertyExist && displayFlags.clientFlags.has_open_house) {
+        const { activeRoutePath } = storeData.value;
+        let dataSourceIsFromDetailedPage =
+          activeRoutePath == "RentPageDetail" ||
+          activeRoutePath == "SalesPageDetail"
+            ? true
+            : false;
+
+        let startDate = dataSourceIsFromDetailedPage
+          ? format(new Date(displayFlags.openHouses[0].start_date), "E,h")
+          : format(new Date(displayFlags.hasOpenHouses[0].start_date), "E,h");
+
+        let endDate = dataSourceIsFromDetailedPage
+          ? format(new Date(displayFlags.openHouses[0].end_date), "ha")
+          : format(new Date(displayFlags.hasOpenHouses[0].end_date), "E,h");
         let openDateDuration = `OPEN ${startDate}-${endDate}`;
         return openDateDuration;
       }

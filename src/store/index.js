@@ -206,11 +206,11 @@ export default createStore({
     setPropertySorting(state, propertyPayLoad) {
       state.propertyFilters.sorting = propertyPayLoad;
     },
-    //Invoked from searchResultComponent
+    //Invoked from SearchInput
     setIsLoading(state, isLoadingPayload) {
       state.isLoading = isLoadingPayload;
     },
-    //Invoked from searchResultComponent
+    //Invoked from PropertyListPage
     setFetchingIsBusy(state, isLoadingPayload) {
       state.fetchingIsBusy = isLoadingPayload;
     },

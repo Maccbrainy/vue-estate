@@ -93,7 +93,7 @@ export default {
     // const getFirstAndLastName = ref("");
     const getPhoneNumber = ref("");
     const getEmailAddress = ref("");
-    const getMessage = ref(`I am interested in ${props.propertyName}.`);
+    const getMessage = ref(`I am interested in ${props.propertyName || 'this property'}`);
 
     const submitForm = () => {
       const userData = {};

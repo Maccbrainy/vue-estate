@@ -49,7 +49,7 @@
         </button>
       </li>
       <!-- Visible buttons ends -->
-      <li>
+      <li v-show="!isInLastPage">
         <button
           @click="pageChangeHandler('isNextPage')"
           :disabled="isInLastPage"
@@ -82,13 +82,18 @@
       </li> -->
     </ul>
     <div class="text-center text-xs font-normal pt-1.5 text-gray-500">
-      {{ `${pageOffSet}-${perPage * currentPage} of 24040 Results` }}
+      {{
+        `${pageOffSet}-${paginationContentDescription} of ${addCommaToNumberFormat(
+          totalItems
+        )} Results`
+      }}
     </div>
   </div>
 </template>
 <script>
 import { computed } from "vue";
 import { ChevronRight, ChevronLeft } from "@/assets/icons";
+import { addCommaToNumberFormat } from "@/helper";
 export default {
   name: "WidgetPagination",
   props: {
@@ -104,6 +109,10 @@ export default {
       type: Number,
     },
     currentPage: {
+      type: Number,
+      required: true,
+    },
+    totalItemsInCurrentPage: {
       type: Number,
       required: true,
     },
@@ -125,6 +134,11 @@ export default {
     );
     const isInFirstPage = computed(() => props.currentPage === 1);
     const isInLastPage = computed(() => props.currentPage === totalPages.value);
+
+    const paginationContentDescription = computed(
+      () =>
+        (props.currentPage - 1) * props.perPage + props.totalItemsInCurrentPage
+    );
 
     const startPage = computed(() => {
       let visiblePageButtonsStartFrom;
@@ -188,6 +202,8 @@ export default {
       isInLastPage,
       endPage,
       pageChangeHandler,
+      paginationContentDescription,
+      addCommaToNumberFormat
     };
   },
 };

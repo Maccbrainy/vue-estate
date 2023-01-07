@@ -91,7 +91,7 @@
     </template>
     <template v-slot:default>
       <section class="relative top-32">
-        <div class="hidden w-full relative box-border overflow-hidden">
+        <div v-show="$route.name != 'pageNotFound'" class="hidden w-full relative box-border overflow-hidden">
           <button
             v-if="moveIndex < 0"
             v-on:click="moveSlides(-1)"
@@ -202,7 +202,7 @@
             </call-to-action-card>
           </div>
         </div>
-        <div
+        <div v-show="$route.name != 'pageNotFound'"
           class="
             absolute
             w-full
@@ -225,7 +225,7 @@
       </section>
     </template>
     <template v-slot:footer>
-      <section class="listColumns w-full md:flex relative top-80">
+      <section v-show="$route.name != 'pageNotFound'" class="listColumns w-full md:flex relative top-80">
         <div class="max-w-7xl md:flex md:m-auto">
           <show-hide-list-columns
             listColumnTitle="Real Estate Markets"
@@ -417,6 +417,7 @@ export default {
       exploreContact,
       moveSlides,
       moveIndex,
+      findHomeAndRental
     };
   },
 };
