@@ -270,13 +270,13 @@
                   </div>
                   <p class="text-gray-700 text-base pb-4">
                     {{
-                      toggleAndShowMoreDescription
+                      toggleAndShowMoreDescription && propertyDetail.description
                         ? propertyDetail.description
                         : descriptionContentToShowAtDefault
                     }}
                   </p>
                   <span
-                    v-if="
+                    v-if="propertyDetail.description && 
                       propertyDetail.description.length >
                         descriptionCountMaximum && !toggleAndShowMoreDescription
                     "
@@ -292,7 +292,7 @@
                   </span>
                   <button
                     v-if="
-                      propertyDetail.description.length >
+                      propertyDetail.description && propertyDetail.description.length >
                       descriptionCountMaximum
                     "
                     v-on:click="
@@ -838,6 +838,7 @@ export default {
     provide("displayClientFlags", contextProvider.value);
 
     const descriptionContentToShowAtDefault = computed(() => {
+      if (!propertyDetail.value.description) return "No description found";
       let propertyDescription = "";
       if (
         propertyDetail.value.description.length >
