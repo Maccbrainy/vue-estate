@@ -1,7 +1,23 @@
 <template>
   <form v-on:submit.prevent="submitForm">
-    <div class="flex gap-2">
-      <contact-form-input
+    <div
+      v-if="$route.name == 'RentPage'"
+      class="flex flex-row gap-3 text-gray-500 py-3"
+    >
+      <div class="h-20 w-20 rounded-xl overflow-hidden">
+        <img
+          class="object-center object-cover h-full w-full"
+          :src="propertyDetail.photo"
+        />
+      </div>
+      <div class="flex flex-col text-sm">
+        <span>{{ propertyDetail.address }}</span>
+        <span>{{ propertyDetail.city }}</span>
+        <span>{{ propertyDetail.price }}</span>
+      </div>
+    </div>
+    <div class="flex mf:flex-col lm:flex-row gap-2">
+      <contact-form-input class="w-full"
         v-model:data-value="getFirstAndLastName"
         labelName="Name"
         typeName="text"
@@ -12,7 +28,7 @@
         :isInputType="true"
       >
       </contact-form-input>
-      <contact-form-input
+      <contact-form-input class="w-full"
         v-model:data-value="getPhoneNumber"
         labelName="Phone"
         typeName="tel"
@@ -62,7 +78,12 @@
     >
       Check availability
     </button>
-    <div class="text-xs text-teal pt-3">
+    <div
+      v-if="
+        $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail'
+      "
+      class="text-xs text-teal pt-3"
+    >
       You agree to Vue Estate Terms of Use & Privacy Policy By choosing to
       contact a property, you also agree that property managers may call or text
       you about any inquiries you submit through our services, which may involve
