@@ -7,7 +7,7 @@ export default {
     const teleportModalFormRequests = ref({
       name: "",
       for_modal: false,
-      description: ""
+      description: {},
     });
 
     const mapViewChangesCallback = () => {
@@ -23,31 +23,37 @@ export default {
       if (name == "isMediaTable") {
         teleportModalMediaTable.value = open_modal;
         console.log("Teleport:", name, teleportModalMediaTable.value);
+        return teleportModalMediaTable.value;
       }
       if (name == "Schedule A Tour") {
         teleportModalFormRequests.value.name = name;
         teleportModalFormRequests.value.for_modal = open_modal;
+        teleportModalFormRequests.value.description = description;
         console.log("Teleport:", name, teleportModalFormRequests.value);
+        return teleportModalMediaTable.value;
       }
       if (name == "Request For Info") {
         teleportModalFormRequests.value.name = name;
         teleportModalFormRequests.value.for_modal = open_modal;
+        teleportModalFormRequests.value.description = description;
         console.log("Teleport:", name, teleportModalFormRequests.value);
+        return teleportModalMediaTable.value;
       }
       if (name == "Contact This Property") {
         teleportModalFormRequests.value.name = name;
         teleportModalFormRequests.value.for_modal = open_modal;
         teleportModalFormRequests.value.description = description;
         console.log("Teleport:", name, teleportModalFormRequests.value);
+        return teleportModalMediaTable.value;
       }
     };
     const saveHomePropertyCallback = () => {
-      alert("Backend functionalities coming soon!")
-    }
+      alert("Backend functionalities coming soon!");
+    };
 
     const saveSearchCallback = () => {
-      alert("Save search Backend functionalities coming soon!")
-    }
+      alert("Save search Backend functionalities coming soon!");
+    };
 
     app.provide("provider", {
       mapViewChangesCallback,
@@ -56,7 +62,7 @@ export default {
       teleportModalMediaTable,
       teleportModalFormRequests,
       saveHomePropertyCallback,
-      saveSearchCallback
+      saveSearchCallback,
     });
   },
 };

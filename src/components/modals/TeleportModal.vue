@@ -251,7 +251,8 @@
           <widget-contact-form
             v-bind:propertyName="`${teleportModalFormRequests.description.address}, ${teleportModalFormRequests.description.city}`"
             v-bind:propertyDetail="teleportModalFormRequests.description"
-           v-else>
+            v-else
+          >
           </widget-contact-form>
         </div>
         <close-mobile-menu
@@ -310,7 +311,9 @@ export default {
         ? "Schedule A Tour"
         : teleportModalFormRequests.value.name == "Request For Info"
         ? "Request For Info"
-        : "Contact This Property"
+        : teleportModalFormRequests.value.name == "Contact This Property"
+        ? "Contact This Property"
+        : "empty"
     );
     watchEffect(() => {
       teleportModalFormRequests.value.for_modal;
@@ -331,7 +334,13 @@ export default {
     });
     const teleportRequestCallback = (requestType) => {
       teleportModalCallback({ name: "isMediaTable", open_modal: false });
-      teleportModalCallback({ name: requestType, open_modal: true });
+      teleportModalCallback({
+        name: requestType,
+        open_modal: true,
+        description: {
+          address: `${storeData.value.propertyDetailed.address.line}, ${storeData.value.propertyDetailed.address.city}, ${storeData.value.propertyDetailed.address.state_code}, ${storeData.value.propertyDetailed.address.postal_code}`,
+        },
+      });
     };
     return {
       teleportModalFormRequests,
