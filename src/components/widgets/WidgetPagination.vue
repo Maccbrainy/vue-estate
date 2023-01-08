@@ -140,6 +140,12 @@ export default {
         (props.currentPage - 1) * props.perPage + props.totalItemsInCurrentPage
     );
 
+    const maxVisiblePageButtons = computed(() =>
+      totalPages.value >= props.maxVisiblePageLinks
+        ? props.maxVisiblePageLinks
+        : totalPages.value
+    );
+
     const startPage = computed(() => {
       let visiblePageButtonsStartFrom;
       // When on the first page
@@ -150,7 +156,7 @@ export default {
       // When on the last page
       if (isInLastPage.value) {
         visiblePageButtonsStartFrom =
-          totalPages.value - props.maxVisiblePageLinks + 1;
+          totalPages.value - maxVisiblePageButtons.value + 1;
         return visiblePageButtonsStartFrom;
       }
       // When inbetween
@@ -160,7 +166,7 @@ export default {
 
     const endPage = computed(() => {
       let visiblePageButtonsEndsAt = Math.min(
-        startPage.value + props.maxVisiblePageLinks - 1,
+        startPage.value + maxVisiblePageButtons.value - 1,
         totalPages.value
       );
       return visiblePageButtonsEndsAt;
