@@ -13,7 +13,7 @@
       font-medium
       flex
       items-center
-      z-10
+      z-20
     "
   >
     <svg
