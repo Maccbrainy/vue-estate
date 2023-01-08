@@ -78,7 +78,7 @@
         >
           <div
             v-bind:class="{
-              'animate-pulse bg-gray-200 w-full my-1 h-3 ':
+              'animate-pulse bg-gray-200 w-full my-1 h-4 ':
                 storeData.fetchingIsBusy,
             }"
             class="uppercase pb-2 text-xs text-gray-600"
@@ -112,21 +112,14 @@
               },
             })
           "
-          class="
-            w-full
-            my-2
-            bg-white
-            border
-            p-1
-            border-teal-light
-            text-teal text-sm
-            font-semibold
-            rounded-lg
-            hover:bg-teal-lighter hover:border-teal
-            focus:bg-teal focus:text-white focus:border-teal
-          "
+          v-bind:class="{
+            'animate-pulse bg-gray-200 h-4 ': storeData.fetchingIsBusy,
+            'bg-white border p-1 border-teal-light text-teal text-sm font-semibold rounded-lg hover:bg-teal-lighter hover:border-teal focus:bg-teal focus:text-white focus:border-teal':
+              !storeData.fetchingIsBusy,
+          }"
+          class="w-full my-2"
         >
-          Check Availability
+          {{ !storeData.fetchingIsBusy ? "Check Availability" : "" }}
         </button>
       </div>
     </div>
