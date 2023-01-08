@@ -236,11 +236,7 @@
           class="mt-2 w-full h-full overflow-y-auto bg-white px-6 py-2"
         >
           <div class="text-gray-700 font-bold text-lg py-1">
-            {{
-              teleportModalFormRequests.name == `Schedule A Tour`
-                ? `Schedule A Tour`
-                : "Request For Info"
-            }}
+            {{ teleportModalFormRequests.name }}
           </div>
           <widget-schedule-tour
             v-if="teleportModalFormRequests.name == `Schedule A Tour`"
@@ -252,14 +248,19 @@
           >
           </widget-schedule-tour>
           <widget-request-info-form
+            v-else-if="teleportModalFormRequests.name == `Request For Info`"
             v-bind:propertyName="
               Object.keys(storeData.propertyDetailed).length > 0
                 ? `${storeData.propertyDetailed.address.line}, ${storeData.propertyDetailed.address.city}, ${storeData.propertyDetailed.address.state_code}, ${storeData.propertyDetailed.address.postal_code}`
                 : teleportModalFormRequests.description
             "
-            v-else
           >
           </widget-request-info-form>
+          <widget-contact-form
+            v-bind:propertyName="`${teleportModalFormRequests.description.address}, ${teleportModalFormRequests.description.city}`"
+            v-bind:propertDetail="teleportModalFormRequests.description"
+           v-else>
+          </widget-contact-form>
         </div>
         <close-mobile-menu
           v-show="teleportModalFormRequests.for_modal"
@@ -317,7 +318,7 @@ export default {
         ? "Schedule A Tour"
         : teleportModalFormRequests.value.name == "Request For Info"
         ? "Request For Info"
-        : ""
+        : "Contact This Property"
     );
     watchEffect(() => {
       teleportModalFormRequests.value.for_modal;
