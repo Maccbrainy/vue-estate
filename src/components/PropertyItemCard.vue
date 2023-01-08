@@ -102,9 +102,14 @@
           v-if="isRentalProperty"
           v-on:click="
             teleportModalCallback({
-              name: 'Request For Info',
+              name: 'Contact This Property',
               open_modal: true,
-              description: `${home.address.line}, ${home.address.city}, ${home.address.state_code}, ${home.address.postal_code}`,
+              description: {
+                address: `${home.address.line}`,
+                city: `${home.address.city}`,
+                price: propertyPrice,
+                photo: home.photos[0].href,
+              },
             })
           "
           class="

@@ -19,21 +19,26 @@ export default {
       }
     };
 
-    const teleportModalCallback = (modal) => {
-      if (modal.name == "isMediaTable") {
-        teleportModalMediaTable.value = modal.open_modal;
-        console.log("Teleport:", modal.name, teleportModalMediaTable.value);
+    const teleportModalCallback = ({ name, open_modal, description }) => {
+      if (name == "isMediaTable") {
+        teleportModalMediaTable.value = open_modal;
+        console.log("Teleport:", name, teleportModalMediaTable.value);
       }
-      if (modal.name == "Schedule A Tour") {
-        teleportModalFormRequests.value.name = modal.name;
-        teleportModalFormRequests.value.for_modal = modal.open_modal;
-        console.log("Teleport:", modal.name, teleportModalFormRequests.value);
+      if (name == "Schedule A Tour") {
+        teleportModalFormRequests.value.name = name;
+        teleportModalFormRequests.value.for_modal = open_modal;
+        console.log("Teleport:", name, teleportModalFormRequests.value);
       }
-      if (modal.name == "Request For Info") {
-        teleportModalFormRequests.value.name = modal.name;
-        teleportModalFormRequests.value.for_modal = modal.open_modal;
-        teleportModalFormRequests.value.description = modal.description;
-        console.log("Teleport:", modal.name, teleportModalFormRequests.value);
+      if (name == "Request For Info") {
+        teleportModalFormRequests.value.name = name;
+        teleportModalFormRequests.value.for_modal = open_modal;
+        console.log("Teleport:", name, teleportModalFormRequests.value);
+      }
+      if (name == "Contact This Property") {
+        teleportModalFormRequests.value.name = name;
+        teleportModalFormRequests.value.for_modal = open_modal;
+        teleportModalFormRequests.value.description = description;
+        console.log("Teleport:", name, teleportModalFormRequests.value);
       }
     };
     const saveHomePropertyCallback = () => {
