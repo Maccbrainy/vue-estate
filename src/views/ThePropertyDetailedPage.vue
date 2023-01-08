@@ -402,7 +402,15 @@
                   'Request For Info',
                 ]"
                 :key="requestType"
-                v-on:click="teleportModalCallback({name:requestType, open_modal: true})"
+                v-on:click="
+                  teleportModalCallback({
+                    name: requestType,
+                    open_modal: true,
+                    description: {
+                      address: fullPropertyAddressIdentity,
+                    },
+                  })
+                "
                 type="button"
                 class="
                   w-full

@@ -240,20 +240,12 @@
           </div>
           <widget-schedule-tour
             v-if="teleportModalFormRequests.name == `Schedule A Tour`"
-            v-bind:propertyName="
-              Object.keys(storeData.propertyDetailed).length > 0
-                ? `${storeData.propertyDetailed.address.line}, ${storeData.propertyDetailed.address.city}, ${storeData.propertyDetailed.address.state_code}, ${storeData.propertyDetailed.address.postal_code}`
-                : teleportModalFormRequests.description
-            "
+            v-bind:propertyName="`${teleportModalFormRequests.description.address}`"
           >
           </widget-schedule-tour>
           <widget-request-info-form
             v-else-if="teleportModalFormRequests.name == `Request For Info`"
-            v-bind:propertyName="
-              Object.keys(storeData.propertyDetailed).length > 0
-                ? `${storeData.propertyDetailed.address.line}, ${storeData.propertyDetailed.address.city}, ${storeData.propertyDetailed.address.state_code}, ${storeData.propertyDetailed.address.postal_code}`
-                : teleportModalFormRequests.description
-            "
+            v-bind:propertyName="`${teleportModalFormRequests.description.address}`"
           >
           </widget-request-info-form>
           <widget-contact-form
