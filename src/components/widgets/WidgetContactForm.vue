@@ -83,6 +83,10 @@ export default {
       type: String,
       required: true,
     },
+    propertyDetail: {
+      type: Object,
+      required: false,
+    },
   },
   components: {
     ContactFormInput,

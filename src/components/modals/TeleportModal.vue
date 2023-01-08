@@ -250,7 +250,7 @@
           </widget-request-info-form>
           <widget-contact-form
             v-bind:propertyName="`${teleportModalFormRequests.description.address}, ${teleportModalFormRequests.description.city}`"
-            v-bind:propertDetail="teleportModalFormRequests.description"
+            v-bind:propertyDetail="teleportModalFormRequests.description"
            v-else>
           </widget-contact-form>
         </div>
