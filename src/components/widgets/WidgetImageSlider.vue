@@ -4,13 +4,14 @@
     v-on:mouseenter="isHover = true"
     v-on:mouseleave="isHover = false"
     v-bind:class="{
-      'animate-pulse bg-gray-200': storeData.fetchingIsBusy,
+      'animate-pulse': storeData.fetchingIsBusy,
     }"
     class="
       relative
       flex
       w-full
       h-44
+      bg-gray-200
       flex-nowrap
       justify-start
       items-center
@@ -79,7 +80,6 @@
         rel="noopener noreferrer"
       >
         <img
-          v-if="!storeData.fetchingIsBusy"
           v-bind:src="photo.href"
           alt=""
           class="

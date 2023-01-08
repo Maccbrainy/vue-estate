@@ -5,7 +5,7 @@
         'outline-none ring ring-offset-1 ring-offset-white ring-teal-light':
           focused,
       }"
-      class="relative border border-gray-500 rounded-lg h-auto overflow-hidden"
+      class="w-full relative border border-gray-500 rounded-lg h-auto overflow-hidden"
     >
       <label
         v-bind:for="labelName"
