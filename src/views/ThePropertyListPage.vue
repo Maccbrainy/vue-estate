@@ -1,5 +1,5 @@
 <template>
-  <filter-button-container></filter-button-container>
+  <filter-button-container v-bind:key="$route.fullPath"></filter-button-container>
   <div class="flex flex-grow flex-auto flex-col z-0 outline-none">
     <div
       v-bind:class="{
