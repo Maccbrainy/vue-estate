@@ -146,7 +146,14 @@
               <div class="max-w-md sf:pb-5">
                 <div>
                   <h1 class="flex flex-col">
-                    <span v-if="name == 'RentPageDetail' && !isLoading" class="flex flex-col">
+                    <span
+                      v-if="
+                        name == 'RentPageDetail' &&
+                        !isLoading &&
+                        Object.hasOwn(propertyDetail, 'community')
+                      "
+                      class="flex flex-col"
+                    >
                       <span
                         class="text-3xl text-gray-700 font-semibold sf:text-xl"
                       >
@@ -161,7 +168,10 @@
                       </span>
                     </span>
                     <span
-                      v-if="name == 'SalesPageDetail'"
+                      v-if="
+                        name == 'SalesPageDetail' ||
+                        !Object.hasOwn(propertyDetail, 'community')
+                      "
                       class="text-3xl text-gray-700 font-semibold sf:text-xl"
                     >
                       {{ propertyAddress }}
