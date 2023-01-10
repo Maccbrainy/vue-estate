@@ -52,12 +52,12 @@
             </h1>
             <ul
               v-show="
-                filterIsActive && storeData.activeListBranch == agentType[0].id
+                filterIsActive && storeData.activeListBranch != agentType[0].id
               "
               :class="{
-                    'animate-pulse bg-gray-200 mt-0.5 h-2 w-1/4': isLoading,
-                    'list-disc list-inside': !isLoading,
-                  }"
+                'animate-pulse bg-gray-200 mt-0.5 h-2 w-1/4': isLoading,
+                'list-disc list-inside': !isLoading,
+              }"
               class="flex text-xs text-gray-400 space-x-2"
             >
               <li
@@ -65,9 +65,7 @@
                 v-bind:key="activeFilterEntry"
                 v-show="!isLoading"
               >
-                <span
-                  class="-ml-1 capitalize"
-                >
+                <span class="-ml-1 capitalize">
                   <span>{{ activeFilterEntry }}</span>
                 </span>
               </li>
@@ -81,10 +79,7 @@
                   class="text-base font-normal text-gray-500"
                 >
                   <span v-if="activePropertyListings.length > 0 && !isLoading">
-                    {{ 
-                      `${totalItemsMatchingRowsInSearch.toLocaleString()}`
-                      
-                      }}
+                    {{ `${totalItemsMatchingRowsInSearch.toLocaleString()}` }}
                     {{ propertyCountIsGreaterThanOne }}
                   </span>
                 </h2>
@@ -437,7 +432,7 @@ export default {
       store.commit("setFilterIsActive", filterIsActive.value);
       store.commit("setFilterMoreIsActive", filterMoreIsActive);
     });
-    
+
     const activeFilterDescriptionEnteries = computed(() => {
       let activeFilterEntries = [];
       let filterEntries = {
@@ -534,7 +529,6 @@ export default {
         : false;
     });
 
-
     watchEffect(async () => {
       isLoading.value = true;
       store.commit("setFetchingIsBusy", true);
@@ -566,7 +560,9 @@ export default {
         : props.slug;
       let propertyCity = isRentsNearMeOrSalesNearMe.value
         ? isRoutesDefaultCity
-        : useIsPostalCode(props.slug) ? "" : props.city;
+        : useIsPostalCode(props.slug)
+        ? ""
+        : props.city;
 
       let postalCode = useIsPostalCode(props.slug) ? props.slug : "";
 
@@ -706,7 +702,6 @@ export default {
       store.commit("setIsLoading", false);
     });
     onBeforeRouteLeave((_, from) => {
-      
       if (from.name == "RentsNearMe" || from.name == "SalesNearMe") {
         isRouteFromRentsNearOrSalesNearMe.value = true;
       }
