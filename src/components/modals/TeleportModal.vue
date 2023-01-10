@@ -78,9 +78,7 @@
           </div>
           <close-mobile-menu
             class="absolute right-3 top-4 hover:text-teal text-gray-600"
-            v-on:click="
-              teleportModalCallback({ name: modalName, open_modal: false })
-            "
+            v-on:click="teleportModalCallback(modalName, false)"
           />
           <div
             class="sf:hidden text-gray-700 xs:text-sm font-semibold px-4 py-1"
@@ -268,7 +266,7 @@
             text-gray-600
           "
           v-on:click="
-            teleportModalCallback({ name: modalName, open_modal: false })
+            teleportModalCallback(modalName, false)
           "
         />
       </div>
@@ -327,20 +325,18 @@ export default {
         }
         document.removeEventListener("mousedown", closeTeleportModal);
         document.removeEventListener("touchstart", closeTeleportModal);
-        teleportModalCallback({ name: modalName.value, open_modal: false });
+        teleportModalCallback( modalName.value, false);
       };
       document.addEventListener("mousedown", closeTeleportModal);
       document.addEventListener("touchstart", closeTeleportModal);
     });
     const teleportRequestCallback = (requestType) => {
-      teleportModalCallback({ name: "isMediaTable", open_modal: false });
-      teleportModalCallback({
-        name: requestType,
-        open_modal: true,
-        description: {
-          address: `${storeData.value.propertyDetailed.address.line}, ${storeData.value.propertyDetailed.address.city}, ${storeData.value.propertyDetailed.address.state_code}, ${storeData.value.propertyDetailed.address.postal_code}`,
-        },
-      });
+      teleportModalCallback("isMediaTable", false);
+      teleportModalCallback(
+        requestType,
+        true,
+        `${storeData.value.propertyDetailed.address.line}, ${storeData.value.propertyDetailed.address.city}, ${storeData.value.propertyDetailed.address.state_code}, ${storeData.value.propertyDetailed.address.postal_code}`,
+      )
     };
     return {
       teleportModalFormRequests,

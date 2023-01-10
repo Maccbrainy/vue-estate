@@ -19,31 +19,32 @@ export default {
       }
     };
 
-    const teleportModalCallback = ({ name, open_modal, description }) => {
-      if (name == "isMediaTable") {
+    const teleportModalCallback = (modal_name, open_modal, description ) => {
+      console.log("teleportModalCallback", modal_name, open_modal, description);
+      if (modal_name == "isMediaTable") {
         teleportModalMediaTable.value = open_modal;
-        console.log("Teleport:", name, teleportModalMediaTable.value);
+        console.log("Teleport:", modal_name, teleportModalMediaTable.value);
         return teleportModalMediaTable.value;
       }
-      if (name == "Schedule A Tour") {
-        teleportModalFormRequests.value.name = name;
+      if (modal_name == "Schedule A Tour") {
+        teleportModalFormRequests.value.name = modal_name;
         teleportModalFormRequests.value.for_modal = open_modal;
-        teleportModalFormRequests.value.description = description;
-        console.log("Teleport:", name, teleportModalFormRequests.value);
+        teleportModalFormRequests.value.description.address = description;
+        console.log("Teleport:", modal_name, teleportModalFormRequests.value);
         return teleportModalMediaTable.value;
       }
-      if (name == "Request For Info") {
-        teleportModalFormRequests.value.name = name;
+      if (modal_name == "Request For Info") {
+        teleportModalFormRequests.value.name = modal_name;
         teleportModalFormRequests.value.for_modal = open_modal;
-        teleportModalFormRequests.value.description = description;
-        console.log("Teleport:", name, teleportModalFormRequests.value);
+        teleportModalFormRequests.value.description.address = description;
+        console.log("Teleport:", modal_name, teleportModalFormRequests.value);
         return teleportModalMediaTable.value;
       }
-      if (name == "Contact This Property") {
-        teleportModalFormRequests.value.name = name;
+      if (modal_name == "Contact This Property") {
+        teleportModalFormRequests.value.name = modal_name;
         teleportModalFormRequests.value.for_modal = open_modal;
         teleportModalFormRequests.value.description = description;
-        console.log("Teleport:", name, teleportModalFormRequests.value);
+        console.log("Teleport:", modal_name, teleportModalFormRequests.value);
         return teleportModalMediaTable.value;
       }
     };

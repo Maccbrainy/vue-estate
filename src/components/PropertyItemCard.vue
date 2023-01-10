@@ -101,15 +101,11 @@
         <button
           v-if="isRentalProperty"
           v-on:click="
-            teleportModalCallback({
-              name: 'Contact This Property',
-              open_modal: true,
-              description: {
-                address: `${home.address.line}`,
-                city: `${home.address.city}`,
-                price: propertyPrice,
-                photo: home.photos[0].href,
-              },
+            teleportModalCallback('Contact This Property', true, {
+              address: `${home.address.line}`,
+              city: `${home.address.city}`,
+              price: propertyPrice,
+              photo: home.photos[0].href,
             })
           "
           v-bind:class="{
