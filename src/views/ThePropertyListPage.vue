@@ -46,14 +46,14 @@
               }"
               class="text-lg font-bold text-gray-600"
             >
-              <span v-if="activePropertyListings.length > 0">
+              <span v-if="totalItemsMatchingRowsInSearch > 0">
                 {{ listingTitle }}
               </span>
             </h1>
             <ul
               v-show="
-                filterIsActive && storeData.activeListBranch != agentType[0].id
-              "
+                filterIsActive && storeData.activeListBranch != agentType[1].id
+               && totalItemsMatchingRowsInSearch > 0"
               :class="{
                 'animate-pulse bg-gray-200 mt-0.5 h-2 w-1/4': isLoading,
                 'list-disc list-inside': !isLoading,
@@ -78,15 +78,12 @@
                   }"
                   class="text-base font-normal text-gray-500"
                 >
-                  <span v-if="activePropertyListings.length > 0 && !isLoading">
+                  <span v-if="!isLoading && totalItemsMatchingRowsInSearch > 0">
                     {{ `${totalItemsMatchingRowsInSearch.toLocaleString()}` }}
                     {{ propertyCountIsGreaterThanOne }}
                   </span>
                 </h2>
-                <filter-button-sorting
-                  v-show="activePropertyListings.length > 0"
-                >
-                </filter-button-sorting>
+                <filter-button-sorting v-show="totalItemsMatchingRowsInSearch > 0"></filter-button-sorting>
               </div>
             </div>
           </div>
@@ -103,8 +100,8 @@
           </no-search-term-for-agent-or-other-listings>
         </div>
         <is-loading v-if="isLoading || storeData.isLoading"></is-loading>
-        <ul class="flex flex-wrap">
-          <property-item-card
+        <ul v-show="totalItemsMatchingRowsInSearch > 0" class="flex flex-wrap">
+          <property-item-card 
             v-for="home in activePropertyListings"
             v-bind:key="home.property_id"
             v-bind:home="home"
@@ -116,7 +113,7 @@
           v-show="
             !isLoading &&
             storeData.activeListBranch != agentType[1].id &&
-            activePropertyListings.length > 0
+            totalItemsMatchingRowsInSearch > 0
           "
           :total-items="totalItemsMatchingRowsInSearch"
           :per-page="pageLimit"
@@ -608,14 +605,16 @@ export default {
       );
       console.log("FETCH DATA ERROR!!!:", error.value);
 
-      if (propertyListResults.value.length < 1) {
-        return;
-      }
-
       allPropertyListings.value = propertyListResults.value;
       totalItemsMatchingRowsInSearch.value = propertyTotalMatchingRows.value;
       store.commit("setAllPropertyListings", propertyListResults.value);
       store.commit("setTotalItemsMatchRows", propertyTotalMatchingRows.value);
+
+      console.log("====route=====", route);
+
+      if (propertyListResults.value.length < 1) {
+        return;
+      }
 
       const { listingsByOthers, listingsByAgent } =
         useSortListingsByAgentAndOthers(allPropertyListings.value);
@@ -627,6 +626,7 @@ export default {
 
       //Store Route full path to local storage to be consumed in searchresultdetailed component
       localStorage.setItem("historyRoute", route.fullPath);
+      
     });
     watchEffect(() => {
       let isBuyPage =
