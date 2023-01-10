@@ -36,9 +36,11 @@
                     shadow-md
                     transform
                     translate-y-4
+                    sf:w-52
+                    w-96
                   "
                 >
-                  <h1>Real Estate Market Place</h1>
+                  <h1>Real Estate Marketplace</h1>
                 </div>
                 <div class="mt-16 mb-3">
                   <home-tab-buttons></home-tab-buttons>
