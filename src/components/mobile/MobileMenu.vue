@@ -1,9 +1,64 @@
 <template>
   <mobile-menu-container>
     <mobile-menu-list>
-      <mobile-menu-button-item v-on:click="saveHomePropertyCallback">Sign up or Login</mobile-menu-button-item>
+      <mobile-menu-button-item v-on:click="saveHomePropertyCallback"
+        >Sign up or Login</mobile-menu-button-item
+      >
       <mobile-menu-drop-down menuTitle="Buy">
         <div v-if="currentSearchedData">
+          <div
+            v-if="
+              $route.name == 'SalesPageDetail' ||
+              $route.name == 'RentPageDetail'
+            " class="border-b border-gray-500"
+          >
+            <mobile-menu-drop-down-item
+              class="hover:no-underline cursor-text text-gray-300"
+            >
+              {{ $route.params.postalCode }} zip
+            </mobile-menu-drop-down-item>
+            <mobile-menu-drop-down-item>
+              <router-link
+                :to="{
+                  name: 'BuyPage',
+                  params: {
+                    slug: $route.params.postalCode,
+                  },
+                }"
+              >
+                Homes for sale</router-link
+              ></mobile-menu-drop-down-item
+            >
+            <mobile-menu-drop-down-item>
+              <router-link
+                :to="{
+                  name: 'BuyPage',
+                  params: {
+                    slug: $route.params.postalCode,
+                  },
+                  query: {
+                    hasOpenHouses: true,
+                  },
+                }"
+                >Open Houses</router-link
+              ></mobile-menu-drop-down-item
+            >
+
+            <mobile-menu-drop-down-item class="pb-3"
+              ><router-link
+                :to="{
+                  name: 'BuyPage',
+                  params: {
+                    slug: $route.params.postalCode,
+                  },
+                  query: {
+                    newConstruction: true,
+                  },
+                }"
+                >New Construction</router-link
+              ></mobile-menu-drop-down-item
+            >
+          </div>
           <mobile-menu-drop-down-item
             class="hover:no-underline cursor-text text-gray-300"
             >{{
@@ -76,13 +131,67 @@
           >
         </div>
         <div v-else>
-          <mobile-menu-drop-down-item class="cursor-text text-gray-300 -mt-1 no-underline"
+          <mobile-menu-drop-down-item
+            class="cursor-text text-gray-300 -mt-1 no-underline"
             >No search history found</mobile-menu-drop-down-item
           >
         </div>
       </mobile-menu-drop-down>
       <mobile-menu-drop-down menuTitle="Rent">
         <div v-if="currentSearchedData">
+          <div
+            v-if="
+              $route.name == 'SalesPageDetail' ||
+              $route.name == 'RentPageDetail'
+            " class="border-b border-gray-500"
+          >
+            <mobile-menu-drop-down-item
+              class="hover:no-underline cursor-text text-gray-300"
+            >
+              {{ $route.params.postalCode }} zip
+            </mobile-menu-drop-down-item>
+            <mobile-menu-drop-down-item>
+              <router-link
+                :to="{
+                  name: 'RentPage',
+                  params: {
+                    slug: $route.params.postalCode,
+                  },
+                }"
+              >
+              All Rentals</router-link
+              ></mobile-menu-drop-down-item
+            >
+            <mobile-menu-drop-down-item>
+              <router-link
+                :to="{
+                  name: 'RentPage',
+                  params: {
+                    slug: $route.params.postalCode,
+                  },
+                  query: {
+                    homeType: `multi_family,condo`,
+                  },
+                }"
+                >Apartments for Rent</router-link
+              ></mobile-menu-drop-down-item
+            >
+
+            <mobile-menu-drop-down-item class="pb-3"
+              ><router-link
+                :to="{
+                  name: 'RentPage',
+                  params: {
+                    slug: $route.params.postalCode,
+                  },
+                  query: {
+                    homeType: `single_family`,
+                  },
+                }"
+                >Houses for Rent</router-link
+              ></mobile-menu-drop-down-item
+            >
+          </div>
           <mobile-menu-drop-down-item
             class="hover:no-underline cursor-text text-gray-300"
             >{{
@@ -196,7 +305,7 @@ export default {
       currentSearchedData,
       addUnderScoresToWhiteSpacesInAString,
       removeUnderScoresFromAString,
-      saveHomePropertyCallback
+      saveHomePropertyCallback,
     };
   },
 };

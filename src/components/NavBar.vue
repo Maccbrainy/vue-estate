@@ -17,13 +17,74 @@
       >
       <router-link to="/" v-else>Buy</router-link>
       <nav-bar-dropdown v-if="currentSearchedData">
+        <div
+          v-if="
+            $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail'
+          "
+          class="border-b"
+        >
+          <nav-bar-dropdown-item
+            class="cursor-text font-medium hover:no-underline"
+          >
+            {{ $route.params.postalCode }} zip
+          </nav-bar-dropdown-item>
+          <nav-bar-dropdown-item
+            :title="`Homes for sale in ${$route.params.postalCode} zip code`"
+            class="text-teal hover:bg-gray-200"
+          >
+            <router-link
+              :to="{
+                name: 'BuyPage',
+                params: {
+                  slug: $route.params.postalCode,
+                },
+              }"
+            >
+              Homes for sale</router-link
+            >
+          </nav-bar-dropdown-item>
+          <nav-bar-dropdown-item
+            class="text-teal hover:bg-gray-200"
+            :title="`Open Houses in ${$route.params.postalCode} zip code`"
+          >
+            <router-link
+              :to="{
+                name: 'BuyPage',
+                params: {
+                  slug: $route.params.postalCode,
+                },
+                query: {
+                  hasOpenHouses: true,
+                },
+              }"
+              >Open Houses</router-link
+            >
+          </nav-bar-dropdown-item>
+          <nav-bar-dropdown-item
+            class="text-teal hover:bg-gray-200"
+            :title="`New Constructions in ${$route.params.postalCode} zip code`"
+          >
+            <router-link
+              :to="{
+                name: 'BuyPage',
+                params: {
+                  slug: $route.params.postalCode,
+                },
+                query: {
+                  newConstruction: true,
+                },
+              }"
+              >New Constructions</router-link
+            >
+          </nav-bar-dropdown-item>
+        </div>
         <nav-bar-dropdown-item
           class="cursor-text font-medium hover:no-underline"
         >
           {{ removeUnderScoresFromAString(storeData.searchedData.city) }}
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item
-          :title="`Homes for sale ${isTitle}`"
+          :title="`Homes for sale ${removeUnderScoresFromAString(isTitle)}`"
           class="text-teal hover:bg-gray-200"
         >
           <router-link
@@ -42,7 +103,7 @@
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item
           class="text-teal hover:bg-gray-200"
-          :title="`Open Houses ${isTitle}`"
+          :title="`Open Houses ${removeUnderScoresFromAString(isTitle)}`"
         >
           <router-link
             :to="{
@@ -61,7 +122,9 @@
           >
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item
-          :title="`New Construction Homes ${isTitle}`"
+          :title="`New Construction Homes ${removeUnderScoresFromAString(
+            isTitle
+          )}`"
           class="text-teal hover:bg-gray-200"
         >
           <router-link
@@ -81,8 +144,8 @@
           >
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item
-          :title="`Sold recently ${isTitle}`"
-          class="text-teal hover:bg-gray-200"
+          :title="`Sold recently ${removeUnderScoresFromAString(isTitle)}`"
+          class="text-teal hover:bg-gray-200 border-t"
         >
           <router-link
             :to="{
@@ -97,23 +160,6 @@
             >Sold Recently</router-link
           >
         </nav-bar-dropdown-item>
-        <!-- <nav-bar-dropdown-item class="border-t hover:bg-gray-200">
-          <router-link
-            v-if="currentSearchedData"
-            :to="`/new-for-sale-properties/#/`"
-            :title="`Newest listings in the State`"
-          >
-            See Newest Listings
-          </router-link>
-          <router-link
-            v-else
-            :to="{
-              name: 'SiteMaps',
-            }"
-          >
-            See Newest Listings
-          </router-link>
-        </nav-bar-dropdown-item> -->
       </nav-bar-dropdown>
     </nav-bar-item>
     <nav-bar-item>
@@ -133,13 +179,74 @@
       >
       <router-link to="/rent" v-else>Rent</router-link>
       <nav-bar-dropdown v-if="currentSearchedData">
+        <div
+          v-if="
+            $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail'
+          "
+          class="border-b"
+        >
+          <nav-bar-dropdown-item
+            class="cursor-text font-medium hover:no-underline"
+          >
+            {{ $route.params.postalCode }} zip
+          </nav-bar-dropdown-item>
+          <nav-bar-dropdown-item
+            :title="`All rentals in ${$route.params.postalCode} zip code`"
+            class="text-teal hover:bg-gray-200"
+          >
+            <router-link
+              :to="{
+                name: 'RentPage',
+                params: {
+                  slug: $route.params.postalCode,
+                },
+              }"
+            >
+              All Rentals</router-link
+            >
+          </nav-bar-dropdown-item>
+          <nav-bar-dropdown-item
+            class="text-teal hover:bg-gray-200"
+            :title="`Apartments for rent in ${$route.params.postalCode} zip code`"
+          >
+            <router-link
+              :to="{
+                name: 'RentPage',
+                params: {
+                  slug: $route.params.postalCode,
+                },
+                query: {
+                  homeType: `multi_family,condo`,
+                },
+              }"
+              >Apartments for Rent</router-link
+            >
+          </nav-bar-dropdown-item>
+          <nav-bar-dropdown-item
+            class="text-teal hover:bg-gray-200"
+            :title="`Houses for Rent in ${$route.params.postalCode} zip code`"
+          >
+            <router-link
+              :to="{
+                name: 'RentPage',
+                params: {
+                  slug: $route.params.postalCode,
+                },
+                query: {
+                  homeType: `single_family`,
+                },
+              }"
+              >Houses for Rent</router-link
+            >
+          </nav-bar-dropdown-item>
+        </div>
         <nav-bar-dropdown-item
-          class="hover:bg-gray-200 cursor-text font-medium hover:no-underline"
+          class="cursor-text font-medium hover:no-underline"
         >
           {{ removeUnderScoresFromAString(storeData.searchedData.city) }}
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item
-          :title="`All rentals ${isTitle}`"
+          :title="`All rentals ${removeUnderScoresFromAString(isTitle)}`"
           class="text-teal"
         >
           <router-link
@@ -157,7 +264,9 @@
           >
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item
-          :title="`Apartments for Rents ${isTitle}`"
+          :title="`Apartments for Rents ${removeUnderScoresFromAString(
+            isTitle
+          )}`"
           class="text-teal hover:bg-gray-200"
         >
           <router-link
@@ -177,7 +286,7 @@
           >
         </nav-bar-dropdown-item>
         <nav-bar-dropdown-item
-          :title="`Houses for Rent ${isTitle}`"
+          :title="`Houses for Rent ${removeUnderScoresFromAString(isTitle)}`"
           class="text-teal hover:bg-gray-200"
         >
           <router-link

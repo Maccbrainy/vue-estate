@@ -13,6 +13,9 @@
       rounded-md
       shadow-lg
       bg-white
+      text-sm
+      font-normal
+      text-gray-600
     "
     role="menu"
     aria-orientation="vertical"
@@ -25,6 +28,7 @@
 import { useStore } from "vuex";
 import { computed } from "vue";
 export default {
+  name: "NavBarDropdown",
   setup() {
     const store = useStore();
     const storeData = computed(() => store.getters.getStore);
