@@ -146,25 +146,22 @@
               <div class="max-w-md sf:pb-5">
                 <div>
                   <h1 class="flex flex-col">
-                    <span
-                      v-if="$route.name == 'RentPageDetail'"
-                      class="flex flex-col"
-                    >
+                    <span v-if="name == 'RentPageDetail' && !isLoading" class="flex flex-col">
                       <span
                         class="text-3xl text-gray-700 font-semibold sf:text-xl"
                       >
-                        {{ propertyDetail.community.name || propertyAddress }}
+                        {{
+                          propertyDetail.community.name
+                        || propertyAddress }}
                       </span>
                       <span
-                        v-if="propertyDetail.community.name"
                         class="text-base text-gray-600"
                       >
-                        {{ propertyAddress }}
+                        {{ propertyDetail.community.name ? propertyAddress : ""}}
                       </span>
                     </span>
-
                     <span
-                      v-if="$route.name == 'SalesPageDetail'"
+                      v-if="name == 'SalesPageDetail'"
                       class="text-3xl text-gray-700 font-semibold sf:text-xl"
                     >
                       {{ propertyAddress }}
@@ -193,18 +190,17 @@
                   v-bind:bathroomMin="contextProvider.bathMin"
                   v-bind:bathroomMax="contextProvider.bathMax"
                   v-bind:squarefoot="contextProvider.sqft"
-                  class="my-3"
+                  class="my-3 lm:pb-5"
                 >
                 </widget-utility-summary>
               </div>
               <div class="max-w-xs">
                 <div
                   v-bind:class="{
-                    'animate-pulse bg-gray-200 w-10/12 h-8':
-                      isLoading
+                    'animate-pulse bg-gray-200 w-10/12 h-8': isLoading,
                   }"
                 >
-                  <div v-if="contextProvider.price">
+                  <div v-if="!isLoading">
                     <h3
                       class="
                         text-3xl text-gray-700
@@ -216,11 +212,17 @@
                       {{ propertyPrice }}
                     </h3>
                     <div>
-                      <div v-show="contextProvider.mortgageMonthlyPayment" class="text-gray-700">
+                      <div
+                        v-show="contextProvider.mortgageMonthlyPayment"
+                        class="text-gray-700"
+                      >
                         Est. Mortgage
                         {{ contextProvider.mortgageMonthlyPayment }}/mo*
                       </div>
-                      <div v-show="contextProvider.mortgageRateUrl" class="flex underline text-teal text-base font-bold">
+                      <div
+                        v-show="contextProvider.mortgageRateUrl"
+                        class="flex underline text-teal text-base font-bold"
+                      >
                         <span><dollar-icon /></span>
                         <a
                           class="px-2"
@@ -297,9 +299,11 @@
                     }}
                   </p>
                   <span
-                    v-if="propertyDetail.description && 
+                    v-if="
+                      propertyDetail.description &&
                       propertyDetail.description.length >
-                        descriptionCountMaximum && !toggleAndShowMoreDescription
+                        descriptionCountMaximum &&
+                      !toggleAndShowMoreDescription
                     "
                     class="
                       absolute
@@ -313,8 +317,9 @@
                   </span>
                   <button
                     v-if="
-                      propertyDetail.description && propertyDetail.description.length >
-                      descriptionCountMaximum
+                      propertyDetail.description &&
+                      propertyDetail.description.length >
+                        descriptionCountMaximum
                     "
                     v-on:click="
                       toggleAndShowMoreDescription =
@@ -339,7 +344,8 @@
                   v-if="
                     $route.name == 'RentPageDetail' &&
                     !isLoading &&
-                    Object.hasOwn(propertyDetail, 'office')
+                    Object.hasOwn(propertyDetail, 'office') &&
+                    Object.hasOwn(propertyDetail.office, 'hours')
                   "
                   class="relative my-6"
                 >
@@ -481,38 +487,56 @@
           </div>
         </div>
       </div>
-      <div 
-        v-if="Object.keys(propertyDetail).length > 0" 
-        class="w-full border rounded-lg max-h-96">
+      <div
+        v-if="Object.keys(propertyDetail).length > 0"
+        class="w-full border rounded-lg max-h-96"
+      >
         <div class="text-gray-700 font-bold text-xl px-5 pt-5 pb-2">
           {{ `Home Highlights` }}
         </div>
         <div class="block lm:flex mt-1 pb-5">
           <div class="lm:w-1/2 px-5 text-gray-600 text-base">
             <div class="w-9/12">
-              <div v-if="propertyDetail.garage" class="flex justify-between py-1">
+              <div
+                v-if="propertyDetail.garage"
+                class="flex justify-between py-1"
+              >
                 <span class="inline-flex">
                   <parking-icon /><span class="px-3">Parking/Garage</span></span
                 >
-                <span class="font-semibold">{{`${propertyDetail.garage}`}}</span>
+                <span class="font-semibold">{{
+                  `${propertyDetail.garage}`
+                }}</span>
               </div>
               <div class="flex justify-between py-1">
                 <span class="inline-flex">
                   <outdoor-icon /><span class="px-3">Year built</span></span
                 >
-                <span class="font-semibold">{{ propertyDetail.year_built }}</span>
+                <span class="font-semibold">{{
+                  propertyDetail.year_built
+                }}</span>
               </div>
-              <div v-if="propertyDetail.heating" class="flex justify-between py-1">
+              <div
+                v-if="propertyDetail.heating"
+                class="flex justify-between py-1"
+              >
                 <span class="inline-flex">
                   <temperature-icon /><span class="px-3">A/C</span></span
                 >
-                <span class="font-semibold">{{`${propertyDetail.heating}`}}</span>
+                <span class="font-semibold">{{
+                  `${propertyDetail.heating}`
+                }}</span>
               </div>
-              <div v-if="propertyDetail.hoa_fee" class="flex justify-between py-1">
+              <div
+                v-if="propertyDetail.hoa_fee"
+                class="flex justify-between py-1"
+              >
                 <span class="inline-flex">
                   <parking-icon /><span class="px-3">HOA</span></span
                 >
-                <span class="font-semibold">{{`$${propertyDetail.hoa_fee}`}}</span>
+                <span class="font-semibold">{{
+                  `$${propertyDetail.hoa_fee}`
+                }}</span>
               </div>
             </div>
           </div>
@@ -524,19 +548,22 @@
                 >
                 <span class="font-semibold">No Info</span>
               </div>
-              <div v-if="propertyDetail.pending" class="flex justify-between py-1">
+              <div
+                v-if="propertyDetail.pending"
+                class="flex justify-between py-1"
+              >
                 <span class="inline-flex">
                   <parking-icon /><span class="px-3">Pending</span></span
                 >
-                <span class="font-semibold">{{propertyDetail.pending}}</span>
+                <span class="font-semibold">{{ propertyDetail.pending }}</span>
               </div>
-              <div class="flex justify-between py-1">
+              <div v-if="Object.hasOwn(propertyDetail, 'list_date')" class="flex justify-between py-1">
                 <span class="inline-flex">
                   <parking-icon /><span class="px-3">Listed</span></span
                 >
                 <span class="font-semibold">{{
                   `${format(new Date(propertyDetail.list_date), "d/M/yyy")}`
-            }}</span>
+                }}</span>
               </div>
             </div>
           </div>
@@ -642,23 +669,25 @@
           {{ `Listing provided by` }}
         </h2>
         <p class="text-base text-gray-500">
-          {{
-            `${propertyDetail.office.name}`
-          }}
+          {{ `${propertyDetail.office.name}` }}
         </p>
       </div>
       <div id="#propertyDescriptionModule" class="relative my-4 top-12">
         <p
-          v-if="Object.keys(propertyDetail).length > 0"
+          v-if="Object.keys(propertyDetail).length > 0 && name == 'SalesPageDetail'"
           class="text-xs text-gray-500 font-normal text-justify"
         >
           {{
             `${propertyAddress}, ${propertyCity}, ${slug} ${postalCode} is a ${
               contextProvider.bed == 0
                 ? "Studio,"
-                : !contextProvider.bed? `(no info on bedroom),`:`${contextProvider.bed} bedroom,`
+                : !contextProvider.bed
+                ? `(no info on bedroom),`
+                : `${contextProvider.bed} bedroom,`
             } ${
-              contextProvider.bath > 0 ? `${contextProvider.bath} bathroom,` : ""
+              contextProvider.bath > 0
+                ? `${contextProvider.bath} bathroom,`
+                : ""
             } ${
               contextProvider.sqft ? `${contextProvider.sqft} sqft,` : ""
             } ${removeUnderScoresFromAString(
@@ -687,7 +716,7 @@ import {
   onMounted,
   onUnmounted,
   provide,
-  inject
+  inject,
 } from "vue";
 // import { useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -703,8 +732,8 @@ import {
   TemperatureIcon,
   ChevronDown,
   ScheduleTourIcon,
-  SaveSearch, 
-  ShareIcon
+  SaveSearch,
+  ShareIcon,
 } from "@/assets/icons";
 import {
   WidgetImageGrid,
@@ -758,18 +787,15 @@ export default {
     ChevronDown,
     ScheduleTourIcon,
     WidgetPropertyDetailedTable,
-    SaveSearch, 
-    ShareIcon
+    SaveSearch,
+    ShareIcon,
   },
   setup(props) {
     const store = useStore();
 
-    const {
-      teleportModalCallback,
-    } = inject("provider");
+    const { teleportModalCallback } = inject("provider");
 
     const toggleTable = ref(false);
-
 
     const showContactForm = ref(false);
     const contactFormRef = ref(null);
@@ -783,7 +809,7 @@ export default {
     const contextProvider = ref({});
 
     const propertyPhotos = ref([]);
-    const storeData = computed(()=> store.getters.getStore)
+    const storeData = computed(() => store.getters.getStore);
 
     const toggleAndShowMoreDescription = ref(false);
     const descriptionCountMaximum = ref(844);
@@ -812,7 +838,6 @@ export default {
 
       console.log("DETAILED INFO:", propertyDetail.value);
       console.log("DETAILED error:", errorMessage.value);
-
       contextProvider.value.status = propertyDetail.value.prop_status;
       contextProvider.value.clientFlags =
         propertyDetail.value.client_display_flags;
@@ -820,20 +845,17 @@ export default {
 
       propertyPhotos.value = propertyDetail.value.photos;
 
-      contextProvider.value.price = addCommaToNumberFormat(
-        propertyDetail.value.price
-      );
-      // propertyPrice.value = addCommaToNumberFormat(
-      //   propertyDetail.value.price
-      // );
-      contextProvider.value.bed = Object.hasOwn(propertyDetail.value, "beds")
-        ? propertyDetail.value.beds
-        : "";
-
       let isCommunityARentalProperty = Object.hasOwn(
         propertyDetail.value,
         "community"
       );
+
+      contextProvider.value.price = addCommaToNumberFormat(
+        propertyDetail.value.price
+      );
+      contextProvider.value.bed = Object.hasOwn(propertyDetail.value, "beds")
+        ? propertyDetail.value.beds
+        : "";
 
       contextProvider.value.bedMin = isCommunityARentalProperty
         ? propertyDetail.value.community.beds_min
@@ -842,10 +864,7 @@ export default {
         ? propertyDetail.value.community.beds_max
         : "";
 
-      contextProvider.value.bath = Object.hasOwn(
-        propertyDetail.value,
-        "baths"
-      )
+      contextProvider.value.bath = Object.hasOwn(propertyDetail.value, "baths")
         ? propertyDetail.value.baths
         : "";
       contextProvider.value.bathMin = isCommunityARentalProperty
@@ -856,23 +875,17 @@ export default {
         ? propertyDetail.value.community.baths_max
         : "";
 
-      contextProvider.value.sqft = Object.hasOwn(
-        propertyDetail.value,
-        "sqft"
-      )
+      contextProvider.value.sqft = Object.hasOwn(propertyDetail.value, "sqft")
         ? addCommaToNumberFormat(propertyDetail.value.sqft)
         : "";
 
-      let isPropertyMortgaged = Object.hasOwn(
-        propertyDetail.value,
-        "mortgage"
-      );
+      let isPropertyMortgaged = Object.hasOwn(propertyDetail.value, "mortgage");
 
-      contextProvider.value.mortgageMonthlyPayment = 
-        isPropertyMortgaged && 
-        storeData.value.activeRouthPath == "SalesPageDetail"
-        ? propertyDetail.value.mortgage.estimate.monthly_payment
-        : "";
+      contextProvider.value.mortgageMonthlyPayment =
+        isPropertyMortgaged &&
+        props.name == "SalesPageDetail"
+          ? propertyDetail.value.mortgage.estimate.monthly_payment
+          : "";
       contextProvider.value.mortgageRateUrl = isPropertyMortgaged
         ? propertyDetail.value.mortgage.rates_url
         : "";
@@ -885,16 +898,16 @@ export default {
     const propertyPriceMinMAx = computed(() => {
       return propertyDetail.value.community.price_hint == "CALL"
         ? "Contact For Price"
-        : `$${propertyDetail.value.community.price_min.toLocaleString()} - $${propertyDetail.value.community.price_max.toLocaleString()}/mo`;
+        : `$${addCommaToNumberFormat(propertyDetail.value.community.price_min)} - $${addCommaToNumberFormat(propertyDetail.value.community.price_max)}/mo`;
     });
     const propertyPrice = computed(() => {
       let priceOnSalesPageDetail = propertyDetail.value.price
-        ? `$${propertyDetail.value.price.toLocaleString()}`
+        ? `$${addCommaToNumberFormat(propertyDetail.value.price)}`
         : "Contact For Price";
       return props.name == "SalesPageDetail"
         ? priceOnSalesPageDetail
         : !propertyDetail.value.community
-        ? `$${propertyDetail.value.price.toLocaleString()}/mo`  
+        ? `$${addCommaToNumberFormat(propertyDetail.value.price)}/mo`  
         : propertyPriceMinMAx.value;
     });
 
@@ -904,16 +917,14 @@ export default {
       if (!propertyDetail.value.description) return "No description found";
       let propertyDescription = "";
       if (
-        propertyDetail.value.description.length >
-        descriptionCountMaximum.value
+        propertyDetail.value.description.length > descriptionCountMaximum.value
       ) {
         propertyDescription = propertyDetail.value.description
           .slice(0, descriptionCountMaximum.value)
           .concat(`...`);
       }
       if (
-        propertyDetail.value.description.length <=
-        descriptionCountMaximum.value
+        propertyDetail.value.description.length <= descriptionCountMaximum.value
       ) {
         propertyDescription = propertyDetail.value.description;
       }
@@ -985,6 +996,7 @@ export default {
       historyRoutePath,
       contextProvider,
       fullPropertyAddressIdentity,
+      propertyPrice,
       format,
       showContactForm,
       contactFormRef,
