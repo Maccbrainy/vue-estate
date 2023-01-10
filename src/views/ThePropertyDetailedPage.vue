@@ -157,14 +157,12 @@
                       <span
                         class="text-3xl text-gray-700 font-semibold sf:text-xl"
                       >
-                        {{
-                          propertyDetail.community.name
-                        || propertyAddress }}
+                        {{ propertyDetail.community.name || propertyAddress }}
                       </span>
-                      <span
-                        class="text-base text-gray-600"
-                      >
-                        {{ propertyDetail.community.name ? propertyAddress : ""}}
+                      <span class="text-base text-gray-600">
+                        {{
+                          propertyDetail.community.name ? propertyAddress : ""
+                        }}
                       </span>
                     </span>
                     <span
@@ -368,9 +366,16 @@
                       :key="hour"
                       class="w-full flex flex-row justify-start items-center"
                     >
-                      <span class="w-4/12 text-base font-semibold text-gray-700 capitalize">{{
-                        hour.day[0]
-                      }}</span>
+                      <span
+                        class="
+                          w-4/12
+                          text-base
+                          font-semibold
+                          text-gray-700
+                          capitalize
+                        "
+                        >{{ hour.day[0] }}</span
+                      >
                       <div class="w-8/12 flex gap-1 text-base text-gray-500">
                         <span>{{ hour.start_time }} to</span>
                         <span>{{ hour.end_time }}</span>
@@ -567,7 +572,10 @@
                 >
                 <span class="font-semibold">{{ propertyDetail.pending }}</span>
               </div>
-              <div v-if="Object.hasOwn(propertyDetail, 'list_date')" class="flex justify-between py-1">
+              <div
+                v-if="Object.hasOwn(propertyDetail, 'list_date')"
+                class="flex justify-between py-1"
+              >
                 <span class="inline-flex">
                   <parking-icon /><span class="px-3">Listed</span></span
                 >
@@ -684,7 +692,9 @@
       </div>
       <div id="#propertyDescriptionModule" class="relative my-4 top-12">
         <p
-          v-if="Object.keys(propertyDetail).length > 0 && name == 'SalesPageDetail'"
+          v-if="
+            Object.keys(propertyDetail).length > 0 && name == 'SalesPageDetail'
+          "
           class="text-xs text-gray-500 font-normal text-justify"
         >
           {{
@@ -892,8 +902,7 @@ export default {
       let isPropertyMortgaged = Object.hasOwn(propertyDetail.value, "mortgage");
 
       contextProvider.value.mortgageMonthlyPayment =
-        isPropertyMortgaged &&
-        props.name == "SalesPageDetail"
+        isPropertyMortgaged && props.name == "SalesPageDetail"
           ? propertyDetail.value.mortgage.estimate.monthly_payment
           : "";
       contextProvider.value.mortgageRateUrl = isPropertyMortgaged
@@ -904,11 +913,15 @@ export default {
       contextProvider.value.taxHistory = propertyDetail.value.tax_history;
       contextProvider.value.openHouses = propertyDetail.value.open_houses;
     });
-    
+
     const propertyPriceMinMAx = computed(() => {
       return propertyDetail.value.community.price_hint == "CALL"
         ? "Contact For Price"
-        : `$${addCommaToNumberFormat(propertyDetail.value.community.price_min)} - $${addCommaToNumberFormat(propertyDetail.value.community.price_max)}/mo`;
+        : `$${addCommaToNumberFormat(
+            propertyDetail.value.community.price_min
+          )} - $${addCommaToNumberFormat(
+            propertyDetail.value.community.price_max
+          )}/mo`;
     });
     const propertyPrice = computed(() => {
       let priceOnSalesPageDetail = propertyDetail.value.price
@@ -917,7 +930,7 @@ export default {
       return props.name == "SalesPageDetail"
         ? priceOnSalesPageDetail
         : !propertyDetail.value.community
-        ? `$${addCommaToNumberFormat(propertyDetail.value.price)}/mo`  
+        ? `$${addCommaToNumberFormat(propertyDetail.value.price)}/mo`
         : propertyPriceMinMAx.value;
     });
 
