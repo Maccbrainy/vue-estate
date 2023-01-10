@@ -16,7 +16,7 @@
             {{ propertyAddress }}
           </div>
           <div class="text-2xl font-semibold text-gray-700">
-            {{ `$${contextProvider.price}` }}
+            {{ propertyPrice }}
           </div>
           <div class="flex space-x-4 -mr-8">
             <save-search></save-search>
@@ -148,7 +148,27 @@
               <div class="max-w-md sf:pb-5">
                 <div>
                   <h1 class="flex flex-col">
-                    <span class="text-3xl text-gray-700 font-semibold sf:text-xl">
+                    <span
+                      v-if="$route.name == 'RentPageDetail'"
+                      class="flex flex-col"
+                    >
+                      <span
+                        class="text-3xl text-gray-700 font-semibold sf:text-xl"
+                      >
+                        {{ propertyDetail.community.name || propertyAddress }}
+                      </span>
+                      <span
+                        v-if="propertyDetail.community.name"
+                        class="text-base text-gray-600"
+                      >
+                        {{ propertyAddress }}
+                      </span>
+                    </span>
+
+                    <span
+                      v-if="$route.name == 'SalesPageDetail'"
+                      class="text-3xl text-gray-700 font-semibold sf:text-xl"
+                    >
                       {{ propertyAddress }}
                     </span>
                     <span class="text-base text-gray-600">
@@ -158,7 +178,10 @@
                       <span
                         v-if="!isLoading"
                         class="underline text-teal cursor-pointer"
-                        >{{ propertyDetail.address.neighborhood_name }}</span
+                        >{{
+                          propertyDetail.address.neighborhood_name ||
+                          propertyDetail.neighborhood
+                        }}</span
                       >
                     </span>
                   </h1>
@@ -192,7 +215,7 @@
                         sf:text-xl
                       "
                     >
-                      ${{ contextProvider.price }}
+                      {{ propertyPrice }}
                     </h3>
                     <div>
                       <div v-show="contextProvider.mortgageMonthlyPayment" class="text-gray-700">
@@ -316,7 +339,35 @@
                 </div>
                 <div
                   v-if="
-                    Object.keys(propertyDetail).length > 0 && propertyDetail.client_display_flags.has_open_house
+                    $route.name == 'RentPageDetail' &&
+                    !isLoading &&
+                    Object.hasOwn(propertyDetail, 'office')
+                  "
+                  class="relative my-6"
+                >
+                  <div class="text-gray-700 font-bold text-xl my-4">
+                    Office Hours
+                  </div>
+                  <div class="w-full flex flex-col gap-2">
+                    <div
+                      v-for="hour in propertyDetail.office.hours"
+                      :key="hour"
+                      class="w-full flex flex-row justify-start items-center"
+                    >
+                      <span class="w-4/12 text-base font-semibold text-gray-700 capitalize">{{
+                        hour.day[0]
+                      }}</span>
+                      <div class="w-8/12 flex gap-1 text-base text-gray-500">
+                        <span>{{ hour.start_time }} to</span>
+                        <span>{{ hour.end_time }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  v-if="
+                    Object.keys(propertyDetail).length > 0 &&
+                    propertyDetail.client_display_flags.has_open_house
                   "
                   id="#OpenHousesModule"
                   class="relative my-6"
@@ -833,6 +884,22 @@ export default {
         propertyDetail.value.property_history;
       contextProvider.value.taxHistory = propertyDetail.value.tax_history;
       contextProvider.value.openHouses = propertyDetail.value.open_houses;
+    });
+    
+    const propertyPriceMinMAx = computed(() => {
+      return propertyDetail.value.community.price_hint == "CALL"
+        ? "Contact For Price"
+        : `$${propertyDetail.value.community.price_min.toLocaleString()} - $${propertyDetail.value.community.price_max.toLocaleString()}/mo`;
+    });
+    const propertyPrice = computed(() => {
+      let priceOnSalesPageDetail = propertyDetail.value.price
+        ? `$${propertyDetail.value.price.toLocaleString()}`
+        : "Contact For Price";
+      return props.name == "SalesPageDetail"
+        ? priceOnSalesPageDetail
+        : !propertyDetail.value.community
+        ? `$${propertyDetail.value.price.toLocaleString()}/mo`  
+        : propertyPriceMinMAx.value;
     });
 
     provide("displayClientFlags", contextProvider.value);
