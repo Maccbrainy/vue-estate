@@ -82,7 +82,6 @@
         >
           <div
             v-show="!fetchingIsBusy && propertyImages.length > 0"
-            v-on:click="$emit('openMediaTable', $event)"
             class="
               absolute
               top-0
@@ -119,7 +118,6 @@
         >
           <div
             v-show="!fetchingIsBusy && propertyImages.length > 1"
-            v-on:click="$emit('openMediaTable', $event)"
             class="
               absolute
               top-0
@@ -150,7 +148,6 @@
         >
           <img
             v-if="propertyImages.length > 2"
-            v-on:click="$emit('openMediaTable', $event)"
             v-bind:src="propertyImages[2].href"
             alt=""
             class="absolute inset-0 w-full h-full object-center object-cover"
@@ -161,7 +158,6 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
 import { ImageCountIcon, SaveSearch, ShareIcon } from "@/assets/icons";
 import { WidgetClientFlags } from "@/components/widgets";
 export default {
@@ -179,10 +175,6 @@ export default {
     WidgetClientFlags,
     ShareIcon,
     SaveSearch,
-  },
-  setup() {
-    const openMediaTable = ref(false);
-    return { openMediaTable };
   },
 };
 </script>
