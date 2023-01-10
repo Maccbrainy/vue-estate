@@ -127,9 +127,7 @@
       </button>
     </div>
     <widget-image-grid
-      v-on:openMediaTable="
-        teleportModalCallback({ name: `isMediaTable`, open_modal: true })
-      "
+      v-on:click="teleportModalCallback('isMediaTable', true)"
       v-bind:fetchingIsBusy="isLoading"
       v-bind:propertyImages="propertyPhotos"
     >
@@ -454,13 +452,11 @@
                 ]"
                 :key="requestType"
                 v-on:click="
-                  teleportModalCallback({
-                    name: requestType,
-                    open_modal: true,
-                    description: {
-                      address: fullPropertyAddressIdentity,
-                    },
-                  })
+                  teleportModalCallback(
+                    requestType,
+                    true,
+                    fullPropertyAddressIdentity
+                  )
                 "
                 type="button"
                 class="
