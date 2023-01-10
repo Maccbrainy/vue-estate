@@ -1,10 +1,15 @@
 <template>
   <div>
-    <h2 class="text-2xl text-gray-700 font-medium mb-7">
-      Nothing turned up in {{ listingBranch }} listings, but we did find
-      {{ numberOfListings }}
-      listed {{ singularPluralWord ? `homes` : `home` }} that match your search.
-    </h2>
+    <div class="text-xl text-gray-700 font-normal mb-7">
+      <p>
+        Nothing turned up in {{ listingBranch }} listings, but we did find
+        <span class="text-gray-800 font-semibold">{{
+          numberOfListings.toLocaleString()
+        }}</span>
+        listed {{ singularPluralWord ? `homes` : `home` }} that match your
+        search.
+      </p>
+    </div>
     <button
       type="button"
       v-on:click="seeTheHomes"
@@ -48,7 +53,9 @@ export default {
     });
 
     const listingBranch = computed(() => {
-      return storeData.value.activeListBranch == "Agent Listings" ? "agent" : "other";
+      return storeData.value.activeListBranch == "Agent Listings"
+        ? "agent"
+        : "other";
     });
 
     function seeTheHomes() {
