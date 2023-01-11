@@ -3,9 +3,7 @@
     <div class="text-xl text-gray-700 font-normal mb-7">
       <p>
         Nothing turned up in {{ listingBranch }} listings, but we did find
-        <span class="text-gray-800 font-semibold">{{
-          numberOfListings.toLocaleString()
-        }}</span>
+        <span class="text-gray-800 font-semibold">{{ numberOfListings }}</span>
         listed {{ singularPluralWord ? `homes` : `home` }} that match your
         search.
       </p>
@@ -46,9 +44,9 @@ export default {
       } = storeData.value;
 
       return propertyListingsByAgent.length == 0
-        ? `${propertyListingsByNoneAgent.length} other`
+        ? `${propertyListingsByNoneAgent.length.toLocaleString()} other`
         : propertyListingsByNoneAgent.length == 0
-        ? `${totalItemsMatchRows} agent`
+        ? `${totalItemsMatchRows.toLocaleString()} agent`
         : "";
     });
 

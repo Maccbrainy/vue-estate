@@ -8,7 +8,7 @@ import settingsData from "@/api/settingsData.json";
 
 const storeData = computed(() => store.getters.getStore);
 const agentType = [...settingsData.agentType];
-const regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
+// const regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
 
 const routes = [
   {
@@ -28,13 +28,14 @@ const routes = [
     },
   },
   {
-    path: "/for_sale/:slug/:city?",
+    path: "/for_sale/:slug/:city?/:zipCode?",
     name: "BuyPage",
     component: ThePropertyListPage,
     props: (route) => ({
       name: route.name,
       slug: route.params.slug,
       city: route.params.city,
+      zipCode: route.params.zipCode,
       bed: route.query.bed,
       bath: route.query.bath,
       priceMin: route.query.priceMin,
@@ -58,13 +59,14 @@ const routes = [
     })
   },
   {
-    path: "/for_rent/:slug/:city?",
+    path: "/for_rent/:slug/:city?/:zipCode?",
     name: "RentPage",
     component: ThePropertyListPage,
     props: (route) => ({
       name: route.name,
       slug: route.params.slug,
       city: route.params.city,
+      zipCode: route.params.zipCode,
       bed: route.query.bed,
       bath: route.query.bath,
       priceMin: route.query.priceMin,
@@ -88,13 +90,14 @@ const routes = [
     })
   },
   {
-    path: "/sold/:slug/:city?",
+    path: "/sold/:slug/:city?/:zipCode?",
     name: "SoldPage",
     component: ThePropertyListPage,
     props: (route) => ({
       name: route.name,
       slug: route.params.slug,
       city: route.params.city,
+      zipCode: route.params.zipCode,
       bed: route.query.bed,
       bath: route.query.bath,
       priceMin: route.query.priceMin,
@@ -153,7 +156,7 @@ const routes = [
     },
   },
   {
-    path: "/C/:slug/:city/:address?/:propertyId/:postalCode?",
+    path: "/C/:slug/:city/:address?/:propertyId/:zipCode?",
     name: "SalesPageDetail",
     // route level code-splitting
     // this generates a separate chunk (ThePropertyDetailedPage.[hash].js) for this route
@@ -168,12 +171,12 @@ const routes = [
       city: route.params.city,
       address: route.params.address,
       propertyId: route.params.propertyId,
-      postalCode: route.params.postalCode,
+      zipCode: route.params.zipCode,
       mediaTable: route.query.mediaTable,
     })
   },
   {
-    path: "/P/:slug/:city/:address?/:propertyId/:postalCode?",
+    path: "/P/:slug/:city/:address?/:propertyId/:zipCode?",
     name: "RentPageDetail",
     // route level code-splitting
     // this generates a separate chunk (ThePropertyDetailedPage.[hash].js) for this route
@@ -188,7 +191,7 @@ const routes = [
       city: route.params.city,
       address: route.params.address,
       propertyId: route.params.propertyId,
-      postalCode: route.params.postalCode,
+      zipCode: route.params.zipCode,
       mediaTable: route.query.mediaTable,
     })
   },
@@ -242,27 +245,27 @@ router.afterEach((to) => {
   let cityParam = city ? removeUnderScoresFromAString(city) : city;
   let slugParam = `${cityParam},${to.params.slug}`;
 
-  let isPostalCode = regExpNumbersOnly.test(to.params.slug);
-  let isPostalTitle;
+  let zipCode = to.params.zipCode ? parseInt(to.params.zipCode) : "";
+  let isZipCodeTitle;
   let isTitle;
 
   let addressParam = removeUnderScoresFromAString(to.params.address);
 
   if (to.name == "RentPage") {
-    isPostalTitle = `Apartments For Rents in ${to.params.slug} Zip Code`;
+    isZipCodeTitle = `Apartments For Rents in ${to.params.zipCode} Zip Code`;
     isTitle = `Apartments For Rents in ${slugParam} | Vue Estate`;
     makeActiveRouteToBe = to.name;
-    setRouteMetaTitle = !isPostalCode ? isTitle : isPostalTitle;
+    setRouteMetaTitle = !zipCode ? isTitle : isZipCodeTitle;
   } else if (to.name == "SoldPage") {
-    isPostalTitle = `Recently Sold Properties in ${to.params.slug} Zip Code`;
+    isZipCodeTitle = `Recently Sold Properties in ${to.params.zipCode} Zip Code`;
     isTitle = `${slugParam} Recently Sold Properties | Vue Estate`;
     makeActiveRouteToBe = to.name;
-    setRouteMetaTitle = !isPostalCode ? isTitle : isPostalTitle;
+    setRouteMetaTitle = !zipCode ? isTitle : isZipCodeTitle;
   } else if (to.name == "BuyPage") {
-    isPostalTitle = `Homes For Sale & Real Estate in ${to.params.slug} Zip Code`;
+    isZipCodeTitle = `Homes For Sale & Real Estate in ${to.params.zipCode} Zip Code`;
     isTitle = `${slugParam} Homes For Sale & ${slugParam} Real Estate | Vue Estate`;
     makeActiveRouteToBe = to.name;
-    setRouteMetaTitle = !isPostalCode ? isTitle : isPostalTitle;
+    setRouteMetaTitle = !zipCode ? isTitle : isZipCodeTitle;
   } else if (to.name == "RentsNearMe") {
     makeActiveRouteToBe = "RentPage";
     setRouteMetaTitle = `Apartments for rent near me - Find An Apartment Nearby | Vue Estate`;

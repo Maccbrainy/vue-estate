@@ -62,7 +62,7 @@ export default createStore({
       features: "",
       bathroom: "",
     },
-    searchedData: "",
+    searchedData: {},
     allPropertyListings: [],
     propertyListingsByAgent: [],
     propertyListingsByNoneAgent: [],

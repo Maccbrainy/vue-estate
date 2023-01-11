@@ -1,5 +1,7 @@
 <template>
-  <filter-button-container v-bind:key="$route.fullPath"></filter-button-container>
+  <filter-button-container
+    v-bind:key="$route.fullPath"
+  ></filter-button-container>
   <div class="flex flex-grow flex-auto flex-col z-0 outline-none">
     <div
       v-bind:class="{
@@ -46,14 +48,21 @@
               }"
               class="text-lg font-bold text-gray-600"
             >
-              <span v-if="totalItemsMatchingRowsInSearch > 0">
+              <span
+                v-if="
+                  totalItemsMatchingRowsInSearch > 0 &&
+                  storeData.activeListBranch != agentType[1].id
+                "
+              >
                 {{ listingTitle }}
               </span>
             </h1>
             <ul
               v-show="
-                filterIsActive && storeData.activeListBranch != agentType[1].id
-               && totalItemsMatchingRowsInSearch > 0"
+                filterIsActive &&
+                storeData.activeListBranch != agentType[1].id &&
+                totalItemsMatchingRowsInSearch > 0
+              "
               :class="{
                 'animate-pulse bg-gray-200 mt-0.5 h-2 w-1/4': isLoading,
                 'list-disc list-inside': !isLoading,
@@ -78,12 +87,23 @@
                   }"
                   class="text-base font-normal text-gray-500"
                 >
-                  <span v-if="!isLoading && totalItemsMatchingRowsInSearch > 0">
+                  <span
+                    v-if="
+                      !isLoading &&
+                      totalItemsMatchingRowsInSearch > 0 &&
+                      storeData.activeListBranch != agentType[1].id
+                    "
+                  >
                     {{ `${totalItemsMatchingRowsInSearch.toLocaleString()}` }}
                     {{ propertyCountIsGreaterThanOne }}
                   </span>
                 </h2>
-                <filter-button-sorting v-show="totalItemsMatchingRowsInSearch > 0"></filter-button-sorting>
+                <filter-button-sorting
+                  v-show="
+                    totalItemsMatchingRowsInSearch > 0 &&
+                    storeData.activeListBranch != agentType[1].id
+                  "
+                ></filter-button-sorting>
               </div>
             </div>
           </div>
@@ -101,7 +121,7 @@
         </div>
         <is-loading v-if="isLoading || storeData.isLoading"></is-loading>
         <ul v-show="totalItemsMatchingRowsInSearch > 0" class="flex flex-wrap">
-          <property-item-card 
+          <property-item-card
             v-for="home in activePropertyListings"
             v-bind:key="home.property_id"
             v-bind:home="home"
@@ -170,6 +190,7 @@ export default {
     slug: [String, Number],
     page: [String, Number],
     city: String,
+    zipCode: [String, Number],
     bed: String,
     bath: String,
     priceMin: String,
@@ -224,11 +245,14 @@ export default {
     const pageLimit = ref(40);
     const pageOffSet = ref(0); //The offset of items to be ignored in response for paging
     const totalItemsMatchingRowsInSearch = ref(0);
-    const useIsPostalCode = (slug) => {
-      //Test if search is Postal/zip is used by user
-      let regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
-      return regExpNumbersOnly.test(slug);
-    };
+    const searchedDataIsEmpty = computed(
+      () => Object.keys(storeData.value.searchedData).length == 0
+    );
+    // const useIsPostalCode = (slug) => {
+    //   //Test if search is Postal/zip is used by user
+    //   let regExpNumbersOnly = /^\d+$/; //Regular Expression for Number detection
+    //   return regExpNumbersOnly.test(slug);
+    // };
 
     onBeforeRouteUpdate((to, from) => {
       if (to.query.page === from.query.page) {
@@ -247,7 +271,7 @@ export default {
       let updateRouterParams = {};
       const {
         activeRoutePath,
-        searchedData: { state_code, city },
+        searchedData: { state_code, city, zip_code },
         propertyFilters: {
           homeType,
           numberOfBed,
@@ -367,16 +391,19 @@ export default {
         filterMoreIsActive = true;
         updateRouterParams.newPlans = isNewPlans;
       }
-
       updateRouterParams.activeRouteTab = activeRoutePath;
-      updateRouterParams.state_code = useIsPostalCode(props.slug)
+      updateRouterParams.state_code = searchedDataIsEmpty.value
         ? props.slug
         : state_code;
-      updateRouterParams.city = useIsPostalCode(props.slug) ? "" : city;
+      updateRouterParams.city = searchedDataIsEmpty.value ? props.city : city;
+      updateRouterParams.zip_code = searchedDataIsEmpty.value
+        ? props.zipCode
+        : zip_code;
 
-      //Pagination update to the route
-      // updateRouterParams.pagination =
-      //   setCurrentPage.value == 1 ? null : setCurrentPage.value;
+      // updateRouterParams.state_code = useIsPostalCode(props.slug)
+      //   ? props.slug
+      //   : state_code;
+      // updateRouterParams.city = useIsPostalCode(props.slug) ? "" : city;
 
       if (
         filterIsActive.value &&
@@ -552,16 +579,16 @@ export default {
 
       let propertySlug = isRentsNearMeOrSalesNearMe.value
         ? isRoutesDefaultStateCode
-        : useIsPostalCode(props.slug)
+        : props.zipCode
         ? ""
         : props.slug;
       let propertyCity = isRentsNearMeOrSalesNearMe.value
         ? isRoutesDefaultCity
-        : useIsPostalCode(props.slug)
+        : props.zipCode
         ? ""
         : props.city;
 
-      let postalCode = useIsPostalCode(props.slug) ? props.slug : "";
+      // let postalCode = useIsPostalCode(props.slug) ? props.slug : "";
 
       const { propertyListResults, propertyTotalMatchingRows, errorFetch } =
         await useFetch(
@@ -591,7 +618,7 @@ export default {
           props.contingents,
           latitude,
           longitude,
-          postalCode
+          props.zipCode
         );
 
       error.value = errorFetch.value;
@@ -618,7 +645,12 @@ export default {
 
       const { listingsByOthers, listingsByAgent } =
         useSortListingsByAgentAndOthers(allPropertyListings.value);
-      const { listTitle } = useListingTitle(props.name, props.slug, props.city);
+      const { listTitle } = useListingTitle(
+        props.name,
+        props.slug,
+        props.city,
+        props.zipCode
+      );
 
       listingTitle.value = listTitle.value;
       propertyListingByAgent.value = listingsByAgent.value;
@@ -626,7 +658,6 @@ export default {
 
       //Store Route full path to local storage to be consumed in searchresultdetailed component
       localStorage.setItem("historyRoute", route.fullPath);
-      
     });
     watchEffect(() => {
       let isBuyPage =
@@ -673,7 +704,7 @@ export default {
     });
 
     onMounted(() => {
-      if (!storeData.value.searchedData) {
+      if (searchedDataIsEmpty.value) {
         let activeRoutePath =
           props.name == "RentsNearMe"
             ? "RentPage"
@@ -691,6 +722,7 @@ export default {
           city: propsCity,
           state_code: propsStateCode,
           activeRouteTab: activeRoutePath,
+          zip_code: props.zipCode,
         };
         store.commit("setSearchedData", searchPayload);
 

@@ -49,7 +49,7 @@
           </button>
         </div>
         <div class="relative float-left text-gray-500 -mt-3">
-          {{ `${propertyCity}, ${slug}  ${postalCode}` }}
+          {{ `${propertyCity}, ${slug}  ${zipCode}` }}
         </div>
         <div
           ref="contactFormRef"
@@ -117,10 +117,10 @@
       <router-link
         :to="`/${
           name == 'SalesPageDetail' ? 'for_sale' : 'for_rent'
-        }/${postalCode}`"
+        }/${slug}/${city}/${zipCode}`"
         class="text-teal inline-flex underline"
       >
-        <chevron-right class="text-gray-600 w-4 h-4 p-1" /> {{ postalCode }}
+        <chevron-right class="text-gray-600 w-4 h-4 p-1" /> {{ zipCode }}
       </router-link>
       <button class="text-gray-600 inline-flex cursor-text">
         <chevron-right class="w-4 h-4 p-1" /> {{ propertyAddress }}
@@ -177,7 +177,7 @@
                     <span class="text-base text-gray-600">
                       {{ propertyCity }},
                       {{ slug }}
-                      {{ postalCode }}
+                      {{ zipCode }}
                       <span
                         v-if="!isLoading"
                         class="underline text-teal cursor-pointer"
@@ -698,7 +698,7 @@
           class="text-xs text-gray-500 font-normal text-justify"
         >
           {{
-            `${propertyAddress}, ${propertyCity}, ${slug} ${postalCode} is a ${
+            `${propertyAddress}, ${propertyCity}, ${slug} ${zipCode} is a ${
               contextProvider.bed == 0
                 ? "Studio,"
                 : !contextProvider.bed
@@ -784,7 +784,7 @@ export default {
       type: String,
       required: true,
     },
-    postalCode: {
+    zipCode: {
       type: String,
     },
     mediaTable: {
@@ -839,7 +839,7 @@ export default {
 
     const propertyAddress = removeUnderScoresFromAString(props.address);
     const propertyCity = removeUnderScoresFromAString(props.city);
-    const fullPropertyAddressIdentity = `${propertyAddress}, ${propertyCity}, ${props.slug} ${props.postalCode} `;
+    const fullPropertyAddressIdentity = `${propertyAddress}, ${propertyCity}, ${props.slug} ${props.zipCode} `;
 
     const historyRoutePath = localStorage.getItem("historyRoute");
 
@@ -1001,6 +1001,7 @@ export default {
         city: props.city,
         state_code: props.slug,
         activeRouteTab: props.name,
+        zip_code: props.zipCode
       };
       store.commit("setSearchedData", searchPayload);
 

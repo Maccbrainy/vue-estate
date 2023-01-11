@@ -19,6 +19,9 @@ export default function useRouterPush(payLoad) {
     : regExpWhiteSpaces.test(city)
     ? city.replaceAll(" ", "_")
     : city;
+  let postalCode = searchParams.value.zip_code
+    ? parseInt(searchParams.value.zip_code)
+    : "";
 
   switch (routeName) {
     case "list-for-rent":
@@ -50,13 +53,15 @@ export default function useRouterPush(payLoad) {
    * Otherwise there is no page refresh action from the user
    */
   let homeTypeFilter =
-    storeData.value.searchedData && searchParams.value.homeType
+    Object.keys(storeData.value.searchedData).length > 0 &&
+    searchParams.value.homeType
       ? `${searchParams.value.homeType.join()}`
       : !storeData.value.searchedData && searchParams.value.homeType
       ? `${searchParams.value.homeType}`
       : "";
   let features =
-    storeData.value.searchedData && searchParams.value.homeFeatures
+    Object.keys(storeData.value.searchedData).length > 0 &&
+    searchParams.value.homeFeatures
       ? `${searchParams.value.homeFeatures.join()}`
       : !storeData.value.searchedData && searchParams.value.homeFeatures
       ? `${searchParams.value.homeFeatures}`
@@ -182,6 +187,7 @@ export default function useRouterPush(payLoad) {
     params: {
       slug: slugParam,
       city: cityParam,
+      zipCode: postalCode,
     },
     query: queryParams,
   });

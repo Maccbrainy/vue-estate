@@ -42,6 +42,7 @@ export default {
           ? defaultStateCode.value
           : route.params.slug,
         activeRouteTab: routeName,
+        zip_code: ""
       };
       store.commit("setActiveRoutePath", routeName);
       store.commit("setSearchedData", searchPayload.value);

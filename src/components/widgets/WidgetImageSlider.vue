@@ -31,7 +31,7 @@
             city: cityName,
             address: addressLocation,
             propertyId: propertyIdCode,
-            postalCode: postalAddressCode,
+            zipCode: postalAddressCode,
           },
         }"
         target="_blank"
@@ -73,7 +73,7 @@
             city: cityName,
             address: addressLocation,
             propertyId: propertyIdCode,
-            postalCode: postalAddressCode,
+            zipCode: postalAddressCode,
           },
         }"
         target="_blank"

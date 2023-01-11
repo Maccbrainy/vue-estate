@@ -7,22 +7,24 @@
       <mobile-menu-drop-down menuTitle="Buy">
         <div v-if="currentSearchedData">
           <div
-            v-if="
-              $route.name == 'SalesPageDetail' ||
-              $route.name == 'RentPageDetail'
-            " class="border-b border-gray-500"
+            v-show="storeData.searchedData.zip_code"
+            class="border-b border-gray-500"
           >
             <mobile-menu-drop-down-item
               class="hover:no-underline cursor-text text-gray-300"
             >
-              {{ $route.params.postalCode }} zip
+              {{ storeData.searchedData.zip_code }} zip
             </mobile-menu-drop-down-item>
             <mobile-menu-drop-down-item>
               <router-link
                 :to="{
                   name: 'BuyPage',
                   params: {
-                    slug: $route.params.postalCode,
+                    slug: storeData.searchedData.state_code,
+                    city: addUnderScoresToWhiteSpacesInAString(
+                      storeData.searchedData.city
+                    ),
+                    zipCode: storeData.searchedData.zip_code,
                   },
                 }"
               >
@@ -34,7 +36,11 @@
                 :to="{
                   name: 'BuyPage',
                   params: {
-                    slug: $route.params.postalCode,
+                    slug: storeData.searchedData.state_code,
+                    city: addUnderScoresToWhiteSpacesInAString(
+                      storeData.searchedData.city
+                    ),
+                    zipCode: storeData.searchedData.zip_code,
                   },
                   query: {
                     hasOpenHouses: true,
@@ -49,7 +55,11 @@
                 :to="{
                   name: 'BuyPage',
                   params: {
-                    slug: $route.params.postalCode,
+                    slug: storeData.searchedData.state_code,
+                    city: addUnderScoresToWhiteSpacesInAString(
+                      storeData.searchedData.city
+                    ),
+                    zipCode: storeData.searchedData.zip_code,
                   },
                   query: {
                     newConstruction: true,
@@ -140,26 +150,28 @@
       <mobile-menu-drop-down menuTitle="Rent">
         <div v-if="currentSearchedData">
           <div
-            v-if="
-              $route.name == 'SalesPageDetail' ||
-              $route.name == 'RentPageDetail'
-            " class="border-b border-gray-500"
+            v-show="storeData.searchedData.zip_code"
+            class="border-b border-gray-500"
           >
             <mobile-menu-drop-down-item
               class="hover:no-underline cursor-text text-gray-300"
             >
-              {{ $route.params.postalCode }} zip
+              {{ storeData.searchedData.zip_code }} zip
             </mobile-menu-drop-down-item>
             <mobile-menu-drop-down-item>
               <router-link
                 :to="{
                   name: 'RentPage',
                   params: {
-                    slug: $route.params.postalCode,
+                    slug: storeData.searchedData.state_code,
+                    city: addUnderScoresToWhiteSpacesInAString(
+                      storeData.searchedData.city
+                    ),
+                    zipCode: storeData.searchedData.zip_code,
                   },
                 }"
               >
-              All Rentals</router-link
+                All Rentals</router-link
               ></mobile-menu-drop-down-item
             >
             <mobile-menu-drop-down-item>
@@ -167,7 +179,11 @@
                 :to="{
                   name: 'RentPage',
                   params: {
-                    slug: $route.params.postalCode,
+                    slug: storeData.searchedData.state_code,
+                    city: addUnderScoresToWhiteSpacesInAString(
+                      storeData.searchedData.city
+                    ),
+                    zipCode: storeData.searchedData.zip_code,
                   },
                   query: {
                     homeType: `multi_family,condo`,
@@ -182,7 +198,11 @@
                 :to="{
                   name: 'RentPage',
                   params: {
-                    slug: $route.params.postalCode,
+                    slug: storeData.searchedData.state_code,
+                    city: addUnderScoresToWhiteSpacesInAString(
+                      storeData.searchedData.city
+                    ),
+                    zipCode: storeData.searchedData.zip_code,
                   },
                   query: {
                     homeType: `single_family`,
@@ -298,7 +318,7 @@ export default {
     const storeData = computed(() => store.getters.getStore);
 
     const currentSearchedData = computed(() =>
-      storeData.value.searchedData ? true : false
+      Object.keys(storeData.value.searchedData).length > 0 ? true : false
     );
     return {
       storeData,

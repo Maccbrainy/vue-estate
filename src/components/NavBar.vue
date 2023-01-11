@@ -10,6 +10,7 @@
             city: addUnderScoresToWhiteSpacesInAString(
               storeData.searchedData.city
             ),
+            zipCode: storeData.searchedData.zip_code,
           },
         }"
       >
@@ -17,26 +18,25 @@
       >
       <router-link to="/" v-else>Buy</router-link>
       <nav-bar-dropdown v-if="currentSearchedData">
-        <div
-          v-if="
-            $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail'
-          "
-          class="border-b"
-        >
+        <div v-show="storeData.searchedData.zip_code" class="border-b">
           <nav-bar-dropdown-item
             class="cursor-text font-medium hover:no-underline"
           >
-            {{ $route.params.postalCode }} zip
+            {{ storeData.searchedData.zip_code }} zip
           </nav-bar-dropdown-item>
           <nav-bar-dropdown-item
-            :title="`Homes for sale in ${$route.params.postalCode} zip code`"
+            :title="`Homes for sale in ${storeData.searchedData.zip_code} zip code`"
             class="text-teal hover:bg-gray-200"
           >
             <router-link
               :to="{
                 name: 'BuyPage',
                 params: {
-                  slug: $route.params.postalCode,
+                  slug: storeData.searchedData.state_code,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
+                  zipCode: storeData.searchedData.zip_code,
                 },
               }"
             >
@@ -45,13 +45,17 @@
           </nav-bar-dropdown-item>
           <nav-bar-dropdown-item
             class="text-teal hover:bg-gray-200"
-            :title="`Open Houses in ${$route.params.postalCode} zip code`"
+            :title="`Open Houses in ${storeData.searchedData.zip_code} zip code`"
           >
             <router-link
               :to="{
                 name: 'BuyPage',
                 params: {
-                  slug: $route.params.postalCode,
+                  slug: storeData.searchedData.state_code,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
+                  zipCode: storeData.searchedData.zip_code,
                 },
                 query: {
                   hasOpenHouses: true,
@@ -62,13 +66,17 @@
           </nav-bar-dropdown-item>
           <nav-bar-dropdown-item
             class="text-teal hover:bg-gray-200"
-            :title="`New Constructions in ${$route.params.postalCode} zip code`"
+            :title="`New Constructions in ${storeData.searchedData.zip_code} zip code`"
           >
             <router-link
               :to="{
                 name: 'BuyPage',
                 params: {
-                  slug: $route.params.postalCode,
+                  slug: storeData.searchedData.state_code,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
+                  zipCode: storeData.searchedData.zip_code,
                 },
                 query: {
                   newConstruction: true,
@@ -172,6 +180,7 @@
             city: addUnderScoresToWhiteSpacesInAString(
               storeData.searchedData.city
             ),
+            zipCode: storeData.searchedData.zip_code,
           },
         }"
       >
@@ -179,26 +188,25 @@
       >
       <router-link to="/rent" v-else>Rent</router-link>
       <nav-bar-dropdown v-if="currentSearchedData">
-        <div
-          v-if="
-            $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail'
-          "
-          class="border-b"
-        >
+        <div v-show="storeData.searchedData.zip_code" class="border-b">
           <nav-bar-dropdown-item
             class="cursor-text font-medium hover:no-underline"
           >
-            {{ $route.params.postalCode }} zip
+            {{ storeData.searchedData.zip_code }} zip
           </nav-bar-dropdown-item>
           <nav-bar-dropdown-item
-            :title="`All rentals in ${$route.params.postalCode} zip code`"
+            :title="`All rentals in ${storeData.searchedData.zip_code} zip code`"
             class="text-teal hover:bg-gray-200"
           >
             <router-link
               :to="{
                 name: 'RentPage',
                 params: {
-                  slug: $route.params.postalCode,
+                  slug: storeData.searchedData.state_code,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
+                  zipCode: storeData.searchedData.zip_code,
                 },
               }"
             >
@@ -207,13 +215,17 @@
           </nav-bar-dropdown-item>
           <nav-bar-dropdown-item
             class="text-teal hover:bg-gray-200"
-            :title="`Apartments for rent in ${$route.params.postalCode} zip code`"
+            :title="`Apartments for rent in ${storeData.searchedData.zip_code} zip code`"
           >
             <router-link
               :to="{
                 name: 'RentPage',
                 params: {
-                  slug: $route.params.postalCode,
+                  slug: storeData.searchedData.state_code,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
+                  zipCode: storeData.searchedData.zip_code,
                 },
                 query: {
                   homeType: `multi_family,condo`,
@@ -224,13 +236,17 @@
           </nav-bar-dropdown-item>
           <nav-bar-dropdown-item
             class="text-teal hover:bg-gray-200"
-            :title="`Houses for Rent in ${$route.params.postalCode} zip code`"
+            :title="`Houses for Rent in ${storeData.searchedData.zip_code} zip code`"
           >
             <router-link
               :to="{
                 name: 'RentPage',
                 params: {
-                  slug: $route.params.postalCode,
+                  slug: storeData.searchedData.state_code,
+                  city: addUnderScoresToWhiteSpacesInAString(
+                    storeData.searchedData.city
+                  ),
+                  zipCode: storeData.searchedData.zip_code,
                 },
                 query: {
                   homeType: `single_family`,
@@ -409,10 +425,10 @@ export default {
     const storeData = computed(() => store.getters.getStore);
 
     const currentSearchedData = computed(() =>
-      storeData.value.searchedData ? true : false
+      Object.keys(storeData.value.searchedData).length > 0 ? true : false
     );
     const isTitle = computed(() => {
-      return storeData.value.searchedData
+      return currentSearchedData.value
         ? `in ${storeData.value.searchedData["city"]}, ${storeData.value.searchedData["state_code"]}`
         : "";
     });

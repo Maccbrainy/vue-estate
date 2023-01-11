@@ -42,7 +42,7 @@
               city: addUnderScoresToWhiteSpacesInAString(home.address.city),
               address: addUnderScoresToWhiteSpacesInAString(home.address.line),
               propertyId: home.property_id,
-              postalCode: home.address.postal_code,
+              zipCode: home.address.postal_code,
             },
           }"
           target="_blank"
