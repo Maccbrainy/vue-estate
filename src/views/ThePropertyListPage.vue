@@ -396,9 +396,7 @@ export default {
         ? props.slug
         : state_code;
       updateRouterParams.city = searchedDataIsEmpty.value ? props.city : city;
-      updateRouterParams.zip_code = searchedDataIsEmpty.value
-        ? props.zipCode
-        : zip_code;
+      updateRouterParams.zip_code = !zip_code ? "" : props.zipCode;
 
       // updateRouterParams.state_code = useIsPostalCode(props.slug)
       //   ? props.slug
