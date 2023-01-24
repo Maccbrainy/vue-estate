@@ -27,9 +27,11 @@
             px-1.5
             py-0.5
             hover:bg-white
+            text-white
+            hover:text-teal
           "
         >
-          <chevron-left class="text-white hover:text-teal"/>
+          <chevron-left />
         </button>
       </li>
       <!-- Visible buttons start -->
@@ -64,10 +66,11 @@
             rounded-lg
             px-1.5
             py-0.5
-            hover:bg-white
+            text-white
+            hover:text-teal hover:bg-white
           "
         >
-          <chevron-right class="text-white hover:text-teal"/>
+          <chevron-right />
         </button>
       </li>
       <!-- <li>
@@ -124,7 +127,7 @@ export default {
   },
   components: {
     ChevronRight,
-    ChevronLeft
+    ChevronLeft,
   },
   emits: ["pageChanged"],
   setup(props, context) {
@@ -209,7 +212,7 @@ export default {
       endPage,
       pageChangeHandler,
       paginationContentDescription,
-      addCommaToNumberFormat
+      addCommaToNumberFormat,
     };
   },
 };
