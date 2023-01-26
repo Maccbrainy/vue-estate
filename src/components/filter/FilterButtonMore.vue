@@ -11,15 +11,15 @@
     tabindex="-1"
   >
     <filter-route-tab></filter-route-tab>
-    <dropdown-button-fieldset class="hidden mf:block" fieldsetTitle="Price">
+    <dropdown-button-fieldset class="hidden xlm:block" fieldsetTitle="Price">
       <filter-core-price-range></filter-core-price-range>
     </dropdown-button-fieldset>
-    <dropdown-button-fieldset class="hidden mf:block" fieldsetTitle="Bedrooms">
+    <dropdown-button-fieldset class="hidden xlm:block" fieldsetTitle="Bedrooms">
       <filter-core-bedrooms></filter-core-bedrooms>
     </dropdown-button-fieldset>
     <dropdown-button-fieldset
       v-show="isRentPage"
-      class="hidden mf:block"
+      class="hidden xlm:block"
       fieldsetTitle="Pets Allowed"
     >
       <button-radio @click="dogsHandler" v-model:value="isDogsAllowed"
@@ -29,7 +29,7 @@
         >Cats Allowed</button-radio
       >
     </dropdown-button-fieldset>
-    <dropdown-button-fieldset class="hidden mf:block" fieldsetTitle="Home Type">
+    <dropdown-button-fieldset class="hidden xlm:block" fieldsetTitle="Home Type">
       <filter-core-home-types v-bind:listOptions="homeTypes">
       </filter-core-home-types>
     </dropdown-button-fieldset>

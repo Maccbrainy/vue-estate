@@ -133,6 +133,10 @@
           />
         </div>
         <div
+          :class="{
+            'transform -translate-x-3/4':
+              isLargeScreen || (isMediumScreen && $route.name == 'BuyPage'),
+          }"
           class="
             h-full
             bg-white
@@ -141,12 +145,7 @@
             z-40
             text-base text-gray-600
             font-normal
-            lm:w-96
-            lm:top-14
-            lm:h-96
-            lm:absolute
-            lm:transform
-            lm:-translate-x-3/4
+            lm:w-96 lm:top-14 lm:h-96 lm:absolute
           "
         >
           <slot name="moreAdvancedButtons"></slot>
@@ -162,7 +161,8 @@
               lm:rounded-lg
             "
           >
-            <button v-on:click="saveSearchCallback"
+            <button
+              v-on:click="saveSearchCallback"
               type="button"
               class="
                 w-full
@@ -205,11 +205,12 @@
   </li>
 </template>
 <script>
-import { ref, computed, onMounted, onUnmounted, inject } from "vue";
+import { ref, computed, onMounted, onUnmounted, inject, watchEffect } from "vue";
 import { useStore } from "vuex";
 import { ChevronDown, CloseMobileMenu, FilterIcon } from "@/assets/icons";
 import { ButtonSlot } from "@/components/buttonui";
 import settingsData from "@/api/settingsData.json";
+import { useMediaQuery } from "@vueuse/core";
 
 // import { useOnClickOutside } from "@/helper";
 export default {
@@ -231,7 +232,7 @@ export default {
   setup() {
     const buttonIsOpen = ref(false);
     const store = useStore();
-    const { saveSearchCallback } = inject("provider");
+    const { saveSearchCallback, isLargeScreen } = inject("provider");
     const fieldSetRef = ref(null);
     const menuRef = ref(null);
     const storeData = computed(() => store.getters.getStore);
@@ -239,7 +240,12 @@ export default {
     const isBuyPage = computed(() =>
       storeData.value.activeRoutePath == routeNames[0].id ? true : false
     );
-
+    const isMediumScreen = useMediaQuery(
+      "(min-width: 991px)" && "(max-width: 1024px)"
+    );
+    watchEffect(() => {
+      console.log("isMediumScreen", isMediumScreen.value);
+    })
     // useOnClickOutside(
     //   menuRef.value,
     //   fieldSetRef.value,
@@ -269,6 +275,8 @@ export default {
       menuRef,
       isBuyPage,
       saveSearchCallback,
+      isLargeScreen,
+      isMediumScreen
     };
   },
 };
