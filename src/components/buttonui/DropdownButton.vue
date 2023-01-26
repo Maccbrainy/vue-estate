@@ -134,8 +134,10 @@
         </div>
         <div
           :class="{
+            'transform -translate-x-3/4': isLargeScreen,
+            'transform-none': !isLargeScreen,
             'transform -translate-x-3/4':
-              isLargeScreen || (isMediumScreen && $route.name == 'BuyPage'),
+              isMediumScreen && $route.name == 'BuyPage',
           }"
           class="
             h-full
