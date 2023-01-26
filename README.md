@@ -1,4 +1,16 @@
-# vue-estate
+# vue-estate - Real Estate Marketplace web App (Trulia clone).
+
+<div align="center">
+    <br>
+    <img src="https://i.ibb.co/Wf7CjXM/vue-estate-homepage1.jpg" alt="Vue Estate Home page">
+    <img src="https://i.ibb.co/2P87nF5/vue-estate-property-List-filter-page1.jpg" alt="Vue Estate Property filter page">
+    <img src="https://i.ibb.co/Fm3G7hv/vue-estate-property-detail-page1.png" alt="Vue Estate Property detailed  page">
+</div>
+
+## Scheme of work to be completed
+
+ - `Backend and functionalities`
+ - `Map interactions`
 
 ## Project setup
 ```
