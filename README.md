@@ -1,5 +1,5 @@
 # vue-estate - Real Estate Marketplace web App (Trulia clone).
-
+## <a href="https://vue-estate.vercel.app/" target="_blank">Live View</a>
 <div align="center">
     <br>
     <img src="https://i.ibb.co/Wf7CjXM/vue-estate-homepage1.jpg" alt="Vue Estate Home page">
