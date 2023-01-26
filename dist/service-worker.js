@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.aa1f5ccf768678aacac816ffbdd09e4e.js"
+  "/precache-manifest.e6bd44c382de2d631db19ef7f438b789.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "vue-estate"});

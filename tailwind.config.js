@@ -1,5 +1,13 @@
 module.exports = {
-  purge: [],
+  purge: {
+    enabled: process.env.NODE_ENV === "production",
+    content: [
+      "components/**/*.vue",
+      "layouts/**/*.vue",
+      "views/**/*.vue",
+      "router/**/*.vue",
+    ],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
