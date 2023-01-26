@@ -142,14 +142,11 @@ export default {
       if (route.query.priceMin) {
         selectedMin.value = route.query.priceMin;
         store.commit("setMinPriceRange", selectedMin.value);
-        console.log("ONMOUNTED priceMin:", selectedMin.value);
       }
       if (route.query.priceMax) {
         selectedMax.value = route.query.priceMax;
         store.commit("setMaxPriceRange", selectedMax.value);
-        console.log("ONMOUNTED priceMax:", selectedMax.value);
       }
-      console.log(">> onBeforeMount PRICECORE");
     });
 
     return {

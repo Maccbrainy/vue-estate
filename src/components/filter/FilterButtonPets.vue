@@ -76,7 +76,6 @@ export default {
         isCatsAllowed.value = route.query.catsAllowed;
         store.commit("setIsCatsAllowed", isCatsAllowed.value);
       }
-      console.log(">> onBeforeMount PETS ALLOWED");
     });
     return {
       petsTitle,

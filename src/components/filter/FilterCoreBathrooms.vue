@@ -43,10 +43,8 @@ export default {
     });
     onBeforeMount(() => {
       if (route.query.bath) {
-        console.log("ONMOUNTED bath:", route.query.bath);
         store.commit("setNumberOfBathRoom", route.query.bath);
       }
-      console.log(">>> onBeforeMount COREBATH");
     });
     return {
       numberOfBathHandler,

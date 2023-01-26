@@ -53,7 +53,10 @@
           </div>
         </div>
       </section>
-      <section v-show="$route.name == 'pageNotFound'" class="relative top-16 pb-20 overflow-x-hidden">
+      <section
+        v-show="$route.name == 'pageNotFound'"
+        class="relative top-16 pb-20 overflow-x-hidden"
+      >
         <div class="w-full flex flex-col justify-center gap-5 px-4 mt-20">
           <div class="flex flex-col justify-center items-center gap-2">
             <h1 class="text-5xl text-gray-700 font-semibold">404</h1>
@@ -93,7 +96,10 @@
     </template>
     <template v-slot:default>
       <section class="relative top-32">
-        <div v-show="$route.name != 'pageNotFound'" class="hidden w-full relative box-border overflow-hidden">
+        <div
+          v-show="$route.name != 'pageNotFound'"
+          class="hidden w-full relative box-border overflow-hidden"
+        >
           <button
             v-if="moveIndex < 0"
             v-on:click="moveSlides(-1)"
@@ -204,7 +210,8 @@
             </call-to-action-card>
           </div>
         </div>
-        <div v-show="$route.name != 'pageNotFound'"
+        <div
+          v-show="$route.name != 'pageNotFound'"
           class="
             absolute
             w-full
@@ -227,7 +234,10 @@
       </section>
     </template>
     <template v-slot:footer>
-      <section v-show="$route.name != 'pageNotFound'" class="listColumns w-full md:flex relative top-80">
+      <section
+        v-show="$route.name != 'pageNotFound'"
+        class="listColumns w-full md:flex relative top-80"
+      >
         <div class="max-w-7xl md:flex md:m-auto">
           <show-hide-list-columns
             listColumnTitle="Real Estate Markets"
@@ -258,7 +268,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { SearchBox, SearchInput } from "@/components/buttonui";
 import HomeTabButtons from "@/components/HomeTabButtons.vue";
 import ShowHideListColumns from "@/components/ShowHideListColumns.vue";
@@ -401,13 +411,6 @@ export default {
       console.log("moveSlide");
     };
 
-    onMounted(() => {
-      groupItems();
-    });
-    function groupItems() {
-      console.log("Working on slide");
-    }
-
     return {
       itemRefs,
       itemsUl,
@@ -419,7 +422,7 @@ export default {
       exploreContact,
       moveSlides,
       moveIndex,
-      findHomeAndRental
+      findHomeAndRental,
     };
   },
 };

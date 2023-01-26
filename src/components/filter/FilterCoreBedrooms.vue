@@ -45,10 +45,8 @@ export default {
     });
     onBeforeMount(() => {
       if (route.query.bed) {
-        console.log("ONMOUNTED BED:", route.query.bed);
         store.commit("setNumberOfBedRoom", route.query.bed);
       }
-      console.log(">> onBeforeMount COREBED");
     });
 
     return {

@@ -243,11 +243,9 @@ export default {
       let regExpNumbersOnly = /^\d+$/;
       let ageMinIsANumber = regExpNumbersOnly.test(ageMin.value) ? true : false;
       if (!ageMin.value && !ageMinFocus.value) {
-        console.log("ageMin text:", "");
         store.commit("setYearBuiltAgeMin", "");
       }
       if (!ageMinFocus.value && ageMinIsANumber && ageMin.value.length == 4) {
-        console.log("ageMinOnly text:", ageMin.value);
         store.commit("setYearBuiltAgeMin", ageMin.value);
       }
     });
@@ -260,7 +258,6 @@ export default {
 
       if (!yearAgeMax && !ageMinFocus.value && !ageMaxFocus.value) {
         store.commit("setYearBuiltAgeMax", "");
-        console.log("ageMax text:", "");
       }
       if (
         !ageMaxFocus.value &&
@@ -275,11 +272,8 @@ export default {
           ageMin.value = yearAgeMax;
           ageMax.value = yearAgeMin;
           store.commit("setYearBuiltAgeMin", ageMin.value);
-          console.log("ageMin text:", ageMin.value);
         }
         // let isAgeMin = ageMin.value == 0 ? "" : ageMin.value;
-        let isAgeMax = ageMax.value;
-        console.log("ageMax text:", isAgeMax);
       }
     });
     watchEffect(() => {
@@ -375,42 +369,34 @@ export default {
       if (route.query.lotSize) {
         lotSize.value = route.query.lotSize;
         store.commit("setLotSize", lotSize.value);
-        console.log("ONMOUNTED lotSize:", lotSize.value);
       }
       if (route.query.hasOpenHouses) {
         hasOpenHousesOnly.value = route.query.hasOpenHouses;
         store.commit("setIsHasOpenHousesOnly", hasOpenHousesOnly.value);
-        console.log("ONMOUNTED hasOpenHouses:", hasOpenHousesOnly.value);
       }
       if (route.query.has3DTours) {
         isMatterPorts.value = route.query.has3DTours;
         store.commit("setIsMatterPorts", isMatterPorts.value);
-        console.log("ONMOUNTED has3DTours:", isMatterPorts.value);
       }
       if (route.query.foreClosure) {
         foreclosureOnly.value = route.query.foreClosure;
         store.commit("setIsForeclosuresOnly", foreclosureOnly.value);
-        console.log("ONMOUNTED foreClosure:", foreclosureOnly.value);
       }
       if (route.query.newConstruction) {
         isNewConstruction.value = route.query.newConstruction;
         store.commit("setIsNewConstructions", isNewConstruction.value);
-        console.log("ONMOUNTED newConstruction:", isNewConstruction.value);
       }
       if (route.query.newPlans) {
         isNewPlan.value = route.query.newPlans;
         store.commit("setIsNewPlans", isNewPlan.value);
-        console.log("ONMOUNTED newPlans:", isNewPlan.value);
       }
       if (route.query.radius) {
         searchRadius.value = route.query.radius;
         store.commit("setSearchRadius", searchRadius.value);
-        console.log("ONMOUNTED radius:", searchRadius.value);
       }
       if (route.query.contingents) {
         isContingent.value = route.query.contingents;
         store.commit("setIsContingents", isContingent.value);
-        console.log("ONMOUNTED contingents:", isContingent.value);
       }
       if (route.query.yearBuiltMin) {
         ageMin.value = route.query.yearBuiltMin;
@@ -420,7 +406,6 @@ export default {
         ageMax.value = route.query.yearBuiltMax;
         store.commit("setIsyearBuiltMax", ageMax.value);
       }
-      console.log(">> onBeforeMount FILTERBUTTONMORE");
     });
     return {
       routeNames,

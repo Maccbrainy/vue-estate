@@ -43,32 +43,6 @@ export default {
       return optionFeatures;
     });
 
-    // const defaultTitle = computed(() => {
-    //   let title =
-    //     storeData.value.activeRoutePath == routeNames.value[1].id
-    //       ? "All Rental Features"
-    //       : "All Home Features";
-    //   return title;
-    // });
-    // watchEffect(() => {
-    //   if (storeData.value.activeRoutePath) {
-    //     let typeTitle =
-    //       checkedFeatures.value.length == 0
-    //         ? defaultTitle.value
-    //         : checkedFeatures.value.length == 1
-    //         ? getHomeTypeTitle(featureOptions.value, checkedFeatures.value[0])
-    //         : `Home Features (${checkedFeatures.value.length})`;
-    //     store.commit("setHomeFeaturesTitleInfo", typeTitle);
-    //   }
-    // });
-    // const getHomeTypeTitle = (types, theCheckedTypeId) => {
-    //   let typeChecked = types.filter((type) => type.id == theCheckedTypeId);
-          // TypeError: Cannot read properties of undefined (reading 'title') fixed in the
-         // next line of code
-    //   let title =
-    //     typeChecked.length > 0 ? typeChecked[0].title : defaultTitle.value;
-    //   return title;
-    // };
     const checkedSignal = () => {
       store.commit("setHomeFeatures", checkedFeatures.value);
     };

@@ -856,8 +856,6 @@ export default {
       store.commit("setFetchingIsBusy", false);
       store.commit("setPropertyDetail", propertyFullContents.value);
 
-      console.log("DETAILED INFO:", propertyDetail.value);
-      console.log("DETAILED error:", errorMessage.value);
       contextProvider.value.status = propertyDetail.value.prop_status;
       contextProvider.value.clientFlags =
         propertyDetail.value.client_display_flags;

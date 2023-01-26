@@ -1,6 +1,5 @@
 import { ref } from "vue";
 import axios from "axios";
-// import settingsData from "@/api/settingsData.json";
 
 const url = "https://realty-in-us.p.rapidapi.com/properties/detail"
 
@@ -8,8 +7,6 @@ export async function useFetchDetail(propertyId) {
   const propertyFullContents = ref([]);
   const errorFetch = ref({});
 
-  // console.log("From useFetchDetail propertyId:", propertyId);
-  // propertyFullContents.value = [...settingsData.detailedProperty[0].properties];
 
   try {
     errorFetch.value = {};
@@ -26,7 +23,6 @@ export async function useFetchDetail(propertyId) {
       data: { listing }
     } = response;
     propertyFullContents.value = listing;
-    console.log("====///The detailed\\\\:", response);
   } catch (err) {
     console.error(err);
     errorFetch.value.isError = true;

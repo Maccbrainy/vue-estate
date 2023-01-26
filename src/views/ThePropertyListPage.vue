@@ -143,7 +143,6 @@
     >
     </no-search-term-match>
     <widget-google-map>
-      <!-- v-bind:discoveredHomes="discoveredHomes" -->
     </widget-google-map>
   </div>
 </template>
@@ -397,18 +396,12 @@ export default {
       updateRouterParams.city = searchedDataIsEmpty.value ? props.city : city;
       updateRouterParams.zip_code = !zip_code ? "" : props.zipCode;
 
-      // updateRouterParams.state_code = useIsPostalCode(props.slug)
-      //   ? props.slug
-      //   : state_code;
-      // updateRouterParams.city = useIsPostalCode(props.slug) ? "" : city;
-
       if (
         filterIsActive.value &&
         activeRoutePath == "BuyPage" &&
         props.name == "BuyPage" &&
         storeData.value.searchedData
       ) {
-        console.log("000filterIsActive.value && BuyPage");
         store.commit("setUseRouterPush", updateRouterParams);
       }
       if (
@@ -418,7 +411,6 @@ export default {
         // updateRouterParams.activeRouteTab = activeRoutePath;
         updateRouterParams.state_code = "CA";
         updateRouterParams.city = "San Francisco";
-        console.log("001filterIsActive.value && SalesNearMe OR RentsNearMe");
         store.commit("setUseRouterPush", updateRouterParams);
       }
       if (
@@ -427,9 +419,6 @@ export default {
         props.name != "RentsNearMe" &&
         storeData.value.searchedData
       ) {
-        console.log(
-          "002filterIsNotActive && NotSalesNearMe AND NotRentsNearMe"
-        );
         store.commit("setUseRouterPush", updateRouterParams);
       }
       if (
@@ -438,7 +427,6 @@ export default {
         props.name == "RentPage" &&
         storeData.value.searchedData
       ) {
-        console.log("003filterIsActive.value && RentPage");
         store.commit("setUseRouterPush", updateRouterParams);
       }
       if (
@@ -447,7 +435,6 @@ export default {
         props.name == "SoldPage" &&
         storeData.value.searchedData
       ) {
-        console.log("004filterIsActive.value && SoldPage");
         store.commit("setUseRouterPush", updateRouterParams);
       }
       store.commit("setFilterIsActive", filterIsActive.value);
@@ -623,18 +610,10 @@ export default {
       store.commit("setFetchingIsBusy", false);
       store.commit("setIsLoading", false);
 
-      console.log(
-        "FETCH DATA AFTER NAVIGATION DATA!!!:",
-        propertyListResults.value
-      );
-      console.log("FETCH DATA ERROR!!!:", error.value);
-
       allPropertyListings.value = propertyListResults.value;
       totalItemsMatchingRowsInSearch.value = propertyTotalMatchingRows.value;
       store.commit("setAllPropertyListings", propertyListResults.value);
       store.commit("setTotalItemsMatchRows", propertyTotalMatchingRows.value);
-
-      console.log("====route=====", route);
 
       if (propertyListResults.value.length < 1) {
         return;
