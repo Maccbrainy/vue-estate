@@ -205,7 +205,7 @@
   </li>
 </template>
 <script>
-import { ref, computed, onMounted, onUnmounted, inject, watchEffect } from "vue";
+import { ref, computed, onMounted, onUnmounted, inject } from "vue";
 import { useStore } from "vuex";
 import { ChevronDown, CloseMobileMenu, FilterIcon } from "@/assets/icons";
 import { ButtonSlot } from "@/components/buttonui";
@@ -243,9 +243,6 @@ export default {
     const isMediumScreen = useMediaQuery(
       "(min-width: 991px)" && "(max-width: 1024px)"
     );
-    watchEffect(() => {
-      console.log("isMediumScreen", isMediumScreen.value);
-    })
     // useOnClickOutside(
     //   menuRef.value,
     //   fieldSetRef.value,
@@ -276,7 +273,7 @@ export default {
       isBuyPage,
       saveSearchCallback,
       isLargeScreen,
-      isMediumScreen
+      isMediumScreen,
     };
   },
 };
