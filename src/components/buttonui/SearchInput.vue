@@ -260,7 +260,6 @@ export default {
         currentDataIndex.value < searchPreferences.value.length - 1
       ) {
         currentDataIndex.value++;
-        console.log("suggestItemRef:", suggestItemRef.value);
       } else if (
         searchFilterIsActive.value &&
         e.keyCode == 38 &&

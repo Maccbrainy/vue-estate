@@ -96,7 +96,6 @@ export default {
 
         if (minPrice && maxPrice) {
           if (minPrice > maxPrice) {
-            console.log("minPrice is greaterthan maxPrice");
 
             let minValue = selectedMin.value;
             selectedMin.value = selectedMax.value;

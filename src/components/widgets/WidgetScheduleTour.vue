@@ -141,7 +141,6 @@ export default {
       userData.phoneNumber = getPhoneNumber.value;
       userData.emailAddress = getEmailAddress.value;
 
-      console.log("Your Info:", userData);
     };
 
     return {

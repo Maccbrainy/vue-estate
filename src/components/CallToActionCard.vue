@@ -66,7 +66,6 @@ export default {
             lat: latitude,
             long: longitude,
           });
-          console.log("From CallToAction", userCordinates);
           // let latitudeFilter = `lat=${userCordinates.lat}&`;
           // let longitudeFilter = `long=${userCordinates.long}`;
           // router.push({
@@ -76,6 +75,7 @@ export default {
           //     long: longitudeFilter,
           //   }
           // })
+          return userCordinates
         }
       );
     };

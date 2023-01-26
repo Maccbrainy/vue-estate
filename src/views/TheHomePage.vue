@@ -408,7 +408,7 @@ export default {
     const itemsUl = ref([]);
 
     const moveSlides = () => {
-      console.log("moveSlide");
+      // console.log("moveSlide");
     };
 
     return {

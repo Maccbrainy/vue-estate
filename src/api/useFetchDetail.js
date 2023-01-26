@@ -23,12 +23,9 @@ export async function useFetchDetail(propertyId) {
     } = response;
     propertyFullContents.value = listing;
   } catch (err) {
-    console.error(err);
     errorFetch.value.isError = true;
     errorFetch.value.description = err;
-  } finally {
-    console.log("Fetching is completed");
-  }
+  } 
   return {
     propertyFullContents,
     errorFetch,

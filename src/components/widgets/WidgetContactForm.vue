@@ -137,7 +137,6 @@ export default {
       userData.emailAddress = getEmailAddress.value;
       userData.message = getMessage.value;
 
-      console.log("Your Info:", userData);
     };
 
     return {
