@@ -48,7 +48,6 @@
                     text-base
                     xs:text-sm
                     font-medium
-                    text-gray-700
                     px-5
                     py-2
                     text-teal
