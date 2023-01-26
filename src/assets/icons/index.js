@@ -1,5 +1,6 @@
 export { default as VueEstateLogo } from "@/assets/icons/VueEstateLogo.vue";
 export { default as MenuIcon } from "@/assets/icons/MenuIcon.vue";
+export { default as ListIcon } from "@/assets/icons/ListIcon.vue";
 export { default as MapViewIcon } from "@/assets/icons/MapViewIcon.vue";
 export { default as NotificationIcon } from "@/assets/icons/NotificationIcon.vue";
 export { default as ScheduleTourIcon } from "@/assets/icons/ScheduleTourIcon.vue";
