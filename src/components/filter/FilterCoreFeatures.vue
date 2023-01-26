@@ -28,7 +28,6 @@ export default {
     DropdownButtonMultiCheckBoxes,
   },
   setup(props) {
- 
     const store = useStore();
     const route = useRoute();
     const storeData = computed(() => store.getters.getStore);

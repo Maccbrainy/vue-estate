@@ -39,18 +39,18 @@ export default {
       if (mobileMapViewLayoutFullScreen.value) {
         document.body.classList.add("overflow-hidden");
       }
-      if (!mobileMapViewLayoutFullScreen.value){
+      if (!mobileMapViewLayoutFullScreen.value) {
         document.body.classList.remove("overflow-hidden");
       }
     };
     watchEffect(() => {
-      isLargeScreen.value
+      isLargeScreen.value;
       if (
         !isLargeScreen.value &&
         activeMapViewVariant.value == "MapViewLayout"
       ) {
         activeMapViewVariant.value = "ListViewNoMapLayout";
-        mobileMapViewLayoutFullScreen.value = false
+        mobileMapViewLayoutFullScreen.value = false;
       }
     });
 
@@ -98,7 +98,7 @@ export default {
       activeMapViewVariant,
       mobileToggleMapHandler,
       mobileMapViewLayoutFullScreen,
-      isLargeScreen
+      isLargeScreen,
     });
   },
 };

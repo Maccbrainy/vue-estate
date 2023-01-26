@@ -68,7 +68,7 @@ export default createStore({
     propertyListingsByNoneAgent: [],
     activeListing: [],
     totalItemsMatchRows: 0,
-    propertyDetailed: {}
+    propertyDetailed: {},
   },
   getters: {
     getStore(state) {
@@ -228,11 +228,11 @@ export default createStore({
       useRouterPush(routePayload);
     },
     //Invoked in PropertyListPage
-    setPropertyPagination(state, pagePayLoad){
+    setPropertyPagination(state, pagePayLoad) {
       let pagination = pagePayLoad == 1 ? null : pagePayLoad;
       state.propertyFilters.pagination = pagination;
     },
-    setTotalItemsMatchRows(state, payLoad){
+    setTotalItemsMatchRows(state, payLoad) {
       state.totalItemsMatchRows = parseInt(payLoad);
     },
     //Invoked in PropertyListPage Components
@@ -243,9 +243,9 @@ export default createStore({
       });
     },
     //Invoked form the propertyDetailed component
-    setPropertyDetail(state, payload){
+    setPropertyDetail(state, payload) {
       state.propertyDetailed = payload;
-    }
+    },
   },
 
   actions: {

@@ -19,10 +19,7 @@
       overflow-hidden
     "
   >
-    <div
-      v-if="listingPhotosIsAString"
-      class="w-full h-full min-w-full"
-    >
+    <div v-if="listingPhotosIsAString" class="w-full h-full min-w-full">
       <router-link
         :to="{
           name: routeName,
@@ -206,7 +203,6 @@ export default {
     const slideMoveSize = ref(0);
     const storeData = computed(() => store.getters.getStore);
 
-
     const listingPhotosIsAString = computed(() =>
       typeof props.listingPhotos === "string" ? true : false
     );
@@ -230,7 +226,7 @@ export default {
 
     const slideHandle = (direction) => {
       // const carousalChamberRef = carousalChamberRef;
-      const clientWidth  = slideItemRef.value[0].clientWidth;
+      const clientWidth = slideItemRef.value[0].clientWidth;
       if (direction == "right") {
         slideCounter.value++;
         slideMoveSize.value -= clientWidth;

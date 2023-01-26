@@ -11,7 +11,7 @@
         cursor-pointer
       "
     >
-    <div
+      <div
         class="
           absolute
           right-4
@@ -31,7 +31,7 @@
         <template v-slot:iconSlot>
           <div class="sm:hidden flex m-2 space-x-3">
             <save-search />
-            <share-icon  />
+            <share-icon />
           </div>
         </template>
       </widget-client-flags>

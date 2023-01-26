@@ -33,7 +33,6 @@ export async function useFetch(
   const propertyTotalMatchingRows = ref(0);
   const errorFetch = ref({});
 
-
   let slugName = slug;
   let cityName = city ? city.replace(/_/g, " ") : "";
   let sortingType = sorting || "relevance";
@@ -92,12 +91,13 @@ export async function useFetch(
         },
         headers: {
           "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
-          "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`
-        }
-      });
-    propertyTotalMatchingRows.value = response.data.meta.matching_rows
+          "X-RapidAPI-Key": `${process.env.VUE_APP_RAPID_API_KEY}`,
+        },
+      }
+    );
+    propertyTotalMatchingRows.value = response.data.meta.matching_rows;
     propertyListResults.value = response.data.properties;
-  } catch (err){
+  } catch (err) {
     errorFetch.value.isError = true;
     errorFetch.value.errorDescription = err;
   }

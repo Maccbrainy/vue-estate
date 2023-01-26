@@ -10,7 +10,8 @@
         'w-full':
           activeMapViewVariant == 'ListViewNoMapLayout' && isLargeScreen,
         //Small Screen
-        'transform -translate-x-full': mobileMapViewLayoutFullScreen && !isLargeScreen,
+        'transform -translate-x-full':
+          mobileMapViewLayoutFullScreen && !isLargeScreen,
       }"
       class="block relative flex-1 -bottom-16 outline-none"
     >
@@ -142,8 +143,7 @@
       v-if="filterIsNotActiveAndAllPropertiesIsZero && !isLoading"
     >
     </no-search-term-match>
-    <widget-google-map>
-    </widget-google-map>
+    <widget-google-map> </widget-google-map>
   </div>
 </template>
 <script>
@@ -222,7 +222,7 @@ export default {
       mapViewFullScreen,
       mobileMapViewLayoutFullScreen,
       activeMapViewVariant,
-      isLargeScreen
+      isLargeScreen,
     } = inject("provider");
     const isSalePage = ref(false);
     const error = ref("");

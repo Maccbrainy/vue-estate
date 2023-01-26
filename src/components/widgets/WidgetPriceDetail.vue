@@ -1,6 +1,7 @@
 <template>
-  <div v-bind:class="{
-        'animate-pulse bg-gray-200 w-16 h-3 my-1': storeData.fetchingIsBusy,
+  <div
+    v-bind:class="{
+      'animate-pulse bg-gray-200 w-16 h-3 my-1': storeData.fetchingIsBusy,
     }"
     class="my-1 text-lg font-bold text-gray-600"
   >
@@ -15,10 +16,10 @@ import { useStore } from "vuex";
 export default {
   name: "WidgetPriceDetail",
   props: ["sellingPrice"],
-  setup(){
+  setup() {
     const store = useStore();
     const storeData = computed(() => store.getters.getStore);
-    return { storeData }
-  }
+    return { storeData };
+  },
 };
 </script>

@@ -999,7 +999,7 @@ export default {
         city: props.city,
         state_code: props.slug,
         activeRouteTab: props.name,
-        zip_code: props.zipCode
+        zip_code: props.zipCode,
       };
       store.commit("setSearchedData", searchPayload);
 

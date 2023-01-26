@@ -84,14 +84,14 @@ export default {
       mobileMapViewLayoutFullScreen,
       mapViewChangesCallback,
       activeMapViewVariant,
-      isLargeScreen
+      isLargeScreen,
     } = inject("provider");
     return {
       mapViewFullScreen,
       mapViewChangesCallback,
       activeMapViewVariant,
       mobileMapViewLayoutFullScreen,
-      isLargeScreen
+      isLargeScreen,
     };
   },
 };

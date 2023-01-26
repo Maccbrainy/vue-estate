@@ -17,7 +17,8 @@
       </div>
     </div>
     <div class="flex mf:flex-col lm:flex-row gap-2">
-      <contact-form-input class="w-full"
+      <contact-form-input
+        class="w-full"
         v-model:data-value="getFirstAndLastName"
         labelName="Name"
         typeName="text"
@@ -28,7 +29,8 @@
         :isInputType="true"
       >
       </contact-form-input>
-      <contact-form-input class="w-full"
+      <contact-form-input
+        class="w-full"
         v-model:data-value="getPhoneNumber"
         labelName="Phone"
         typeName="tel"
@@ -79,9 +81,7 @@
       Check availability
     </button>
     <div
-      v-if="
-        $route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail'
-      "
+      v-if="$route.name == 'SalesPageDetail' || $route.name == 'RentPageDetail'"
       class="text-xs text-teal pt-3"
     >
       You agree to Vue Estate Terms of Use & Privacy Policy By choosing to

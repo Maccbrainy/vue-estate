@@ -29,7 +29,10 @@
         >Cats Allowed</button-radio
       >
     </dropdown-button-fieldset>
-    <dropdown-button-fieldset class="hidden xlm:block" fieldsetTitle="Home Type">
+    <dropdown-button-fieldset
+      class="hidden xlm:block"
+      fieldsetTitle="Home Type"
+    >
       <filter-core-home-types v-bind:listOptions="homeTypes">
       </filter-core-home-types>
     </dropdown-button-fieldset>

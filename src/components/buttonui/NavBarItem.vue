@@ -1,5 +1,6 @@
 <template>
-  <li v-show="$route.name != 'pageNotFound'"
+  <li
+    v-show="$route.name != 'pageNotFound'"
     v-bind:class="{
       'cursor-pointer hover:text-white hover:bg-teal': !storeData.isLoading,
     }"

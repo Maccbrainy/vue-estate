@@ -198,7 +198,7 @@ export default {
           city: "San Francisco",
           state_code: "CA",
           activeRouteTab: route.name,
-          zip_code: ""
+          zip_code: "",
         };
         store.commit("setIsLoading", true);
         store.commit("setUseRouterPush", defaultSearch);
@@ -212,7 +212,7 @@ export default {
             e.target.nextElementSibling.children["places-search-list"]
               .children[1].nonce,
           activeRouteTab: route.name,
-          zip_code: ""
+          zip_code: "",
         };
         store.commit("setIsLoading", true);
         store.commit("setUseRouterPush", searchPayload.value);
@@ -227,7 +227,7 @@ export default {
               currentDataIndex.value + 1
             ].nonce,
           activeRouteTab: route.name,
-          zip_code: ""
+          zip_code: "",
         };
         store.commit("setIsLoading", true);
         store.commit("setUseRouterPush", searchPayload.value);
@@ -239,7 +239,7 @@ export default {
         city: home.city,
         state_code: home.state_code,
         activeRouteTab: route.name,
-        zip_code: ""
+        zip_code: "",
       };
       store.commit("setIsLoading", true);
       store.commit("setUseRouterPush", searchPayload.value);

@@ -1,11 +1,11 @@
 <template>
   <li
-  :class="{
+    :class="{
       'xs:w-full sm:w-6/12 md:w-6/12 lg:w-4/12 xl:w-3/12 2xl:w-3/12 3xl:w-2/12':
         activeMapViewVariant == 'ListViewNoMapLayout',
       'xs:w-full sm:w-6/12 md:w-6/12 lg:w-4/12 xl:w-6/12 2xl:w-4/12 3xl:w-3/12':
         activeMapViewVariant == 'MapViewLayout',
-  }"
+    }"
     class="
       relative
       border-solid border-transparent border-r-8 border-l-8 border-t-8

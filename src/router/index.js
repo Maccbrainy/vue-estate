@@ -56,7 +56,7 @@ const routes = [
       contingents: route.query.contingents,
       sortType: route.query.sortType,
       page: route.query.page,
-    })
+    }),
   },
   {
     path: "/for_rent/:slug/:city?/:zipCode?",
@@ -87,7 +87,7 @@ const routes = [
       contingents: route.query.contingents,
       sortType: route.query.sortType,
       page: route.query.page,
-    })
+    }),
   },
   {
     path: "/sold/:slug/:city?/:zipCode?",
@@ -118,7 +118,7 @@ const routes = [
       contingents: route.query.contingents,
       sortType: route.query.sortType,
       page: route.query.page,
-    })
+    }),
   },
   {
     path: "/new-for-sale-properties/:slug",
@@ -173,7 +173,7 @@ const routes = [
       propertyId: route.params.propertyId,
       zipCode: route.params.zipCode,
       mediaTable: route.query.mediaTable,
-    })
+    }),
   },
   {
     path: "/P/:slug/:city/:address?/:propertyId/:zipCode?",
@@ -193,7 +193,7 @@ const routes = [
       propertyId: route.params.propertyId,
       zipCode: route.params.zipCode,
       mediaTable: route.query.mediaTable,
-    })
+    }),
   },
   {
     path: "/neighborhoods",
@@ -205,9 +205,9 @@ const routes = [
       import(
         /* webpackChunkName: "neighborhoods" */ "../views/TheMortgagePage.vue"
       ),
-      meta: {
-        title: "Neighborhoods | Vue-estate.com",
-      },
+    meta: {
+      title: "Neighborhoods | Vue-estate.com",
+    },
   },
   {
     path: "/mortgages",
@@ -219,17 +219,17 @@ const routes = [
       import(
         /* webpackChunkName: "TheMortgagePage" */ "../views/TheMortgagePage.vue"
       ),
-      meta: {
-        title: "Mortgages | Vue-estate.com",
-      },
+    meta: {
+      title: "Mortgages | Vue-estate.com",
+    },
   },
   {
     path: "/:pathMatch(.*)*",
     name: "pageNotFound",
     component: TheHomePage,
-      meta: {
-        title: "Page Not Found | Vue-estate.com",
-      },
+    meta: {
+      title: "Page Not Found | Vue-estate.com",
+    },
   },
 ];
 
