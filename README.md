@@ -7,7 +7,13 @@
     <img src="https://i.ibb.co/Fm3G7hv/vue-estate-property-detail-page1.png" alt="Vue Estate Property detailed  page">
 </div>
 
-## Scheme of work to be completed
+## completed
+
+ - `Api intergration and consumption (#rapid api (realty in us))`
+ - `Over 30+ property listing filters implemented`
+ - `Front end dev`
+ 
+ ## Scheme of work uncompleted
 
  - `Backend and functionalities`
  - `Map interactions`
