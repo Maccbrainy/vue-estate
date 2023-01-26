@@ -3,8 +3,9 @@
     role="region"
     aria-label="Interactive Google Map showing listings in .... Details about each listing, including address and price, can be found in the search results under the h2 heading."
     v-bind:class="{
-      'map-half-size': !mapViewFullScreen,
-      'map-full-size': mapViewFullScreen,
+      hidden: activeMapViewVariant == 'ListViewNoMapLayout' && isLargeScreen,
+      'map-half-size': activeMapViewVariant == 'MapViewLayout' && isLargeScreen,
+      'map-full-size': mobileMapViewLayoutFullScreen && !isLargeScreen,
     }"
     class="
       fixed
@@ -18,7 +19,6 @@
       transition-all
       delay-500
       duration-1000
-      sf:hidden
     "
   >
     <div class="flex flex-1 w-full h-full">
@@ -35,7 +35,7 @@
             rounded-xl
           "
         >
-          <span class="text-5xl text-white font-bold">Coming Soon</span>
+          <span class="text-5xl text-white font-bold">Map Coming Soon</span>
         </div>
         <button
           v-on:click="mapViewChangesCallback"
@@ -52,6 +52,7 @@
             m-3
             font-normal
             text-base
+            xlm:hidden
           "
         >
           <chevron-left
@@ -78,10 +79,19 @@ export default {
     ChevronLeft,
   },
   setup() {
-    const { mapViewFullScreen, mapViewChangesCallback } = inject("provider");
+    const {
+      mapViewFullScreen,
+      mobileMapViewLayoutFullScreen,
+      mapViewChangesCallback,
+      activeMapViewVariant,
+      isLargeScreen
+    } = inject("provider");
     return {
       mapViewFullScreen,
       mapViewChangesCallback,
+      activeMapViewVariant,
+      mobileMapViewLayoutFullScreen,
+      isLargeScreen
     };
   },
 };

@@ -5,20 +5,14 @@
   <div class="flex flex-grow flex-auto flex-col z-0 outline-none">
     <div
       v-bind:class="{
-        'transform -translate-x-full': mapViewFullScreen,
+        //Large Screen
+        'w-1/2': activeMapViewVariant == 'MapViewLayout' && isLargeScreen,
+        'w-full':
+          activeMapViewVariant == 'ListViewNoMapLayout' && isLargeScreen,
+        //Small Screen
+        'transform -translate-x-full': mobileMapViewLayoutFullScreen && !isLargeScreen,
       }"
-      class="
-        w-1/2
-        sf:w-full
-        block
-        relative
-        flex-1
-        -bottom-16
-        outline-none
-        transition-all
-        delay-500
-        duration-1000
-      "
+      class="block relative flex-1 -bottom-16 outline-none"
     >
       <div tabindex="-1" class="flex flex-auto flex-col px-2 py-1 outline-none">
         <div
@@ -225,7 +219,12 @@ export default {
   setup(props) {
     const store = useStore();
     const route = useRoute();
-    const { mapViewFullScreen } = inject("provider");
+    const {
+      mapViewFullScreen,
+      mobileMapViewLayoutFullScreen,
+      activeMapViewVariant,
+      isLargeScreen
+    } = inject("provider");
     const isSalePage = ref(false);
     const error = ref("");
     const isLoading = ref(false);
@@ -753,6 +752,9 @@ export default {
       isLoading,
       isSalePage,
       mapViewFullScreen,
+      activeMapViewVariant,
+      isLargeScreen,
+      mobileMapViewLayoutFullScreen,
       error,
       listingTitle,
       storeData,

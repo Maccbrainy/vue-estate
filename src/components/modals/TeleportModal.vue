@@ -265,18 +265,64 @@
             hover:text-teal hover:shadow-lg
             text-gray-600
           "
-          v-on:click="
-            teleportModalCallback(modalName, false)
-          "
+          v-on:click="teleportModalCallback(modalName, false)"
         />
       </div>
     </section>
+    <div
+      v-show="
+        $route.name == 'BuyPage' ||
+        $route.name == 'RentPage' ||
+        $route.name == 'SoldPage'
+      "
+      class="lg:hidden fixed w-full flex justify-center bottom-2 z-10"
+    >
+      <div class="flex flex-row items-center gap-2 bg-white rounded-lg px-4">
+        <button
+          @click="saveSearchCallback"
+          class="
+            text-black text-sm
+            font-medium
+            flex flex-row flex-nowrap
+            gap-1
+            border-r
+            px-2
+            py-2
+          "
+        >
+          <NotificationIcon />
+          <span>Save search</span>
+        </button>
+        <button
+          @click="mobileToggleMapHandler"
+          class="
+            text-black
+            font-medium
+            text-sm
+            flex flex-row flex-nowrap
+            gap-1
+            py-2
+          "
+        >
+          <map-view-icon v-show="!mobileMapViewLayoutFullScreen" />
+          <list-icon v-show="mobileMapViewLayoutFullScreen" />
+          <span>{{ mobileMapViewLayoutFullScreen ? "List" : "Map" }}</span>
+        </button>
+      </div>
+    </div>
   </teleport>
 </template>
 <script>
 import { ref, watchEffect, inject, computed } from "vue";
 import { useStore } from "vuex";
-import { CloseMobileMenu, SaveSearch, ShareIcon } from "@/assets/icons";
+import {
+  CloseMobileMenu,
+  SaveSearch,
+  ShareIcon,
+  MapViewIcon,
+  NotificationIcon,
+  ListIcon,
+} from "@/assets/icons";
 import {
   WidgetScheduleTour,
   WidgetRequestInfoForm,
@@ -291,6 +337,9 @@ export default {
     CloseMobileMenu,
     SaveSearch,
     ShareIcon,
+    MapViewIcon,
+    NotificationIcon,
+    ListIcon,
   },
   setup() {
     const teleportModalRef = ref(null);
@@ -299,6 +348,9 @@ export default {
       teleportModalCallback,
       teleportModalMediaTable,
       teleportModalFormRequests,
+      saveSearchCallback,
+      mobileToggleMapHandler,
+      mobileMapViewLayoutFullScreen,
     } = inject("provider");
     const storeData = computed(() => store.getters.getStore);
 
@@ -325,7 +377,7 @@ export default {
         }
         document.removeEventListener("mousedown", closeTeleportModal);
         document.removeEventListener("touchstart", closeTeleportModal);
-        teleportModalCallback( modalName.value, false);
+        teleportModalCallback(modalName.value, false);
       };
       document.addEventListener("mousedown", closeTeleportModal);
       document.addEventListener("touchstart", closeTeleportModal);
@@ -335,8 +387,8 @@ export default {
       teleportModalCallback(
         requestType,
         true,
-        `${storeData.value.propertyDetailed.address.line}, ${storeData.value.propertyDetailed.address.city}, ${storeData.value.propertyDetailed.address.state_code}, ${storeData.value.propertyDetailed.address.postal_code}`,
-      )
+        `${storeData.value.propertyDetailed.address.line}, ${storeData.value.propertyDetailed.address.city}, ${storeData.value.propertyDetailed.address.state_code}, ${storeData.value.propertyDetailed.address.postal_code}`
+      );
     };
     return {
       teleportModalFormRequests,
@@ -346,6 +398,9 @@ export default {
       modalName,
       storeData,
       teleportRequestCallback,
+      saveSearchCallback,
+      mobileToggleMapHandler,
+      mobileMapViewLayoutFullScreen,
     };
   },
 };

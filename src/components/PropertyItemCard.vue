@@ -1,16 +1,15 @@
 <template>
   <li
+  :class="{
+      'xs:w-full sm:w-6/12 md:w-6/12 lg:w-4/12 xl:w-3/12 2xl:w-3/12 3xl:w-2/12':
+        activeMapViewVariant == 'ListViewNoMapLayout',
+      'xs:w-full sm:w-6/12 md:w-6/12 lg:w-4/12 xl:w-6/12 2xl:w-4/12 3xl:w-3/12':
+        activeMapViewVariant == 'MapViewLayout',
+  }"
     class="
       relative
       border-solid border-transparent border-r-8 border-l-8 border-t-8
       pb-4
-      xs:w-full
-      sm:w-full
-      md:w-full
-      lg:w-6/12
-      xl:w-6/12
-      2xl:w-4/12
-      3xl:w-3/12
     "
   >
     <div>
@@ -159,7 +158,7 @@ export default {
   setup(props) {
     const store = useStore();
     const storeData = computed(() => store.getters.getStore);
-    const { teleportModalCallback } = inject("provider");
+    const { teleportModalCallback, activeMapViewVariant } = inject("provider");
 
     provide("displayClientFlags", {
       lastUpdates: props.home.last_update,
@@ -271,6 +270,7 @@ export default {
     });
     return {
       teleportModalCallback,
+      activeMapViewVariant,
       storeData,
       getPageDetailRouteName,
       isRentalProperty,
