@@ -25,7 +25,7 @@ export async function useFetchDetail(propertyId) {
   } catch (err) {
     errorFetch.value.isError = true;
     errorFetch.value.description = err;
-  } 
+  }
   return {
     propertyFullContents,
     errorFetch,

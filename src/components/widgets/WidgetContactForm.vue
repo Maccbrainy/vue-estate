@@ -136,7 +136,6 @@ export default {
       userData.phoneNumber = getPhoneNumber.value;
       userData.emailAddress = getEmailAddress.value;
       userData.message = getMessage.value;
-
     };
 
     return {

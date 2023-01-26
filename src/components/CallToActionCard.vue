@@ -75,7 +75,7 @@ export default {
           //     long: longitudeFilter,
           //   }
           // })
-          return userCordinates
+          return userCordinates;
         }
       );
     };

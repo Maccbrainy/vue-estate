@@ -96,7 +96,6 @@ export default {
 
         if (minPrice && maxPrice) {
           if (minPrice > maxPrice) {
-
             let minValue = selectedMin.value;
             selectedMin.value = selectedMax.value;
             selectedMax.value = minValue;

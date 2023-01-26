@@ -289,7 +289,7 @@ export default {
         isANumberProp &&
         squarefeetMin.value.length > 2
       ) {
-        alert(squarefeetMin.value, squarefeetMinFocus.value)
+        alert(squarefeetMin.value, squarefeetMinFocus.value);
       }
     });
     watchEffect(() => {
@@ -302,7 +302,7 @@ export default {
         isANumberProp &&
         squarefeetMax.value.length > 2
       ) {
-        alert(squarefeetMax.value)
+        alert(squarefeetMax.value);
         // console.log("squarefeetMax text:", squarefeetMax.value);
         // console.log("sqftMax Is in focus:", squarefeetMaxFocus.value);
       }

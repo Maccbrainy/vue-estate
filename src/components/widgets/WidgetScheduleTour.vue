@@ -140,7 +140,6 @@ export default {
       userData.scheduledTourTime = format(new Date(thisDate), "hh:mm a");
       userData.phoneNumber = getPhoneNumber.value;
       userData.emailAddress = getEmailAddress.value;
-
     };
 
     return {
