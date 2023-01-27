@@ -17,6 +17,8 @@
         inline-flex
         cursor-pointer
         rounded-lg
+        xs:px-5
+        xs:text-lg
         px-7
         py-2
         text-xl
