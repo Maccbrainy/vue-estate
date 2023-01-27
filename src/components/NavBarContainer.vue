@@ -46,7 +46,11 @@
       "
     ></vue-estate-logo>
     <slot></slot>
-    <menu-icon v-on:click="toggleMenu = !toggleMenu" class="w-10"></menu-icon>
+    <menu-icon
+      ref="menuIconRef"
+      v-on:click="toggleMenu = !toggleMenu"
+      class="w-10"
+    ></menu-icon>
     <mobile-menu ref="menuSideRef" v-show="toggleMenu"></mobile-menu>
     <close-mobile-menu
       class="absolute right-6 text-white"
@@ -79,6 +83,7 @@ export default {
   setup() {
     const route = useRoute();
     const menuSideRef = ref(null);
+    const menuIconRef = ref(null);
     const toggleMenu = ref(false);
 
     const historyRoutePath = localStorage.getItem("historyRoute");
@@ -103,7 +108,11 @@ export default {
           catchOutSideClickCloseMenuSideBar
         );
         toggleMenu.value = false;
+        menuIconRef.value.$el.style.pointerEvents = "";
       };
+      if (menuIconRef.value) {
+        menuIconRef.value.$el.style.pointerEvents = "none";
+      }
       document.addEventListener("mousedown", catchOutSideClickCloseMenuSideBar);
       document.addEventListener(
         "touchstart",
@@ -113,6 +122,7 @@ export default {
     return {
       menuSideRef,
       toggleMenu,
+      menuIconRef,
       isPropertyDetailedPage,
       historyRoutePath,
       removeUnderScoresFromAString,
