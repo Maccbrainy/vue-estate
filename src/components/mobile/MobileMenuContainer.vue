@@ -9,7 +9,7 @@
       -top-0
       -right-0
       h-screen
-      bg-gray-700
+      bg-menu
       text-white
       overflow-y-auto
     "

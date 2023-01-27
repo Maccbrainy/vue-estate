@@ -20,6 +20,9 @@ module.exports = {
           DEFAULT: "#007889",
           light: "#3cb3bd",
         },
+        menu: {
+          DEFAULT: "#1e1e1e",
+        },
       },
       boxShadow: {
         DEFAULT: "0 0 7px #3cb3bd",
