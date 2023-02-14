@@ -62,6 +62,7 @@
 <script>
 import { ref, computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
+import { useMediaQuery } from "@vueuse/core";
 import { removeUnderScoresFromAString } from "@/helper";
 
 import {
@@ -86,6 +87,7 @@ export default {
     const menuIconRef = ref(null);
     const toggleMenu = ref(false);
 
+    const isTableAndLargeScreen = useMediaQuery("(min-width: 640px");
     const historyRoutePath = localStorage.getItem("historyRoute");
 
     const isPropertyDetailedPage = computed(() =>
@@ -94,30 +96,35 @@ export default {
         : false
     );
     watchEffect(() => {
-      toggleMenu.value;
-      const catchOutSideClickCloseMenuSideBar = (event) => {
-        if (menuSideRef.value && menuSideRef.value.$el.contains(event.target)) {
-          return;
-        }
-        document.removeEventListener(
+      if (isTableAndLargeScreen.value) {
+        toggleMenu.value;
+        const catchOutSideClickCloseMenuSideBar = (event) => {
+          if (
+            menuSideRef.value &&
+            menuSideRef.value.$el.contains(event.target)
+          ) {
+            return;
+          }
+          document.removeEventListener(
+            "mousedown",
+            catchOutSideClickCloseMenuSideBar
+          );
+          document.removeEventListener(
+            "touchstart",
+            catchOutSideClickCloseMenuSideBar
+          );
+          toggleMenu.value = false;
+        };
+
+        document.addEventListener(
           "mousedown",
           catchOutSideClickCloseMenuSideBar
         );
-        document.removeEventListener(
+        document.addEventListener(
           "touchstart",
           catchOutSideClickCloseMenuSideBar
         );
-        toggleMenu.value = false;
-        menuIconRef.value.$el.style.pointerEvents = "";
-      };
-      if (menuIconRef.value) {
-        menuIconRef.value.$el.style.pointerEvents = "none";
       }
-      document.addEventListener("mousedown", catchOutSideClickCloseMenuSideBar);
-      document.addEventListener(
-        "touchstart",
-        catchOutSideClickCloseMenuSideBar
-      );
     });
     return {
       menuSideRef,
@@ -126,6 +133,7 @@ export default {
       isPropertyDetailedPage,
       historyRoutePath,
       removeUnderScoresFromAString,
+      isTableAndLargeScreen,
     };
   },
 };
