@@ -23,9 +23,11 @@
         focus:ring-offset-1
         focus:ring-offset-white
         focus:shadow
-        pl-4
+        pl-3
+        sm:pl-4
         py-1
-        pr-20
+        sm:pr-20
+        pr-12
       "
       v-bind="$attrs"
       type="search"

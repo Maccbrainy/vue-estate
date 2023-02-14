@@ -1,7 +1,7 @@
 <template>
   <home-page-layout>
     <template v-slot:header>
-      <section v-show="$route.name != 'pageNotFound'" class="px-4">
+      <section v-show="$route.name != 'pageNotFound'" class="sm:px-4">
         <div class="flex flex-col overflow-visible">
           <div class="relative -bottom-16">
             <div class="w-full h-100 overflow-hidden">
@@ -9,7 +9,7 @@
                 <img
                   src="../assets/images/HomePage.jpg"
                   alt="HomePage image"
-                  class="w-full h-full object-center object-cover rounded-xl"
+                  class="w-full h-full object-center object-cover sm:rounded-xl"
                 />
               </picture>
             </div>
@@ -18,7 +18,7 @@
                 class="
                   absolute
                   pt-20
-                  px-4
+                  sm:px-4
                   pb-4
                   overflow-visible
                   flex flex-col
@@ -46,7 +46,7 @@
                   <home-tab-buttons></home-tab-buttons>
                 </div>
                 <search-box class="w-6/12 xs:w-11/12 sf:w-10/12 text-xl">
-                  <search-input class="h-16"></search-input>
+                  <search-input class="h-14 sm:h-16"></search-input>
                 </search-box>
               </div>
             </div>
