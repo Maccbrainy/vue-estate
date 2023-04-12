@@ -114,8 +114,11 @@ export default {
             catchOutSideClickCloseMenuSideBar
           );
           toggleMenu.value = false;
+          // menuIconRef.value.$el.style.pointerEvents = "";
         };
-
+        // if (menuIconRef.value) {
+        //   menuIconRef.value.$el.style.pointerEvents = "none";
+        // }
         document.addEventListener(
           "mousedown",
           catchOutSideClickCloseMenuSideBar
