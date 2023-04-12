@@ -539,6 +539,7 @@ export default {
 
     watchEffect(async () => {
       isLoading.value = true;
+      store.commit("setIsLoading", true);
       store.commit("setFetchingIsBusy", true);
       let queryEndpointType =
         props.name == "RentPage"

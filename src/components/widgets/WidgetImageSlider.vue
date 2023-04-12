@@ -121,27 +121,6 @@
         :title="navigation.name"
       ></component
     ></span>
-    <!-- <span
-      class="
-        absolute
-        w-full
-        h-10
-        flex flex-row flex-nowrap
-        justify-center
-        items-center
-        gap-1
-        bg-black
-        text-white
-        bottom-0
-        overflow-hidden
-      "
-    >
-      <div
-        class="bg-white w-2 h-2 rounded-full"
-        v-for="indicator in carousalIndicators"
-        :key="indicator"
-      ></div>
-    </span> -->
   </div>
 </template>
 <script>
@@ -266,20 +245,20 @@ export default {
         item.style.transform = `translateX(${slideMoveSize.value}px)`;
       });
     };
-    const tieBeginingAndEndSlideItemsTogether = () => {
-      if (!listingPhotosIsAString.value && props.listingPhotos.length > 0) {
-        carousalChamberRef.value.insertAdjacentHTML(
-          "afterbegin",
-          slideItemRef.value[slideItemRef.value.length - 1].outerHTML
-        );
-        carousalChamberRef.value.insertAdjacentHTML(
-          "beforeend",
-          slideItemRef.value[0].outerHTML
-        );
-      }
-    };
+    // const tieBeginingAndEndSlideItemsTogether = () => {
+    //   if (!listingPhotosIsAString.value && props.listingPhotos.length > 0) {
+    //     carousalChamberRef.value.insertAdjacentHTML(
+    //       "afterbegin",
+    //       slideItemRef.value[slideItemRef.value.length - 1].outerHTML
+    //     );
+    //     carousalChamberRef.value.insertAdjacentHTML(
+    //       "beforeend",
+    //       slideItemRef.value[0].outerHTML
+    //     );
+    //   }
+    // };
     onMounted(() => {
-      tieBeginingAndEndSlideItemsTogether();
+      // tieBeginingAndEndSlideItemsTogether();
     });
     return {
       isDefaultImage,
@@ -294,7 +273,7 @@ export default {
       slideItemRef,
       slideCounter,
       slideMoveSize,
-      tieBeginingAndEndSlideItemsTogether,
+      // tieBeginingAndEndSlideItemsTogether,
     };
   },
 };

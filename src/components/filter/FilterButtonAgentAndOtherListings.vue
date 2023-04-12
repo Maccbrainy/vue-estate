@@ -8,7 +8,10 @@
       <button
         v-on:click="activateListingBranch(type)"
         type="button"
-        :class="{ 'transform -translate-x-3': arrayIndex == 1 }"
+        :class="{
+          'transform -translate-x-3': arrayIndex == 1,
+          'cursor-not-allowed': storeData.fetchingIsBusy,
+        }"
         class="
           flex
           justify-center
@@ -34,14 +37,26 @@
             'absolute w-full px-6 py-2 h-full bg-white border rounded-lg z-10 xs:px-4 transition-all duration-500':
               type.id == storeData.activeListBranch,
             'transform translate-x-0': arrayIndex == 0,
+            'bg-gray-100':
+              type.id == storeData.activeListBranch && storeData.fetchingIsBusy,
+            'bg-white':
+              type.id == storeData.activeListBranch && !storeData.fetchingIsBusy,
           }"
         ></span>
-        <span class="z-10">{{ type.title }}</span>
-        <span class="xxs:hidden z-10 font-normal px-1">{{
-          arrayIndex == 0
-            ? `(${numberOfPropertyByAgent})`
-            : `(${storeData.propertyListingsByNoneAgent.length})`
-        }}</span>
+        <span
+          :class="{ 'text-gray-400': storeData.fetchingIsBusy }"
+          class="z-10"
+          >{{ type.title }}</span
+        >
+        <span
+          v-if="!storeData.fetchingIsBusy"
+          class="xxs:hidden z-10 font-normal px-1"
+          >{{
+            arrayIndex == 0
+              ? `(${numberOfPropertyByAgent})`
+              : `(${storeData.propertyListingsByNoneAgent.length})`
+          }}</span
+        >
       </button>
     </div>
   </div>
@@ -69,6 +84,7 @@ export default {
     });
 
     const activateListingBranch = (type) => {
+      if (storeData.value.isLoading) return;
       store.commit("setActiveListBranch", type.id);
     };
 

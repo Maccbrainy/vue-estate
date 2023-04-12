@@ -3,10 +3,6 @@
     <div ref="menuRef" class="mr-2">
       <button-slot
         v-on:click="buttonIsOpen = !buttonIsOpen"
-        v-bind:class="{
-          'bg-gray-100': storeData.isLoading,
-        }"
-        :disabled="storeData.isLoading"
       >
         <span
           v-if="!isAdvancedDropdown"
@@ -16,7 +12,7 @@
         <span
           v-if="!isAdvancedDropdown"
           v-bind:class="{
-            'text-gray-400': storeData.isLoading,
+            'text-gray-400': storeData.fetchingIsBusy,
           }"
         >
           {{ buttonTitle }}
@@ -25,7 +21,7 @@
           v-if="!isAdvancedDropdown"
           v-bind:class="{
             'transform rotate-180': buttonIsOpen,
-            ' text-gray-400': storeData.isLoading,
+            ' text-gray-400': storeData.fetchingIsBusy,
           }"
         />
 
@@ -71,7 +67,7 @@
           </span>
           <span
             v-bind:class="{
-              'text-gray-400': storeData.isLoading,
+              'text-gray-400': storeData.fetchingIsBusy,
             }"
             class="ml-1"
             >More</span
@@ -79,7 +75,7 @@
           <chevron-down
             v-bind:class="{
               'transform rotate-180': buttonIsOpen,
-              ' text-gray-400': storeData.isLoading,
+              ' text-gray-400': storeData.fetchingIsBusy,
             }"
           />
         </span>
@@ -109,7 +105,7 @@
         aria-orientation="vertical"
         aria-labelledby="menu-button"
         tabindex="-1"
-        v-show="buttonIsOpen"
+        v-show="buttonIsOpen && !storeData.fetchingIsBusy"
       >
         <div class="py-2 px-2 text-gray-400">
           {{ menuTitle }}
@@ -134,10 +130,8 @@
         </div>
         <div
           :class="{
-            'transform -translate-x-3/4': isLargeScreen,
-            'transform-none': !isLargeScreen,
-            'transform -translate-x-3/4':
-              isMediumScreen && $route.name == 'BuyPage',
+            'lm:transform lm:-translate-x-3/4': $route.name == 'BuyPage',
+            'lm:transform-none': $route.name !== 'BuyPage',
           }"
           class="
             h-full
@@ -212,7 +206,6 @@ import { useStore } from "vuex";
 import { ChevronDown, CloseMobileMenu, FilterIcon } from "@/assets/icons";
 import { ButtonSlot } from "@/components/buttonui";
 import settingsData from "@/api/settingsData.json";
-import { useMediaQuery } from "@vueuse/core";
 
 // import { useOnClickOutside } from "@/helper";
 export default {
@@ -234,7 +227,7 @@ export default {
   setup() {
     const buttonIsOpen = ref(false);
     const store = useStore();
-    const { saveSearchCallback, isLargeScreen } = inject("provider");
+    const { saveSearchCallback } = inject("provider");
     const fieldSetRef = ref(null);
     const menuRef = ref(null);
     const storeData = computed(() => store.getters.getStore);
@@ -242,13 +235,6 @@ export default {
     const isBuyPage = computed(() =>
       storeData.value.activeRoutePath == routeNames[0].id ? true : false
     );
-    const isMediumScreen = useMediaQuery(
-      "(min-width: 991px)" && "(max-width: 1024px)"
-    );
-    // useOnClickOutside(
-    //   menuRef.value,
-    //   fieldSetRef.value,
-    //   () => buttonIsOpen.value = false)
 
     function listenerOnOutsideClick(event) {
       if (!fieldSetRef.value || fieldSetRef.value.contains(event.target)) {
@@ -274,8 +260,6 @@ export default {
       menuRef,
       isBuyPage,
       saveSearchCallback,
-      isLargeScreen,
-      isMediumScreen,
     };
   },
 };
