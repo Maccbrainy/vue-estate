@@ -68,7 +68,10 @@
     <span
       v-for="navigation in slideNavigations"
       :key="navigation.id"
-      v-show="isHover && $route.name === 'RentPage'"
+      v-show="
+        (isHover && $route.name === 'RentPage') ||
+        (isHover && $route.name === 'RentsNearMe')
+      "
       v-on:click="slideHandle(navigation.id)"
       :class="{
         hidden: slideCounter == 0 && navigation.id == 'left',
