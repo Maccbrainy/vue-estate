@@ -1,6 +1,5 @@
 <template>
   <div
-    ref="carousalChamberRef"
     v-on:mouseenter="isHover = true"
     v-on:mouseleave="isHover = false"
     v-bind:class="{
@@ -19,87 +18,60 @@
       overflow-hidden
     "
   >
-    <div v-if="listingPhotosIsAString" class="w-full h-full min-w-full">
-      <router-link
-        :to="{
-          name: routeName,
-          params: {
-            slug: stateCode,
-            city: cityName,
-            address: addressLocation,
-            propertyId: propertyIdCode,
-            zipCode: postalAddressCode,
-          },
-        }"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img
-          v-if="!storeData.fetchingIsBusy"
-          v-bind:src="listingPhotos"
-          alt=""
-          class="
-            w-full
-            h-full
-            object-center object-cover
-            transform
-            delay-300
-            duration-300
-            ease-in
-            hover:scale-105
-            cursor-pointer
-          "
-        />
-      </router-link>
-    </div>
-    <div
-      v-for="(photo, index) in listingImages"
-      :key="photo[index]"
-      v-bind:ref="(el) => (slideItemRef[index] = el)"
-      :class="{
-        'animate-pulse bg-gray-200': storeData.fetchingIsBusy,
+    <router-link
+      :to="{
+        name: routeName,
+        params: {
+          slug: stateCode,
+          city: cityName,
+          address: addressLocation,
+          propertyId: propertyIdCode,
+          zipCode: postalAddressCode,
+        },
       }"
-      class="w-full h-full min-w-full"
-      v-else
+      target="_blank"
+      rel="noopener noreferrer"
+      ref="slideContainer"
+      class="
+        hide-horizontal__scrollbar
+        flex flex-row flex-nowrap
+        w-full
+        h-full
+        min-w-full
+        overflow-x-auto
+        snap-x snap-mandatory
+      "
     >
-      <router-link
-        :to="{
-          name: routeName,
-          params: {
-            slug: stateCode,
-            city: cityName,
-            address: addressLocation,
-            propertyId: propertyIdCode,
-            zipCode: postalAddressCode,
-          },
-        }"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img
-          v-bind:src="photo.href"
-          alt=""
-          class="
-            w-full
-            h-full
-            object-center object-cover
-            transform
-            delay-300
-            duration-300
-            ease-in
-            hover:scale-105
-            cursor-pointer
-          "
-        />
-      </router-link>
-    </div>
-
+      <img
+        v-show="!storeData.fetchingIsBusy"
+        v-for="(photo, index) in listingImages"
+        :key="photo[index]"
+        v-bind:ref="(el) => (slideItemRef[index] = el)"
+        v-bind:src="photo.href"
+        alt=""
+        class="
+          snap-always snap-center
+          w-full
+          min-w-full
+          flex-initial
+          h-full
+          object-center object-cover
+          transform
+          delay-300
+          duration-300
+          ease-in
+          hover:scale-105
+          cursor-pointer
+        "
+      />
+    </router-link>
     <span
       v-for="navigation in slideNavigations"
       :key="navigation.id"
-      v-show="isHover && !listingPhotosIsAString"
+      v-show="isHover && $route.name === 'RentPage'"
       v-on:click="slideHandle(navigation.id)"
       :class="{
+        hidden: slideCounter == 0 && navigation.id == 'left',
         'left-0': navigation.id == 'left',
         'right-0': navigation.id == 'right',
       }"
@@ -124,7 +96,7 @@
   </div>
 </template>
 <script>
-import { computed, ref, onMounted } from "vue";
+import { computed, ref } from "vue";
 import { ChevronRight, ChevronLeft } from "@/assets/icons";
 import { useStore } from "vuex";
 export default {
@@ -176,23 +148,15 @@ export default {
     ];
     const store = useStore();
     const isHover = ref(null);
-    const carousalChamberRef = ref(null);
+    const slideContainer = ref(null);
     const slideItemRef = ref([]);
     const slideCounter = ref(0);
-    const slideMoveSize = ref(0);
     const storeData = computed(() => store.getters.getStore);
 
-    const listingPhotosIsAString = computed(() =>
-      typeof props.listingPhotos === "string" ? true : false
-    );
     const listingImages = computed(() =>
       typeof props.listingPhotos === "string"
-        ? [...props.listingPhotos]
+        ? [{ href: props.listingPhotos.split() }]
         : props.listingPhotos
-    );
-
-    const isDefaultImage = computed(() =>
-      listingImages.value.length < 1 ? true : false
     );
 
     const carousalIndicators = computed(() => {
@@ -204,77 +168,43 @@ export default {
     });
 
     const slideHandle = (direction) => {
-      // const carousalChamberRef = carousalChamberRef;
-      const clientWidth = slideItemRef.value[0].clientWidth;
+      const { offsetWidth } = slideContainer.value.$el;
+      let scrollBySize;
+
       if (direction == "right") {
         slideCounter.value++;
-        slideMoveSize.value -= clientWidth;
-        if (slideCounter.value >= slideItemRef.value.length) {
-          setTimeout(() => {
-            slideItemRef.value.forEach((item) => {
-              item.style.transition = `none`;
-              item.style.transform = `translateX(${
-                slideCounter.value * clientWidth
-              }px)`;
-            });
-
-            slideCounter.value = 0;
-            slideMoveSize.value = 0;
-          }, 300);
-          return;
-        }
+        scrollBySize = offsetWidth;
       }
       if (direction == "left") {
+        scrollBySize = -offsetWidth;
         slideCounter.value--;
-        slideMoveSize.value += clientWidth;
-        if (slideCounter.value < 0) {
-          slideCounter.value = slideItemRef.value.length - 1;
-          slideMoveSize.value = -(slideCounter.value * clientWidth);
-
-          setTimeout(() => {
-            slideItemRef.value.forEach((item) => {
-              item.style.transition = `none`;
-              item.style.transform = `translateX(${slideMoveSize.value}px)`;
-            });
-          }, 300);
-          return;
-        }
       }
-      slideItemRef.value.forEach((item) => {
-        item.style.transition = `all 0.5s ease-in-out`;
-        item.style.transform = `translateX(${slideMoveSize.value}px)`;
+      slideContainer.value.$el.scrollBy({
+        top: 0,
+        left: scrollBySize,
+        behavior: "smooth",
       });
     };
-    // const tieBeginingAndEndSlideItemsTogether = () => {
-    //   if (!listingPhotosIsAString.value && props.listingPhotos.length > 0) {
-    //     carousalChamberRef.value.insertAdjacentHTML(
-    //       "afterbegin",
-    //       slideItemRef.value[slideItemRef.value.length - 1].outerHTML
-    //     );
-    //     carousalChamberRef.value.insertAdjacentHTML(
-    //       "beforeend",
-    //       slideItemRef.value[0].outerHTML
-    //     );
-    //   }
-    // };
-    onMounted(() => {
-      // tieBeginingAndEndSlideItemsTogether();
-    });
     return {
-      isDefaultImage,
-      listingImages,
-      listingPhotosIsAString,
       isHover,
       storeData,
       slideNavigations,
       slideHandle,
       carousalIndicators,
-      carousalChamberRef,
+      slideContainer,
       slideItemRef,
       slideCounter,
-      slideMoveSize,
-      // tieBeginingAndEndSlideItemsTogether,
+      listingImages,
     };
   },
 };
 </script>
+<style scoped>
+.hide-horizontal__scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-horizontal__scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+</style>
