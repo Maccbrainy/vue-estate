@@ -1,9 +1,7 @@
 <template>
   <li>
     <div ref="menuRef" class="mr-2">
-      <button-slot
-        v-on:click="buttonIsOpen = !buttonIsOpen"
-      >
+      <button-slot v-on:click="buttonIsOpen = !buttonIsOpen">
         <span
           v-if="!isAdvancedDropdown"
           v-show="filterActivated"
@@ -130,8 +128,8 @@
         </div>
         <div
           :class="{
-            'lm:transform lm:-translate-x-3/4': $route.name == 'BuyPage',
-            'lm:transform-none': $route.name !== 'BuyPage',
+            // 'lm:transform lm:-translate-x-3/4': $route.name == 'BuyPage',
+            'xlm:transform-none': $route.name !== 'BuyPage',
           }"
           class="
             h-full
@@ -141,7 +139,12 @@
             z-40
             text-base text-gray-600
             font-normal
-            lm:w-96 lm:top-14 lm:h-96 lm:absolute
+            lm:w-96
+            lm:top-14
+            lm:h-96
+            lm:absolute
+            lm:transform
+            lm:-translate-x-3/4
           "
         >
           <slot name="moreAdvancedButtons"></slot>
